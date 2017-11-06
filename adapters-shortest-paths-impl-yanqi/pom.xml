@@ -9,4 +9,38 @@
 	<groupId>com.programmerare</groupId>
 	<artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
 	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+				
+		<!-- 
+			"yanqi" implementation does not currently seem to provide a way of programmatically create a graph,
+			but rather seem to require that input data must come from a file.
+			For that reason, I created a fork of it and used jitpack and my own github commit id as version below.
+			https://github.com/yan-qi/k-shortest-paths-java-version
+			https://github.com/TomasJohansson/k-shortest-paths-java-version
+			https://github.com/TomasJohansson/k-shortest-paths-java-version/commits/programmatic-graph-creation-without-using-inputfile
+			https://github.com/TomasJohansson/k-shortest-paths-java-version/commit/82fce65b43deb6f43c178a0e6dc2f6546c27bc45
+			https://jitpack.io
+			The artifact below will be retrieved from the "jitpack" repository which been added to the parent pom.xml file  
+			Thanks to the below maven dependency, the types within the following "yanqi" package can be used: 
+			edu.asu.emit.algorithm
+		 -->	
+		<dependency>
+		    <groupId>com.github.TomasJohansson</groupId>
+		    <artifactId>k-shortest-paths-java-version</artifactId>
+		    <version>82fce65b43deb6f43c178a0e6dc2f6546c27bc45</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.programmerare</groupId>
+			<artifactId>adapters-shortest-paths-core</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
+		</dependency>		
+	</dependencies>
+	
 </project>

@@ -21,7 +21,7 @@ import com.programmerare.shortestpaths.adapter.Path;
 // Currenntly these test classes are duplicated:
 // 		GraphBsmockTest 	(module "adapters-shortest-paths-impl-bsmock")
 //		GraphJgraphtTest 	(module "adapters-shortest-paths-impl-jgrapht") 
-
+//		GraphYanQiTest		(module adapters-shortest-paths-impl-yanqi")
 public class GraphBsmockTest {
 
 	@Test
