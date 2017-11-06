@@ -53,5 +53,8 @@ public final class WeightImpl implements Weight {
 			return false;
 		return true;
 	}
-	
+
+
+	// TODO: find all places where a small value is used and replace it with this constant 
+	public final static double SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS = 0.0000000001;	
 }
