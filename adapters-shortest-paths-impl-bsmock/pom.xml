@@ -8,4 +8,37 @@
 	
 	<groupId>com.programmerare</groupId>
 	<artifactId>adapters-shortest-paths-impl-bsmock</artifactId>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+			
+		<!-- 
+			"bsmock" implementation does not currently have a maven pom.xml file 
+			so I created a fork of it and used jitpack and my own github commit id as version below 
+			https://github.com/bsmock/k-shortest-paths
+			https://github.com/TomasJohansson/k-shortest-paths
+			https://github.com/TomasJohansson/k-shortest-paths/commit/c8ac52a364da74d3afbefa1b73dfb39a79fb3610
+			https://jitpack.io
+			The artifact below will be retrieved from the "jitpack" repository which been added to the parent pom.xml file  
+			Thanks to the below dependency below, the types within the following "bsmock" package can be used: 
+			edu.ufl.cise.bsmock
+		 -->
+		<dependency>
+		    <groupId>com.github.TomasJohansson</groupId>
+		    <artifactId>k-shortest-paths</artifactId>
+		    <version>c8ac52a364da74d3afbefa1b73dfb39a79fb3610</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.programmerare</groupId>
+			<artifactId>adapters-shortest-paths-core</artifactId>
+		    <version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+	</dependencies>
 </project>

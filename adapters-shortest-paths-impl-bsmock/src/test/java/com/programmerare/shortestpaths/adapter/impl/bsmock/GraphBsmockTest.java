@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl.jgrapht;
+package com.programmerare.shortestpaths.adapter.impl.bsmock;
 
 import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
@@ -17,12 +17,12 @@ import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
 import com.programmerare.shortestpaths.adapter.Path;
 
-//TODO: move duplicated test code into the test module "adapters-shortest-paths-test"
-//Currenntly these test classes are duplicated:
-//		GraphBsmockTest 	(module "adapters-shortest-paths-impl-bsmock")
-//		GraphJgraphtTest 	(module "adapters-shortest-paths-impl-jgrapht")
+// TODO: move duplicated test code into the test module "adapters-shortest-paths-test"
+// Currenntly these test classes are duplicated:
+// 		GraphBsmockTest 	(module "adapters-shortest-paths-impl-bsmock")
+//		GraphJgraphtTest 	(module "adapters-shortest-paths-impl-jgrapht") 
 
-public class GraphJgraphtTest {
+public class GraphBsmockTest {
 
 	@Test
 	public void testFindShortestPaths() {
@@ -40,7 +40,7 @@ public class GraphJgraphtTest {
 		// A - B - C- D  	, with weight 15 ( 3 + 5 + 7 )
 		// A - B - D  		, with weight 16 ( 3 + 13 )
 		
-		GraphFactory graphFactory = new GraphFactoryJgrapht();
+		GraphFactory graphFactory = new GraphFactoryBsmock();
 		Graph graph = graphFactory.createGraph(edges);
 		List<Path> shortestPaths = graph.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
 		assertEquals(2,  shortestPaths.size());
@@ -69,4 +69,5 @@ public class GraphJgraphtTest {
 		assertTrue(edgeFromOriginalInput == edgeFromResultingPath);
 		
 	}
+
 }
