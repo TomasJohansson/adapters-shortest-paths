@@ -7,10 +7,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    	<maven.compiler.source>1.5</maven.compiler.source>
-	    <maven.compiler.target>1.5</maven.compiler.target>
-
+		  	
+		<maven.compiler.source>1.5</maven.compiler.source>
+		<maven.compiler.target>1.5</maven.compiler.target>
 	</properties>
 	
 	<modules>
@@ -22,7 +21,6 @@
 		
 		<module>adapters-shortest-paths-test</module>
 	</modules>
-	
  	 
 	<repositories>
 		<repository>
@@ -30,5 +28,5 @@
 		<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
-	
+
 </project>
