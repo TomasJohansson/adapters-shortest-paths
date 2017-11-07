@@ -35,12 +35,12 @@ public abstract class GraphTestBase {
 		// A - B - C- D  	, with weight 15 ( 3 + 5 + 7 )
 		// A - B - D  		, with weight 16 ( 3 + 13 )
 		
-		GraphFactory graphFactory = createGraphFactory();//  new GraphFactoryJgrapht();
-		Graph graph = graphFactory.createGraph(edges);
-		List<Path> shortestPaths = graph.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
+		GraphFactory<Edge> graphFactory = createGraphFactory();//  new GraphFactoryJgrapht();
+		Graph<Edge> graph = graphFactory.createGraph(edges);
+		List<Path<Edge>> shortestPaths = graph.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
 		assertEquals(2,  shortestPaths.size());
 
-		Path path1 = shortestPaths.get(0); // the shortest mentioned above with total weight 15
+		Path<Edge> path1 = shortestPaths.get(0); // the shortest mentioned above with total weight 15
 		assertEquals(15,  path1.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		List<Edge> edgesForPath1 = path1.getEdgesForPath();
 		assertEquals(3,  edgesForPath1.size());
@@ -49,7 +49,7 @@ public abstract class GraphTestBase {
 		assertEqualsAndTheSameInstance(edgeCD7,  edgesForPath1.get(2));
 		
 
-		Path path2 = shortestPaths.get(1);
+		Path<Edge> path2 = shortestPaths.get(1);
 		assertEquals(16,  path2.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		List<Edge> edgesForPath2 = path2.getEdgesForPath();
 		assertEquals(2,  edgesForPath2.size());
@@ -64,5 +64,5 @@ public abstract class GraphTestBase {
 	}
 	
 	
-	protected abstract GraphFactory createGraphFactory();
+	protected abstract GraphFactory<Edge> createGraphFactory();
 }

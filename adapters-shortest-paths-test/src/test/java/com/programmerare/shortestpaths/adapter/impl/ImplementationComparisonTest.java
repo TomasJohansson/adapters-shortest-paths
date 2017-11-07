@@ -64,11 +64,11 @@ public class ImplementationComparisonTest {
 	 * and the implementation results will be verified with each other and the test will cause a failure 
 	 * if there is any mismatch found in the results.
 	 */
-	private List<GraphFactory> createGraphFactories() {
-		final List<GraphFactory> list = new ArrayList<GraphFactory>();
-		list.add(new GraphFactoryYanQi());
-		list.add(new GraphFactoryBsmock());
-		list.add(new GraphFactoryJgrapht());
+	private List<GraphFactory<Edge>> createGraphFactories() {
+		final List<GraphFactory<Edge>> list = new ArrayList<GraphFactory<Edge>>();
+		list.add(new GraphFactoryYanQi<Edge>());
+		list.add(new GraphFactoryBsmock<Edge>());
+		list.add(new GraphFactoryJgrapht<Edge>());
 		return list;
 	}
 	
@@ -100,27 +100,27 @@ public class ImplementationComparisonTest {
 		
 		output("Number of edges in the graph to be tested : " + edgesForBigGraph.size());
 
-		final Map<String, List<Path>> shortestPathsPerImplementation = new HashMap<String, List<Path>>();
+		final Map<String, List<Path<Edge>>> shortestPathsPerImplementation = new HashMap<String, List<Path<Edge>>>();
 		
-		final List<GraphFactory> graphFactories = createGraphFactories();
+		final List<GraphFactory<Edge>> graphFactories = createGraphFactories();
 		
 		for (int i = 0; i < graphFactories.size(); i++) {
-			final GraphFactory graphFactory = graphFactories.get(i);
+			final GraphFactory<Edge> graphFactory = graphFactories.get(i);
 
 			final TimeMeasurer tm = TimeMeasurer.start();			
-			final Graph graph = graphFactory.createGraph(edgesForBigGraph);
-			final List<Path> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
+			final Graph<Edge> graph = graphFactory.createGraph(edgesForBigGraph);
+			final List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			output("seconds : " + tm.getSeconds() + " for implementation " + graph.getClass().getName());
 			
 			assertEquals(numberOfPathsToFind, shortestPaths.size());
 
-			for (Path path : shortestPaths) {
+			for (Path<Edge> path : shortestPaths) {
 				// output("shortest path weight " + path.getTotalWeightForPath().getWeightValue());
 			}
 			
 			shortestPathsPerImplementation.put(graph.getClass().getName(), shortestPaths);
 			
-			final Path shortestPath = shortestPaths.get(0);
+			final Path<Edge> shortestPath = shortestPaths.get(0);
 			final List<Edge> edgesForShortestPaths = shortestPath.getEdgesForPath();
 			for (int j = 0; j < edgesForShortestPaths.size(); j++) {
 				// output("edge " + j + " : " + edgesForShortestPaths.get(j));
@@ -130,10 +130,10 @@ public class ImplementationComparisonTest {
 		final List<String> nameOfImplementations = new ArrayList<String>(shortestPathsPerImplementation.keySet());
 		for (int i = 0; i < nameOfImplementations.size(); i++) {
 			final String nameOfImplementation_1 = nameOfImplementations.get(i);
-			final List<Path> pathsFoundByImplementation_1 = shortestPathsPerImplementation.get(nameOfImplementation_1);
+			final List<Path<Edge>> pathsFoundByImplementation_1 = shortestPathsPerImplementation.get(nameOfImplementation_1);
 			for (int j = i+1; j < nameOfImplementations.size(); j++) {
 				final String nameOfImplementation_2 = nameOfImplementations.get(j);
-				final List<Path> pathsFoundByImplementation_2 = shortestPathsPerImplementation.get(nameOfImplementation_2);
+				final List<Path<Edge>> pathsFoundByImplementation_2 = shortestPathsPerImplementation.get(nameOfImplementation_2);
 				assertEquals(pathsFoundByImplementation_1.size(), pathsFoundByImplementation_2.size());
 				for (int k = 0; k < pathsFoundByImplementation_2.size(); k++) {
 					assertEqualPaths("fail for i,j,k " + i + " , " + j + " , " + k , pathsFoundByImplementation_1.get(k), pathsFoundByImplementation_2.get(k));
@@ -195,7 +195,7 @@ public class ImplementationComparisonTest {
 		return vertices;
 	}
 
-	private void assertEqualPaths(final String message, final Path expectedPath, final Path actualPath) {
+	private void assertEqualPaths(final String message, final Path<Edge> expectedPath, final Path<Edge> actualPath) {
 		assertEquals(
 			message, 
 			expectedPath.getTotalWeightForPath().getWeightValue(), 

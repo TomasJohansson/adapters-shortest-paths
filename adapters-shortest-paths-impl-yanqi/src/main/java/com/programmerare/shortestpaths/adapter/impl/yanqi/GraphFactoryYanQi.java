@@ -19,14 +19,14 @@ import edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphFactoryYanQi implements GraphFactory {
+public final class GraphFactoryYanQi<T extends Edge> implements GraphFactory<T> {
 
-	public Graph createGraph(final List<Edge> edges) {
-		final EdgeMapper edgeMapper = EdgeMapper.createEdgeMapper(edges);
+	public Graph<T> createGraph(final List<T> edges) {
+		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		
 		final List<String> lines = new ArrayList<String>(); 
-		for (final Edge edge : edges) {
+		for (final T edge : edges) {
 			lines.add(createStringLine(idMapper, edge));
 		}
 		
@@ -36,7 +36,7 @@ public final class GraphFactoryYanQi implements GraphFactory {
 			lines
 		);
 		
-		return new GraphYanQi(graphAdaptee, edgeMapper, idMapper);
+		return new GraphYanQi<T>(graphAdaptee, edgeMapper, idMapper);
 	}
 
 
@@ -52,7 +52,7 @@ public final class GraphFactoryYanQi implements GraphFactory {
 	 * See also the example in method 'testGraphPossibleToCreateProgramatically'
 	 *  at this page: https://github.com/TomasJohansson/k-shortest-paths-java-version/commit/7130ed623d6e7436cdb8294c0e142a8b4b29a18d
 	 */
-	private String createStringLine(final MapperForIntegerIdsAndGeneralStringIds idMapper, final Edge edge) {
+	private String createStringLine(final MapperForIntegerIdsAndGeneralStringIds idMapper, final T edge) {
 		int integerIdForStartVertex = idMapper.createOrRetrieveIntegerId(edge.getStartVertex().getVertexId());
 		int integerIdForEndVertex = idMapper.createOrRetrieveIntegerId(edge.getEndVertex().getVertexId());
 		return integerIdForStartVertex + SPACE + integerIdForEndVertex + SPACE + edge.getEdgeWeight().getWeightValue();

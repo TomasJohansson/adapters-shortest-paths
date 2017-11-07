@@ -54,7 +54,7 @@ public class PathImplTest {
 
 	@Test
 	public void testGetEdgesForPath() {
-		List<Edge> edgesForPath = path.getEdgesForPath();
+		List<? extends Edge> edgesForPath = path.getEdgesForPath();
 		assertEquals(3, edgesForPath.size());
 		assertEquals(edgeAB3, edgesForPath.get(0));
 		assertEquals(edgeBC5, edgesForPath.get(1));

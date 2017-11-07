@@ -13,7 +13,7 @@ import com.programmerare.shortestpaths.adapter.Vertex;
  */
 public final class VertexUtility {
 
-	public final static List<Vertex> getAllVerticesFromEdgesButWithoutDuplicates(final List<Edge> edges) {
+	public final static List<Vertex> getAllVerticesFromEdgesButWithoutDuplicates(final List<? extends Edge> edges) {
 
 		final List<Vertex> vertices = new ArrayList<Vertex>();
 		final Map<String, Boolean> map = new HashMap<String, Boolean>();

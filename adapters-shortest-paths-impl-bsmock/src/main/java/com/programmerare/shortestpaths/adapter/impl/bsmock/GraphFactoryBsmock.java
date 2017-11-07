@@ -12,15 +12,15 @@ import com.programmerare.shortestpaths.utils.EdgeMapper;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphFactoryBsmock implements GraphFactory {
+public final class GraphFactoryBsmock<T extends Edge> implements GraphFactory<T> {
 
-	public Graph createGraph(List<Edge> edges) {
-		final EdgeMapper edgeMapper = EdgeMapper.createEdgeMapper(edges);
+	public Graph<T> createGraph(List<T> edges) {
+		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 
 		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
 		
-		for (final Edge edge : edges) {
+		for (final T edge : edges) {
 			graphAdaptee.addEdge(
 				edge.getStartVertex().getVertexId(), 
 				edge.getEndVertex().getVertexId(), 

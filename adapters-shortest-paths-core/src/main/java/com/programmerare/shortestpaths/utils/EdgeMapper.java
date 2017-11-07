@@ -18,16 +18,16 @@ import com.programmerare.shortestpaths.adapter.Edge;
  * It works because the interface {@link Edge#getEdgeId()} has specified what should be returned which is used in this class.
  * @author Tomas Johansson
  */
-public final class EdgeMapper {
+public final class EdgeMapper<T extends Edge> {
 
-	private final Map<String, Edge> edgeMapWithVertexIdsAsKey = new HashMap<String, Edge>();
+	private final Map<String, T> edgeMapWithVertexIdsAsKey = new HashMap<String, T>();
 	
-	public static EdgeMapper createEdgeMapper(final List<Edge> edges) {
+	public static <T extends Edge> EdgeMapper<T> createEdgeMapper(final List<T> edges) {
 		return new EdgeMapper(edges);
 	}
 	
-	private EdgeMapper(final List<Edge> edges) {
-		for (Edge edge : edges) {
+	private  EdgeMapper(final List<T> edges) {
+		for (T edge : edges) {
 			if(edgeMapWithVertexIdsAsKey.containsKey(edge.getEdgeId())) {
 				throw new RuntimeException("An edge is a pair of vertices and must only occur once. " + edge);
 			}
@@ -35,9 +35,9 @@ public final class EdgeMapper {
 		}
 	}
 
-	public List<Edge> getOriginalObjectInstancesOfTheEdges(final List<Edge> edges) {
-		final List<Edge> originalObjectInstancesOfTheEdges = new ArrayList<Edge>();
-		for (Edge edge : edges) {
+	public List<T> getOriginalObjectInstancesOfTheEdges(final List<T> edges) {
+		final List<T> originalObjectInstancesOfTheEdges = new ArrayList<T>();
+		for (T edge : edges) {
 			originalObjectInstancesOfTheEdges.add(edgeMapWithVertexIdsAsKey.get(edge.getEdgeId()));
 		}		
 		return originalObjectInstancesOfTheEdges;

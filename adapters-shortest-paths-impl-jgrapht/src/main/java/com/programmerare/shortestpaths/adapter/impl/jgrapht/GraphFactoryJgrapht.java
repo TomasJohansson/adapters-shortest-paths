@@ -17,25 +17,23 @@ import com.programmerare.shortestpaths.utils.EdgeMapper;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public class GraphFactoryJgrapht implements GraphFactory {
+public class GraphFactoryJgrapht<T extends Edge> implements GraphFactory<T> {
 
-	public Graph createGraph(List<Edge> edges) {
-		final EdgeMapper edgeMapper = EdgeMapper.createEdgeMapper(edges);
+	public Graph<T> createGraph(List<T> edges) {
+		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 		
 		final SimpleDirectedWeightedGraph<String, WeightedEdge>  graphAdaptee = 
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);
 		
 		final List<Vertex> vertices = getAllVerticesFromEdgesButWithoutDuplicates(edges);
-		
 		for (final Vertex vertex : vertices) {
 			graphAdaptee.addVertex(vertex.getVertexId());	
 		}
-		for (final Edge edge : edges) {
-			final WeightedEdge e = graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
-			graphAdaptee.setEdgeWeight(e, edge.getEdgeWeight().getWeightValue()); 
+		for (final T edge : edges) {
+			final WeightedEdge weightedEdge = graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
+			graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
 		}
-		
 	    return new GraphJgrapht(graphAdaptee, edgeMapper);
 	}
 }

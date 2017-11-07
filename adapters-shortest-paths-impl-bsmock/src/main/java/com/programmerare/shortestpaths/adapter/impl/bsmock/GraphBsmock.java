@@ -14,6 +14,7 @@ import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.Path;
 import com.programmerare.shortestpaths.adapter.Vertex;
+import com.programmerare.shortestpaths.adapter.Weight;
 import com.programmerare.shortestpaths.utils.EdgeMapper;
 
 import edu.ufl.cise.bsmock.graph.ksp.Yen;
@@ -21,48 +22,49 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
 /**
  * @author Tomas Johansson
  */
-public final class GraphBsmock implements Graph {
+public final class GraphBsmock<T extends Edge> implements Graph<T> {
 	
 	private final Yen yenAlgorithm;
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
-	private final EdgeMapper edgeMapper;
+	private final EdgeMapper<T> edgeMapper;
 	
 	public GraphBsmock(
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee, 
-		final EdgeMapper edgeMapper
+		final EdgeMapper<T> edgeMapper
 	) {
 		this.graphAdaptee = graphAdaptee;
 		this.edgeMapper = edgeMapper;
 		yenAlgorithm = new Yen();
 	}
 	
-	public List<Path> findShortestPaths(
+	public List<Path<T>> findShortestPaths(
 		final Vertex startVertex, 
 		final Vertex endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path> paths = new ArrayList<Path>();		
+		final List<Path<T>> paths = new ArrayList<Path<T>>();		
 		final List<edu.ufl.cise.bsmock.graph.util.Path> pathList = yenAlgorithm.ksp(
 			graphAdaptee, 
 			startVertex.getVertexId(), 
 			endVertex.getVertexId(), 
 			maxNumberOfPaths
 		);
-		
 		for (edu.ufl.cise.bsmock.graph.util.Path path : pathList) {
 			final LinkedList<edu.ufl.cise.bsmock.graph.Edge> listOfEdges = path.getEdges();
-			final List<Edge> edges = new ArrayList<Edge>();
-			for (edu.ufl.cise.bsmock.graph.Edge edge : listOfEdges) {
+			final List<T> edges = new ArrayList<T>();
+			for (edu.ufl.cise.bsmock.graph.Edge edgeAdaptee : listOfEdges) {
+				final T edge = createEdge(
+					createVertex(edgeAdaptee.getFromNode()), 
+					createVertex(edgeAdaptee.getToNode()), 
+					createWeight(edgeAdaptee.getWeight())
+				); 
 				edges.add(
-					createEdge(
-						createVertex(edge.getFromNode()), 
-						createVertex(edge.getToNode()), 
-						createWeight(edge.getWeight())
-					)
+					edge
 				);
 			}
-			final List<Edge> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(edges);
-			paths.add(createPath(createWeight(path.getTotalCost()), originalObjectInstancesOfTheEdges));
+			final Weight totalWeight = createWeight(path.getTotalCost());
+			final List<T> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(edges);			
+			paths.add(createPath(totalWeight, originalObjectInstancesOfTheEdges));
 		}
 		return Collections.unmodifiableList(paths);
 	}

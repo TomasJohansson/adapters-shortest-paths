@@ -7,6 +7,6 @@ import java.util.List;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
   */
-public interface GraphFactory {
-	Graph createGraph(List<Edge> edges);
+public interface GraphFactory<T extends Edge> {
+	Graph<T> createGraph(List<T> edges);
 }

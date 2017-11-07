@@ -12,12 +12,12 @@ import com.programmerare.shortestpaths.adapter.Weight;
 /**
  * @author Tomas Johansson
  */
-public class PathImpl implements Path {
+public class PathImpl<T extends Edge> implements Path<T> {
 
 	private final Weight totalWeight;
-	private final List<Edge> edges;
+	private final List<T> edges;
 
-	public static Path createPath(final Weight totalWeight, final List<Edge> edges) {
+	public static <T extends Edge> Path<T> createPath(final Weight totalWeight, final List<T> edges) {
 		return createPath(totalWeight, edges, false, false);
 	}
 
@@ -29,9 +29,9 @@ public class PathImpl implements Path {
 	 * @param shouldThrowExceptionIfAnyMismatchingVertex
 	 * @return
 	 */
-	public static Path createPath(
+	public static <T extends Edge> Path<T> createPath(
 		final Weight totalWeight, 
-		final List<Edge> edges, 
+		final List<T> edges, 
 		boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
 		boolean shouldThrowExceptionIfAnyMismatchingVertex
 	) {
@@ -45,18 +45,18 @@ public class PathImpl implements Path {
 				throw new RuntimeException("Mismatching vertices detected " + edges);
 			}
 		}
-		return new PathImpl(totalWeight, edges, shouldThrowExceptionIfTotalWeightIsMismatching, shouldThrowExceptionIfAnyMismatchingVertex);
+		return new PathImpl<T>(totalWeight, edges, shouldThrowExceptionIfTotalWeightIsMismatching, shouldThrowExceptionIfAnyMismatchingVertex);
 	}	
 	
-	private static boolean isTotalWeightNotCorrect(List<Edge> edges, Weight totalWeight) {
+	private static <T extends Edge> boolean isTotalWeightNotCorrect(List<T> edges, Weight totalWeight) {
 		double tot = 0;
-		for (Edge edge : edges) {
+		for (T edge : edges) {
 			tot += edge.getEdgeWeight().getWeightValue();
 		}
 		return Math.abs(totalWeight.getWeightValue() - tot) > SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 	}
 
-	private static boolean isAnyVertexMismatching(List<Edge> edges) {
+	private static <T extends Edge> boolean isAnyVertexMismatching(List<T> edges) {
 		for (int i = 1; i < edges.size(); i++) {
 			Edge edge = edges.get(i-1);
 			Edge nextEdge = edges.get(i);
@@ -69,7 +69,7 @@ public class PathImpl implements Path {
 
 	private PathImpl(
 		final Weight totalWeight, 
-		final List<Edge> edges, 
+		final List<T> edges, 
 		boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
 		boolean shouldThrowExceptionIfAnyMismatchingVertex
 	) {
@@ -81,7 +81,7 @@ public class PathImpl implements Path {
 		return totalWeight;
 	}
 
-	public List<Edge> getEdgesForPath() {
+	public List<T> getEdgesForPath() {
 		return edges;
 	}
 
@@ -122,6 +122,5 @@ public class PathImpl implements Path {
 			return false;
 		return true;
 	}
-	
 	
 }

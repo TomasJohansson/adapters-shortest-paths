@@ -14,16 +14,17 @@ public final class EdgeImpl implements Edge {
 	private final Vertex endVertex;
 	private final Weight weight;
 
-	public static Edge createEdge(
+	public static <T extends Edge> T createEdge(
 		final Vertex startVertex, 
 		final Vertex endVertex, 
 		final Weight weight			
 	) {
-		return new EdgeImpl(
+		Edge e = new EdgeImpl(
 			startVertex, 
 			endVertex, 
 			weight				
 		);
+		return (T)e;
 	}
 
 	private EdgeImpl(

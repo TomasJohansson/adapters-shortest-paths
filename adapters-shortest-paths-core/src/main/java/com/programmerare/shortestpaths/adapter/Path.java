@@ -5,9 +5,9 @@ import java.util.List;
 /**
  * @author Tomas Johansson
  */
-public interface Path {
+public interface Path<T extends Edge> {
 	
 	Weight getTotalWeightForPath();
 	
-	List<Edge> getEdgesForPath();
+	List<T> getEdgesForPath();
 }
