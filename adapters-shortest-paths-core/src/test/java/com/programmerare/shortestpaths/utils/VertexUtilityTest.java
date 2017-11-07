@@ -3,16 +3,15 @@ package com.programmerare.shortestpaths.utils;
 import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
-
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.adapter.Edge;
@@ -52,8 +51,8 @@ public class VertexUtilityTest {
 		
 		// verify that all vertices in all edges is one of the four above
 		for (Edge edge : edges) {
-			assertTrue(expectedVerticesIds.contains(edge.getStartVertex().getVertexId()));
-			assertTrue(expectedVerticesIds.contains(edge.getEndVertex().getVertexId()));
+			assertThat(expectedVerticesIds, hasItem(edge.getStartVertex().getVertexId()));
+			assertThat(expectedVerticesIds, hasItem(edge.getEndVertex().getVertexId()));
 		}		
 	}
 

@@ -5,7 +5,7 @@ import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVert
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +49,7 @@ public class EdgeMapperTest {
 		// Note that the input parameter above vas the list which did NOT have the same instances as the original
 		// list (i.e. the list passed into the constructor of EdgeMapper) but the returned list should have the same 
 		// instances, and they should be mapped through the id of the edge
-		assertTrue(originalEdges.get(0) == originalObjectInstancesOfTheEdges.get(0));
-		assertTrue(originalEdges.get(1) == originalObjectInstancesOfTheEdges.get(1));		
+		assertSame(originalEdges.get(0), originalObjectInstancesOfTheEdges.get(0));
+		assertSame(originalEdges.get(1), originalObjectInstancesOfTheEdges.get(1)); 		
 	}
 }

@@ -5,7 +5,7 @@ import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVert
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,10 +59,8 @@ public abstract class GraphTestBase {
 
 	private void assertEqualsAndTheSameInstance(Edge edgeFromOriginalInput, Edge edgeFromResultingPath) {
 		assertEquals(edgeFromOriginalInput,  edgeFromResultingPath);
-		// TODO hamcrecst code instead of below assertTrue
 		// Note that the below assertion works thanks to the class EdgeMappe
-		assertTrue(edgeFromOriginalInput == edgeFromResultingPath);
-		
+		assertSame(edgeFromOriginalInput, edgeFromResultingPath);
 	}
 	
 	
