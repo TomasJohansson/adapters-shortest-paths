@@ -1,5 +1,7 @@
 package com.programmerare.shortestpaths.adapter.impl;
 
+import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -51,7 +53,7 @@ public class PathImpl implements Path {
 		for (Edge edge : edges) {
 			tot += edge.getEdgeWeight().getWeightValue();
 		}
-		return Math.abs(totalWeight.getWeightValue() - tot) > 0.0000000001;
+		return Math.abs(totalWeight.getWeightValue() - tot) > SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 	}
 
 	private static boolean isAnyVertexMismatching(List<Edge> edges) {

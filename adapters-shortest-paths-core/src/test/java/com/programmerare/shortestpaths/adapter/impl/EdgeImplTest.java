@@ -2,6 +2,7 @@ package com.programmerare.shortestpaths.adapter.impl;
 
 import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -49,7 +50,7 @@ public class EdgeImplTest {
 	
 	@Test
 	public void testgetEdgeWeight() {
-		assertEquals(weightValue, edgeX.getEdgeWeight().getWeightValue(), 0.000000001);
+		assertEquals(weightValue, edgeX.getEdgeWeight().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		assertEquals(weight, edgeX.getEdgeWeight());		
 	}
 	

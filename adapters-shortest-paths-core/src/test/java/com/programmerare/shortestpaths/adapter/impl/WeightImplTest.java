@@ -1,5 +1,6 @@
 package com.programmerare.shortestpaths.adapter.impl;
 
+import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,7 +34,7 @@ public class WeightImplTest {
 		assertEquals(
 			weightValueA, 
 			weightA.getWeightValue(), 
-			0.0000000001 // small delta value for comparison of double
+			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
 		);
 	}
 	
