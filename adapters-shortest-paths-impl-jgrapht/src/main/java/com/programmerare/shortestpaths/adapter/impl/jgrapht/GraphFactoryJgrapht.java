@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.adapter.impl.jgrapht;
 
-import static com.programmerare.shortestpaths.utils.VertexUtility.getAllVerticesFromVerticesButWithoutDuplicates;
+import static com.programmerare.shortestpaths.utils.VertexUtility.getAllVerticesFromEdgesButWithoutDuplicates;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class GraphFactoryJgrapht implements GraphFactory {
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);
 		
-		final List<Vertex> vertices = getAllVerticesFromVerticesButWithoutDuplicates(edges);
+		final List<Vertex> vertices = getAllVerticesFromEdgesButWithoutDuplicates(edges);
 		
 		for (final Vertex vertex : vertices) {
 			graphAdaptee.addVertex(vertex.getVertexId());	

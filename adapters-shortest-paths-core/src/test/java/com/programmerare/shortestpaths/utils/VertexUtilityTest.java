@@ -43,7 +43,7 @@ public class VertexUtilityTest {
 			createEdge(createVertex("C"), createVertex("D"), createWeight(6))
 		);
 
-		List<Vertex> vertices = VertexUtility.getAllVerticesFromVerticesButWithoutDuplicates(edges);
+		List<Vertex> vertices = VertexUtility.getAllVerticesFromEdgesButWithoutDuplicates(edges);
 		
 		List<String> expectedVerticesIds = Arrays.asList("A", "B", "C", "D");
 		
