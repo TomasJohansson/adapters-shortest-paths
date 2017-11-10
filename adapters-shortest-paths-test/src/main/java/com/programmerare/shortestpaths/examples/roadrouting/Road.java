@@ -1,97 +1,133 @@
 package com.programmerare.shortestpaths.examples.roadrouting;
 
-import java.util.UUID;
-
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
-//import javax.persistence.Transient;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.Weight;
 
 /**
+ * 
  * @author Tomas Johansson
+ *
  */
-//@Entity
-public final class Road implements Edge {
-
-	//	@Id
-	private UUID roadKey;
+@Entity
+public class Road implements Edge {
 	
-//	@Transient
-	private City cityFrom;
+	@Id
+	private int roadKey;
 	
-//	@Transient
-	private City cityTo;
-	
-	private UUID cityFromId;
-	private UUID cityToId;
+	private int cityFromId;
+	private int cityToId;
 	
 	private int roadLength;
 	private RoadQuality roadQuality;
 	
-//	@Transient
-	private Weight edgeWeight;
-
 	private String roadName;
 
-	public Road(UUID roadKey)  {
+	// Currently simple database mapping is used, and therefore three fields below are marked as Transient.
+	// They are managed with explicit code, i.e. cyurrently not using real ORM (Object-Relational Mapping)..
+	// The two City fields are persisted entities and must be populated in the class RoadDataMapper while the Weight field
+	// is not  a persisted entity and it can be instantiated through its get method. 
+	
+	@Transient
+	private City cityFrom;
+	
+	@Transient
+	private City cityTo;
+	
+	@Transient
+	private Weight edgeWeight;
+
+
+	protected Road()  {	}
+	
+	public Road(
+		final int roadKey, 
+		final City cityFrom, 
+		final City cityTo, 
+		final int roadLength, 
+		final RoadQuality roadQuality, 
+		final String roadName
+	) {
 		this.roadKey = roadKey;
+		setCityFrom(cityFrom);
+		setCityTo(cityTo);
+		this.roadLength = roadLength;
+		this.roadQuality = roadQuality;		
+		this.roadName = roadName;
+	}
+
+	public int getRoadKey() {
+		return roadKey;
 	}
 	
-	public Road()  {
-	}	
-
-	public Road(City cityFrom, City cityTo, int roadLength, RoadQuality roadQuality, String roadName) {
-		this.cityFrom = cityFrom;
-		this.cityTo = cityTo;
-		this.roadLength = roadLength;
-		this.roadName = roadName;
-
-		setRoadQuality(roadQuality);
-		setEdgeWeight(roadLength, roadQuality);
+	public int getRoadLength() {
+		return roadLength;
 	}
-
-	private void setEdgeWeight(int roadLength, RoadQuality roadQuality) {
-		edgeWeight = new WeightDeterminedByRoadLengthAndQuality(roadLength, roadQuality);
-	}
-
-	// interface methods below
-	public String getEdgeId() { // important as documented in the interface for Edge
-		return cityFrom.getVertexId() + "_" + cityTo.getVertexId();
-	}
-
-	public Vertex getStartVertex() {
-		return cityFrom;
-	}
-
-	public Vertex getEndVertex() {
-		return cityTo;
-	}	
-
-	public Weight getEdgeWeight() {
-		return edgeWeight;
-	}
-	// interface methods above
-
-	@Override
-	public String toString() {
-		return "Road [cityFrom=" + cityFrom + ", cityTo=" + cityTo + ", edgeWeight=" + edgeWeight + ", roadQuality="
-				+ getRoadQuality() + ", roadLength=" + roadLength + ", roadKey=" + roadKey + ", cityFromId=" + cityFromId
-				+ ", cityToId=" + cityToId + "]";
-	}
-
+	
 	public RoadQuality getRoadQuality() {
 		return roadQuality;
-	}
-
-	public void setRoadQuality(RoadQuality roadQuality) {
-		this.roadQuality = roadQuality;
 	}
 
 	public String getRoadName() {
 		return roadName;
 	}
+
 	
+	public void setCityFrom(City cityFrom) {
+		this.cityFrom = cityFrom;
+		this.cityFromId = cityFrom.getCityKey();
+	}
+	public void setCityTo(City cityTo) {
+		this.cityTo = cityTo;
+		this.cityToId = cityTo.getCityKey();		
+	}		
+
+	public City getCityFrom() {
+		return cityFrom;
+	}
+
+	public City getCityTo() {
+		return cityTo;
+	}
+	
+	public int getCityFromId() {
+		return cityFromId;
+	}
+
+	public int getCityToId() {
+		return cityToId;
+	}
+
+	@Override
+	public String toString() {
+		return "Road [roadKey=" + roadKey + ", cityFromId=" + cityFromId + ", cityToId=" + cityToId + ", roadLength="
+				+ roadLength + ", roadQuality=" + roadQuality + ", roadName=" + roadName + ", cityFrom=" + cityFrom
+				+ ", cityTo=" + cityTo + ", edgeWeight=" + edgeWeight + "]";
+	}
+
+	// ------------------------------------------------------------ 
+	//  Below are the methods from the interface com.programmerare.shortestpaths.adapter.Edge
+	public String getEdgeId() { // important as documented in the interface for Edge
+		return getCityFrom().getVertexId() + "_" + getCityTo().getVertexId();
+	}
+
+	public Vertex getStartVertex() {
+		return getCityFrom();
+	}
+
+	public Vertex getEndVertex() {
+		return getCityTo();
+	}	
+
+	public Weight getEdgeWeight() {
+		if(edgeWeight == null) { // lazy loading, using the twop persisted fields
+			edgeWeight = new WeightDeterminedByRoadLengthAndQuality(roadLength, roadQuality);	
+		}
+		return edgeWeight;
+	}	
+	// ------------------------------------------------------------
 }
