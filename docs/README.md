@@ -4,8 +4,7 @@ The purpose of this project is to provide Adapters for Java implementations of G
 
 ### Example of how to use this library:
 
-Consider a graph with four vertices (A,B,C,D) and five edges with weights.<br>(A to B (5) , A to C (6) , B to C (7)  , B to D (8) , C to D (9) ).
-
+Consider a graph with four vertices (A,B,C,D) and five edges with weights.<br>(A to B (5) , A to C (6) , B to C (7)  , B to D (8) , C to D (9) ).<br>![alt text](images/shortest_paths_getting_started_example.gif "Logo Title Text 1")<br>
 There are three possible paths from A to C , with the total weight within parenthesis : 
 * A to B to D (total cost: 13 = 5 + 8)
 * A to C to D (total cost: 15 = 6 + 9)
