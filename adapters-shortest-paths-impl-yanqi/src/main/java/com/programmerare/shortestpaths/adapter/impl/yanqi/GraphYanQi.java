@@ -1,7 +1,6 @@
 package com.programmerare.shortestpaths.adapter.impl.yanqi;
 
 import static com.programmerare.shortestpaths.adapter.impl.PathImpl.createPath;
-import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.Path;
 import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.Weight;
-import com.programmerare.shortestpaths.adapter.impl.EdgeImpl;
 import com.programmerare.shortestpaths.utils.EdgeMapper;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
@@ -65,21 +63,15 @@ public final class GraphYanQi<T extends Edge> implements Graph<T> {
 			for (int i = 1; i < vertexList.size(); i++) {
 				final BaseVertex startVertexForEdge = vertexList.get(i-1);
 				final BaseVertex endVertexForEdge = vertexList.get(i);
-				//startVertexForEdge.getWeight() // weight for a vertex ... unclear how to get the weight for the edge
 				final String startVertexString = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(startVertexForEdge.getId());
 				final String endVertexString = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(endVertexForEdge.getId());
-				final T edge = EdgeImpl.createEdge(
-					createVertex(startVertexString), 
-					createVertex(endVertexString), 
-					createWeight(0) // the weight will be retrieved from the original instance instead below
-				);
+				final T edge = edgeMapper.getOriginalEdgeInstance(startVertexString, endVertexString);
 				edges.add(
 					edge
-				);
+				);				
 			}
 			final Weight totalWeight = createWeight(path.getWeight());
-			final List<T> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(edges);			
-			paths.add(createPath(totalWeight, originalObjectInstancesOfTheEdges));
+			paths.add(createPath(totalWeight, edges));
 			if(maxNumberOfPaths == paths.size()) {
 				break;
 			}

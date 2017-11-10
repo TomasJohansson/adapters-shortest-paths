@@ -1,8 +1,6 @@
 package com.programmerare.shortestpaths.adapter.impl.jgrapht;
 
-import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.adapter.impl.PathImpl.createPath;
-import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 
 import java.util.ArrayList;
@@ -53,18 +51,11 @@ public final class GraphJgrapht<T extends Edge> implements Graph<T> {
 	    	final List<T> edges = new ArrayList<T>();
 	    	final List<WeightedEdge> edgeList = graphPath.getEdgeList();
 	    	for (final WeightedEdge weightedEdge : edgeList) {
-				final T edge = createEdge(
-					createVertex(weightedEdge.getSourceIdAsStringValue()), 
-					createVertex(weightedEdge.getTargetIdAsStringValue()), 
-					createWeight(weightedEdge.getWeightValue())	    				
-				);	    		
-	    		edges.add(
-					edge
-				);
+	    		final T edge = edgeMapper.getOriginalEdgeInstance(weightedEdge.getSourceIdAsStringValue(), weightedEdge.getTargetIdAsStringValue());
+	    		edges.add(edge);
 			}
 	    	final Weight totalWeight = createWeight(graphPath.getWeight());
-			final List<T> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(edges);
-			paths.add(createPath(totalWeight, originalObjectInstancesOfTheEdges));
+			paths.add(createPath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}

@@ -52,4 +52,16 @@ public class EdgeMapperTest {
 		assertSame(originalEdges.get(0), originalObjectInstancesOfTheEdges.get(0));
 		assertSame(originalEdges.get(1), originalObjectInstancesOfTheEdges.get(1)); 		
 	}
+	
+	@Test
+	public void testGetOriginalEdgeInstance() {
+		List<Edge> originalEdges = Arrays.asList(edgeX1, edgeY1);
+		
+		EdgeMapper edgeMapper = EdgeMapper.createEdgeMapper(originalEdges);
+
+		// the same edge instance should be retrieve when we below pass in the string ids for the vertices of the edge 
+		
+		assertSame(edgeX1, edgeMapper.getOriginalEdgeInstance(edgeX1.getStartVertex().getVertexId(), edgeX1.getEndVertex().getVertexId()));
+		assertSame(edgeY1, edgeMapper.getOriginalEdgeInstance(edgeY1.getStartVertex().getVertexId(), edgeY1.getEndVertex().getVertexId()));
+	}
 }

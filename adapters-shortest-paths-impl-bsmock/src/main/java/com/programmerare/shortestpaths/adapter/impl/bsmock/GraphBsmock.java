@@ -53,18 +53,13 @@ public final class GraphBsmock<T extends Edge> implements Graph<T> {
 			final LinkedList<edu.ufl.cise.bsmock.graph.Edge> listOfEdges = path.getEdges();
 			final List<T> edges = new ArrayList<T>();
 			for (edu.ufl.cise.bsmock.graph.Edge edgeAdaptee : listOfEdges) {
-				final T edge = createEdge(
-					createVertex(edgeAdaptee.getFromNode()), 
-					createVertex(edgeAdaptee.getToNode()), 
-					createWeight(edgeAdaptee.getWeight())
-				); 
+				final T edge = edgeMapper.getOriginalEdgeInstance(edgeAdaptee.getFromNode(), edgeAdaptee.getToNode());
 				edges.add(
 					edge
-				);
+				);				
 			}
 			final Weight totalWeight = createWeight(path.getTotalCost());
-			final List<T> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(edges);			
-			paths.add(createPath(totalWeight, originalObjectInstancesOfTheEdges));
+			paths.add(createPath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}

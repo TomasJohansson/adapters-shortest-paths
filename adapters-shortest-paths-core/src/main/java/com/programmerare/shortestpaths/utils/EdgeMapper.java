@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.adapter.impl.EdgeImpl;
 
 /**
  * Edge is an interface which the implementations will not know of.
@@ -43,4 +44,8 @@ public final class EdgeMapper<T extends Edge> {
 		return originalObjectInstancesOfTheEdges;
 	}
 
+	public T getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
+		final String edgeId = EdgeImpl.createEdgeIdValue(startVertexId, endVertexId);
+		return edgeMapWithVertexIdsAsKey.get(edgeId);
+	}
 }

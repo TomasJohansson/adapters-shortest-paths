@@ -57,9 +57,11 @@ public final class EdgeImpl implements Edge {
 	private final static String SEPARATOR_BETWEEN_START_AND_END_VERTEX_ID = "_";
 
 	/**
+	 * It could be nicer to place this method somewhere else but the important thing is 
+	 * to avoid the duplication, i.e. avoid implementing the concatenation in different places. 
 	 * @return a string as documented by {@link Vertex#getVertexId()}
 	 */
-	private String createEdgeIdValue(String startVertexId, String endVertexId) {
+	public static String createEdgeIdValue(String startVertexId, String endVertexId) {
 		return startVertexId + SEPARATOR_BETWEEN_START_AND_END_VERTEX_ID + endVertexId;
 	}
 
