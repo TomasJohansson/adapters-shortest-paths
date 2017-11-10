@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.programmerare</groupId>
+	<artifactId>adapters-shortest-paths-example-project</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+  
+	<repositories>
+		<repository>
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	  
+	<dependencies>
+		<dependency>
+			<groupId>com.github.TomasJohansson</groupId>
+			<artifactId>adapters-shortest-paths</artifactId>
+			<version>5308d2aec13d6147c864703e1e2284a970e8c42e</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+		</dependency>      
+	</dependencies>
+	  
+</project>
