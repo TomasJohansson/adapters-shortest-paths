@@ -2,7 +2,43 @@
 
 The purpose of this project is to provide Adapters for Java implementations of Graph algorithms for routing the shortest path**s**.<br>(the bold '**s**' above is intentional i.e. **not only** the single shortest path but the shortest path**s**)
 
-### Example of how to use this library:
+**Currently there are three implemented Adapters**, i.e. three different implementations can be used.
+Since the Client code is using the same Target interface (see the [Adapter Design Pattern](https://en.wikipedia.org/wiki/Adapter_pattern)) it is possible to **reuse the same test code for the different implementations**.
+Therefore you can assert their results against each other, which could help finding bugs. If one implementation would produce a different result than the others, then it is likely a bug that should be reported and hopefully fixed. However, note that the tested graph need to be constructed in such a way that there must not be more than one path (among the first shortest paths you use test assertions for) with the same total weight. If multiple paths have the same total weight then it is not obvious which should be sorted first, and then it would not be surprising if different implementations produce different results.
+
+When you run such [tests with the same data for different implementations](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/impl/ImplementationComparisonTest.java), then you can also easily **compare the performance for the different implementations**.       
+
+### Some comments about the three libraries currently being used
+
+There are currently Adapter implementations for the following three libraries:
+* <https://github.com/jgrapht/jgrapht>
+* <https://github.com/yan-qi/k-shortest-paths-java-version>
+* <https://github.com/bsmock/k-shortest-paths>
+
+Regarding the versions /"releases" being used:
+
+* Regarding jgrapht, the [version 0.9.2](https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core/0.9.2) is currently used. Later versions require Java 8, and if I change the Adapter project to also require Java 8 then I intend to upgrade to a later version of jgraph.         
+* Regarding the ["yan-ki"](https://github.com/yan-qi/k-shortest-paths-java-version) implementation, there seems to be no official releases. Also, I could not find a way of reusing the library without modification since it seems to [require input from a file](https://github.com/yan-qi/k-shortest-paths-java-version/issues/4) which would mean I could not have used it as intended, e.g. programmatically generating a [big graph for comparison against other implementations](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/impl/ImplementationComparisonTest.java). This is one of the reasons why I instead use a [forked version](https://github.com/TomasJohansson/k-shortest-paths-java-version/commits/programmatic-graph-creation-without-using-inputfile). Another reason for using a fork is the limitation that the input vertices needs to be integer in a sequence, while the other libraries support general strings. I fixed this with a mapper class in [GraphFactoryYanQi](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-yanqi/src/main/java/com/programmerare/shortestpaths/adapter/impl/yanqi/GraphFactoryYanQi.java) and [GraphYanQi](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-yanqi/src/main/java/com/programmerare/shortestpaths/adapter/impl/yanqi/GraphYanQi.java) which maps back and forth from more general input strings.          
+* Regarding the ["bsmock"](https://github.com/bsmock/k-shortest-paths) implementation, it was not even a maven project. Therefore I [forked](https://github.com/TomasJohansson/k-shortest-paths/commits/adding-maven-structure-and-junit-test) it and created a maven project of it.
+
+The two interfaces [GraphFactory](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-core/src/main/java/com/programmerare/shortestpaths/adapter/GraphFactory.java) and [Graph](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-core/src/main/java/com/programmerare/shortestpaths/adapter/Graph.java) are implemented for the above libraries (i.e. the libraries are the "Adaptee" in the Adapter Design Pattern).
+'GraphFactory' defines one method responsible for taking care of the Graph input in a common format as a list of Edges which need to be converted into an internal Graph structure for the implementation.
+'Graph' defines one search method which will find the shortest path**s** between two nodes specified as input parameters.
+
+The returned list of paths aggregate edges, and those edges will be the **same instances** (see the test method [assertEqualsAndTheSameInstance](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/impl/GraphTestBase.java#L60)) as the input edges for the 'GraphFactory'.
+This means that you can use for example your own database entities and send in your "Edge" instances to the 'GraphFactory' and then you will retrieve an instance of 'Graph' which will return a path containing your own entities as edges.
+There is a code example with database entities for City (Vertex) and Road (Edge) which is implemented with SQLite as database and JPA as persistence API with Hibernate as implementation.
+The database code can be used if you choose to do so with a parameter to the main method in [RoadRoutingMain](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-test/src/main/java/com/programmerare/shortestpaths/examples/roadrouting/RoadRoutingMain.java)
+          
+Links to the 'GraphFactory' and 'Graph' classes for the three above libraries :
+
+* [GraphFactoryJgrapht](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-jgrapht/src/main/java/com/programmerare/shortestpaths/adapter/impl/jgrapht/GraphFactoryJgrapht.java) and [GraphJgrapht](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-jgrapht/src/main/java/com/programmerare/shortestpaths/adapter/impl/jgrapht/GraphJgrapht.java)
+* [GraphFactoryYanQi](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-yanqi/src/main/java/com/programmerare/shortestpaths/adapter/impl/yanqi/GraphFactoryYanQi.java) and [GraphYanQi](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-yanqi/src/main/java/com/programmerare/shortestpaths/adapter/impl/yanqi/GraphYanQi.java) 
+* [GraphFactoryBsmock](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-bsmock/src/main/java/com/programmerare/shortestpaths/adapter/impl/bsmock/GraphFactoryBsmock.java) and [GraphBsmock](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-impl-bsmock/src/main/java/com/programmerare/shortestpaths/adapter/impl/bsmock/GraphBsmock.java)
+
+         
+
+### Example of how to use this shortest paths adapter library:
 
 Consider a graph with four vertices (A,B,C,D) and five edges with weights.<br>(A to B (5) , A to C (6) , B to C (7)  , B to D (8) , C to D (9) ).<br>![alt text](images/shortest_paths_getting_started_example.gif "Logo Title Text 1")<br>
 There are three possible paths from A to C , with the total weight within parenthesis : 
