@@ -22,12 +22,21 @@
 			Thanks to the below dependency below, the types within the following "bsmock" package can be used: 
 			edu.ufl.cise.bsmock
 		 -->
-		<dependency>
+
+
+		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
 		    <groupId>com.github.TomasJohansson</groupId>
 		    <artifactId>k-shortest-paths</artifactId>
-		    <version>c8ac52a364da74d3afbefa1b73dfb39a79fb3610</version>
+		    <version>05f6ef172fa25bef9b1da3c7b9525e69439fabd6</version> <!-- 2017-11-12 -->
 		</dependency>
-		
+		<!-- 
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>fork-of-edu.ufl.cise.bsmock.graph</artifactId>
+		</dependency>
+		 -->
+
+
 		<dependency>
 			<groupId>com.programmerare</groupId>
 			<artifactId>adapters-shortest-paths-core</artifactId>
