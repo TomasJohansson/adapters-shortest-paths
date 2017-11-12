@@ -24,12 +24,21 @@
 			Thanks to the below maven dependency, the types within the following "yanqi" package can be used: 
 			edu.asu.emit.algorithm
 		 -->
-		<dependency>
+
+
+		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
 		    <groupId>com.github.TomasJohansson</groupId>
 		    <artifactId>k-shortest-paths-java-version</artifactId>
-		    <version>82fce65b43deb6f43c178a0e6dc2f6546c27bc45</version>
+		    <version>323afae47fb580a50bf18129108385126eda969b</version> <!--  2017-11-12 -->
 		</dependency>
-		
+		<!--
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>fork_of_com.programmerare.edu.asu.emit.algorithm.graph</artifactId>
+		</dependency>
+		 -->
+
+
 		<dependency>
 			<groupId>com.programmerare</groupId>
 			<artifactId>adapters-shortest-paths-core</artifactId>

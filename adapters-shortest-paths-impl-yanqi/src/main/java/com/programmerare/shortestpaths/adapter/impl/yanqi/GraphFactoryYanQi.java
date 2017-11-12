@@ -3,16 +3,13 @@ package com.programmerare.shortestpaths.adapter.impl.yanqi;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.programmerare.edu.asu.emit.algorithm.graph.EdgeYanQi;
+import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
 import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
 import com.programmerare.shortestpaths.utils.EdgeMapper;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
-
-// Note that the below class does not really belong to that package but I modified the code in a fork below:
-// https://github.com/TomasJohansson/k-shortest-paths-java-version/commits/programmatic-graph-creation-without-using-inputfile
-// https://github.com/TomasJohansson/k-shortest-paths-java-version/commit/7130ed623d6e7436cdb8294c0e142a8b4b29a18d
-import edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
 
 /**
  * "Adapter" implementation of the "Target" interface 
@@ -25,15 +22,18 @@ public final class GraphFactoryYanQi<T extends Edge> implements GraphFactory<T> 
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		
-		final List<String> lines = new ArrayList<String>(); 
+		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();
+
 		for (final T edge : edges) {
-			lines.add(createStringLine(idMapper, edge));
+			final int integerIdForStartVertex = idMapper.createOrRetrieveIntegerId(edge.getStartVertex().getVertexId());
+			final int integerIdForEndVertex = idMapper.createOrRetrieveIntegerId(edge.getEndVertex().getVertexId());
+			vertices.add(new EdgeYanQi(integerIdForStartVertex, integerIdForEndVertex, edge.getEdgeWeight().getWeightValue()));
 		}
 		
 		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern
 		final edu.asu.emit.algorithm.graph.Graph graphAdaptee = new GraphPossibleToCreateProgrammatically(
 			idMapper.getNumberOfVertices(),
-			lines
+			vertices
 		);
 		
 		return new GraphYanQi<T>(graphAdaptee, edgeMapper, idMapper);
