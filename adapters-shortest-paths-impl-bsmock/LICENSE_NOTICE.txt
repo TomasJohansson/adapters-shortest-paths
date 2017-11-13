@@ -1,0 +1,6 @@
+This adapter library is intended to be licensed in the same way as the adapted library itself. 
+
+However, it is currently not clear what the license is.
+
+The author has been encouraged to specify a license:
+https://github.com/bsmock/k-shortest-paths/issues/3

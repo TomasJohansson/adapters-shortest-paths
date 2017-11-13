@@ -1,3 +1,12 @@
+# License Notice
+Notice that the "core" library with the API and general code is released with MIT License.
+However, the libraries which are implementing adapters are licensed in the same way as the adapted libraries.
+Currently there are three such adapter libraries, and if you intend to use one or more of them you must check their licenses:
+* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht
+* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock
+* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi
+
+
 ## Adapters for Java implementations of Graph algorithms for routing the shortest paths.
 
 The purpose of this project is to provide Adapters for Java implementations of Graph algorithms for routing the shortest path**s**.<br>(the bold '**s**' above is intentional i.e. **not only** the single shortest path but the shortest path**s**)

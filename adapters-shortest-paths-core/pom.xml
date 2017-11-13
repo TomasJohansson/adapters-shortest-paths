@@ -25,4 +25,16 @@
 	
 	</dependencies>
 	
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>			
+				<includes>
+					<include>License.txt</include>
+					<include>NOTICE.txt</include>
+				</includes>
+			</resource>	
+		</resources>	
+	</build>
+	
 </project>

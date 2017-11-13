@@ -45,5 +45,16 @@
 		</dependency>
 				
 	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>			
+				<includes>
+					<include>LICENSE_NOTICE.txt</include>
+				</includes>
+			</resource>	
+		</resources>	
+	</build>
 	
 </project>

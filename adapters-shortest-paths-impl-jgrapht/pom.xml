@@ -9,6 +9,29 @@
 	<groupId>com.programmerare</groupId>
 	<artifactId>adapters-shortest-paths-impl-jgrapht</artifactId>
 	
+	<name>Implementation of the shortest paths, using the library jgrapht</name>
+	<description>
+		The license for using the imlpementaion with jgrapht 0.9.2 is one of these two:
+		GNU Lesser General Public License Version 2.1, February 1999
+		Eclipse Public License (EPL) 1.0
+		
+		https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core/0.9.2
+	</description>
+	<url>https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht</url>	
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License Version 2.1, February 1999</name>
+			<url>http://jgrapht.sourceforge.net/LGPL.html</url>
+			<distribution>repo</distribution>
+		</license>
+		<license>
+			<name>Eclipse Public License (EPL) 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+		
 	<dependencies>
 	
 		<dependency>
@@ -23,4 +46,17 @@
 		</dependency>
 			  	
 	</dependencies>
+	
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>			
+				<includes>
+					<include>LICENSE_NOTICE.txt</include>
+				</includes>
+			</resource>	
+		</resources>	
+	</build>
+	
 </project>
