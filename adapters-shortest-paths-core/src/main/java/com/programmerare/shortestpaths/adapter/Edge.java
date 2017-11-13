@@ -5,10 +5,6 @@ package com.programmerare.shortestpaths.adapter;
  */
 public interface Edge {
 
-	/**
-	 * @return a concatenation of the the vertex ids separated by underscore, i.e. like this:
-	 * 	startVertex.getVertexId() + "_" + endVertex.getVertexId()
-	 */
 	String getEdgeId();
 	
 	Vertex getStartVertex();

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.impl.EdgeImpl;
 
 /**
@@ -16,7 +17,6 @@ import com.programmerare.shortestpaths.adapter.impl.EdgeImpl;
  * it will be a new instance which may not be desirable if the instances are not 
  * the default implementations provided but this project, but they may be classes with more data methods,
  * and therefore it is desirable to map them back to the original instances, which is the purpose of this class.
- * It works because the interface {@link Edge#getEdgeId()} has specified what should be returned which is used in this class.
  * @author Tomas Johansson
  */
 public final class EdgeMapper<T extends Edge> {
@@ -29,23 +29,35 @@ public final class EdgeMapper<T extends Edge> {
 	
 	private  EdgeMapper(final List<T> edges) {
 		for (T edge : edges) {
-			if(edgeMapWithVertexIdsAsKey.containsKey(edge.getEdgeId())) {
+			final String idForMapping = getIdForMapping(edge);
+			if(edgeMapWithVertexIdsAsKey.containsKey(idForMapping)) {
 				throw new RuntimeException("An edge is a pair of vertices and must only occur once. " + edge);
 			}
-			edgeMapWithVertexIdsAsKey.put(edge.getEdgeId(), edge);
+			edgeMapWithVertexIdsAsKey.put(idForMapping, edge);
 		}
 	}
 
 	public List<T> getOriginalObjectInstancesOfTheEdges(final List<T> edges) {
 		final List<T> originalObjectInstancesOfTheEdges = new ArrayList<T>();
 		for (T edge : edges) {
-			originalObjectInstancesOfTheEdges.add(edgeMapWithVertexIdsAsKey.get(edge.getEdgeId()));
+			originalObjectInstancesOfTheEdges.add(edgeMapWithVertexIdsAsKey.get(getIdForMapping(edge)));
 		}		
 		return originalObjectInstancesOfTheEdges;
 	}
 
 	public T getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
-		final String edgeId = EdgeImpl.createEdgeIdValue(startVertexId, endVertexId);
-		return edgeMapWithVertexIdsAsKey.get(edgeId);
+		return edgeMapWithVertexIdsAsKey.get(getIdForMapping(startVertexId, endVertexId));
 	}
+	
+	private String getIdForMapping(final Edge edge) {
+		return getIdForMapping(edge.getStartVertex(), edge.getEndVertex());
+	}
+	
+	private String getIdForMapping(final Vertex startVertex, final Vertex endVertex) {
+		return getIdForMapping(startVertex.getVertexId(), endVertex.getVertexId());
+	}
+	
+	private String getIdForMapping(final String startVertexId, final String endVertexId) {
+		return EdgeImpl.createEdgeIdValue(startVertexId, endVertexId);
+	}	
 }

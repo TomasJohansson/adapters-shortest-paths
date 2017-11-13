@@ -15,19 +15,35 @@ public final class EdgeImpl implements Edge {
 	private final Weight weight;
 
 	public static <T extends Edge> T createEdge(
+		final String edgeId,
 		final Vertex startVertex, 
 		final Vertex endVertex, 
 		final Weight weight			
 	) {
 		Edge e = new EdgeImpl(
+			edgeId,
 			startVertex, 
 			endVertex, 
 			weight				
 		);
 		return (T)e;
 	}
+	
+	public static <T extends Edge> T createEdge(
+		final Vertex startVertex, 
+		final Vertex endVertex, 
+		final Weight weight			
+	) {
+		return createEdge(
+			createEdgeIdValue(startVertex.getVertexId(), endVertex.getVertexId()),
+			startVertex, 
+			endVertex, 
+			weight					
+		);
+	}
 
 	private EdgeImpl(
+		final String edgeId,
 		final Vertex startVertex, 
 		final Vertex endVertex, 
 		final Weight weight
@@ -35,9 +51,10 @@ public final class EdgeImpl implements Edge {
 		this.startVertex = startVertex;
 		this.endVertex = endVertex;
 		this.weight = weight;
-		this.id = createEdgeIdValue(startVertex.getVertexId(), endVertex.getVertexId());
+		this.id = edgeId;
 		
 	}
+	
 	public Vertex getStartVertex() {
 		return startVertex;
 	}
