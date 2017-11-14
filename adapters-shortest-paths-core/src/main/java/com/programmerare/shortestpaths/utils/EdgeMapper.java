@@ -23,6 +23,11 @@ public final class EdgeMapper<T extends Edge> {
 
 	private final Map<String, T> edgeMapWithVertexIdsAsKey = new HashMap<String, T>();
 	
+	/**
+	 * TODO: let this be a precondition: the edges must already be validated. Use GraphEdgesValidator before createEdgeMapper.  
+	 * @param edges
+	 * @return
+	 */
 	public static <T extends Edge> EdgeMapper<T> createEdgeMapper(final List<T> edges) {
 		return new EdgeMapper(edges);
 	}
@@ -30,6 +35,7 @@ public final class EdgeMapper<T extends Edge> {
 	private  EdgeMapper(final List<T> edges) {
 		for (T edge : edges) {
 			final String idForMapping = getIdForMapping(edge);
+			// TODO: removed the exception throwing when the precondition has been implemented
 			if(edgeMapWithVertexIdsAsKey.containsKey(idForMapping)) {
 				throw new RuntimeException("An edge is a pair of vertices and must only occur once. " + edge);
 			}
