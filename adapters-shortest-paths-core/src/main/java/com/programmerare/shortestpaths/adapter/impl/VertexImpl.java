@@ -62,5 +62,8 @@ public final class VertexImpl implements Vertex {
 		return true;
 	}
 
+	public String renderToString() {
+		return toString();
+	}
 	
 }

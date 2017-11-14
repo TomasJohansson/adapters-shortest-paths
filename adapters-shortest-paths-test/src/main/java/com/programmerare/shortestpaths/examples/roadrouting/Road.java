@@ -130,4 +130,11 @@ public class Road implements Edge {
 		return edgeWeight;
 	}	
 	// ------------------------------------------------------------
+	
+	public String renderToString() {
+		return toString();
+	}
+	
+	
+	
 }

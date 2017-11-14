@@ -131,5 +131,7 @@ public final class EdgeImpl implements Edge {
 		return true;
 	}
 
-	
+	public String renderToString() {
+		return toString();
+	}	
 }

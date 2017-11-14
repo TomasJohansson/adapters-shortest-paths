@@ -45,4 +45,8 @@ public class City implements Vertex {
 		return Integer.toString(cityKey);
 	}
 	// ------------------------------------------------------------
+
+	public String renderToString() {
+		return toString();
+	}
 } 

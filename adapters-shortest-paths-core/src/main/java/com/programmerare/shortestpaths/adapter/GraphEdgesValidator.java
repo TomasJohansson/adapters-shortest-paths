@@ -27,18 +27,10 @@ public final class GraphEdgesValidator<T extends Edge> {
 	}
 
 	void validateNonNullObjects(final T edge) {
-		validateNonNullObject(edge.getStartVertex());		
-		validateNonNullObject(edge.getEndVertex());
-		validateNonNullObject(edge.getEdgeWeight());
-	}
-
-	/**
-	 * @param shouldNotBeNull should be either an instance of Vertex or a Weight, aggregated within an Edge instance 
-	 */
-	void validateNonNullObject(final Object shouldNotBeNull) {
-		if(shouldNotBeNull == null) {
-//			TODO throw new .getClass()..
-		}
+		throwExceptionIfConditionTrue(edge == null, "edge == null", edge);
+		throwExceptionIfConditionTrue(edge.getStartVertex() == null, "start vertex is null for edge", edge);
+		throwExceptionIfConditionTrue(edge.getEndVertex() == null, "end vertex is null for edge", edge);
+		throwExceptionIfConditionTrue(edge.getEdgeWeight() == null, "weight is null for edge", edge);
 	}
 
 	/**
@@ -46,21 +38,24 @@ public final class GraphEdgesValidator<T extends Edge> {
 	 * @param edge
 	 */
 	void validateNonBlankIds(final T edge) {
-		validateNonBlankId(edge.getEdgeId());
-		validateNonBlankId(edge.getStartVertex().getVertexId());
-		validateNonBlankId(edge.getEndVertex().getVertexId());
+		validateNonBlankId(edge.getEdgeId(), edge);
+		validateNonBlankId(edge.getStartVertex().getVertexId(), edge.getStartVertex());
+		validateNonBlankId(edge.getEndVertex().getVertexId(), edge.getEndVertex());
+	}
+	
+	private void throwExceptionIfConditionTrue(boolean conditionFoExceptionToBeThrown, String exceptionMessagePrefix, StringRenderable edgeOrVertexOrWeight) {
+		if(conditionFoExceptionToBeThrown) {
+			final String exceptionMessageSuffix = edgeOrVertexOrWeight == null ? "null" : edgeOrVertexOrWeight.renderToString();
+			throw new GraphEdgesValidationException(exceptionMessagePrefix + " " + exceptionMessageSuffix);
+		}
 	}
 
-	void validateNonBlankId(final String id) {
-		if(id == null || id.trim().equals("")) {
-//			TODO throw new .getClass()..
-		}		
+	private void validateNonBlankId(final String id, final StringRenderable edgeOrVertex) {
+		throwExceptionIfConditionTrue(id == null || id.trim().equals(""), "id value must not be empty", edgeOrVertex);
 	}
 	
 	void validateUniqueEdgeId(final T edge, final Map<String, Boolean> mapForValidatingUniqueEdgeId) {
-		if(mapForValidatingUniqueEdgeId.containsKey(edge.getEdgeId())) {
-			// TODO throw ...
-		}
+		throwExceptionIfConditionTrue(mapForValidatingUniqueEdgeId.containsKey(edge.getEdgeId()), "edge id must be unique wich it was not", edge);
 		mapForValidatingUniqueEdgeId.put(edge.getEdgeId(), true);
 	}
 
@@ -72,9 +67,7 @@ public final class GraphEdgesValidator<T extends Edge> {
 	 */
 	void validateUniqueVerticesIds(final T edge, final Map<String, Boolean> mapForValidatingUniqueVerticesIds) {
 		final String concatenationOdVerticesIds = edge.getStartVertex().getVertexId() + "_" + edge.getEndVertex().getVertexId();
-		if(mapForValidatingUniqueVerticesIds.containsKey(concatenationOdVerticesIds)) {
-			// TODO throw ...
-		}
+		throwExceptionIfConditionTrue(mapForValidatingUniqueVerticesIds.containsKey(concatenationOdVerticesIds), "edge id must be unique wich it was not " + concatenationOdVerticesIds, edge);
 		mapForValidatingUniqueVerticesIds.put(concatenationOdVerticesIds, true);		
 	}	
 }

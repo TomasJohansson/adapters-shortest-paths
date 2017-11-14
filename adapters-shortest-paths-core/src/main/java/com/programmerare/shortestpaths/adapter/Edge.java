@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.adapter;
 /**
  * @author Tomas Johansson
  */
-public interface Edge {
+public interface Edge extends StringRenderable {
 
 	String getEdgeId();
 	

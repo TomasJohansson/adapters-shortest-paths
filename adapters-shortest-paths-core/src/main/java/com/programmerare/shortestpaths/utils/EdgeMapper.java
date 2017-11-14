@@ -22,10 +22,15 @@ import com.programmerare.shortestpaths.adapter.impl.EdgeImpl;
 public final class EdgeMapper<T extends Edge> {
 
 	private final Map<String, T> edgeMapWithVertexIdsAsKey = new HashMap<String, T>();
+
+	
+	// TODO: Make the method below package level protected and put the class in the same package 
+	// as the only one which should need to use it, to reduce the potential with misusing it 
+	// without respecting the precondition 
 	
 	/**
-	 * TODO: let this be a precondition: the edges must already be validated. Use GraphEdgesValidator before createEdgeMapper.  
-	 * @param edges
+	 * Precondition: the edges must already be validated. Use GraphEdgesValidator before createEdgeMapper.  
+	 * @param edges a list of edges to be used for constructing a graph. Note that they are assumed to be validated as a precondition.
 	 * @return
 	 */
 	public static <T extends Edge> EdgeMapper<T> createEdgeMapper(final List<T> edges) {
@@ -35,10 +40,6 @@ public final class EdgeMapper<T extends Edge> {
 	private  EdgeMapper(final List<T> edges) {
 		for (T edge : edges) {
 			final String idForMapping = getIdForMapping(edge);
-			// TODO: removed the exception throwing when the precondition has been implemented
-			if(edgeMapWithVertexIdsAsKey.containsKey(idForMapping)) {
-				throw new RuntimeException("An edge is a pair of vertices and must only occur once. " + edge);
-			}
 			edgeMapWithVertexIdsAsKey.put(idForMapping, edge);
 		}
 	}

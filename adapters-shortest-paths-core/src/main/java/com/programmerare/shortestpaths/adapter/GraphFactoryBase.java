@@ -15,9 +15,15 @@ public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T
 	// TODO: implement a way to avoid the validation e.g. an overloaded method.
 	// Reason: If multiple instances will be used, it is unnecessary to do the validation multiple times.
 	// However, it is convenient if the default is to do validation internally without having to specify it.
-	public final Graph<T> createGraph(List<T> edges) {
-		//graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);
+	public final Graph<T> createGraph(final List<T> edges) {
+		
+		graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);
+		// Prevondition to method below is that validation (as above) is performed i.e. 
+		// the method below will NOT try to validate,
+		// and in fact it should be moved into the same package and removd the "public" 
+		// from the method to avoid misuse regardign the precondition
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
+		
 		return createGraphHook(edges, edgeMapper);	
 	}
 

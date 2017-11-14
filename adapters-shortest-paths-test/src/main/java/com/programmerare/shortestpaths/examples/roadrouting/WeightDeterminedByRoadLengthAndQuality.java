@@ -18,4 +18,14 @@ public final class WeightDeterminedByRoadLengthAndQuality implements Weight {
 		return weightValue;
 	}
 
+	public String renderToString() {
+		return toString();
+	}
+
+	@Override
+	public String toString() {
+		return "WeightDeterminedByRoadLengthAndQuality [weightValue=" + weightValue + "]";
+	}
+
+	
 }

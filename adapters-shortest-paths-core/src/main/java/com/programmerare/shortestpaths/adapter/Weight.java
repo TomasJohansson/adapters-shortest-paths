@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.adapter;
 /**
  * @author Tomas Johansson
  */
-public interface Weight {
+public interface Weight extends StringRenderable {
 	
 	double getWeightValue();
 	

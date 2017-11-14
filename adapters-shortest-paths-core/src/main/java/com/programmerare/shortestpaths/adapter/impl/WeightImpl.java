@@ -54,5 +54,9 @@ public final class WeightImpl implements Weight {
 		return true;
 	}
 
-	public final static double SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS = 0.0000000001;	
+	public final static double SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS = 0.0000000001;
+	
+	public String renderToString() {
+		return toString();
+	}	
 }

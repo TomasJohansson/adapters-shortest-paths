@@ -1,9 +1,12 @@
 package com.programmerare.shortestpaths.adapter;
 
 /**
- * TODO: throw this exception from within GraphEdgesValidator   
+ * @see GraphEdgesValidator
+ *    
  * @author Tomas Johansson
- */
+*/
 public class GraphEdgesValidationException extends RuntimeException {
-
+	public GraphEdgesValidationException(String message) {
+		super(message);
+	}
 }
