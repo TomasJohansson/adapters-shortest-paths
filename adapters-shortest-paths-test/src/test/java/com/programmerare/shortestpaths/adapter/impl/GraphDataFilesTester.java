@@ -46,6 +46,9 @@ public class GraphDataFilesTester {
 		// TODO: improve the usage of files with test data.
 		// currently only the edges are specified in the test file 
 		// while the tests from A to B is hardcoded as above
+		
+		// TODO: use xml reader instead to use an xml file instead 
+		
 		testPathResultsForImplementationsAgainstEachOther(filePath, startVertexId, endVertexId, maxNumberOfPathsToTryToFind);
 	}
 	
