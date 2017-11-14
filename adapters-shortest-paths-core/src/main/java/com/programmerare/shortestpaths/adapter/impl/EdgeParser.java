@@ -4,9 +4,13 @@ import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.Weight;
+import com.programmerare.shortestpaths.utils.StringUtility;
 
 /**
  * See javadoc comments at the two essential methods in this class, i.e. the methods which convert between String and Edge.
@@ -129,5 +133,25 @@ public final class EdgeParser {
 		array[orderForEndVertex-1] = edge.getEndVertex().getVertexId();
 		array[orderForWeight-1] = Double.toString(edge.getEdgeWeight().getWeightValue());
 		return array[0] + separatorBetweenEdgesAndWeightWhenCreating + array[1] + separatorBetweenEdgesAndWeightWhenCreating + array[2];
+	}
+
+	/**
+	 * 
+	 * @param multiLinedString a string including linebreaks where each line defines an edge with vertices and weight. 
+	 * A string like this is intended to be surrounded by  xml tags in xml files but the content will then use this method.
+	    A B 5
+	    A C 6
+	    B C 7
+	    B D 8
+	    C D 9    
+	 * @return
+	 */
+	public List<Edge> fromMultiLinedStringToListOfEdges(final String multiLinedString) {
+		final List<Edge> edges = new ArrayList<Edge>();
+		final List<String> edgesAsStrings = StringUtility.getMultilineStringAsListOfStringsIgnoringThoseWithWhiteSpaceOnly(multiLinedString);
+		for (String string : edgesAsStrings) {
+			edges.add(fromStringToEdge(string));
+		}
+		return edges;
 	}
 }
