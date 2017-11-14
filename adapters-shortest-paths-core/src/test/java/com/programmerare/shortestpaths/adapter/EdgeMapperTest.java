@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.utils;
+package com.programmerare.shortestpaths.adapter;
 
 import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.adapter.EdgeMapper;
 
 /**
  * @author Tomas Johansson

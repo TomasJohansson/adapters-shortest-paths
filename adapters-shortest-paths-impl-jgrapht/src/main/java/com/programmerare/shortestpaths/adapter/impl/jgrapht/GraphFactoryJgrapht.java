@@ -7,11 +7,11 @@ import java.util.List;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.adapter.EdgeMapper;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
 import com.programmerare.shortestpaths.adapter.GraphFactoryBase;
 import com.programmerare.shortestpaths.adapter.Vertex;
-import com.programmerare.shortestpaths.utils.EdgeMapper;
 
 /**
  * "Adapter" implementation of the "Target" interface 

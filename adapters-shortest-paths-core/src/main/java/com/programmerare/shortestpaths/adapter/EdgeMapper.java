@@ -1,12 +1,10 @@
-package com.programmerare.shortestpaths.utils;
+package com.programmerare.shortestpaths.adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.impl.EdgeImpl;
 
 /**
@@ -24,16 +22,13 @@ public final class EdgeMapper<T extends Edge> {
 	private final Map<String, T> edgeMapWithVertexIdsAsKey = new HashMap<String, T>();
 
 	
-	// TODO: Make the method below package level protected and put the class in the same package 
-	// as the only one which should need to use it, to reduce the potential with misusing it 
-	// without respecting the precondition 
-	
 	/**
-	 * Precondition: the edges must already be validated. Use GraphEdgesValidator before createEdgeMapper.  
+	 * Precondition: the edges must already be validated. Use GraphEdgesValidator before createEdgeMapper.
+	 * It has package level access to reduce the risk of misusing it with precondition violation.   
 	 * @param edges a list of edges to be used for constructing a graph. Note that they are assumed to be validated as a precondition.
 	 * @return
 	 */
-	public static <T extends Edge> EdgeMapper<T> createEdgeMapper(final List<T> edges) {
+	static <T extends Edge> EdgeMapper<T> createEdgeMapper(final List<T> edges) {
 		return new EdgeMapper(edges);
 	}
 	

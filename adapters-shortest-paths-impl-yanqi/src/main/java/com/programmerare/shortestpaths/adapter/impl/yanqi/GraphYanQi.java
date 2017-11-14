@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.adapter.EdgeMapper;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.Path;
 import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.Weight;
-import com.programmerare.shortestpaths.utils.EdgeMapper;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
 import edu.asu.emit.algorithm.graph.abstraction.BaseVertex;

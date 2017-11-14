@@ -2,14 +2,12 @@ package com.programmerare.shortestpaths.adapter;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.utils.EdgeMapper;
-
 public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T> {
 	
-	private final GraphEdgesValidator graphEdgesValidator;
+	private final GraphEdgesValidator<T> graphEdgesValidator;
 	
 	protected GraphFactoryBase() {
-		graphEdgesValidator = new GraphEdgesValidator();
+		graphEdgesValidator = new GraphEdgesValidator<T>();
 	}
 	
 	// TODO: implement a way to avoid the validation e.g. an overloaded method.
@@ -20,8 +18,6 @@ public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T
 		graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);
 		// Prevondition to method below is that validation (as above) is performed i.e. 
 		// the method below will NOT try to validate,
-		// and in fact it should be moved into the same package and removd the "public" 
-		// from the method to avoid misuse regardign the precondition
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 		
 		return createGraphHook(edges, edgeMapper);	

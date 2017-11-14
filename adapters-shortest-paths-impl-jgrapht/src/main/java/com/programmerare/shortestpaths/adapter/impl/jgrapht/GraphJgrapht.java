@@ -12,11 +12,11 @@ import org.jgrapht.alg.KShortestPaths;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.adapter.EdgeMapper;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.Path;
 import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.Weight;
-import com.programmerare.shortestpaths.utils.EdgeMapper;
 
 /**
  * @author Tomas Johansson
