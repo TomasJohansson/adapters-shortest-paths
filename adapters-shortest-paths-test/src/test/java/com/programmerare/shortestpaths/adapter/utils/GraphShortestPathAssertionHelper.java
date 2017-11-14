@@ -42,8 +42,6 @@ public class GraphShortestPathAssertionHelper {
 			final List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			output("seconds : " + tm.getSeconds() + " for implementation " + graph.getClass().getName());
 			
-			assertEquals(numberOfPathsToFind, shortestPaths.size());
-
 			for (Path<Edge> path : shortestPaths) {
 				// output("shortest path weight " + path.getTotalWeightForPath().getWeightValue());
 			}
