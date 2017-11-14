@@ -9,14 +9,18 @@ import com.google.common.io.Resources;
 
 public class FileReader {
 
+	public final static Charset CHARSET_UTF_8;
+	static {
+		CHARSET_UTF_8 = Charset.forName("UTF-8");
+	}
+	
 	/**
 	 * Reads line from a file which is assumed to use charset UTF-8
 	 * @param filePath e.g. ""test_graphs/tiny_graph_01.txt"
 	 * @return
 	 */
 	public List<String> readLines(final String filePath)  {
-		final Charset charsetForInputFile = Charset.forName("UTF-8");
-		return readLines(filePath, charsetForInputFile);
+		return readLines(filePath, CHARSET_UTF_8);
 	}
 	
 	public List<String> readLines(final String filePath, Charset charsetForInputFile)  {
