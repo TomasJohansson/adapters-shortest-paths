@@ -79,17 +79,24 @@ public class ImplementationComparisonTest {
 		final int numberOfVertices, 
 		final int numberOfPathsToFind
 	) throws IOException {
-		
 		final List<Edge> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
-		
 		final Vertex startVertex = edgesForBigGraph.get(0).getStartVertex();
 		final Vertex endVertex = edgesForBigGraph.get(edgesForBigGraph.size()-1).getEndVertex();
-		
+		final List<GraphFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
+		testResultsWithImplementationsAgainstEachOther(edgesForBigGraph, startVertex, endVertex, numberOfPathsToFind, graphFactories);
+	}
+	
+	// TODO: make this method reusable from other test classes
+	private void testResultsWithImplementationsAgainstEachOther(
+		final List<Edge> edgesForBigGraph, 
+		final Vertex startVertex,
+		final Vertex endVertex, 
+		final int numberOfPathsToFind, 
+		final List<GraphFactory<Edge>> graphFactories
+	) {
 		output("Number of edges in the graph to be tested : " + edgesForBigGraph.size());
 
 		final Map<String, List<Path<Edge>>> shortestPathsPerImplementation = new HashMap<String, List<Path<Edge>>>();
-		
-		final List<GraphFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
 		
 		for (int i = 0; i < graphFactories.size(); i++) {
 			final GraphFactory<Edge> graphFactory = graphFactories.get(i);
@@ -131,7 +138,7 @@ public class ImplementationComparisonTest {
 			}
 		}
 	}
-	
+
 	private List<Edge> createEdgesForBigGraph(final int numberOfVertices) {
 		final List<Vertex> vertices = createVertices(numberOfVertices);
 		assertEquals(numberOfVertices, vertices.size());
