@@ -116,9 +116,11 @@ public class EdgeTest {
 
 	private void verifyExpectedResults(List<Edge> edges) {
 		final ExpectedPath[] expectedPaths = getExpectedPaths();
-		verifyExpectedPaths(a, d, edges, new GraphFactoryYanQi<Edge>(), expectedPaths);
-		verifyExpectedPaths(a, d, edges, new GraphFactoryBsmock<Edge>(), expectedPaths);
-		verifyExpectedPaths(a, d, edges, new GraphFactoryJgrapht<Edge>(), expectedPaths);
+
+		final List<GraphFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
+		for (GraphFactory<Edge> graphFactory : graphFactories) {
+			verifyExpectedPaths(a, d, edges, graphFactory, expectedPaths);	
+		}
 	}
 	
 	private ExpectedPath[] getExpectedPaths() {

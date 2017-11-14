@@ -59,19 +59,6 @@ public class ImplementationComparisonTest {
 		// seconds : 50 for implementation com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphJgrapht		
 	}
 
-	/**
-	 * @return a list of implementations that should be used for searching the best paths,
-	 * and the implementation results will be verified with each other and the test will cause a failure 
-	 * if there is any mismatch found in the results.
-	 */
-	private List<GraphFactory<Edge>> createGraphFactories() {
-		final List<GraphFactory<Edge>> list = new ArrayList<GraphFactory<Edge>>();
-		list.add(new GraphFactoryYanQi<Edge>());
-		list.add(new GraphFactoryBsmock<Edge>());
-		list.add(new GraphFactoryJgrapht<Edge>());
-		return list;
-	}
-	
 	private void output(Object o) {
 		if(isExecutingThroughTheMainMethod) {
 			System.out.println(o);
@@ -102,7 +89,7 @@ public class ImplementationComparisonTest {
 
 		final Map<String, List<Path<Edge>>> shortestPathsPerImplementation = new HashMap<String, List<Path<Edge>>>();
 		
-		final List<GraphFactory<Edge>> graphFactories = createGraphFactories();
+		final List<GraphFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
 		
 		for (int i = 0; i < graphFactories.size(); i++) {
 			final GraphFactory<Edge> graphFactory = graphFactories.get(i);
