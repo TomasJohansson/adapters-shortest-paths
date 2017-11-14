@@ -20,9 +20,7 @@ import com.programmerare.shortestpaths.utils.EdgeMapper;
  */
 public class GraphFactoryJgrapht<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
 
-	public Graph<T> createGraph(List<T> edges) {
-		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
-		
+	protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 		final SimpleDirectedWeightedGraph<String, WeightedEdge>  graphAdaptee = 
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);

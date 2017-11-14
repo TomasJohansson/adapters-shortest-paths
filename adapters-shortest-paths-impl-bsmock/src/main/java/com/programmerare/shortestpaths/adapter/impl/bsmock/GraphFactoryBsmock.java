@@ -15,8 +15,7 @@ import com.programmerare.shortestpaths.utils.EdgeMapper;
  */
 public final class GraphFactoryBsmock<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
 
-	public Graph<T> createGraph(List<T> edges) {
-		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
+	protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 
 		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();

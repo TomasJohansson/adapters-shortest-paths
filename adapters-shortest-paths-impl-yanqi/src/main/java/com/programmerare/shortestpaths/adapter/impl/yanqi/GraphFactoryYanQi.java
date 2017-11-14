@@ -19,8 +19,7 @@ import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralString
  */
 public final class GraphFactoryYanQi<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
 
-	public Graph<T> createGraph(final List<T> edges) {
-		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
+	protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();

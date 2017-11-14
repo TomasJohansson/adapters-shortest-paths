@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.examples.roadrouting;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.programmerare.shortestpaths.adapter.Graph;
@@ -28,15 +28,17 @@ public class RoadRoutingMain {
 		final City startCity = cityRoadService.getStartCity();
 		final City endCity = cityRoadService.getEndCity();
 
+		final List<GraphFactory<Road>> graphFactories = new ArrayList<GraphFactory<Road>>();
+		graphFactories.add(new GraphFactoryYanQi<Road>());
+		graphFactories.add(new GraphFactoryBsmock<Road>());
+		graphFactories.add(new GraphFactoryJgrapht<Road>());
+		
 		performRoadRoutingForTheImplementations(
 			roads, 
 			startCity, 
 			endCity, 
-			Arrays.asList(
-				new GraphFactoryYanQi<Road>(), 
-				new GraphFactoryBsmock<Road>(),
-				new GraphFactoryJgrapht<Road>())
-			);
+			graphFactories
+		);
 	}
 	
 	private static void performRoadRoutingForTheImplementations(
