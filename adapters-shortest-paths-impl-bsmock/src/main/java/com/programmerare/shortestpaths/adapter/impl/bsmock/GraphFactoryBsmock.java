@@ -5,6 +5,7 @@ import java.util.List;
 import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
+import com.programmerare.shortestpaths.adapter.GraphFactoryBase;
 import com.programmerare.shortestpaths.utils.EdgeMapper;
 
 /**
@@ -12,7 +13,7 @@ import com.programmerare.shortestpaths.utils.EdgeMapper;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphFactoryBsmock<T extends Edge> implements GraphFactory<T> {
+public final class GraphFactoryBsmock<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
 
 	public Graph<T> createGraph(List<T> edges) {
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);

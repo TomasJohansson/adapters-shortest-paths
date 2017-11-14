@@ -9,6 +9,7 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
+import com.programmerare.shortestpaths.adapter.GraphFactoryBase;
 import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.utils.EdgeMapper;
 
@@ -17,7 +18,7 @@ import com.programmerare.shortestpaths.utils.EdgeMapper;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public class GraphFactoryJgrapht<T extends Edge> implements GraphFactory<T> {
+public class GraphFactoryJgrapht<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
 
 	public Graph<T> createGraph(List<T> edges) {
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);

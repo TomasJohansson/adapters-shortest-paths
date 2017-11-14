@@ -8,6 +8,7 @@ import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgr
 import com.programmerare.shortestpaths.adapter.Edge;
 import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
+import com.programmerare.shortestpaths.adapter.GraphFactoryBase;
 import com.programmerare.shortestpaths.utils.EdgeMapper;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
@@ -16,7 +17,7 @@ import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralString
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphFactoryYanQi<T extends Edge> implements GraphFactory<T> {
+public final class GraphFactoryYanQi<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
 
 	public Graph<T> createGraph(final List<T> edges) {
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
