@@ -10,6 +10,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.w3c.dom.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -67,14 +68,17 @@ public final class XmlFileReader {
 	 * @return the text content of the subnode if such subnode exists, otherwise null is returned 
 	 */
 	public String getTextContentNodeOfFirstSubNode(final Node nodeParent, final String nameOfSubnode) {
-		// currently the method is using xpath for the implementation which is overkill so this is a potential refactoring
 		// Example: nodeParent is "input" below and nameOfSubnode is  startVertex. Then "A" should be returned 
 //	    <input> 
 //	    <startVertex>A</startVertex>
-		final NodeList nodeList = getNodeListMatchingXPathExpression(nodeParent, nameOfSubnode);
-		if(nodeList.getLength() > 0) {
-			Node subNode = nodeList.item(0);
-			return subNode.getTextContent();
+		final NodeList childNodes = nodeParent.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			final Node childNode = childNodes.item(i);
+			if(childNode.getNodeType() == Node.ELEMENT_NODE) {
+				if(nameOfSubnode.equals(childNode.getNodeName())) {
+					return childNode.getTextContent();
+				}
+			}
 		}
 		return null;
 	}
