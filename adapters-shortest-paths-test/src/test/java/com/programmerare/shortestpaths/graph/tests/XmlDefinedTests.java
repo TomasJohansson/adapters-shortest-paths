@@ -30,7 +30,7 @@ import com.programmerare.shortestpaths.utils.XmlFileReader;
  * 
  * @author Tomas Johansson
  */
-public class GraphDataFilesTester {
+public class XmlDefinedTests {
 	
 	private XmlFileReader xmlFileReader;
 	private FileReaderForGraphEdges fileReaderForGraphTestData;

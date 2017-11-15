@@ -32,12 +32,12 @@ import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHel
  * 
  * @author Tomas Johansson
  */
-public class ImplementationComparisonTest {
+public class BigGraphTest {
 
 	private boolean isExecutingThroughTheMainMethod = false;
 	
 	public static void main(String[] args) throws IOException {
-		ImplementationComparisonTest implementationComparisonTest = new ImplementationComparisonTest();
+		BigGraphTest implementationComparisonTest = new BigGraphTest();
 		implementationComparisonTest.isExecutingThroughTheMainMethod = true;
 
 		final int numberOfVertices = 500;

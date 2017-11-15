@@ -1,5 +1,5 @@
 /**
- * TODO: Better structure/names (packages/classes) for the tests. 
+ * Classes in this package should contain tests which are run with all adapter implementations.
  */
 /**
  * @author Tomas Johansson

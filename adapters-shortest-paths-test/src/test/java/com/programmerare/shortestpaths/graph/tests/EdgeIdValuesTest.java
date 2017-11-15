@@ -47,7 +47,7 @@ import com.programmerare.shortestpaths.graph.utils.GraphFactories;
  * 
  * @author Tomas Johansson
  */
-public class EdgeTest {
+public class EdgeIdValuesTest {
 
 	// Name of the vertices
 	private final static String A = "A";

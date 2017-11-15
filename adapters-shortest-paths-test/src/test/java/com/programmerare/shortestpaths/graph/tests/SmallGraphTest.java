@@ -31,7 +31,7 @@ import com.programmerare.shortestpaths.core.api.Path;
  *
  * @author Tomas Johansson
  */
-public class GraphTest {
+public class SmallGraphTest {
 
 	@Test
 	public void testFindShortestPaths_Bsmock() {
