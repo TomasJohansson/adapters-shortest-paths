@@ -62,6 +62,9 @@ public class ExampleMain {
 		displayShortestPathBetweenEdges(a, d, edges, new GraphFactoryBsmock<Edge>());
 	}
 
+	// ---------------------------------------------------------------------------------------
+	// TODO: these methods below have been copied to "/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/utils/GraphShortestPathAssertionHelper.java"
+	// and should be refactored into a reusable utiltity method (probably in core project)	
 	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, GraphFactory<Edge> graphFactory) {
 		System.out.println("Implementation " + graphFactory.getClass().getName());
 		Graph<Edge> graph = graphFactory.createGraph(edgesInput);

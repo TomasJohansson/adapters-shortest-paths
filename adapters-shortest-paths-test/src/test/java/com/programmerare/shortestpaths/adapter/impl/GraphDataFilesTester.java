@@ -22,7 +22,8 @@ import com.programmerare.shortestpaths.adapter.utils.GraphShortestPathAssertionH
 import com.programmerare.shortestpaths.adapter.utils.XmlFileReader;
 
 /**
- * The class provides tests for graphs specified with strings in files with test data.  
+ * The class can run test cases with both input data and expected output data defined in xml files.
+ * See an example in the xml file ".../src/test/resources/test_graphs/small_graph_1.xml"   
  * 
  * @author Tomas Johansson
  */
@@ -47,8 +48,21 @@ public class GraphDataFilesTester {
 
 	@Test
 	public void test_graph_datafile__small_graph_1_xml() throws IOException {
-		final String pathToResourceFile = "test_graphs/small_graph_1.xml";
-		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceFile);
+		runTestCaseDefinedInXmlFile("small_graph_1.xml");
+	}
+
+	@Test
+	public void test_graph_datafile__small_graph_2_xml() throws IOException {
+		runTestCaseDefinedInXmlFile("small_graph_2.xml");
+	}
+	
+	private void runTestCaseDefinedInXmlFile(final String nameOfXmlFileWithoutDirectoryPath) throws IOException {
+		runTestCaseDefinedInXmlFileWithPathIncludingDirectory("test_graphs/" + nameOfXmlFileWithoutDirectoryPath);
+	}
+	
+	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(final String pathToResourceXmlFile) throws IOException {
+		
+		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceXmlFile);
 		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/graphDefinition");
 		assertNotNull(nodeList);
 		assertEquals(1, nodeList.getLength()); // should only be one graph definition per file
@@ -81,13 +95,14 @@ public class GraphDataFilesTester {
 			final int maxNumberOfPaths = Integer.parseInt(maxNumberOfPathsAsString);
 			System.out.println("maxNumberOfPaths " + maxNumberOfPaths);
 			graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(
-					edgesForGraph, 
-					createVertex(startVertexId), 
-					createVertex(endVertexId), 
-					maxNumberOfPaths, 
-					graphFactories,
-					expectedListOfPaths
-				);
+				edgesForGraph, 
+				createVertex(startVertexId), 
+				createVertex(endVertexId), 
+				maxNumberOfPaths, 
+				graphFactories,
+				expectedListOfPaths, // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
+				false // true // true when we want "debug output"
+			);
 		}
 	}
 	
@@ -148,4 +163,5 @@ public class GraphDataFilesTester {
 			graphFactories
 		);
 	}
+	
 }
