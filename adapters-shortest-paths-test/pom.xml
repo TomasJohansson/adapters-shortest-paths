@@ -9,10 +9,6 @@
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths-test</artifactId>
-
-	<properties>
-		<outputDirectoryForGeneratedJpaMetamodel>${project.basedir}/src/java-generated</outputDirectoryForGeneratedJpaMetamodel>
-	</properties>
 	  
 	<dependencies>
 
@@ -56,60 +52,7 @@
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.xerial</groupId>
-			<artifactId>sqlite-jdbc</artifactId>
-		</dependency>
 
-		<dependency>
-			<groupId>com.github.gwenn</groupId>
-			<artifactId>sqlite-dialect</artifactId>
-		</dependency>
-			
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-		</dependency>
-				
 </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-			    <groupId>org.bsc.maven</groupId>
-			    <artifactId>maven-processor-plugin</artifactId>
-				<version>3.3.2</version>
-				<executions>
-					<execution>
-						<id>process</id>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<processors>
-								<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-							</processors>
-							<outputDirectory>${outputDirectoryForGeneratedJpaMetamodel}</outputDirectory>
-							<overwrite>true</overwrite>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.hibernate</groupId>
-						<artifactId>hibernate-jpamodelgen</artifactId>
-						<version>5.2.12.Final</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-
-		</plugins>
-	</build>
 </project>

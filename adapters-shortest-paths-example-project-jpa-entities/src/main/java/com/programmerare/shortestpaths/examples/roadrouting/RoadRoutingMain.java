@@ -30,7 +30,7 @@ public class RoadRoutingMain {
 
 		final List<GraphFactory<Road>> graphFactories = new ArrayList<GraphFactory<Road>>();
 		graphFactories.add(new GraphFactoryYanQi<Road>());
-		graphFactories.add(new GraphFactoryBsmock<Road>());
+		graphFactories.add(new GraphFactoryBsmock<Road>()); 
 		graphFactories.add(new GraphFactoryJgrapht<Road>());
 		
 		performRoadRoutingForTheImplementations(
