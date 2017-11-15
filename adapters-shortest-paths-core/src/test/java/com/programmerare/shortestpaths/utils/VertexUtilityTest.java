@@ -1,8 +1,8 @@
 package com.programmerare.shortestpaths.utils;
 
-import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
-import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -14,8 +14,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.Vertex;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Vertex;
 
 /**
  * @author Tomas Johansson

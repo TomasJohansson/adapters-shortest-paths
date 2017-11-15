@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.adapter.utils;
 
-import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.Edge;
+import com.programmerare.shortestpaths.core.api.Edge;
 
 /**
  * @author Tomas Johansson

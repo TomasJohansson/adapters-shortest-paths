@@ -1,8 +1,8 @@
 package com.programmerare.shortestpaths.adapter.impl;
 
-import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
-import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -12,10 +12,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
-import com.programmerare.shortestpaths.adapter.Vertex;
 import com.programmerare.shortestpaths.adapter.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.Vertex;
 
 
 /**

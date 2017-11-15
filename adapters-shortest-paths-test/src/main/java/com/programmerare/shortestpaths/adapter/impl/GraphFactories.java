@@ -3,11 +3,11 @@ package com.programmerare.shortestpaths.adapter.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.GraphFactory;
 
 public final class GraphFactories {
 	

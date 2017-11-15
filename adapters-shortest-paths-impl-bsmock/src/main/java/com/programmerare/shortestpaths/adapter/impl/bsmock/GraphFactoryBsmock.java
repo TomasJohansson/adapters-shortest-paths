@@ -2,11 +2,11 @@ package com.programmerare.shortestpaths.adapter.impl.bsmock;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.EdgeMapper;
-import com.programmerare.shortestpaths.adapter.Graph;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
-import com.programmerare.shortestpaths.adapter.GraphFactoryBase;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
+import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.impl.EdgeMapper;
+import com.programmerare.shortestpaths.core.impl.GraphFactoryBase;
 
 /**
  * "Adapter" implementation of the "Target" interface 

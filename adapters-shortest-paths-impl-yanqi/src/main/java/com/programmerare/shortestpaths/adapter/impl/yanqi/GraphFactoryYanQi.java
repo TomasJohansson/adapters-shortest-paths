@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.programmerare.edu.asu.emit.algorithm.graph.EdgeYanQi;
 import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.EdgeMapper;
-import com.programmerare.shortestpaths.adapter.Graph;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
-import com.programmerare.shortestpaths.adapter.GraphFactoryBase;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
+import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.impl.EdgeMapper;
+import com.programmerare.shortestpaths.core.impl.GraphFactoryBase;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
 /**

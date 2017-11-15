@@ -1,19 +1,19 @@
 package com.programmerare.shortestpaths.adapter.impl.bsmock;
 
-import static com.programmerare.shortestpaths.adapter.impl.PathImpl.createPath;
-import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.EdgeMapper;
-import com.programmerare.shortestpaths.adapter.Graph;
-import com.programmerare.shortestpaths.adapter.Path;
-import com.programmerare.shortestpaths.adapter.Vertex;
-import com.programmerare.shortestpaths.adapter.Weight;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
+import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.impl.EdgeMapper;
 
 import edu.ufl.cise.bsmock.graph.ksp.Yen;
 

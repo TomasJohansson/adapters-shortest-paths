@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.examples.roadrouting;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.programmerare.shortestpaths.adapter.Vertex;
+import com.programmerare.shortestpaths.core.api.Vertex;
 
 /**
  * @author Tomas Johansson

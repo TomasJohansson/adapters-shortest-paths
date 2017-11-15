@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.examples.roadrouting;
 
-import com.programmerare.shortestpaths.adapter.Weight;
+import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * @author Tomas Johansson

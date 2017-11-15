@@ -3,12 +3,12 @@ package com.programmerare.shortestpaths.examples.roadrouting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.Graph;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
-import com.programmerare.shortestpaths.adapter.Path;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.core.api.Graph;
+import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.Path;
 
 /**
  * @author Tomas Johansson
