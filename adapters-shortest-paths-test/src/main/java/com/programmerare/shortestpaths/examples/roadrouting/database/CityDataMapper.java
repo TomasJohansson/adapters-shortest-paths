@@ -8,7 +8,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import com.programmerare.shortestpaths.examples.roadrouting.City;
-import com.programmerare.shortestpaths.examples.roadrouting.City_; // JPA metomodel class. It is generated ! 
+import com.programmerare.shortestpaths.examples.roadrouting.City_; 
+// The class "City_" is a JPA metomodel class. It has been generated to the following folder:
+// ".../src/java-generated/com/programmerare/shortestpaths/examples/roadrouting/City_.java"
+// To make it work in an IDE (e.g. Eclipse) you have to make sure "java-generated" is added as a source folder. 
+// In Eclipse you can add like this:
+// Right-click the project "adapters-shortest-paths-test" in Eclipse Project Explorer
+// Then select Properties --> Java Build Path --> Source --> Add folder 
+// Then browse to the folder "src/java-generated" and select the folder "java-generated"   
 
 /**
  * @author Tomas Johansson
