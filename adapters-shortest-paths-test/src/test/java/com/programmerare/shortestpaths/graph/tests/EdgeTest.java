@@ -23,6 +23,30 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
 import com.programmerare.shortestpaths.graph.utils.GraphFactories;
 
+
+/**
+ * The focus of this test class is the id value for edges.
+ * 
+ * These can be either set explicitly, but if not, then they are set to a concatenation
+ * of the ids for the two vertices of the edge.
+ * Either way, the ids of edges are used for being able to return the same instances as was sent as parameters. 
+ * In other words, the client code sends Edge instances as parameters to the method:
+ * "Graph GraphFactory.createGraph(List<T> edges)"
+ * Then the client will get back a Graph instance and will invoke the method:
+ * "List<Path<T>> Graph.findShortestPaths(Vertex startVertex, Vertex endVertex, int maxNumberOfPaths);"
+ * The returned list of Path instances will aggregate instances of Edge, and those instances will be retrieved 
+ * from the edges sent to the createGraph method. 
+ * 
+ * The id values of the edge values play a significant role, and this test class try to make sure it works
+ * for both scenarios, i.e. either explicitly set ids or implicitly set (with concatenation of vertices ids).
+ * 
+ * See also javadoc comments at the test methods.
+ *
+ * The tests are performed for all adapter implementations.
+ * (the implementation is determined by the instance of GraphFactory) 
+ * 
+ * @author Tomas Johansson
+ */
 public class EdgeTest {
 
 	// Name of the vertices

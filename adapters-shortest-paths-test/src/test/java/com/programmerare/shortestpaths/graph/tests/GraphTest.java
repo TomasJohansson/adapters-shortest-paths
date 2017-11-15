@@ -20,6 +20,17 @@ import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 
+/**
+ * Tests for a small graph. It is small for the purpose that it should be easy to understand.
+ * The tested graph have four vertices A,B,C,D with edges as below 
+ * (from start vertex to start vertex and then the weight within parenthesis)
+ * A --> B (3)
+ * B --> C (5)
+ * C --> D (7) 
+ * B --> D (13)
+ *
+ * @author Tomas Johansson
+ */
 public class GraphTest {
 
 	@Test
