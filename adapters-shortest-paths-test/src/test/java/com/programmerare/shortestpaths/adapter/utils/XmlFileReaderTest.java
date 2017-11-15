@@ -68,9 +68,9 @@ public class XmlFileReaderTest {
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(filePathForXmlTestFile);
 		final Node rootElement = document.getDocumentElement();
 		
-		final String textContentNodeOfFirstSubNode = xmlFileReader.getTextContentNodeOfFirstSubNode(rootElement , nameOfXmlSubElement);
-		assertNotNull(textContentNodeOfFirstSubNode);
-		assertEquals(textContentNodeOfFirstSubNode,  textContentNodeOfFirstSubNode);
+		final String result = xmlFileReader.getTextContentNodeOfFirstSubNode(rootElement , nameOfXmlSubElement);
+		assertNotNull(result);
+		assertEquals(textContentForFirstSubelement,  result);
 	}
 	
 }
