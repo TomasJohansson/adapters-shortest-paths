@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -17,6 +18,9 @@ public class XmlFileReaderTest {
 	private String textContentForFirstSubelement;
 	private String textContentForSecondSubelement;
 	
+	private String nameOfXmlRootElement;
+	private String nameOfXmlSubElement;
+	
 	@Before
 	public void setUp() throws Exception {
 		xmlFileReader = new XmlFileReader();
@@ -27,6 +31,9 @@ public class XmlFileReaderTest {
 //		    <mySubElement>def</mySubElement>
 //		</myRoot>
 		xPathExpressionForSubelements = "myRoot/mySubElement";
+		nameOfXmlRootElement = "myRoot";
+		nameOfXmlSubElement = "mySubElement";
+		
 		textContentForFirstSubelement = "abc";
 		textContentForSecondSubelement = "def";		
 	}
@@ -34,7 +41,9 @@ public class XmlFileReaderTest {
 	@Test
 	public void testGetResourceFileAsXmlDocument() {
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(filePathForXmlTestFile);
-		assertNotNull(document);		
+		assertNotNull(document);
+		final Element documentElement = document.getDocumentElement();
+		assertEquals(nameOfXmlRootElement, documentElement.getTagName());		
 	}
 	
 	@Test
@@ -53,4 +62,15 @@ public class XmlFileReaderTest {
 		assertEquals(textContentForFirstSubelement, item1.getTextContent());
 		assertEquals(textContentForSecondSubelement, item2.getTextContent());
 	}
+	
+	@Test
+	public void testGetTextContentNodeOfFirstSubNode() {
+		final Document document = xmlFileReader.getResourceFileAsXmlDocument(filePathForXmlTestFile);
+		final Node rootElement = document.getDocumentElement();
+		
+		final String textContentNodeOfFirstSubNode = xmlFileReader.getTextContentNodeOfFirstSubNode(rootElement , nameOfXmlSubElement);
+		assertNotNull(textContentNodeOfFirstSubNode);
+		assertEquals(textContentNodeOfFirstSubNode,  textContentNodeOfFirstSubNode);
+	}
+	
 }

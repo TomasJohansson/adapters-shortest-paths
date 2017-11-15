@@ -57,6 +57,27 @@ public final class XmlFileReader {
 			throw new RuntimeException(e);
 		}
 	}
+
+	/**
+	 * Typically, the method is supposed to be used when there only is one subnode.
+	 * The semantic "First" in the method name indicates the behaviour if there would be more than one subnodes.
+	 * (since an obvious alternative could have been to throw an exception rather than simply returning the first)
+	 * @param nodeParent
+	 * @param nameOfSubnode
+	 * @return the text content of the subnode if such subnode exists, otherwise null is returned 
+	 */
+	public String getTextContentNodeOfFirstSubNode(final Node nodeParent, final String nameOfSubnode) {
+		// currently the method is using xpath for the implementation which is overkill so this is a potential refactoring
+		// Example: nodeParent is "input" below and nameOfSubnode is  startVertex. Then "A" should be returned 
+//	    <input> 
+//	    <startVertex>A</startVertex>
+		final NodeList nodeList = getNodeListMatchingXPathExpression(nodeParent, nameOfSubnode);
+		if(nodeList.getLength() > 0) {
+			Node subNode = nodeList.item(0);
+			return subNode.getTextContent();
+		}
+		return null;
+	}
 	
 //	private InputSource getXmlStringAsInputSource(final String xmlString) {
 //		final StringReader reader = new StringReader(xmlString);
