@@ -41,20 +41,4 @@ public final class GraphFactoryYanQi<T extends Edge> extends GraphFactoryBase<T>
 
 
 	private final static String SPACE = " ";
-	
-	/**
-	 * @param idMapper see the documentation of the class {@link MapperForIntegerIdsAndGeneralStringIds}
-	 * @param edge
-	 * @return a line of strings where each line has three parts separated with a space.
-	 * The first part is an integer id representing the 'from vertex' of the edge.
-	 * The second part is an integer id representing the 'to vertex' of the edge,
-	 * The third part is a double value representing the weight of the edge, 
-	 * See also the example in method 'testGraphPossibleToCreateProgramatically'
-	 *  at this page: https://github.com/TomasJohansson/k-shortest-paths-java-version/commit/7130ed623d6e7436cdb8294c0e142a8b4b29a18d
-	 */
-	private String createStringLine(final MapperForIntegerIdsAndGeneralStringIds idMapper, final T edge) {
-		int integerIdForStartVertex = idMapper.createOrRetrieveIntegerId(edge.getStartVertex().getVertexId());
-		int integerIdForEndVertex = idMapper.createOrRetrieveIntegerId(edge.getEndVertex().getVertexId());
-		return integerIdForStartVertex + SPACE + integerIdForEndVertex + SPACE + edge.getEdgeWeight().getWeightValue();
-	}
 }

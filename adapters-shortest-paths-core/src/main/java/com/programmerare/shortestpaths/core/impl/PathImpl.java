@@ -45,7 +45,7 @@ public class PathImpl<T extends Edge> implements Path<T> {
 				throw new RuntimeException("Mismatching vertices detected " + edges);
 			}
 		}
-		return new PathImpl<T>(totalWeight, edges, shouldThrowExceptionIfTotalWeightIsMismatching, shouldThrowExceptionIfAnyMismatchingVertex);
+		return new PathImpl<T>(totalWeight, edges);
 	}	
 	
 	private static <T extends Edge> boolean isTotalWeightNotCorrect(List<T> edges, Weight totalWeight) {
@@ -69,9 +69,7 @@ public class PathImpl<T extends Edge> implements Path<T> {
 
 	private PathImpl(
 		final Weight totalWeight, 
-		final List<T> edges, 
-		boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
-		boolean shouldThrowExceptionIfAnyMismatchingVertex
+		final List<T> edges
 	) {
 		this.totalWeight = totalWeight;
 		this.edges = Collections.unmodifiableList(edges);
