@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl;
+package com.programmerare.shortestpaths.graph.tests;
 
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
@@ -21,6 +21,7 @@ import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
+import com.programmerare.shortestpaths.graph.utils.GraphFactories;
 
 public class EdgeTest {
 

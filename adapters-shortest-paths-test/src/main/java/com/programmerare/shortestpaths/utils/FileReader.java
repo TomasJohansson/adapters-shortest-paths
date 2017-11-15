@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.utils;
+package com.programmerare.shortestpaths.utils;
 
 import java.io.IOException;
 import java.net.URL;

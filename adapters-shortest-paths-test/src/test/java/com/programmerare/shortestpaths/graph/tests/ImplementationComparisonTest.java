@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl;
+package com.programmerare.shortestpaths.graph.tests;
 
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
@@ -12,10 +12,11 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.utils.GraphShortestPathAssertionHelper;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.graph.utils.GraphFactories;
+import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
 
 
 /**

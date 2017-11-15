@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.utils;
+package com.programmerare.shortestpaths.graph.utils;
 
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.junit.Assert.assertEquals;

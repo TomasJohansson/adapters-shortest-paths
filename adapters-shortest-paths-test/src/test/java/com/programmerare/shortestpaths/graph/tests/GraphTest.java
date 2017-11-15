@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl;
+package com.programmerare.shortestpaths.graph.tests;
 
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;

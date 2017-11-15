@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl;
+package com.programmerare.shortestpaths.graph.tests;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static org.junit.Assert.assertEquals;
@@ -13,15 +13,16 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.programmerare.shortestpaths.adapter.utils.FileReaderForGraphEdges;
-import com.programmerare.shortestpaths.adapter.utils.GraphShortestPathAssertionHelper;
-import com.programmerare.shortestpaths.adapter.utils.XmlFileReader;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
+import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
+import com.programmerare.shortestpaths.graph.utils.GraphFactories;
+import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.utils.XmlFileReader;
 
 /**
  * The class can run test cases with both input data and expected output data defined in xml files.

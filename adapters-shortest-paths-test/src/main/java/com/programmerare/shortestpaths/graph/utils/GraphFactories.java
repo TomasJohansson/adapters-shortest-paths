@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl;
+package com.programmerare.shortestpaths.graph.utils;
 
 import java.util.ArrayList;
 import java.util.List;

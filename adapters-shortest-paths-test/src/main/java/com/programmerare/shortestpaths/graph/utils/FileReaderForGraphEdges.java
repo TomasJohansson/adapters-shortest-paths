@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.utils;
+package com.programmerare.shortestpaths.graph.utils;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
+import com.programmerare.shortestpaths.utils.FileReader;
 
 /**
  * The class is used for creating Edge instances from files.
@@ -49,5 +50,4 @@ public final class FileReaderForGraphEdges {
 		}
 		return edges;
 	}
-
 }

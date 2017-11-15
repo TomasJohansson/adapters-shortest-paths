@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.utils;
+package com.programmerare.shortestpaths.utils;
 
 import java.io.InputStream;
 
@@ -10,7 +10,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.w3c.dom.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -82,7 +81,6 @@ public final class XmlFileReader {
 		}
 		return null;
 	}
-	
 //	private InputSource getXmlStringAsInputSource(final String xmlString) {
 //		final StringReader reader = new StringReader(xmlString);
 //		return new InputSource(reader);
