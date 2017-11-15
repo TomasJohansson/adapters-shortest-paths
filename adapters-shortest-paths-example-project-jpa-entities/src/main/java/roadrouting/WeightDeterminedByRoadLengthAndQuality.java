@@ -1,7 +1,6 @@
-package a;
+package roadrouting;
 
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.examples.roadrouting.RoadQuality;
 
 /**
  * @author Tomas Johansson

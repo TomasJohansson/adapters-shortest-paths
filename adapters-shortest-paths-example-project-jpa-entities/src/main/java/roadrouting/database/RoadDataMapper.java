@@ -1,11 +1,11 @@
-package com.programmerare.shortestpaths.examples.roadrouting.database;
+package roadrouting.database;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import com.programmerare.shortestpaths.examples.roadrouting.City;
-import com.programmerare.shortestpaths.examples.roadrouting.Road;
+import roadrouting.City;
+import roadrouting.Road;
 
 /**
  * @author Tomas Johansson

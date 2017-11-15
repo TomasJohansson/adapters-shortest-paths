@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package roadrouting;
 
 /**
  * @author Tomas Johansson

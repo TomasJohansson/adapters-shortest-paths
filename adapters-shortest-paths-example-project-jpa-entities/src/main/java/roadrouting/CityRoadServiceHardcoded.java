@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package roadrouting;
 
 import java.util.Arrays;
 import java.util.List;

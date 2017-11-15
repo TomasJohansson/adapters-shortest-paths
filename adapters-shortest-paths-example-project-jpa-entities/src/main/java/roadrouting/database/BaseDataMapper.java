@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.examples.roadrouting.database;
+package roadrouting.database;
 
 import java.util.List;
 

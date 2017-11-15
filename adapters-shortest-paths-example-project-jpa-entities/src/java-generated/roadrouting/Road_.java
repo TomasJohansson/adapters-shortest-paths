@@ -1,8 +1,11 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package roadrouting;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
+
+import roadrouting.Road;
+import roadrouting.RoadQuality;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Road.class)

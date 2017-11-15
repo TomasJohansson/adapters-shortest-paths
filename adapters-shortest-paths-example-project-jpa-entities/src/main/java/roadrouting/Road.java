@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package roadrouting;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,8 +7,6 @@ import javax.persistence.Transient;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-
-import a.WeightDeterminedByRoadLengthAndQuality;
 
 /**
  * 

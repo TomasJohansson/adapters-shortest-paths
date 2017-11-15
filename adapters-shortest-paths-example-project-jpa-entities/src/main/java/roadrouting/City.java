@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package roadrouting;
  
 import javax.persistence.Entity;
 import javax.persistence.Id;

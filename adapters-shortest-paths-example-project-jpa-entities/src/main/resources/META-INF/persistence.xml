@@ -6,8 +6,8 @@
 	<persistence-unit name="jpaExampleWithRoadAndCity" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>			    
 		
-		<class>com.programmerare.shortestpaths.examples.roadrouting.Road</class>
-		<class>com.programmerare.shortestpaths.examples.roadrouting.City</class>
+		<class>roadrouting.Road</class>
+		<class>roadrouting.City</class>
 
 		<properties>
  			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />

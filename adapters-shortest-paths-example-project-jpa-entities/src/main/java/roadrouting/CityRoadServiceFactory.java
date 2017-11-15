@@ -1,6 +1,6 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package roadrouting;
 
-import a.CityRoadServiceDatabase;
+import roadrouting.database.CityRoadServiceDatabase;
 
 public class CityRoadServiceFactory {
 
