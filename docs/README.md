@@ -96,7 +96,7 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 	<dependency>
 		<groupId>com.github.TomasJohansson</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>5308d2aec13d6147c864703e1e2284a970e8c42e</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+		<version>ea38f9b0717d1fe11f6c84492e62e4efcf1c5c1b</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
 	</dependency>      
 </dependencies>
 ```
