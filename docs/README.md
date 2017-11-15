@@ -30,56 +30,56 @@ For example, the vertices might represent cities, and the edges might represent 
 The Java code below can be used for finding the shortest paths (sorted with the shortest first) from A to D :
 
 ```java
-import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
-import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import java.util.Arrays;
 import java.util.List;
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.Graph;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
-import com.programmerare.shortestpaths.adapter.Path;
-import com.programmerare.shortestpaths.adapter.Vertex;
-import com.programmerare.shortestpaths.adapter.Weight;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
+import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 
 ...
 
-Vertex a = createVertex("A");
-Vertex b = createVertex("B");
-Vertex c = createVertex("C");
-Vertex d = createVertex("D");
+	Vertex a = createVertex("A");
+	Vertex b = createVertex("B");
+	Vertex c = createVertex("C");
+	Vertex d = createVertex("D");
 
-List<Edge> edges = Arrays.asList(
-	createEdge(a, b, createWeight(5)),
-	createEdge(a, c, createWeight(6)),
-	createEdge(b, c, createWeight(7)),
-	createEdge(b, d, createWeight(8)),
-	createEdge(c, d, createWeight(9))
-);
+	List<Edge> edges = Arrays.asList(
+		createEdge(a, b, createWeight(5)),
+		createEdge(a, c, createWeight(6)),
+		createEdge(b, c, createWeight(7)),
+		createEdge(b, d, createWeight(8)),
+		createEdge(c, d, createWeight(9))
+	);
 
-GraphFactory<Edge> graphFactory = new GraphFactoryJgrapht<Edge>());
-// or: graphFactory = new GraphFactoryBsmock<Edge>());
-// or: graphFactory = new GraphFactoryYanQi<Edge>());
-// (currently there are three implementations)
+	GraphFactory<Edge> graphFactory = new GraphFactoryJgrapht<Edge>();
+	// or: graphFactory = new GraphFactoryBsmock<Edge>();
+	// or: graphFactory = new GraphFactoryYanQi<Edge>();
+	// (currently there are three implementations)
 
-Graph<Edge> graph = graphFactory.createGraph(edges);
-List<Path<Edge>> shortestPaths = graph.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
-for (Path<Edge> path : shortestPaths) {
-	Weight totalWeightForPath = path.getTotalWeightForPath();
-	System.out.println(totalWeightForPath);
-	List<Edge> edges = path.getEdgesForPath();
-	for (Edge edge : edges) {
-		Vertex startVertex = edge.getStartVertex();
-		Vertex endVertex = edge.getEndVertex();
-		Weight edgeWeight = edge.getEdgeWeight();					
-		System.out.println(startVertex);
-		System.out.println(endVertex);
-		System.out.println(edgeWeight);
-	}			
-}
+	Graph<Edge> graph = graphFactory.createGraph(edges);
+	List<Path<Edge>> shortestPaths = graph.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
+	for (Path<Edge> path : shortestPaths) {
+		Weight totalWeightForPath = path.getTotalWeightForPath();
+		System.out.println(totalWeightForPath);
+		List<Edge> pathEdges = path.getEdgesForPath();
+		for (Edge edge : pathEdges) {
+			Vertex startVertex = edge.getStartVertex();
+			Vertex endVertex = edge.getEndVertex();
+			Weight edgeWeight = edge.getEdgeWeight();					
+			System.out.println(startVertex);
+			System.out.println(endVertex);
+			System.out.println(edgeWeight);
+		}			
+	}
 ```
 Assuming you are using Maven, to be able to use the above code, you can use the following configuration in your "pom.xml" file :
 ```xml
