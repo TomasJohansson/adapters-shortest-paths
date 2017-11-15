@@ -1,6 +1,7 @@
-package com.programmerare.shortestpaths.examples.roadrouting;
+package a;
 
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.examples.roadrouting.RoadQuality;
 
 /**
  * @author Tomas Johansson
@@ -29,3 +30,5 @@ public final class WeightDeterminedByRoadLengthAndQuality implements Weight {
 
 	
 }
+//
+//

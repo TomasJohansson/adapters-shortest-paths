@@ -8,6 +8,8 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
+import a.WeightDeterminedByRoadLengthAndQuality;
+
 /**
  * 
  * @author Tomas Johansson

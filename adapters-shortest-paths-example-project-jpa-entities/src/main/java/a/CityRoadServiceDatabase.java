@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.examples.roadrouting.database;
+package a;
 
 import java.util.List;
 
@@ -9,6 +9,8 @@ import javax.persistence.Persistence;
 import com.programmerare.shortestpaths.examples.roadrouting.City;
 import com.programmerare.shortestpaths.examples.roadrouting.CityRoadService;
 import com.programmerare.shortestpaths.examples.roadrouting.Road;
+import com.programmerare.shortestpaths.examples.roadrouting.database.CityDataMapper;
+import com.programmerare.shortestpaths.examples.roadrouting.database.RoadDataMapper;
 
 /**
  * @author Tomas Johansson
