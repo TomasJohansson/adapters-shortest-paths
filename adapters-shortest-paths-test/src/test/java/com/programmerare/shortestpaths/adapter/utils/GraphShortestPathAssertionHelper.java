@@ -13,8 +13,21 @@ import com.programmerare.shortestpaths.adapter.Graph;
 import com.programmerare.shortestpaths.adapter.GraphFactory;
 import com.programmerare.shortestpaths.adapter.Path;
 import com.programmerare.shortestpaths.adapter.Vertex;
+import com.programmerare.shortestpaths.adapter.impl.PathParser;
 import com.programmerare.shortestpaths.utils.TimeMeasurer;
 
+/**
+ * Used for validation of paths against each other.
+ * TODO: the class should be restructured probably into to two classes with appropriate names.
+ * (or at least refactored with better methods)
+ * One class/method should invoke different "findShortestPaths" for different implementations 
+ * and another would compare a different returned "List<Path<Edge>>" with each other.
+ * Please also note that one method currently receives a parameter "List<Path<Edge>> expectedListOfPaths"
+ * which is created from xml as an expected output path.
+ *     
+ *  
+ * @author Tomas Johansson
+ */
 public class GraphShortestPathAssertionHelper {
 	
 	private boolean isExecutingThroughTheMainMethod;
@@ -23,12 +36,41 @@ public class GraphShortestPathAssertionHelper {
 		this.isExecutingThroughTheMainMethod = isExecutingThroughTheMainMethod;
 	}
 
+	/**
+	 * Overloaded method using null when we do not have an expected list of paths (retrieved from xml)
+	 * but only want to compare results from implementations with each other
+	 * See also comment at class level.
+	 */
+	public void testResultsWithImplementationsAgainstEachOther(
+			final List<Edge> edgesForGraph, 
+			final Vertex startVertex,
+			final Vertex endVertex, 
+			final int numberOfPathsToFind, 
+			final List<GraphFactory<Edge>> graphFactoriesForImplementationsToTest
+		) {
+		testResultsWithImplementationsAgainstEachOther(
+			edgesForGraph, 
+			startVertex,
+			endVertex, 
+			numberOfPathsToFind, 
+			graphFactoriesForImplementationsToTest,
+			null
+		);		
+	}
+
+	/**
+	 * Overloaded method. Note that the last parameter can be null if we only want to compare 
+	 * results from different implementations.
+	 * The last parameter is used when we also have an expected path retrieved for example from an xml file.
+	 * See comment at class level.
+	 */	
 	public void testResultsWithImplementationsAgainstEachOther(
 		final List<Edge> edgesForGraph, 
 		final Vertex startVertex,
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
-		final List<GraphFactory<Edge>> graphFactoriesForImplementationsToTest
+		final List<GraphFactory<Edge>> graphFactoriesForImplementationsToTest,
+		final List<Path<Edge>> expectedListOfPaths
 	) {
 		output("Number of edges in the graph to be tested : " + edgesForGraph.size());
 
@@ -54,11 +96,19 @@ public class GraphShortestPathAssertionHelper {
 				// output("edge " + j + " : " + edgesForShortestPaths.get(j));
 			}
 		}
-
+		
 		final List<String> nameOfImplementations = new ArrayList<String>(shortestPathsPerImplementation.keySet());
 		for (int i = 0; i < nameOfImplementations.size(); i++) {
 			final String nameOfImplementation_1 = nameOfImplementations.get(i);
 			final List<Path<Edge>> pathsFoundByImplementation_1 = shortestPathsPerImplementation.get(nameOfImplementation_1);
+			if(expectedListOfPaths != null) {
+				final String failureMessage = nameOfImplementation_1 + " failed when comparing with expected result according to xml file"; 
+				assertEquals(failureMessage, expectedListOfPaths.size(), pathsFoundByImplementation_1.size());
+				for (int m = 0; m < pathsFoundByImplementation_1.size(); m++) {
+					assertEqualPaths(failureMessage, expectedListOfPaths.get(m), pathsFoundByImplementation_1.get(m));
+				}					
+			}
+			
 			for (int j = i+1; j < nameOfImplementations.size(); j++) {
 				final String nameOfImplementation_2 = nameOfImplementations.get(j);
 				final List<Path<Edge>> pathsFoundByImplementation_2 = shortestPathsPerImplementation.get(nameOfImplementation_2);
@@ -79,7 +129,6 @@ public class GraphShortestPathAssertionHelper {
 		}
 	}
 
-	
 	private void assertEqualPaths(final String message, final Path<Edge> expectedPath, final Path<Edge> actualPath) {
 		assertEquals(
 			message, 
@@ -89,6 +138,7 @@ public class GraphShortestPathAssertionHelper {
 		);
 		final List<Edge> expectedEdges = expectedPath.getEdgesForPath(); 
 		final List<Edge> actualEdges = actualPath.getEdgesForPath();
+		assertEquals("Mismatching number of vertices/edges in the path, " + message, expectedEdges.size(), actualEdges.size());
 		for (int i = 0; i < actualEdges.size(); i++) {
 			final Edge actualEdge = actualEdges.get(i);
 			final Edge expectedEdge = expectedEdges.get(i);
@@ -102,6 +152,5 @@ public class GraphShortestPathAssertionHelper {
 			);			
 			assertEquals(message, expectedEdge, actualEdge);			
 		}
-		
 	}	
 }
