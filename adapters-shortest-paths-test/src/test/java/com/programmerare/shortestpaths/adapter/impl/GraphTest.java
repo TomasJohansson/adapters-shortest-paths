@@ -12,15 +12,32 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 
-public abstract class GraphTestBase {
+public class GraphTest {
 
 	@Test
-	public void testFindShortestPaths() {
+	public void testFindShortestPaths_Bsmock() {
+		testFindShortestPaths(new GraphFactoryBsmock<Edge>());
+	}	
+	
+	@Test
+	public void testFindShortestPaths_Jgrapht() {
+		testFindShortestPaths(new GraphFactoryJgrapht<Edge>());
+	}
+	
+	@Test
+	public void testFindShortestPaths_YanQi() {
+		testFindShortestPaths(new GraphFactoryYanQi<Edge>());
+	}
+	
+	public void testFindShortestPaths(GraphFactory<Edge> graphFactory) {
 		Edge edgeAB3 = createEdge(createVertex("A"), createVertex("B"), createWeight(3));
 		Edge edgeBC5 = createEdge(createVertex("B"), createVertex("C"), createWeight(5));
 		Edge edgeCD7 = createEdge(createVertex("C"), createVertex("D"), createWeight(7));
@@ -35,7 +52,6 @@ public abstract class GraphTestBase {
 		// A - B - C- D  	, with weight 15 ( 3 + 5 + 7 )
 		// A - B - D  		, with weight 16 ( 3 + 13 )
 		
-		GraphFactory<Edge> graphFactory = createGraphFactory();//  new GraphFactoryJgrapht();
 		Graph<Edge> graph = graphFactory.createGraph(edges);
 		List<Path<Edge>> shortestPaths = graph.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
 		assertEquals(2,  shortestPaths.size());
@@ -62,7 +78,4 @@ public abstract class GraphTestBase {
 		// Note that the below assertion works thanks to the class EdgeMappe
 		assertSame(edgeFromOriginalInput, edgeFromResultingPath);
 	}
-	
-	
-	protected abstract GraphFactory<Edge> createGraphFactory();
 }
