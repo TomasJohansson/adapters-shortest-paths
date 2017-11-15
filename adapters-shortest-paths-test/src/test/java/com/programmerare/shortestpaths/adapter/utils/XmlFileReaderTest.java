@@ -12,23 +12,35 @@ import org.w3c.dom.NodeList;
 public class XmlFileReaderTest {
 
 	private XmlFileReader xmlFileReader;
-
+	private String filePathForXmlTestFile;
+	private String xPathExpressionForSubelements;
+	private String textContentForFirstSubelement;
+	private String textContentForSecondSubelement;
+	
 	@Before
 	public void setUp() throws Exception {
 		xmlFileReader = new XmlFileReader();
-	}
-
-	@Test
-	public void testGetNodeListMatchingXPathExpression() {
+		filePathForXmlTestFile = "directory_for_xmlfilereader_test/xmlFileReaderTest.xml";
 		// testing the content of the file "/src/test/resources/directory_for_xmlfilereader_test/xmlFileReaderTest.xml":
 //		<myRoot>
 //		    <mySubElement>abc</mySubElement>
 //		    <mySubElement>def</mySubElement>
 //		</myRoot>
-		final String filePath = "directory_for_xmlfilereader_test/xmlFileReaderTest.xml";
-		final Document document = xmlFileReader.getResourceFileAsXmlDocument(filePath);
-		assertNotNull(document);
-		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "myRoot/mySubElement");
+		xPathExpressionForSubelements = "myRoot/mySubElement";
+		textContentForFirstSubelement = "abc";
+		textContentForSecondSubelement = "def";		
+	}
+
+	@Test
+	public void testGetResourceFileAsXmlDocument() {
+		final Document document = xmlFileReader.getResourceFileAsXmlDocument(filePathForXmlTestFile);
+		assertNotNull(document);		
+	}
+	
+	@Test
+	public void testGetNodeListMatchingXPathExpression() {
+		final Document document = xmlFileReader.getResourceFileAsXmlDocument(filePathForXmlTestFile);
+		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, xPathExpressionForSubelements);
 		
 		assertNotNull(nodeList);
 		assertEquals(2,  nodeList.getLength());
@@ -38,7 +50,7 @@ public class XmlFileReaderTest {
 		assertNotNull(item1);
 		assertNotNull(item2);
 		
-		assertEquals("abc", item1.getTextContent());
-		assertEquals("def", item2.getTextContent());
+		assertEquals(textContentForFirstSubelement, item1.getTextContent());
+		assertEquals(textContentForSecondSubelement, item2.getTextContent());
 	}
 }
