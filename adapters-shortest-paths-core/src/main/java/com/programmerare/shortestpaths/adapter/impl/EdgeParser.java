@@ -148,7 +148,7 @@ public final class EdgeParser {
 	 */
 	public List<Edge> fromMultiLinedStringToListOfEdges(final String multiLinedString) {
 		final List<Edge> edges = new ArrayList<Edge>();
-		final List<String> edgesAsStrings = StringUtility.getMultilineStringAsListOfStringsIgnoringThoseWithWhiteSpaceOnly(multiLinedString);
+		final List<String> edgesAsStrings = StringUtility.getMultilineStringAsListOfTrimmedStringsIgnoringLinesWithOnlyWhiteSpace(multiLinedString);
 		for (String string : edgesAsStrings) {
 			edges.add(fromStringToEdge(string));
 		}

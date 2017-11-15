@@ -43,7 +43,7 @@ public final class PathParser {
 	}
 	
 	public List<Path<Edge>> fromStringToListOfPaths(String multiLinedString) {
-		final List<String> listOfLines = StringUtility.getMultilineStringAsListOfStringsIgnoringThoseWithWhiteSpaceOnly(multiLinedString);
+		final List<String> listOfLines = StringUtility.getMultilineStringAsListOfTrimmedStringsIgnoringLinesWithOnlyWhiteSpace(multiLinedString);
 		return fromListOfStringsToListOfPaths(listOfLines);
 	}
 	

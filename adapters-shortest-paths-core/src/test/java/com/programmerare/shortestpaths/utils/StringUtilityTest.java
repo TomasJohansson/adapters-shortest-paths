@@ -19,7 +19,7 @@ public class StringUtilityTest {
 	}
 
 	@Test
-	public void testGetMultilineStringAsListOfTrimmedStringsIgnoringThoseWithWhiteSpaceOnly() {
+	public void testGetMultilineStringAsListOfTrimmedStringsIgnoringLinesWithOnlyWhiteSpace() {
 		String s = "AB\r\n" + 
 				"XY\r\n" + 
 				"   BX\r\n" + 
@@ -30,7 +30,7 @@ public class StringUtilityTest {
 				"\r\n" + 
 				"\r\n" + 
 				"";
-		List<String> list = StringUtility.getMultilineStringAsListOfTrimmedStringsIgnoringThoseWithWhiteSpaceOnly(s);
+		List<String> list = StringUtility.getMultilineStringAsListOfTrimmedStringsIgnoringLinesWithOnlyWhiteSpace(s);
 		assertNotNull(list);
 		assertEquals(5, list.size());
 		assertEquals("AB", list.get(0));

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class StringUtility {
-	public static List<String> getMultilineStringAsListOfTrimmedStringsIgnoringThoseWithWhiteSpaceOnly(String s) {
-		final String lines[] = s.split("[\r\n]+");
+	public static List<String> getMultilineStringAsListOfTrimmedStringsIgnoringLinesWithOnlyWhiteSpace(String multilinedStringWithLineBreaks) {
+		final String lines[] = multilinedStringWithLineBreaks.split("[\r\n]+");
 		final List<String> listOfLines = new ArrayList<String>(); 
 		for (String line : lines) {
 			if(line != null && !line.trim().equals("") ) {
