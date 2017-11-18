@@ -3,16 +3,14 @@ package com.programmerare.shortestpaths.graph.tests;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 import java.util.List;
-
+import com.programmerare.shortestpaths.utils.ResourceReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -33,10 +31,12 @@ import com.programmerare.shortestpaths.utils.XmlFileReader;
 public class XmlDefinedTests {
 	
 	private XmlFileReader xmlFileReader;
+	private ResourceReader resourceReader;
 	private FileReaderForGraphEdges fileReaderForGraphTestData;
 	private List<GraphFactory<Edge>> graphFactories;
 	private GraphShortestPathAssertionHelper graphShortestPathAssertionHelper;
 	private EdgeParser edgeParser;
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -46,25 +46,28 @@ public class XmlDefinedTests {
 		graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(false);
 		
 		xmlFileReader = new XmlFileReader();
+		resourceReader = new ResourceReader();
 		edgeParser = EdgeParser.createEdgeParser();
 	}
 
 	@Test
-	public void test_graph_datafile__small_graph_1_xml() throws IOException {
-		runTestCaseDefinedInXmlFile("small_graph_1.xml");
+	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
+		// the advantage with iterating xml files is this method is that you do not have to add a new test method
+		// for each new xml file with test cases, but the disadvantage is that you do not automatically see which file failed ...
+		// TODO: fix the above mentioned problem 
+		final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder("test_graphs");
+		for(String fileName : fileNames) {
+			if(fileName.toLowerCase().endsWith(".xml")) {
+				runTestCaseDefinedInXmlFile(fileName);
+			}
+		}
 	}
 
-	@Test
-	public void test_graph_datafile__small_graph_2_xml() throws IOException {
-		runTestCaseDefinedInXmlFile("small_graph_2.xml");
-	}
-	
 	private void runTestCaseDefinedInXmlFile(final String nameOfXmlFileWithoutDirectoryPath) throws IOException {
 		runTestCaseDefinedInXmlFileWithPathIncludingDirectory("test_graphs/" + nameOfXmlFileWithoutDirectoryPath);
 	}
 	
 	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(final String pathToResourceXmlFile) throws IOException {
-		
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceXmlFile);
 		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/graphDefinition");
 		assertNotNull(nodeList);
