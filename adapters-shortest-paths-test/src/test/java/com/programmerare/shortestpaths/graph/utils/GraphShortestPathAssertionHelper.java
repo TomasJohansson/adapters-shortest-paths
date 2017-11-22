@@ -2,6 +2,7 @@ package com.programmerare.shortestpaths.graph.utils;
 
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,10 +144,14 @@ public class GraphShortestPathAssertionHelper {
 		);
 		final List<Edge> expectedEdges = expectedPath.getEdgesForPath(); 
 		final List<Edge> actualEdges = actualPath.getEdgesForPath();
+		assertNotNull(message, expectedEdges); // the expected list SHOULD not be null but you never know for sure, since it might originate from an xml file which was not properly defined or read
+		assertNotNull(message, actualEdges);
 		assertEquals("Mismatching number of vertices/edges in the path, " + message, expectedEdges.size(), actualEdges.size());
 		for (int i = 0; i < actualEdges.size(); i++) {
 			final Edge actualEdge = actualEdges.get(i);
 			final Edge expectedEdge = expectedEdges.get(i);
+			assertNotNull(message, expectedEdge); // same comment as above, regarding why the expected value is asserted 
+			assertNotNull(message, actualEdge);
 			assertEquals(message, expectedEdge.getStartVertex(), actualEdge.getStartVertex());
 			assertEquals(message, expectedEdge.getEndVertex(), actualEdge.getEndVertex());
 			assertEquals(
