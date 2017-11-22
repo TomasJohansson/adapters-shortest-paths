@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 import java.util.List;
-import com.programmerare.shortestpaths.utils.ResourceReader;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -19,9 +19,11 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
 import com.programmerare.shortestpaths.graph.utils.GraphFactories;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.utils.ResourceReader;
 import com.programmerare.shortestpaths.utils.XmlFileReader;
 
 /**
@@ -97,7 +99,10 @@ public class XmlDefinedTests {
 			final NodeList nodeListWithInput = xmlFileReader.getNodeListMatchingXPathExpression(itemWithTestCase, "input");
 			final String outputExpectedAsMultiLinedString  = xmlFileReader.getTextContentNodeOfFirstSubNode(itemWithTestCase, "outputExpected");
 			System.out.println("outputExpectedAsMultiLinedString " + outputExpectedAsMultiLinedString);
-			final List<Path<Edge>> expectedListOfPaths  = pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);	
+			final List<Path<Edge>> expectedListOfPaths  = pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
+			final GraphEdgesValidator<Edge> edgeGraphEdgesValidator = new GraphEdgesValidator<Edge>();
+			edgeGraphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edgesForGraph);
+			edgeGraphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(expectedListOfPaths, edgesForGraph);
 			assertEquals(1, nodeListWithInput.getLength()); // should only be one input element
 			Node nodeWithInputForTestCase  = nodeListWithInput.item(0);
 			//final NodeList nodeListWithInput = xmlFileReader.getNodeListMatchingXPathExpression(itemWithTestCase, "input");

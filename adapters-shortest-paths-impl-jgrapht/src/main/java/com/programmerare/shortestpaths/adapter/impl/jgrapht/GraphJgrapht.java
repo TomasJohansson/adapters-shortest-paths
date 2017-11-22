@@ -57,6 +57,9 @@ public final class GraphJgrapht<T extends Edge> implements Graph<T> {
 	    	final Weight totalWeight = createWeight(graphPath.getWeight());
 			paths.add(createPath(totalWeight, edges));
 		}
+	    // TDOO maybe: use graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph
+	    // but then from a new base class which then should be introduced, and maybe also 
+	    // it should be optional to perform that validation of the output list of paths
 		return Collections.unmodifiableList(paths);
 	}
 }

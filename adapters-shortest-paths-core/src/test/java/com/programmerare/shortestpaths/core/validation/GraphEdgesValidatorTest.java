@@ -1,5 +1,8 @@
 package com.programmerare.shortestpaths.core.validation;
 
+import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 /**
  * @author Tomas Johansson
@@ -207,7 +209,6 @@ public class GraphEdgesValidatorTest {
 		graphEdgesValidator.validateUniqueVerticesIds(edges.get(2), mapForValidatingUniqueVerticesIds);
 	}
 
-	
 	private Vertex createTestVertex(String id) {
 		return new VertexTestImpl(id);
 	}
@@ -292,4 +293,23 @@ public class GraphEdgesValidatorTest {
 					+ weight + "]";
 		}
 	}
+
+	// ----------------------------------------------------------------------------------------------
+	@Test(expected = GraphEdgesValidationException.class)
+	public void testValidateAllPathsOnlyContainEdgesDefinedInGraph() {
+		final List<Edge> allEdgesForGraph = new ArrayList<Edge>();
+		allEdgesForGraph.add(createTestEdge("11", createTestVertex("a"), createTestVertex("b"), createTestWeight(1)));
+
+		final List<Edge> edgesForPath = new ArrayList<Edge>();
+		edgesForPath.add(createTestEdge("11", createTestVertex("a"), createTestVertex("c"), createTestWeight(1)));
+		final Path<Edge> path = createPath(createTestWeight(1), edgesForPath);
+		List<Path<Edge>> paths = Arrays.asList(path);
+
+		graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(paths, allEdgesForGraph);
+
+		// TODO maybe: introduce a new base class for GraphJgrapht and for the other implementations of Graph, 
+		// and put the validation there, to ensure a reasonable output paths by using the above validation method, 
+		// but then maybe such an validation also should be optional 
+	}
+	// ----------------------------------------------------------------------------------------------
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.StringRenderable;
 
 public final class GraphEdgesValidator<T extends Edge> {
@@ -72,5 +73,57 @@ public final class GraphEdgesValidator<T extends Edge> {
 		final String concatenationOdVerticesIds = edge.getStartVertex().getVertexId() + "_" + edge.getEndVertex().getVertexId();
 		throwExceptionIfConditionTrue(mapForValidatingUniqueVerticesIds.containsKey(concatenationOdVerticesIds), "edge id must be unique wich it was not " + concatenationOdVerticesIds, edge);
 		mapForValidatingUniqueVerticesIds.put(concatenationOdVerticesIds, true);		
-	}	
+	}
+
+	/**
+	 * An example of usage for this method is that both parameters (expected list of paths, and a list of edges) 
+	 * may be defined in an xml file, but they might be defined incorrectly, and then it is desirable
+	 * to fail early to easier realize that the problem is how the test is defined rather than the behaviour 
+	 * of the code under test.
+	 * Precondition: The list of all the edges should be valid, i.e. it is NOT tested again in this method that
+	 * 	the vertices and weights are not null.    
+	 * @param paths
+	 * @param allEdgesForGraph
+	 */
+	public void validateAllPathsOnlyContainEdgesDefinedInGraph(
+		final List<Path<T>> paths, 
+		final List<T> allEdgesForGraph
+	) {
+		final Map<String, T> mapWithAllEdgesInGraph = createMapWithAllEdgesInGraph(allEdgesForGraph);
+		
+		for (final Path<T> path : paths) {
+			final List<T> edgesForPath = path.getEdgesForPath();
+			for (T edgeInPath : edgesForPath) {
+				validateNonNullObjects(edgeInPath);
+				validateNonBlankIds(edgeInPath);
+				final String key = createMapKeyUsedInMapWithEdges(edgeInPath);
+				throwExceptionIfConditionTrue(!mapWithAllEdgesInGraph.containsKey(key), "The edge in path is not part of the graph", edgeInPath);
+			}
+		}
+	}
+
+	/**
+	 * @param edgesForGraph
+	 * @return a map with edges as values, and the key is a string created with a private helper method in this same class   
+	 */
+	private Map<String, T> createMapWithAllEdgesInGraph(final List<T> edgesForGraph) {
+		final Map<String, T> mapWithAllEdgesInGraph = new HashMap<String, T>();
+		for (final T edgeInGraph : edgesForGraph) {
+			// the method used below should never cause a NullPointerException if the above documented precondition is fulfilled
+			final String key = createMapKeyUsedInMapWithEdges(edgeInGraph);
+			mapWithAllEdgesInGraph.put(key, edgeInGraph);
+		}
+		return mapWithAllEdgesInGraph;
+	}
+
+	/**
+	 * Precondition: the input edge and all its aggregated parts must be non-null, i.e. this method should 
+	 * never throw an NullPointerException if the precondition is respected  
+	 * @param edge
+	 * @return
+	 */
+	private String createMapKeyUsedInMapWithEdges(final T edge) {
+		final String key = edge.getEdgeId() + "_" + edge.getStartVertex().getVertexId() + "_" +  edge.getEndVertex().getVertexId();
+		return key;
+	}
 }
