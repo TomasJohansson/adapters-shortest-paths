@@ -11,8 +11,7 @@ import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.parsers.EdgeParser;
-import com.programmerare.shortestpaths.core.parsers.PathParser;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
 
 public class PathParserTest {
 
@@ -82,5 +81,11 @@ public class PathParserTest {
 		assertEquals(pathParser.getEdgeIncludingTheWeight("A", "B"), edgesForPath3.get(0));
 		assertEquals(pathParser.getEdgeIncludingTheWeight("B", "C"), edgesForPath3.get(1));
 		assertEquals(pathParser.getEdgeIncludingTheWeight("C", "D"), edgesForPath3.get(2));
+	}
+	
+	@Test(expected = GraphEdgesValidationException.class)
+	public void testgetEdgeIncludingTheWeight_should_throw_exception_when_edge_does_not_exist() {
+		// the edges in the setup method do not contain any edge between vertices A and D
+		pathParser.getEdgeIncludingTheWeight("A", "D");	
 	}
 }

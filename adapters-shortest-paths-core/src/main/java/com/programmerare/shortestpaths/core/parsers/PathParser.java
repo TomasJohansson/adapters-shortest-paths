@@ -11,6 +11,7 @@ import java.util.Map;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
 import com.programmerare.shortestpaths.utils.StringUtility;
 
 /**
@@ -78,9 +79,12 @@ public final class PathParser {
 		return createPath(createWeight(totalWeight), edges);
 	}
 
-	public Edge getEdgeIncludingTheWeight(String startVertexId, String endVertexId) {
-		// TODO controlled exception message
-		return mapWithEdgesAndVertexConcatenationAsKey.get(EdgeImpl.createEdgeIdValue(startVertexId, endVertexId));
+	public Edge getEdgeIncludingTheWeight(final String startVertexId, final String endVertexId) {
+		final String key = EdgeImpl.createEdgeIdValue(startVertexId, endVertexId);
+		if(!mapWithEdgesAndVertexConcatenationAsKey.containsKey(key)) {
+			throw new GraphEdgesValidationException("No edge with these vertices: from " + startVertexId + " to " + endVertexId);
+		}
+		return mapWithEdgesAndVertexConcatenationAsKey.get(key);
 	}
 
 }
