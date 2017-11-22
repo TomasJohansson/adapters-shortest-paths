@@ -3,6 +3,7 @@ package com.programmerare.shortestpaths.graph.tests;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import java.util.List;
 import com.programmerare.shortestpaths.utils.ResourceReader;
@@ -11,6 +12,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -53,12 +55,19 @@ public class XmlDefinedTests {
 	@Test
 	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method
-		// for each new xml file with test cases, but the disadvantage is that you do not automatically see which file failed ...
-		// TODO: fix the above mentioned problem 
+		// for each new xml file with test cases, but the disadvantage is that you do not automatically see which file failed
+		// but that problem is handled in the loop below with a try/catch/throw
 		final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder("test_graphs");
 		for(String fileName : fileNames) {
 			if(fileName.toLowerCase().endsWith(".xml")) {
-				runTestCaseDefinedInXmlFile(fileName);
+				try {
+					runTestCaseDefinedInXmlFile(fileName);
+				}
+				catch(Exception e) {
+					// Without try/catch here we would fail without seeing which test file caused the failure
+					// We might use the method 'Assert.fail' here but then we do not see the stack trace, so therefore throw exception here 
+					throw new java.lang.AssertionError("Failure for the test defined in file " + fileName + " , " + e.getMessage(), e);
+				}
 			}
 		}
 	}
@@ -89,7 +98,6 @@ public class XmlDefinedTests {
 			final String outputExpectedAsMultiLinedString  = xmlFileReader.getTextContentNodeOfFirstSubNode(itemWithTestCase, "outputExpected");
 			System.out.println("outputExpectedAsMultiLinedString " + outputExpectedAsMultiLinedString);
 			final List<Path<Edge>> expectedListOfPaths  = pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);	
-			
 			assertEquals(1, nodeListWithInput.getLength()); // should only be one input element
 			Node nodeWithInputForTestCase  = nodeListWithInput.item(0);
 			//final NodeList nodeListWithInput = xmlFileReader.getNodeListMatchingXPathExpression(itemWithTestCase, "input");
