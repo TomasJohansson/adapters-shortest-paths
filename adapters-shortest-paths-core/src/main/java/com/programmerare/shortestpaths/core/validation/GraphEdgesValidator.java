@@ -10,6 +10,12 @@ import com.programmerare.shortestpaths.core.api.StringRenderable;
 
 public final class GraphEdgesValidator<T extends Edge> {
 
+	private GraphEdgesValidator() {	}
+	
+	public static <T extends Edge> GraphEdgesValidator<T> createGraphEdgesValidator() {
+		return new GraphEdgesValidator<T>();
+	}	
+
 	public void validateEdgesAsAcceptableInputForGraphConstruction(final List<T> edges) {
 
 		final Map<String, Boolean> mapForValidatingUniqueEdgeId = new HashMap<String, Boolean>(); 
@@ -126,4 +132,14 @@ public final class GraphEdgesValidator<T extends Edge> {
 		final String key = edge.getEdgeId() + "_" + edge.getStartVertex().getVertexId() + "_" +  edge.getEndVertex().getVertexId();
 		return key;
 	}
+
+	/**
+	 * Static convenience method.
+	 * @param edges
+	 */
+	public static <T extends Edge> void validateEdgesForGraphCreation(final List<T> edges) {
+		final GraphEdgesValidator<T> graphEdgesValidator = createGraphEdgesValidator();
+		graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);
+	}
+	
 }

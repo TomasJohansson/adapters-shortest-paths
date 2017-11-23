@@ -9,6 +9,8 @@ import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 /**
  * @author Tomas Johansson
@@ -47,6 +49,9 @@ public class RoadRoutingMain {
 		final City endCity, 
 		final List<GraphFactory<Road>> graphFactories
 	) {
+		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
+		GraphEdgesValidator.validateEdgesForGraphCreation(roads);
+		
 		for (GraphFactory<Road> graphFactory : graphFactories) {
 			performRoadRouting(roads, startCity, endCity, graphFactory);	
 		}
@@ -65,7 +70,10 @@ public class RoadRoutingMain {
 		// of domain object you can create yourself.
 		// Note that such an object must implement the interface "Edge" and in particular must pay attention to 
 		// how the method "getEdgeId()" must be implemented as documented in the Edge interface.
-		final Graph<Road> graph = graphFactory.createGraph(roads); 
+		final Graph<Road> graph = graphFactory.createGraph(
+			roads, 
+			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
+		); 
 		
 		final List<Path<Road>> paths = graph.findShortestPaths(startCity, endCity, 10);
 		// Now also note that you can retrieve your own domain object (for example "Road" above) 

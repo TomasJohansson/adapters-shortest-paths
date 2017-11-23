@@ -19,6 +19,7 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**
  * Tests for a small graph. It is small for the purpose that it should be easy to understand.
@@ -63,7 +64,10 @@ public class SmallGraphTest {
 		// A - B - C- D  	, with weight 15 ( 3 + 5 + 7 )
 		// A - B - D  		, with weight 16 ( 3 + 13 )
 		
-		Graph<Edge> graph = graphFactory.createGraph(edges);
+		Graph<Edge> graph = graphFactory.createGraph(
+			edges,
+			GraphEdgesValidationDesired.YES // TODO: refactor the construction of edges to able to do the validation only once instead of doing it for each factory
+		);
 		List<Path<Edge>> shortestPaths = graph.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
 		assertEquals(2,  shortestPaths.size());
 

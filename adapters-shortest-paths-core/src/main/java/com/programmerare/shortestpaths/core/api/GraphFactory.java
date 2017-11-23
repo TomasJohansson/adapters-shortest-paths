@@ -11,9 +11,6 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
   */
 public interface GraphFactory<T extends Edge> {
 
-	@Deprecated
-	Graph<T> createGraph(List<T> edges);
-	
 	Graph<T> createGraph(
 		List<T> edges, 
 		GraphEdgesValidationDesired graphEdgesValidationDesired

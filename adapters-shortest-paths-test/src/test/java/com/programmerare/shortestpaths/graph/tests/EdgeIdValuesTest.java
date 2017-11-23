@@ -21,6 +21,8 @@ import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.GraphFactories;
 
 
@@ -138,6 +140,9 @@ public class EdgeIdValuesTest {
 	
 
 	private void verifyExpectedResults(List<Edge> edges) {
+		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first		
+		GraphEdgesValidator.validateEdgesForGraphCreation(edges);
+		
 		final ExpectedPath[] expectedPaths = getExpectedPaths();
 
 		final List<GraphFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
@@ -176,7 +181,10 @@ public class EdgeIdValuesTest {
 		GraphFactory<Edge> graphFactory,
 		ExpectedPath[] expectedShortestPaths
 	) {
-		Graph<Edge> graph = graphFactory.createGraph(edges);
+		Graph<Edge> graph = graphFactory.createGraph(
+			edges, 
+			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
+		);
 		List<Path<Edge>> actualShortestPaths = graph.findShortestPaths(startVertex, endVertex, 10);
 		
 		assertEquals(expectedShortestPaths.length, actualShortestPaths.size());

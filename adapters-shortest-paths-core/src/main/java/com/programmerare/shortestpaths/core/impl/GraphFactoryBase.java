@@ -10,16 +10,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T> {
 	
-	private final GraphEdgesValidator<T> graphEdgesValidator;
-	
-	protected GraphFactoryBase() {
-		graphEdgesValidator = new GraphEdgesValidator<T>();
-	}
-
-	@Deprecated
-	public final Graph<T> createGraph(final List<T> edges) {
-		return createGraph(edges, GraphEdgesValidationDesired.YES);
-	}
+	protected GraphFactoryBase() { }
 
 	/**
 	 * @param edges
@@ -33,7 +24,7 @@ public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T
 		// Reason for avoiding the validation: If multiple invocations will be used, it is unnecessary to do the validation multiple times.
 		// However, it is convenient if the default is to do validation internally without having to specify it.	
 		if(graphEdgesValidationDesired == GraphEdgesValidationDesired.YES) {
-			graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);	
+			GraphEdgesValidator.validateEdgesForGraphCreation(edges);
 		}
 		// Prevondition to method below is that validation (as above) is performed i.e. 
 		// the method below will NOT try to validate,

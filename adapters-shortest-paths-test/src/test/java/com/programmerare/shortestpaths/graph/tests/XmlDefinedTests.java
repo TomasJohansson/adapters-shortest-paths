@@ -1,5 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
+import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -100,7 +101,8 @@ public class XmlDefinedTests {
 			final String outputExpectedAsMultiLinedString  = xmlFileReader.getTextContentNodeOfFirstSubNode(itemWithTestCase, "outputExpected");
 			System.out.println("outputExpectedAsMultiLinedString " + outputExpectedAsMultiLinedString);
 			final List<Path<Edge>> expectedListOfPaths  = pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
-			final GraphEdgesValidator<Edge> edgeGraphEdgesValidator = new GraphEdgesValidator<Edge>();
+			
+			final GraphEdgesValidator<Edge> edgeGraphEdgesValidator = createGraphEdgesValidator();
 			edgeGraphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edgesForGraph);
 			edgeGraphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(expectedListOfPaths, edgesForGraph);
 			assertEquals(1, nodeListWithInput.getLength()); // should only be one input element

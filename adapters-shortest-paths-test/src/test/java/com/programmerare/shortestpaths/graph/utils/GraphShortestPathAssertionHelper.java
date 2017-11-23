@@ -14,6 +14,8 @@ import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.utils.TimeMeasurer;
 
 /**
@@ -78,12 +80,18 @@ public class GraphShortestPathAssertionHelper {
 		output("Number of edges in the graph to be tested : " + edgesForGraph.size());
 
 		final Map<String, List<Path<Edge>>> shortestPathsPerImplementation = new HashMap<String, List<Path<Edge>>>();
+
+		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
+		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForGraph);
 		
 		for (int i = 0; i < graphFactoriesForImplementationsToTest.size(); i++) {
 			final GraphFactory<Edge> graphFactory = graphFactoriesForImplementationsToTest.get(i);
-
+			
 			final TimeMeasurer tm = TimeMeasurer.start();			
-			final Graph<Edge> graph = graphFactory.createGraph(edgesForGraph);
+			final Graph<Edge> graph = graphFactory.createGraph(
+				edgesForGraph,
+				GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
+			);
 			final List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			output("seconds : " + tm.getSeconds() + " for implementation " + graph.getClass().getName());
 			if(shouldPrettyPrintListOfPathsToTheConsoleOutput) {

@@ -1,7 +1,7 @@
 package com.programmerare.shortestpaths.core.validation;
 
 import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
-
+import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ public class GraphEdgesValidatorTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		graphEdgesValidator = new GraphEdgesValidator<Edge>();
+		graphEdgesValidator = createGraphEdgesValidator();
 		
 		vertexA = createTestVertex("A");
 		vertexB = createTestVertex("B");
