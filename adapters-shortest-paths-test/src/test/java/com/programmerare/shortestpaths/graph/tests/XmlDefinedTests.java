@@ -100,11 +100,14 @@ public class XmlDefinedTests {
 			final NodeList nodeListWithInput = xmlFileReader.getNodeListMatchingXPathExpression(itemWithTestCase, "input");
 			final String outputExpectedAsMultiLinedString  = xmlFileReader.getTextContentNodeOfFirstSubNode(itemWithTestCase, "outputExpected");
 			System.out.println("outputExpectedAsMultiLinedString " + outputExpectedAsMultiLinedString);
-			final List<Path<Edge>> expectedListOfPaths  = pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
+			final List<Path<Edge>> expectedListOfPaths  = outputExpectedAsMultiLinedString == null ? null : pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
 			
 			final GraphEdgesValidator<Edge> edgeGraphEdgesValidator = createGraphEdgesValidator();
 			edgeGraphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edgesForGraph);
-			edgeGraphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(expectedListOfPaths, edgesForGraph);
+			if(expectedListOfPaths != null) {
+				edgeGraphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(expectedListOfPaths, edgesForGraph);	
+			}
+			
 			assertEquals(1, nodeListWithInput.getLength()); // should only be one input element
 			Node nodeWithInputForTestCase  = nodeListWithInput.item(0);
 			//final NodeList nodeListWithInput = xmlFileReader.getNodeListMatchingXPathExpression(itemWithTestCase, "input");
