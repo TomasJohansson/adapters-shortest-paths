@@ -7,9 +7,16 @@ import java.util.Map;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.StringRenderable;
+import com.programmerare.shortestpaths.utils.EdgeUtility;
 
 public final class GraphEdgesValidator<T extends Edge> {
 
+	private final static String nameOfClassForRemovingDuplicateEdges;
+	static {
+		// refactoring friendly reference to the class name
+		nameOfClassForRemovingDuplicateEdges = EdgeUtility.class.getName();
+	}
+	
 	private GraphEdgesValidator() {	}
 	
 	public static <T extends Edge> GraphEdgesValidator<T> createGraphEdgesValidator() {
@@ -30,7 +37,7 @@ public final class GraphEdgesValidator<T extends Edge> {
 		for (T edge : edges) {
 			validateNonNullObjects(edge);
 			validateNonBlankIds(edge);
-			
+
 			validateUniqueEdgeId(edge, mapForValidatingUniqueEdgeId);
 			validateUniqueVerticesIds(edge, mapForValidatingUniqueVerticesIds);
 		}		
@@ -65,7 +72,7 @@ public final class GraphEdgesValidator<T extends Edge> {
 	}
 	
 	void validateUniqueEdgeId(final T edge, final Map<String, Boolean> mapForValidatingUniqueEdgeId) {
-		throwExceptionIfConditionTrue(mapForValidatingUniqueEdgeId.containsKey(edge.getEdgeId()), "edge id must be unique wich it was not", edge);
+		throwExceptionIfConditionTrue(mapForValidatingUniqueEdgeId.containsKey(edge.getEdgeId()), "Edge id must be unique wich it was not. To remove duplicated edges, you can use a method in the class " + nameOfClassForRemovingDuplicateEdges, edge);
 		mapForValidatingUniqueEdgeId.put(edge.getEdgeId(), true);
 	}
 
