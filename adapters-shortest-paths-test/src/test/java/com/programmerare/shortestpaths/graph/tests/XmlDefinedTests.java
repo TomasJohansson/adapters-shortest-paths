@@ -12,6 +12,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -64,6 +66,13 @@ public class XmlDefinedTests {
 	
 	// TODO: currently no files in this directory but when they are created here there shuuld be a comment here similar to the comment above
 	private final static String DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI = BASE_DIRECTORY_FOR_XML_TEST_FILES + "origin_yanqi/";
+
+	/**
+	 * Used for asserting that we have tested at least a certain number of xml test files,
+	 * to avoid the potential problem that we iterated empty lists of files and then believe everything worked 
+	 * even though we actually tested nothing.
+	 */
+	private int minimumTotalNumberOfXmlTestFiles = 4; // 2 in base directory and 2 in "bsmock" (actually 3 there but one is in the exclusion list of files)  
 	
 	@Before
 	public void setUp() throws Exception {
@@ -140,12 +149,14 @@ public class XmlDefinedTests {
 		// for each new xml file with test cases, but the disadvantage is that you do not automatically see which file failed
 		// but that problem is handled in the loop below with a try/catch/throw
 
+		int counterForNumberOfXmlFilesTested = 0;
 		for (final String pathToResourcesFoldersWithXmlTestFiles : pathsToResourcesFoldersWithXmlTestFiles) {
 			final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder(pathToResourcesFoldersWithXmlTestFiles);
 			for(final String fileName : fileNames) {
 				if(fileName.toLowerCase().endsWith(".xml") && !shouldBeExcdludedInFrequentTesting(fileName)) {
 					try {
 						runTestCaseDefinedInXmlFile(pathToResourcesFoldersWithXmlTestFiles, fileName, graphFactoriesForAllImplementations);
+						counterForNumberOfXmlFilesTested++;
 					}
 					catch(Exception e) {
 						// Without try/catch here we would fail without seeing which test file caused the failure
@@ -155,6 +166,7 @@ public class XmlDefinedTests {
 				}
 			}
 		}
+		assertThat(counterForNumberOfXmlFilesTested, greaterThanOrEqualTo(minimumTotalNumberOfXmlTestFiles));
 	}
 
 	private void runTestCaseDefinedInXmlFile(
