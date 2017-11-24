@@ -44,17 +44,30 @@ public class StringUtilityTest {
 
 	@Test
 	public void testGetDoubleAsStringWithoutZeroesAndDotIfNotRelevant() {
-//		double d = 13.0;
-//		String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(d);
-//		assertEquals("13", s);
-		
 		assertDoubleResult(13, "13");
 		assertDoubleResult(13.0, "13");
 		assertDoubleResult(13.00, "13");
 		assertDoubleResult(13.001, "13.001");
 		assertDoubleResult(13.0010, "13.001");
+		
+		assertDoubleResult(1, "1");
+		assertDoubleResult(10, "10"); // should NOT remove the zero at the end
+		assertDoubleResult(100, "100");
 	}
-
+	// TODO: refactor above and below... maybe better names of the methods but maybe also 
+	// better implementation of the tested methdo without the regular expressions ...
+	@Test
+	public void testGetDoubleAsStringWithoutZeroesAndDotIfNotRelevant_String() {
+		assertStringResult("13", "13");
+		assertStringResult("13.0", "13");
+		assertStringResult("13.00", "13");
+		assertStringResult("13.001", "13.001");
+		assertStringResult("13.0010", "13.001");
+	}
+	private void assertStringResult(String doubleAsString, String expected) {
+		String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(doubleAsString);
+		assertEquals(expected, s);		
+	}
 	private void assertDoubleResult(double d, String expected) {
 		String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(d);
 		assertEquals(expected, s);
