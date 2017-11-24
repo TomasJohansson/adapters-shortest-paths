@@ -62,7 +62,7 @@ public final class PathParser {
 	 * 		Example:  "13 A B D"
 	 * @return
 	 */
-	private Path<Edge> fromStringToPath(final String pathString) {
+	Path<Edge> fromStringToPath(final String pathString) {
 		final String[] array = pathString.split("\\s+");
 
 		// TODO check "array.length" and throw exception ...
@@ -77,6 +77,21 @@ public final class PathParser {
 			edges.add(edge);
 		}		
 		return createPath(createWeight(totalWeight), edges);
+	}
+	
+	public String fromPathToString(final Path<Edge> path) {
+		final StringBuilder sb = new StringBuilder();
+		final double d = path.getTotalWeightForPath().getWeightValue();
+		final String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(d);
+		sb.append(s);
+		final List<Edge> edgesForPath = path.getEdgesForPath();
+		for (final Edge edge : edgesForPath) {
+			sb.append(" ");			
+			sb.append(edge.getStartVertex().getVertexId());
+		}
+		sb.append(" ");		
+		sb.append(edgesForPath.get(edgesForPath.size()-1).getEndVertex().getVertexId());
+		return sb.toString();
 	}
 
 	public Edge getEdgeIncludingTheWeight(final String startVertexId, final String endVertexId) {

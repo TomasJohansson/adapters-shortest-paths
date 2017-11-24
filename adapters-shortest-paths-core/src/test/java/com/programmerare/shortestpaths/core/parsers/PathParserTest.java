@@ -88,4 +88,18 @@ public class PathParserTest {
 		// the edges in the setup method do not contain any edge between vertices A and D
 		pathParser.getEdgeIncludingTheWeight("A", "D");	
 	}
+
+	// yes, I am lazy here, with two methods tested, convenient with strings compared to creating Path and Edge objects 
+	@Test
+	public void test_fromStringToPath_and_fromPathToString() {
+		// the pathParser is constructed in setup method with  two edges: A -> B (weight 5) and B -> D (weight 8) 
+		final String inputPathString = "13 A B D";
+		
+		final Path<Edge> path = pathParser.fromStringToPath(inputPathString);
+		// TODO: test below and above methods from separate test methods
+		final String outputPathString = pathParser.fromPathToString(path);
+		
+		assertEquals(inputPathString, outputPathString);
+	}
+	
 }
