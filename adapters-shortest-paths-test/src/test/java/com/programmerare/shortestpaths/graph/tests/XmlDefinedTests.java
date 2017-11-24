@@ -1,11 +1,12 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -24,6 +25,8 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
 import com.programmerare.shortestpaths.graph.utils.GraphFactories;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.utils.EdgeUtility;
+import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
 import com.programmerare.shortestpaths.utils.ResourceReader;
 import com.programmerare.shortestpaths.utils.XmlFileReader;
 
@@ -55,6 +58,34 @@ public class XmlDefinedTests {
 		edgeParser = EdgeParser.createEdgeParser();
 	}
 
+
+	/**
+	 * The content of the test data in this xml file is copied from the "bsmock" implementation: 
+	 * /tomas-fork_bsmock_k-shortest-paths/edu/ufl/cise/bsmock/graph/ksp/test/small_road_network_01.txt
+	 * It contains 28.000+ Edges, and it takes about 21 seconds with the implementation "GraphYanQi" and 421 seconds with "GraphBsmock".
+	 * Therefore it is excluded from the frequent testing.
+	 */
+	private final static String XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01 = "small_road_network_01.xml";
+
+	private final static List<String> xmlFilesToExclude = Arrays.asList(
+		XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01 // see the comment where the constant is defined    
+	);
+	
+	private boolean shouldBeExcdludedInFrequentTesting(final String xmlFileName) {
+		return xmlFilesToExclude.contains(xmlFileName);
+	}
+	
+	/**
+	 * Method for troubleshooting (or for big slow files), when you want to temporary want to focus at one 
+	 * file, as opposed to normal regression testing when all files are iterated through another test method  
+	 */
+	//@Test // enable this row when you want to used the method
+	public void temporaryTest() throws IOException {
+		// runTestCaseDefinedInXmlFile("tiny_graph_01.xml");
+		// runTestCaseDefinedInXmlFile("tiny_graph_02.xml");
+		runTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01);
+	}
+	
 	@Test
 	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method
@@ -62,7 +93,7 @@ public class XmlDefinedTests {
 		// but that problem is handled in the loop below with a try/catch/throw
 		final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder("test_graphs");
 		for(String fileName : fileNames) {
-			if(fileName.toLowerCase().endsWith(".xml")) {
+			if(fileName.toLowerCase().endsWith(".xml") && !shouldBeExcdludedInFrequentTesting(fileName)) {
 				try {
 					runTestCaseDefinedInXmlFile(fileName);
 				}
@@ -87,9 +118,20 @@ public class XmlDefinedTests {
 		
 		Node nodeWithGraphDefinition = nodeList.item(0);
 		assertNotNull(nodeWithGraphDefinition);
-//		assertEquals("kkk", nodeWithGraphDefinition.getTextContent());
-		final List<Edge> edgesForGraph = edgeParser.fromMultiLinedStringToListOfEdges(nodeWithGraphDefinition.getTextContent());
-		//assertEquals(5,  edges.size());
+
+
+		final List<Edge> edgesForGraphPotentiallyIncludingDuplicatedEdges = edgeParser.fromMultiLinedStringToListOfEdges(nodeWithGraphDefinition.getTextContent());
+		//System.out.println("edgesForGraphPotentiallyIncludingDuplicatedEdges " + edgesForGraphPotentiallyIncludingDuplicatedEdges.size());
+		// There can be duplicates in the list of edges, whcih would cause exception at validation,
+		// so therefore below instead remove duplicated with a chosen strategy 
+		// and one example file with many duplicated edges is "small_road_network_01.xml"
+		final List<Edge> edgesForGraph = EdgeUtility.getEdgesWithoutDuplicates(edgesForGraphPotentiallyIncludingDuplicatedEdges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
+		//System.out.println("edgesForGraph " + edgesForGraph.size());
+		// edgesForGraphPotentiallyIncludingDuplicatedEdges 28524
+		// edgesForGraph 28320
+		// The above output was the result when running tests for the file "small_road_network_01.xml" 
+		
+		
 		final PathParser pathParser = new PathParser(edgesForGraph);
 		
 		final NodeList nodeListWithTestCases = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/testCase");
