@@ -6,6 +6,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,6 +16,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -41,21 +45,23 @@ public class XmlDefinedTests {
 	private XmlFileReader xmlFileReader;
 	private ResourceReader resourceReader;
 	private FileReaderForGraphEdges fileReaderForGraphTestData;
-	private List<GraphFactory<Edge>> graphFactories;
 	private GraphShortestPathAssertionHelper graphShortestPathAssertionHelper;
 	private EdgeParser edgeParser;
 
+	private List<GraphFactory<Edge>> graphFactoriesForAllImplementations;
+	private List<GraphFactory<Edge>> graphFactories;
 
 	@Before
 	public void setUp() throws Exception {
 		fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges();
-		
-		graphFactories = GraphFactories.createGraphFactories();
 		graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(false);
 		
 		xmlFileReader = new XmlFileReader();
 		resourceReader = new ResourceReader();
 		edgeParser = EdgeParser.createEdgeParser();
+
+		graphFactoriesForAllImplementations = GraphFactories.createGraphFactories();
+		graphFactories = new ArrayList<GraphFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used 
 	}
 
 
@@ -81,11 +87,18 @@ public class XmlDefinedTests {
 	 */
 //	@Test // enable this row when you want to used the method
 	public void temporaryTest() throws IOException {
-		 //runTestCaseDefinedInXmlFile("tiny_graph_01.xml");
-//		runTestCaseDefinedInXmlFile("tiny_graph_02.xml"); 
-//		runTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01);
+		// Either use all factories as the first row below, or add one or more to the list which is empty after the setup method 
+		//graphFactories = graphFactoriesForAllImplementations;
+		// Use the row above OR INSTEAD some of the rows below, to specify which implementations should be used for the test
+		//graphFactories.add(new GraphFactoryYanQi<Edge>());
+		//graphFactories.add(new GraphFactoryBsmock<Edge>());
+		//graphFactories.add(new GraphFactoryJgrapht<Edge>());
+		
+//		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", graphFactories);
+//		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", graphFactories);
+//		unTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
 	}
-	
+
 	@Test
 	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method
@@ -95,7 +108,7 @@ public class XmlDefinedTests {
 		for(String fileName : fileNames) {
 			if(fileName.toLowerCase().endsWith(".xml") && !shouldBeExcdludedInFrequentTesting(fileName)) {
 				try {
-					runTestCaseDefinedInXmlFile(fileName);
+					runTestCaseDefinedInXmlFile(fileName, graphFactoriesForAllImplementations);
 				}
 				catch(Exception e) {
 					// Without try/catch here we would fail without seeing which test file caused the failure
@@ -106,11 +119,20 @@ public class XmlDefinedTests {
 		}
 	}
 
-	private void runTestCaseDefinedInXmlFile(final String nameOfXmlFileWithoutDirectoryPath) throws IOException {
-		runTestCaseDefinedInXmlFileWithPathIncludingDirectory("test_graphs/" + nameOfXmlFileWithoutDirectoryPath);
+	private void runTestCaseDefinedInXmlFile(
+		final String nameOfXmlFileWithoutDirectoryPath,
+		final List<GraphFactory<Edge>> graphFactories
+	) throws IOException {
+		runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
+			"test_graphs/" + nameOfXmlFileWithoutDirectoryPath, 
+			graphFactories
+		);
 	}
 	
-	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(final String pathToResourceXmlFile) throws IOException {
+	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
+		final String pathToResourceXmlFile, 
+		final List<GraphFactory<Edge>> graphFactories
+	) throws IOException {
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceXmlFile);
 		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/graphDefinition");
 		assertNotNull(nodeList);
@@ -228,7 +250,7 @@ public class XmlDefinedTests {
 			startVertex, 
 			endVertex, 
 			maxNumberOfPathsToTryToFind, 
-			graphFactories
+			graphFactoriesForAllImplementations
 		);
 	}
 	
