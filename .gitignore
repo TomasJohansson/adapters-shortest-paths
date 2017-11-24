@@ -29,4 +29,6 @@ hs_err_pid*
 .classpath
 .project
 target/
+*.idea/
+*.iml
 *.sqlite
