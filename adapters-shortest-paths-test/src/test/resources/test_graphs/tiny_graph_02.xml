@@ -28,15 +28,19 @@
 		    <endVertex>9</endVertex>
 		    <maxNumberOfPaths>10</maxNumberOfPaths>
 	    </input>
-	    <!--
-	    TODO ... since currently when expected result is missing here, the result will only be asserted with results from different implementations
 	    <outputExpected>
-			38 F J K
-			54 F G J K
-			57 F H J K
-			73 F G H J K
+			<!--
+			The result below has been produced by three independent implementations (asserted against each other)
+			and therefore is trusted as the correct result. To create strings as below from path objects, 
+			there is a method 'PathParser.fromPathToString' 
+			-->	    
+			10 1 2 5 8 9
+			14 1 4 5 8 9
+			19 1 4 7 8 9
+			20 1 2 5 6 9
+			21 1 2 3 6 9
+			24 1 4 5 6 9
 	    </outputExpected>
-	    -->	    
 	</testCase>
 	
 </graphTestData>
