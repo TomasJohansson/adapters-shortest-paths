@@ -96,8 +96,22 @@ public class XmlDefinedTests {
 		
 //		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", graphFactories);
 //		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", graphFactories);
-//		unTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
 	}
+	
+	/**
+	 * Testing xml file with a big graph which takes too long time for some implementations 
+	 * and therefore that file is excluded from the normal testing where all implementations are used,
+	 * and instead use this method for only testing reasonable fast implementation.
+	 * @throws IOException
+	 */
+	@Test   
+	public void testXmlFile_smallRoadNetwork01() throws IOException {
+		graphFactories.add(new GraphFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
+		// graphFactories.add(new GraphFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
+		// graphFactories.add(new GraphFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
+		runTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
+	}
+	
 
 	@Test
 	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
