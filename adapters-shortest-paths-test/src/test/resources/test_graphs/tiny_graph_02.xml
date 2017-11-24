@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphTestData>
+    <graphDefinition>
+    
+    <!--
+    the test data is from 
+    /tomas-fork_bsmock_k-shortest-paths/edu/ufl/cise/bsmock/graph/ksp/test/tiny_graph_02.txt
+    -->
+     <!-- For more comments, regarding the xml, look in "small_graph_1.xml" instead  -->
+1 2 3
+2 3 4
+4 5 2
+5 6 6
+7 8 8
+8 9 1
+1 4 7
+2 5 2
+3 6 5
+4 7 3
+5 8 4
+6 9 9
+9 1 2    
+    </graphDefinition>
+
+	<testCase>
+	    <input>
+		    <startVertex>1</startVertex>
+		    <endVertex>9</endVertex>
+		    <maxNumberOfPaths>10</maxNumberOfPaths>
+	    </input>
+	    <!--
+	    TODO ... since currently when expected result is missing here, the result will only be asserted with results from different implementations
+	    <outputExpected>
+			38 F J K
+			54 F G J K
+			57 F H J K
+			73 F G H J K
+	    </outputExpected>
+	    -->	    
+	</testCase>
+	
+</graphTestData>
