@@ -51,6 +51,10 @@ public class XmlDefinedTests {
 	private List<GraphFactory<Edge>> graphFactoriesForAllImplementations;
 	private List<GraphFactory<Edge>> graphFactories;
 
+	private List<String> pathsToResourcesFoldersWithXmlTestFiles;
+
+	private final static String BASE_DIRECTORY_FOR_XML_TEST_FILES = "test_graphs/";
+	
 	@Before
 	public void setUp() throws Exception {
 		fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges();
@@ -61,7 +65,9 @@ public class XmlDefinedTests {
 		edgeParser = EdgeParser.createEdgeParser();
 
 		graphFactoriesForAllImplementations = GraphFactories.createGraphFactories();
-		graphFactories = new ArrayList<GraphFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used 
+		graphFactories = new ArrayList<GraphFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used
+	
+		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(BASE_DIRECTORY_FOR_XML_TEST_FILES);
 	}
 
 
@@ -109,7 +115,7 @@ public class XmlDefinedTests {
 		graphFactories.add(new GraphFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
 		// graphFactories.add(new GraphFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
 		// graphFactories.add(new GraphFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
-		runTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
+		//runTestCaseDefinedInXmlFile(BASE_DIRECTORY_FOR_XML_TEST_FILES, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
 	}
 	
 
@@ -118,27 +124,31 @@ public class XmlDefinedTests {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method
 		// for each new xml file with test cases, but the disadvantage is that you do not automatically see which file failed
 		// but that problem is handled in the loop below with a try/catch/throw
-		final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder("test_graphs");
-		for(String fileName : fileNames) {
-			if(fileName.toLowerCase().endsWith(".xml") && !shouldBeExcdludedInFrequentTesting(fileName)) {
-				try {
-					runTestCaseDefinedInXmlFile(fileName, graphFactoriesForAllImplementations);
-				}
-				catch(Exception e) {
-					// Without try/catch here we would fail without seeing which test file caused the failure
-					// We might use the method 'Assert.fail' here but then we do not see the stack trace, so therefore throw exception here 
-					throw new java.lang.AssertionError("Failure for the test defined in file " + fileName + " , " + e.getMessage(), e);
+		
+		for (final String pathToResourcesFoldersWithXmlTestFiles : pathsToResourcesFoldersWithXmlTestFiles) {
+			final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder(pathToResourcesFoldersWithXmlTestFiles);
+			for(final String fileName : fileNames) {
+				if(fileName.toLowerCase().endsWith(".xml") && !shouldBeExcdludedInFrequentTesting(fileName)) {
+					try {
+						runTestCaseDefinedInXmlFile(pathToResourcesFoldersWithXmlTestFiles, fileName, graphFactoriesForAllImplementations);
+					}
+					catch(Exception e) {
+						// Without try/catch here we would fail without seeing which test file caused the failure
+						// We might use the method 'Assert.fail' here but then we do not see the stack trace, so therefore throw exception here 
+						throw new java.lang.AssertionError("Failure for the test defined in file " + fileName + " , " + e.getMessage(), e);
+					}
 				}
 			}
 		}
 	}
 
 	private void runTestCaseDefinedInXmlFile(
+		final String pathToResourcesFoldersIncludingTrailingSlash, 
 		final String nameOfXmlFileWithoutDirectoryPath,
 		final List<GraphFactory<Edge>> graphFactories
 	) throws IOException {
 		runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
-			"test_graphs/" + nameOfXmlFileWithoutDirectoryPath, 
+			pathToResourcesFoldersIncludingTrailingSlash + nameOfXmlFileWithoutDirectoryPath, 
 			graphFactories
 		);
 	}
