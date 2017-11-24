@@ -54,6 +54,16 @@ public class XmlDefinedTests {
 	private List<String> pathsToResourcesFoldersWithXmlTestFiles;
 
 	private final static String BASE_DIRECTORY_FOR_XML_TEST_FILES = "test_graphs/";
+	/**
+	 * The test data in the xml files are based on test data found in the implementation library 
+	 * for the implementation "bsmock", i.e. the txt files in the following directory:
+	 * https://github.com/bsmock/k-shortest-paths/tree/master/edu/ufl/cise/bsmock/graph/ksp/test 
+	 * https://github.com/TomasJohansson/k-shortest-paths/tree/master/edu/ufl/cise/bsmock/graph/ksp/test
+	 */
+	private final static String DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK = BASE_DIRECTORY_FOR_XML_TEST_FILES + "origin_bsmock/";
+	
+	// TODO: currently no files in this directory but when they are created here there shuuld be a comment here similar to the comment above
+	private final static String DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI = BASE_DIRECTORY_FOR_XML_TEST_FILES + "origin_yanqi/";
 	
 	@Before
 	public void setUp() throws Exception {
@@ -67,7 +77,11 @@ public class XmlDefinedTests {
 		graphFactoriesForAllImplementations = GraphFactories.createGraphFactories();
 		graphFactories = new ArrayList<GraphFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used
 	
-		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(BASE_DIRECTORY_FOR_XML_TEST_FILES);
+		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(
+			DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, 
+			//DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, // TODO: activate this when the files have been added/created in the directory
+			BASE_DIRECTORY_FOR_XML_TEST_FILES // yes the base directory itself also currently has some xml test files
+		);
 	}
 
 
@@ -84,6 +98,7 @@ public class XmlDefinedTests {
 	);
 	
 	private boolean shouldBeExcdludedInFrequentTesting(final String xmlFileName) {
+
 		return xmlFilesToExclude.contains(xmlFileName);
 	}
 	
@@ -124,7 +139,7 @@ public class XmlDefinedTests {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method
 		// for each new xml file with test cases, but the disadvantage is that you do not automatically see which file failed
 		// but that problem is handled in the loop below with a try/catch/throw
-		
+
 		for (final String pathToResourcesFoldersWithXmlTestFiles : pathsToResourcesFoldersWithXmlTestFiles) {
 			final List<String> fileNames = resourceReader.getNameOfFilesInResourcesFolder(pathToResourcesFoldersWithXmlTestFiles);
 			for(final String fileName : fileNames) {
