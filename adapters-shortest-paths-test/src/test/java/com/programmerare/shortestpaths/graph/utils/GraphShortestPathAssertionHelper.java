@@ -1,5 +1,7 @@
 package com.programmerare.shortestpaths.graph.utils;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -84,7 +86,7 @@ public class GraphShortestPathAssertionHelper {
 		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForGraph);
 		
 		final PathParser pathParser = new PathParser(edgesForGraph);
-		
+		assertThat("At least some implementation should be used", graphFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < graphFactoriesForImplementationsToTest.size(); i++) {
 			final GraphFactory<Edge> graphFactory = graphFactoriesForImplementationsToTest.get(i);
 			
@@ -94,6 +96,8 @@ public class GraphShortestPathAssertionHelper {
 				GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
 			);
 			final List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
+			assertNotNull(shortestPaths);
+			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
 			output("seconds : " + tm.getSeconds() + " for implementation " + graph.getClass().getName());
 			if(shouldPrettyPrintListOfPathsToTheConsoleOutput) {
 				output("Implementation " + graphFactory.getClass().getSimpleName());

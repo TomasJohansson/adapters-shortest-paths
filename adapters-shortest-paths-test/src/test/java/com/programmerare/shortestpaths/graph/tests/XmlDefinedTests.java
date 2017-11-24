@@ -88,7 +88,7 @@ public class XmlDefinedTests {
 	
 		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(
 			DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, 
-			//DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, // TODO: activate this when the files have been added/created in the directory
+			// DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, // TODO: activate this when ALL the files have been added/created in the directory
 			BASE_DIRECTORY_FOR_XML_TEST_FILES // yes the base directory itself also currently has some xml test files
 		);
 	}
@@ -115,10 +115,10 @@ public class XmlDefinedTests {
 	 * Method for troubleshooting (or for big slow files), when you want to temporary want to focus at one 
 	 * file, as opposed to normal regression testing when all files are iterated through another test method  
 	 */
-//	@Test // enable this row when you want to used the method
+	@Test // enable this row when you want to used the method
 	public void temporaryTest() throws IOException {
 		// Either use all factories as the first row below, or add one or more to the list which is empty after the setup method 
-		//graphFactories = graphFactoriesForAllImplementations;
+		graphFactories = graphFactoriesForAllImplementations;
 		// Use the row above OR INSTEAD some of the rows below, to specify which implementations should be used for the test
 		//graphFactories.add(new GraphFactoryYanQi<Edge>());
 		//graphFactories.add(new GraphFactoryBsmock<Edge>());
@@ -126,6 +126,7 @@ public class XmlDefinedTests {
 		
 //		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", graphFactories);
 //		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", graphFactories);
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "network.xml", graphFactories);
 	}
 	
 	/**
@@ -215,7 +216,7 @@ public class XmlDefinedTests {
 			final NodeList nodeListWithInput = xmlFileReader.getNodeListMatchingXPathExpression(itemWithTestCase, "input");
 			final String outputExpectedAsMultiLinedString  = xmlFileReader.getTextContentNodeOfFirstSubNode(itemWithTestCase, "outputExpected");
 //			System.out.println("outputExpectedAsMultiLinedString " + outputExpectedAsMultiLinedString);
-			final List<Path<Edge>> expectedListOfPaths  = outputExpectedAsMultiLinedString == null ? null : pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
+			final List<Path<Edge>> expectedListOfPaths  = outputExpectedAsMultiLinedString == null || outputExpectedAsMultiLinedString.trim().equals("") ? null : pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
 			
 			final GraphEdgesValidator<Edge> edgeGraphEdgesValidator = createGraphEdgesValidator();
 			edgeGraphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edgesForGraph);
