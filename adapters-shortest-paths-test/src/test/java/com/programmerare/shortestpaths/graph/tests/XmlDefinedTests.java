@@ -81,9 +81,9 @@ public class XmlDefinedTests {
 	 */
 	//@Test // enable this row when you want to used the method
 	public void temporaryTest() throws IOException {
-		// runTestCaseDefinedInXmlFile("tiny_graph_01.xml");
+		 //runTestCaseDefinedInXmlFile("tiny_graph_01.xml");
 		// runTestCaseDefinedInXmlFile("tiny_graph_02.xml");
-		runTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01);
+//		runTestCaseDefinedInXmlFile(XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01);
 	}
 	
 	@Test
@@ -160,6 +160,7 @@ public class XmlDefinedTests {
 			final String maxNumberOfPathsAsString = xmlFileReader.getTextContentNodeOfFirstSubNode(nodeWithInputForTestCase, "maxNumberOfPaths");
 			final int maxNumberOfPaths = Integer.parseInt(maxNumberOfPathsAsString);
 			System.out.println("maxNumberOfPaths " + maxNumberOfPaths);
+			graphShortestPathAssertionHelper.setConsoleOutputDesired(true);
 			graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(
 				edgesForGraph, 
 				createVertex(startVertexId), 
@@ -167,7 +168,7 @@ public class XmlDefinedTests {
 				maxNumberOfPaths, 
 				graphFactories,
 				expectedListOfPaths, // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
-				false // true // true when we want "debug output"
+				true// true // true when we want "debug output"
 			);
 		}
 	}

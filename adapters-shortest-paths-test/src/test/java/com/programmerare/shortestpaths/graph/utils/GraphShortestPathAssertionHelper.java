@@ -14,6 +14,7 @@ import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.utils.TimeMeasurer;
@@ -32,10 +33,8 @@ import com.programmerare.shortestpaths.utils.TimeMeasurer;
  */
 public class GraphShortestPathAssertionHelper {
 	
-	private boolean isExecutingThroughTheMainMethod;
-
 	public GraphShortestPathAssertionHelper(boolean isExecutingThroughTheMainMethod) {
-		this.isExecutingThroughTheMainMethod = isExecutingThroughTheMainMethod;
+		this.setConsoleOutputDesired(isExecutingThroughTheMainMethod);
 	}
 
 	/**
@@ -84,6 +83,8 @@ public class GraphShortestPathAssertionHelper {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForGraph);
 		
+		final PathParser pathParser = new PathParser(edgesForGraph);
+		
 		for (int i = 0; i < graphFactoriesForImplementationsToTest.size(); i++) {
 			final GraphFactory<Edge> graphFactory = graphFactoriesForImplementationsToTest.get(i);
 			
@@ -95,7 +96,9 @@ public class GraphShortestPathAssertionHelper {
 			final List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			output("seconds : " + tm.getSeconds() + " for implementation " + graph.getClass().getName());
 			if(shouldPrettyPrintListOfPathsToTheConsoleOutput) {
+				output("Implementation " + graphFactory.getClass().getSimpleName());
 				displayListOfShortestPath(shortestPaths);
+				displayAsPathStringsWhichCanBeUsedInXml(shortestPaths, pathParser);
 			}
 			
 			for (Path<Edge> path : shortestPaths) {
@@ -137,10 +140,28 @@ public class GraphShortestPathAssertionHelper {
 		}
 	}
 
+	private void displayAsPathStringsWhichCanBeUsedInXml(List<Path<Edge>> shortestPaths, PathParser pathParser) {
+		output("-----");
+		output("The below output is in a format which can be used in xml files with test cases defining the expected output");
+		for (Path<Edge> path : shortestPaths) {
+			output(pathParser.fromPathToString(path));
+		}
+		output("-----");
+	}
+
 	private void output(Object o) {
-		if(isExecutingThroughTheMainMethod) {
+		if(isConsoleOutputDesired()) {
 			System.out.println(o);
 		}
+	}
+	
+	private boolean consoleOutputDesired = false;
+
+	public void setConsoleOutputDesired(boolean consoleOutputDesired) {
+		this.consoleOutputDesired = consoleOutputDesired;
+	}
+	private boolean isConsoleOutputDesired() {
+		return consoleOutputDesired;
 	}
 
 	private void assertEqualPaths(final String message, final Path<Edge> expectedPath, final Path<Edge> actualPath) {
@@ -184,7 +205,6 @@ public class GraphShortestPathAssertionHelper {
 //		displayListOfShortestPath(shortestPaths);
 //	}
 	private static void displayListOfShortestPath(List<Path<Edge>> shortestPaths) {
-		System.out.println("djkhasdhaskdjashdkashdkls");
 		for (Path<Edge> path : shortestPaths) {
 			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}
