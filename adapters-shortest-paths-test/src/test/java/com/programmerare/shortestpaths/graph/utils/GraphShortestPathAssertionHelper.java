@@ -165,16 +165,34 @@ public class GraphShortestPathAssertionHelper {
 	}
 
 	private void assertEqualPaths(final String message, final Path<Edge> expectedPath, final Path<Edge> actualPath) {
+		assertNotNull(expectedPath); // the expected list SHOULD not be null but you never know for sure, since it might originate from an xml file which was not properly defined or read
+		assertNotNull(actualPath);
+		assertNotNull(expectedPath.getTotalWeightForPath());
+		assertNotNull(actualPath.getTotalWeightForPath());
+		
+		final List<Edge> expectedEdges = expectedPath.getEdgesForPath(); 
+		final List<Edge> actualEdges = actualPath.getEdgesForPath();
+		assertNotNull(message, expectedEdges); // same comment as above, regarding why the expected value is asserted
+		assertNotNull(message, actualEdges);
+		double weightTotal = 0;
+		for (Edge edge : actualEdges) {
+			assertNotNull(edge.getEdgeWeight());
+			weightTotal += edge.getEdgeWeight().getWeightValue();
+		}
+		assertEquals(
+			message, 
+			weightTotal, 
+			actualPath.getTotalWeightForPath().getWeightValue(), 
+			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
+		);
+		
 		assertEquals(
 			message, 
 			expectedPath.getTotalWeightForPath().getWeightValue(), 
 			actualPath.getTotalWeightForPath().getWeightValue(), 
 			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
 		);
-		final List<Edge> expectedEdges = expectedPath.getEdgesForPath(); 
-		final List<Edge> actualEdges = actualPath.getEdgesForPath();
-		assertNotNull(message, expectedEdges); // the expected list SHOULD not be null but you never know for sure, since it might originate from an xml file which was not properly defined or read
-		assertNotNull(message, actualEdges);
+
 		assertEquals("Mismatching number of vertices/edges in the path, " + message, expectedEdges.size(), actualEdges.size());
 		for (int i = 0; i < actualEdges.size(); i++) {
 			final Edge actualEdge = actualEdges.get(i);
