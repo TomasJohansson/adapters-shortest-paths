@@ -42,4 +42,22 @@ public class StringUtilityTest {
 		
 	}
 
+	@Test
+	public void testGetDoubleAsStringWithoutZeroesAndDotIfNotRelevant() {
+//		double d = 13.0;
+//		String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(d);
+//		assertEquals("13", s);
+		
+		assertDoubleResult(13, "13");
+		assertDoubleResult(13.0, "13");
+		assertDoubleResult(13.00, "13");
+		assertDoubleResult(13.001, "13.001");
+		assertDoubleResult(13.0010, "13.001");
+	}
+
+	private void assertDoubleResult(double d, String expected) {
+		String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(d);
+		assertEquals(expected, s);
+		
+	}
 }
