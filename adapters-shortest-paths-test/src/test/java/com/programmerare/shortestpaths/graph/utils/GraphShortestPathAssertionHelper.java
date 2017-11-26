@@ -126,7 +126,7 @@ public class GraphShortestPathAssertionHelper {
 				final String failureMessage = nameOfImplementation_1 + " failed when comparing with expected result according to xml file"; 
 				assertEquals("Mismatching number of paths, " + failureMessage, expectedListOfPaths.size(), pathsFoundByImplementation_1.size());
 				for (int m = 0; m < pathsFoundByImplementation_1.size(); m++) {
-					assertEqualPaths(failureMessage, expectedListOfPaths.get(m), pathsFoundByImplementation_1.get(m));
+					assertEqualPaths(failureMessage + " , path with index " + m , expectedListOfPaths.get(m), pathsFoundByImplementation_1.get(m));
 				}					
 			}
 			
