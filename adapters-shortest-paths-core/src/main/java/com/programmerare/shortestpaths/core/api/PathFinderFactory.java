@@ -12,8 +12,12 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
 public interface PathFinderFactory<T extends Edge> {
 
 	PathFinder<T> createPathFinder(
-		List<T> edges, 
+		Graph<T> graph, 
 		GraphEdgesValidationDesired graphEdgesValidationDesired
 	);
 	
+	PathFinder<T> createPathFinder(
+		List<T> edges, 
+		GraphEdgesValidationDesired graphEdgesValidationDesired
+	);
 }
