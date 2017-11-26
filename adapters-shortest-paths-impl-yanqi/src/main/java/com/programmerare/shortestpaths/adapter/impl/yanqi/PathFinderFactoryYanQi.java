@@ -6,6 +6,7 @@ import java.util.List;
 import com.programmerare.edu.asu.emit.algorithm.graph.EdgeYanQi;
 import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
@@ -19,7 +20,8 @@ import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralString
  */
 public final class PathFinderFactoryYanQi<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
 
-	protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createPathFinderHook(final Graph<T> graph, final EdgeMapper<T> edgeMapper) {
+		final List<T> edges = graph.getAllEdges();
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();

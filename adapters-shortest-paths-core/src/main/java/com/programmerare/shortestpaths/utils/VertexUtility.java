@@ -13,6 +13,7 @@ import com.programmerare.shortestpaths.core.api.Vertex;
  */
 public final class VertexUtility {
 
+	// TODO: Refactor away this method into the new Graph class which is the natural place for it now when that class has been created
 	public final static List<Vertex> getAllVerticesFromEdgesButWithoutDuplicates(final List<? extends Edge> edges) {
 
 		final List<Vertex> vertices = new ArrayList<Vertex>();

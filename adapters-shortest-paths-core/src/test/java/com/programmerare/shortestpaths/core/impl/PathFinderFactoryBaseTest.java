@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
@@ -63,7 +64,7 @@ public class PathFinderFactoryBaseTest {
 	}
 
 	public final class PathFinderFactoryConcreteForTest<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
-		protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+		protected PathFinder<T> createPathFinderHook(final Graph<T> graph, final EdgeMapper<T> edgeMapper) {
 			return null;
 		}
 	}	

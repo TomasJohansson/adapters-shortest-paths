@@ -3,6 +3,7 @@ package com.programmerare.shortestpaths.adapter.impl.bsmock;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
@@ -15,8 +16,8 @@ import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
  */
 public final class PathFinderFactoryBsmock<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
 
-	protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
-
+	protected PathFinder<T> createPathFinderHook(final Graph<T> graph, final EdgeMapper<T> edgeMapper) {
+		final List<T> edges = graph.getAllEdges();
 		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
 		
@@ -27,6 +28,6 @@ public final class PathFinderFactoryBsmock<T extends Edge> extends PathFinderFac
 				edge.getEdgeWeight().getWeightValue()
 			);	
 		}
-		return new PathFinderBsmock(graphAdaptee, edgeMapper);
+		return new PathFinderBsmock<T>(graphAdaptee, edgeMapper);
 	}
 }

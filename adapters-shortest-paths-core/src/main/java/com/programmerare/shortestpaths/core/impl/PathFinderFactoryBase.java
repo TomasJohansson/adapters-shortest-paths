@@ -20,6 +20,7 @@ public abstract class PathFinderFactoryBase<T extends Edge> implements PathFinde
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
 		final List<T> edges = graph.getAllEdges();
+
 		// Reason for avoiding the validation: If multiple invocations will be used, it is unnecessary to do the validation multiple times.
 		// However, it is convenient if the default is to do validation internally without having to specify it.	
 		if(graphEdgesValidationDesired == GraphEdgesValidationDesired.YES) {
@@ -29,7 +30,7 @@ public abstract class PathFinderFactoryBase<T extends Edge> implements PathFinde
 		// the method below will NOT try to validate,
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 		
-		return createPathFinderHook(edges, edgeMapper);		
+		return createPathFinderHook(graph, edgeMapper);
 	}
 	
 	/**
@@ -45,5 +46,5 @@ public abstract class PathFinderFactoryBase<T extends Edge> implements PathFinde
 		return createPathFinder(graph, graphEdgesValidationDesired);
 	}
 
-	protected abstract PathFinder<T> createPathFinderHook(List<T> edges, EdgeMapper<T> edgeMapper);
+	protected abstract PathFinder<T> createPathFinderHook(Graph<T> graph, EdgeMapper<T> edgeMapper);
 }

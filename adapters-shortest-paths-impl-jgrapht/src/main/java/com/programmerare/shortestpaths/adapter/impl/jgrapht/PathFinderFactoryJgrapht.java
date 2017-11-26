@@ -7,6 +7,7 @@ import java.util.List;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
@@ -20,7 +21,8 @@ import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
  */
 public class PathFinderFactoryJgrapht<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
  
-	protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createPathFinderHook(final Graph<T> graph, final EdgeMapper<T> edgeMapper) {
+		final List<T> edges = graph.getAllEdges();
 		final SimpleDirectedWeightedGraph<String, WeightedEdge>  graphAdaptee = 
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);
@@ -33,7 +35,7 @@ public class PathFinderFactoryJgrapht<T extends Edge> extends PathFinderFactoryB
 			final WeightedEdge weightedEdge = graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
 			graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
 		}
-	    return new PathFinderJgrapht(graphAdaptee, edgeMapper);
+	    return new PathFinderJgrapht<T>(graphAdaptee, edgeMapper);
 	}
 }
 
