@@ -49,7 +49,7 @@ public class SmallGraphTest {
 		testFindShortestPaths(new PathFinderFactoryYanQi<Edge>());
 	}
 	
-	public void testFindShortestPaths(PathFinderFactory<Edge> graphFactory) {
+	public void testFindShortestPaths(PathFinderFactory<Edge> pathFinderFactory) {
 		Edge edgeAB3 = createEdge(createVertex("A"), createVertex("B"), createWeight(3));
 		Edge edgeBC5 = createEdge(createVertex("B"), createVertex("C"), createWeight(5));
 		Edge edgeCD7 = createEdge(createVertex("C"), createVertex("D"), createWeight(7));
@@ -64,11 +64,11 @@ public class SmallGraphTest {
 		// A - B - C- D  	, with weight 15 ( 3 + 5 + 7 )
 		// A - B - D  		, with weight 16 ( 3 + 13 )
 		
-		PathFinder<Edge> graph = graphFactory.createGraph(
+		PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(
 			edges,
 			GraphEdgesValidationDesired.YES // TODO: refactor the construction of edges to able to do the validation only once instead of doing it for each factory
 		);
-		List<Path<Edge>> shortestPaths = graph.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
+		List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(createVertex("A"), createVertex("D"), 5); // max 5 but actually we should only find 2
 		assertEquals(2,  shortestPaths.size());
 
 		Path<Edge> path1 = shortestPaths.get(0); // the shortest mentioned above with total weight 15

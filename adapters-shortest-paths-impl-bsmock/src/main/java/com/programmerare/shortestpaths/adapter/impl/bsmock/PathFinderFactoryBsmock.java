@@ -15,7 +15,7 @@ import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
  */
 public final class PathFinderFactoryBsmock<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
 
-	protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 
 		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();

@@ -23,7 +23,7 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
-import com.programmerare.shortestpaths.graph.utils.GraphFactories;
+import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 
 
 /**
@@ -33,7 +33,7 @@ import com.programmerare.shortestpaths.graph.utils.GraphFactories;
  * of the ids for the two vertices of the edge.
  * Either way, the ids of edges are used for being able to return the same instances as was sent as parameters. 
  * In other words, the client code sends Edge instances as parameters to the method:
- * "Graph GraphFactory.createGraph(List<T> edges)"
+ * "Graph PathFinderFactory.createGraph(List<T> edges)"
  * Then the client will get back a Graph instance and will invoke the method:
  * "List<Path<T>> Graph.findShortestPaths(Vertex startVertex, Vertex endVertex, int maxNumberOfPaths);"
  * The returned list of Path instances will aggregate instances of Edge, and those instances will be retrieved 
@@ -45,7 +45,7 @@ import com.programmerare.shortestpaths.graph.utils.GraphFactories;
  * See also javadoc comments at the test methods.
  *
  * The tests are performed for all adapter implementations.
- * (the implementation is determined by the instance of GraphFactory) 
+ * (the implementation is determined by the instance of PathFinderFactory) 
  * 
  * @author Tomas Johansson
  */
@@ -115,7 +115,7 @@ public class EdgeIdValuesTest {
 	 * 
 	 * This might look like an 'of course' for you, but it is not obvious that it should be like that 
 	 * when you consider how the API works.
-	 * One thing you should note is that the object INSTANCES of edges you send as a parameter to the GraphFactory 
+	 * One thing you should note is that the object INSTANCES of edges you send as a parameter to the PathFinderFactory 
 	 * will be returned by the Graph as being aggregated parts of returned Path objects.
 	 * The implementation will of course create its own objects and are not aware of your classes.
 	 * To make this work, there has to be some kind of mapping.
@@ -145,9 +145,9 @@ public class EdgeIdValuesTest {
 		
 		final ExpectedPath[] expectedPaths = getExpectedPaths();
 
-		final List<PathFinderFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
-		for (PathFinderFactory<Edge> graphFactory : graphFactories) {
-			verifyExpectedPaths(a, d, edges, graphFactory, expectedPaths);	
+		final List<PathFinderFactory<Edge>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+		for (PathFinderFactory<Edge> pathFinderFactory : pathFinderFactories) {
+			verifyExpectedPaths(a, d, edges, pathFinderFactory, expectedPaths);	
 		}
 	}
 	
@@ -178,18 +178,18 @@ public class EdgeIdValuesTest {
 		Vertex startVertex, 
 		Vertex endVertex, 
 		List<Edge> edges, 
-		PathFinderFactory<Edge> graphFactory,
+		PathFinderFactory<Edge> pathFinderFactory,
 		ExpectedPath[] expectedShortestPaths
 	) {
-		PathFinder<Edge> graph = graphFactory.createGraph(
+		PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(
 			edges, 
-			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
+			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 		);
-		List<Path<Edge>> actualShortestPaths = graph.findShortestPaths(startVertex, endVertex, 10);
+		List<Path<Edge>> actualShortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10);
 		
 		assertEquals(expectedShortestPaths.length, actualShortestPaths.size());
 
-		String errorContext = graphFactory.getClass().getSimpleName(); 
+		String errorContext = pathFinderFactory.getClass().getSimpleName(); 
 		for (int i = 0; i < expectedShortestPaths.length; i++) {
 			errorContext += " , i: "+ i;
 			ExpectedPath expectedPath = expectedShortestPaths[i];

@@ -30,16 +30,16 @@ public class RoadRoutingMain {
 		final City startCity = cityRoadService.getStartCity();
 		final City endCity = cityRoadService.getEndCity();
 
-		final List<PathFinderFactory<Road>> graphFactories = new ArrayList<PathFinderFactory<Road>>();
-		graphFactories.add(new PathFinderFactoryYanQi<Road>());
-		graphFactories.add(new PathFinderFactoryBsmock<Road>()); 
-		graphFactories.add(new PathFinderFactoryJgrapht<Road>());
+		final List<PathFinderFactory<Road>> pathFinderFactories = new ArrayList<PathFinderFactory<Road>>();
+		pathFinderFactories.add(new PathFinderFactoryYanQi<Road>());
+		pathFinderFactories.add(new PathFinderFactoryBsmock<Road>()); 
+		pathFinderFactories.add(new PathFinderFactoryJgrapht<Road>());
 		
 		performRoadRoutingForTheImplementations(
 			roads, 
 			startCity, 
 			endCity, 
-			graphFactories
+			pathFinderFactories
 		);
 	}
 	
@@ -47,13 +47,13 @@ public class RoadRoutingMain {
 		final List<Road> roads, 
 		final City startCity, 
 		final City endCity, 
-		final List<PathFinderFactory<Road>> graphFactories
+		final List<PathFinderFactory<Road>> pathFinderFactories
 	) {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 		GraphEdgesValidator.validateEdgesForGraphCreation(roads);
 		
-		for (PathFinderFactory<Road> graphFactory : graphFactories) {
-			performRoadRouting(roads, startCity, endCity, graphFactory);	
+		for (PathFinderFactory<Road> pathFinderFactory : pathFinderFactories) {
+			performRoadRouting(roads, startCity, endCity, pathFinderFactory);	
 		}
 	}
 
@@ -61,21 +61,21 @@ public class RoadRoutingMain {
 		final List<Road> roads, 
 		final City startCity, 
 		final City endCity, 
-		final PathFinderFactory<Road> graphFactory
+		final PathFinderFactory<Road> pathFinderFactory
 	) {
 		System.out.println("--------------------------------");
-		System.out.println("Implementation starts for " + graphFactory.getClass().getSimpleName());
+		System.out.println("Implementation starts for " + pathFinderFactory.getClass().getSimpleName());
 		
 		// Note that the datatype below is List<Road>  where "Road" is an EXAMPLE 
 		// of domain object you can create yourself.
 		// Note that such an object must implement the interface "Edge" and in particular must pay attention to 
 		// how the method "getEdgeId()" must be implemented as documented in the Edge interface.
-		final PathFinder<Road> graph = graphFactory.createGraph(
+		final PathFinder<Road> pathFinder = pathFinderFactory.createPathFinder(
 			roads, 
-			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
+			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 		); 
 		
-		final List<Path<Road>> paths = graph.findShortestPaths(startCity, endCity, 10);
+		final List<Path<Road>> paths = pathFinder.findShortestPaths(startCity, endCity, 10);
 		// Now also note that you can retrieve your own domain object (for example "Road" above) 
 		// through the returned paths when iterating the path edges, i.e. instead of a list typed as "Edge"
 		// you now have a list with "Road" and thus can use methods of that class, e.g. "getRoadName()" as below

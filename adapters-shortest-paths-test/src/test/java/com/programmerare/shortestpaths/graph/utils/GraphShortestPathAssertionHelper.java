@@ -49,14 +49,14 @@ public class GraphShortestPathAssertionHelper {
 			final Vertex startVertex,
 			final Vertex endVertex, 
 			final int numberOfPathsToFind, 
-			final List<PathFinderFactory<Edge>> graphFactoriesForImplementationsToTest
+			final List<PathFinderFactory<Edge>> pathFinderFactoriesForImplementationsToTest
 		) {
 		testResultsWithImplementationsAgainstEachOther(
 			edgesForGraph, 
 			startVertex,
 			endVertex, 
 			numberOfPathsToFind, 
-			graphFactoriesForImplementationsToTest,
+			pathFinderFactoriesForImplementationsToTest,
 			null,
 			false
 		);		
@@ -74,7 +74,7 @@ public class GraphShortestPathAssertionHelper {
 		final Vertex startVertex,
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
-		final List<PathFinderFactory<Edge>> graphFactoriesForImplementationsToTest,
+		final List<PathFinderFactory<Edge>> pathFinderFactoriesForImplementationsToTest,
 		final List<Path<Edge>> expectedListOfPaths,
 		final boolean shouldPrettyPrintListOfPathsToTheConsoleOutput
 	) {
@@ -86,21 +86,21 @@ public class GraphShortestPathAssertionHelper {
 		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForGraph);
 		
 		final PathParser pathParser = new PathParser(edgesForGraph);
-		assertThat("At least some implementation should be used", graphFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
-		for (int i = 0; i < graphFactoriesForImplementationsToTest.size(); i++) {
-			final PathFinderFactory<Edge> graphFactory = graphFactoriesForImplementationsToTest.get(i);
+		assertThat("At least some implementation should be used", pathFinderFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
+		for (int i = 0; i < pathFinderFactoriesForImplementationsToTest.size(); i++) {
+			final PathFinderFactory<Edge> pathFinderFactory = pathFinderFactoriesForImplementationsToTest.get(i);
 			
 			final TimeMeasurer tm = TimeMeasurer.start();			
-			final PathFinder<Edge> graph = graphFactory.createGraph(
+			final PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(
 				edgesForGraph,
-				GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
+				GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 			);
-			final List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
+			final List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			assertNotNull(shortestPaths);
 			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
-			output("seconds : " + tm.getSeconds() + " for implementation " + graph.getClass().getName());
+			output("seconds : " + tm.getSeconds() + " for implementation " + pathFinder.getClass().getName());
 			if(shouldPrettyPrintListOfPathsToTheConsoleOutput) {
-				output("Implementation " + graphFactory.getClass().getSimpleName());
+				output("Implementation " + pathFinderFactory.getClass().getSimpleName());
 				displayListOfShortestPath(shortestPaths);
 				displayAsPathStringsWhichCanBeUsedInXml(shortestPaths, pathParser);
 			}
@@ -109,7 +109,7 @@ public class GraphShortestPathAssertionHelper {
 				// output("shortest path weight " + path.getTotalWeightForPath().getWeightValue());
 			}
 			
-			shortestPathsPerImplementation.put(graph.getClass().getName(), shortestPaths);
+			shortestPathsPerImplementation.put(pathFinder.getClass().getName(), shortestPaths);
 			
 			final Path<Edge> shortestPath = shortestPaths.get(0);
 			final List<Edge> edgesForShortestPaths = shortestPath.getEdgesForPath();
@@ -220,10 +220,10 @@ public class GraphShortestPathAssertionHelper {
 	// ---------------------------------------------------------------------------------------
 	// TODO: these methods was copied from "/adapters-shortest-paths-example-project/src/main/java/shortest_paths_getting_started_example/ExampleMain.java"
 	// and should be refactored into a reusable utiltity method (probably in core project)
-//	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, GraphFactory<Edge> graphFactory) {
-//		System.out.println("Implementation " + graphFactory.getClass().getName());
-//		Graph<Edge> graph = graphFactory.createGraph(edgesInput);
-//		List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
+//	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, PathFinderFactory<Edge> pathFinderFactory) {
+//		System.out.println("Implementation " + pathFinderFactory.getClass().getName());
+//		Graph<Edge> graph = pathFinderFactory.createGraph(edgesInput);
+//		List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
 //		displayListOfShortestPath(shortestPaths);
 //	}
 	private static void displayListOfShortestPath(List<Path<Edge>> shortestPaths) {

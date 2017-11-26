@@ -18,7 +18,7 @@ import com.programmerare.shortestpaths.utils.StringUtility;
  *  TODO: write more/better documentation ...
  * 
  *  String reoresentation of the "List<Path<Edge>>" i.e. the same type returned from the following method: 
- * List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
+ * List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
  * The intended purpose is to define strings within xml files with the expected result
  * 
  * Each line ns a string is first the total weight and then the sequence of vertices.

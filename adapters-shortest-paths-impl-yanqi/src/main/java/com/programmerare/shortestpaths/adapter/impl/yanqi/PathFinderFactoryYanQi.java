@@ -19,7 +19,7 @@ import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralString
  */
 public final class PathFinderFactoryYanQi<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
 
-	protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();

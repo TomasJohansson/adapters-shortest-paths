@@ -17,7 +17,7 @@ public abstract class PathFinderFactoryBase<T extends Edge> implements PathFinde
 	 * @param graphEdgesValidationDesired should be NO (for performance reason) if validation has already been done
 	 * @return
 	 */
-	public final PathFinder<T> createGraph(
+	public final PathFinder<T> createPathFinder(
 		final List<T> edges, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
@@ -30,8 +30,8 @@ public abstract class PathFinderFactoryBase<T extends Edge> implements PathFinde
 		// the method below will NOT try to validate,
 		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);
 		
-		return createGraphHook(edges, edgeMapper);	
+		return createPathFinderHook(edges, edgeMapper);	
 	}
 
-	protected abstract PathFinder<T> createGraphHook(List<T> edges, EdgeMapper<T> edgeMapper);
+	protected abstract PathFinder<T> createPathFinderHook(List<T> edges, EdgeMapper<T> edgeMapper);
 }

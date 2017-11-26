@@ -15,7 +15,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.graph.utils.GraphFactories;
+import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
 
 
@@ -70,10 +70,10 @@ public class BigGraphTest {
 		final List<Edge> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
 		final Vertex startVertex = edgesForBigGraph.get(0).getStartVertex();
 		final Vertex endVertex = edgesForBigGraph.get(edgesForBigGraph.size()-1).getEndVertex();
-		final List<PathFinderFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
+		final List<PathFinderFactory<Edge>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
 		
 		GraphShortestPathAssertionHelper graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(isExecutingThroughTheMainMethod);
-		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(edgesForBigGraph, startVertex, endVertex, numberOfPathsToFind, graphFactories);
+		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(edgesForBigGraph, startVertex, endVertex, numberOfPathsToFind, pathFinderFactories);
 	}
 
 	private List<Edge> createEdgesForBigGraph(final int numberOfVertices) {

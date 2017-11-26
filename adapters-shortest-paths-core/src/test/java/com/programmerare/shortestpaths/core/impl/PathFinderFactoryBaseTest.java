@@ -27,11 +27,11 @@ public class PathFinderFactoryBaseTest {
 
 	private List<Edge> edgesForAcceptableGraph;
 	private List<Edge> edgesForUnacceptableGraph;
-	private PathFinderFactoryConcreteForTest graphFactory;
+	private PathFinderFactoryConcreteForTest pathFinderFactory;
 
 	@Before
 	public void setUp() throws Exception {
-		graphFactory = new PathFinderFactoryConcreteForTest<Edge>();
+		pathFinderFactory = new PathFinderFactoryConcreteForTest<Edge>();
 		
 		final Edge edge_A_B = createEdge(createVertex("A"), createVertex("B"), createWeight(123));
 		final Edge edge_B_C = createEdge(createVertex("B"), createVertex("C"), createWeight(456));
@@ -45,12 +45,12 @@ public class PathFinderFactoryBaseTest {
 	
 	@Test(expected = GraphEdgesValidationException.class)
 	public void testCreateGraph_SHOULD_throw_exception_for_unacceptable_graph_when_validation_REQUIRED() {
-		graphFactory.createGraph(edgesForUnacceptableGraph, GraphEdgesValidationDesired.YES);
+		pathFinderFactory.createPathFinder(edgesForUnacceptableGraph, GraphEdgesValidationDesired.YES);
 	}
 	
 	@Test
 	public void testCreateGraph_should_NOT_throw_exception_for_unacceptable_graph_when_validation_NOT_required() {
-		graphFactory.createGraph(edgesForUnacceptableGraph, GraphEdgesValidationDesired.NO);
+		pathFinderFactory.createPathFinder(edgesForUnacceptableGraph, GraphEdgesValidationDesired.NO);
 	}	
 
 	@Test
@@ -58,12 +58,12 @@ public class PathFinderFactoryBaseTest {
 		// a bit lazy to do two validation below within the same test method, 
 		// but since the graph should be acceptable, no exception should be thrown 
 		// regardless if validation is required
-		graphFactory.createGraph(edgesForAcceptableGraph, GraphEdgesValidationDesired.NO);
-		graphFactory.createGraph(edgesForAcceptableGraph, GraphEdgesValidationDesired.YES);
+		pathFinderFactory.createPathFinder(edgesForAcceptableGraph, GraphEdgesValidationDesired.NO);
+		pathFinderFactory.createPathFinder(edgesForAcceptableGraph, GraphEdgesValidationDesired.YES);
 	}
 
 	public final class PathFinderFactoryConcreteForTest<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
-		protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+		protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 			return null;
 		}
 	}	

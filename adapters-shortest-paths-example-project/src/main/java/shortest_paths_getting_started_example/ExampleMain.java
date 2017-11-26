@@ -25,17 +25,17 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
  * (and currently also usage of the "jitpack" repository since there are yet no actual releases to maven central)  
  *
  * Below is the resulting output from running the below main method:
-Implementation com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht
+Implementation com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht
 13.0 ( 5.0[A--->B]  + 8.0[B--->D] )
 15.0 ( 6.0[A--->C]  + 9.0[C--->D] )
 21.0 ( 5.0[A--->B]  + 7.0[B--->C]  + 9.0[C--->D] )
 -------------------------------------------------------------
-Implementation com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi
+Implementation com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi
 13.0 ( 5.0[A--->B]  + 8.0[B--->D] )
 15.0 ( 6.0[A--->C]  + 9.0[C--->D] )
 21.0 ( 5.0[A--->B]  + 7.0[B--->C]  + 9.0[C--->D] )
 -------------------------------------------------------------
-Implementation com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock
+Implementation com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock
 13.0 ( 5.0[A--->B]  + 8.0[B--->D] )
 15.0 ( 6.0[A--->C]  + 9.0[C--->D] )
 21.0 ( 5.0[A--->B]  + 7.0[B--->C]  + 9.0[C--->D] )
@@ -70,10 +70,10 @@ public class ExampleMain {
 	// ---------------------------------------------------------------------------------------
 	// TODO: these methods below have been copied to "/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/utils/GraphShortestPathAssertionHelper.java"
 	// and should be refactored into a reusable utiltity method (probably in core project)	
-	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, PathFinderFactory<Edge> graphFactory) {
-		System.out.println("Implementation " + graphFactory.getClass().getName());
-		PathFinder<Edge> graph = graphFactory.createGraph(edgesInput, GraphEdgesValidationDesired.NO); // do the validation one time instead of doing it for each graphFactory
-		List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
+	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, PathFinderFactory<Edge> pathFinderFactory) {
+		System.out.println("Implementation " + pathFinderFactory.getClass().getName());
+		PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(edgesInput, GraphEdgesValidationDesired.NO); // do the validation one time instead of doing it for each pathFinderFactory
+		List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
 		for (Path<Edge> path : shortestPaths) {
 			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}

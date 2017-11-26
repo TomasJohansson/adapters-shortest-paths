@@ -20,7 +20,7 @@ import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
  */
 public class PathFinderFactoryJgrapht<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
  
-	protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createPathFinderHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 		final SimpleDirectedWeightedGraph<String, WeightedEdge>  graphAdaptee = 
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);

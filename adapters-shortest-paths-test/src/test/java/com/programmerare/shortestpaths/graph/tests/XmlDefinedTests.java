@@ -28,7 +28,7 @@ import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
-import com.programmerare.shortestpaths.graph.utils.GraphFactories;
+import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
 import com.programmerare.shortestpaths.utils.EdgeUtility;
 import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
@@ -49,8 +49,8 @@ public class XmlDefinedTests {
 	private GraphShortestPathAssertionHelper graphShortestPathAssertionHelper;
 	private EdgeParser edgeParser;
 
-	private List<PathFinderFactory<Edge>> graphFactoriesForAllImplementations;
-	private List<PathFinderFactory<Edge>> graphFactories;
+	private List<PathFinderFactory<Edge>> pathFinderFactoriesForAllImplementations;
+	private List<PathFinderFactory<Edge>> pathFinderFactories;
 
 	private List<String> pathsToResourcesFoldersWithXmlTestFiles;
 
@@ -82,8 +82,8 @@ public class XmlDefinedTests {
 		resourceReader = new ResourceReader();
 		edgeParser = EdgeParser.createEdgeParser();
 
-		graphFactoriesForAllImplementations = GraphFactories.createGraphFactories();
-		graphFactories = new ArrayList<PathFinderFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used
+		pathFinderFactoriesForAllImplementations = PathFinderFactories.createPathFinderFactories();
+		pathFinderFactories = new ArrayList<PathFinderFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used
 	
 		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(
 			DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, 
@@ -135,22 +135,22 @@ public class XmlDefinedTests {
 	//@Test // enable this row when you want to used the method
 	public void temporaryTest() throws IOException {
 		// Either use all factories as the first row below, or add one or more to the list which is empty after the setup method 
-//		graphFactories = graphFactoriesForAllImplementations;
+//		pathFinderFactories = pathFinderFactoriesForAllImplementations;
 		// Use the row above OR INSTEAD some of the rows below, to specify which implementations should be used for the test
-		//graphFactories.add(new GraphFactoryYanQi<Edge>());
-		//graphFactories.add(new GraphFactoryBsmock<Edge>());
-//		graphFactories.add(new GraphFactoryJgrapht<Edge>()); // 67 seconds, compaerd to less than 1 seconds for the other two implementations 
+		//pathFinderFactories.add(new PathFinderFactoryYanQi<Edge>());
+		//pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>());
+//		pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 67 seconds, compaerd to less than 1 seconds for the other two implementations 
 		
-//		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", graphFactories);
-//		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", graphFactories);
-//		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "network.xml", graphFactories);
-//		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_5.xml", graphFactories);
-		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_50.xml", graphFactories);
-		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6_1.xml", graphFactories);
-		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6_2.xml", graphFactories);
-		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6.xml", graphFactories);
-		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_7.xml", graphFactories);
-		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_8.xml", graphFactories);
+//		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", pathFinderFactories);
+//		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", pathFinderFactories);
+//		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "network.xml", pathFinderFactories);
+//		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_5.xml", pathFinderFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_50.xml", pathFinderFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6_1.xml", pathFinderFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6_2.xml", pathFinderFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6.xml", pathFinderFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_7.xml", pathFinderFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_8.xml", pathFinderFactories);
 	}		
 	
 	/**
@@ -161,26 +161,26 @@ public class XmlDefinedTests {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		graphFactories.add(new PathFinderFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
-		// graphFactories.add(new PathFinderFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
-		// graphFactories.add(new PathFinderFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
-		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
+		pathFinderFactories.add(new PathFinderFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
+		// pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
+		// pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
 	}
 	
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
-		graphFactories.add(new PathFinderFactoryYanQi<Edge>());
-		graphFactories.add(new PathFinderFactoryBsmock<Edge>());
-		//graphFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
-		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, graphFactories);
+		pathFinderFactories.add(new PathFinderFactoryYanQi<Edge>());
+		pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>());
+		//pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
 	
 	@Test   
 	public void testXmlFile_test_50() throws IOException {
-		graphFactories.add(new PathFinderFactoryYanQi<Edge>());
-		graphFactories.add(new PathFinderFactoryBsmock<Edge>());
-		//graphFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
-		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, graphFactories);
+		pathFinderFactories.add(new PathFinderFactoryYanQi<Edge>());
+		pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>());
+		//pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, pathFinderFactories);
 	}	
 	
 	@Test
@@ -195,7 +195,7 @@ public class XmlDefinedTests {
 			for(final String fileName : fileNames) {
 				if(fileName.toLowerCase().endsWith(".xml") && !shouldBeExcdludedInFrequentTesting(fileName)) {
 					try {
-						runTestCaseDefinedInXmlFile(pathToResourcesFoldersWithXmlTestFiles, fileName, graphFactoriesForAllImplementations);
+						runTestCaseDefinedInXmlFile(pathToResourcesFoldersWithXmlTestFiles, fileName, pathFinderFactoriesForAllImplementations);
 						counterForNumberOfXmlFilesTested++;
 					}
 					catch(Exception e) {
@@ -212,17 +212,17 @@ public class XmlDefinedTests {
 	private void runTestCaseDefinedInXmlFile(
 		final String pathToResourcesFoldersIncludingTrailingSlash, 
 		final String nameOfXmlFileWithoutDirectoryPath,
-		final List<PathFinderFactory<Edge>> graphFactories
+		final List<PathFinderFactory<Edge>> pathFinderFactories
 	) throws IOException {
 		runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
 			pathToResourcesFoldersIncludingTrailingSlash + nameOfXmlFileWithoutDirectoryPath, 
-			graphFactories
+			pathFinderFactories
 		);
 	}
 	
 	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
 		final String pathToResourceXmlFile, 
-		final List<PathFinderFactory<Edge>> graphFactories
+		final List<PathFinderFactory<Edge>> pathFinderFactories
 	) throws IOException {
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceXmlFile);
 		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/graphDefinition");
@@ -280,7 +280,7 @@ public class XmlDefinedTests {
 				createVertex(startVertexId), 
 				createVertex(endVertexId), 
 				maxNumberOfPaths, 
-				graphFactories,
+				pathFinderFactories,
 				expectedListOfPaths, // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
 				consoleOutputDesired
 			);
@@ -341,7 +341,7 @@ public class XmlDefinedTests {
 			startVertex, 
 			endVertex, 
 			maxNumberOfPathsToTryToFind, 
-			graphFactoriesForAllImplementations
+			pathFinderFactoriesForAllImplementations
 		);
 	}
 	
