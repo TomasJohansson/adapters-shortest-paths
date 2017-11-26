@@ -27,7 +27,7 @@ public class PathFinderFactoryJgrapht<T extends Edge> extends PathFinderFactoryB
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);
 		
-		final List<Vertex> vertices = getAllVerticesFromEdgesButWithoutDuplicates(edges);
+		final List<Vertex> vertices = graph.getAllVertices();
 		for (final Vertex vertex : vertices) {
 			graphAdaptee.addVertex(vertex.getVertexId());	
 		}

@@ -6,4 +6,6 @@ public interface Graph<T extends Edge> {
 
 	List<T> getAllEdges();
 
+	List<Vertex> getAllVertices();
+
 }

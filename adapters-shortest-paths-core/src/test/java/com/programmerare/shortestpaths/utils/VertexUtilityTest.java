@@ -17,9 +17,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 
-/**
- * @author Tomas Johansson
- */
+@Deprecated // TODO: move code from VertexUtilityTest to GraphImplTest 
 public class VertexUtilityTest {
 
 

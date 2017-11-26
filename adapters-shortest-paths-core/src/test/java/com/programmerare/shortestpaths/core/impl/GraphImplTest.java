@@ -15,6 +15,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 
+// TODO: move code from VertexUtilityTest to GraphImplTest  
 public class GraphImplTest {
 
 	private Edge edge1, edge2;
