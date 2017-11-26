@@ -13,13 +13,11 @@
 	  
 	<dependencies>
 		<!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
-		<!-- 
 		<dependency>
 			<groupId>com.github.TomasJohansson</groupId>
 			<artifactId>adapters-shortest-paths</artifactId>
-			<version>5308d2aec13d6147c864703e1e2284a970e8c42e</version> 
+			<version>34650cce9ae4ea26fddb3301e808cce142b97fe9</version> 
 		</dependency>      
-		-->
 	</dependencies>
 	  
 </project>

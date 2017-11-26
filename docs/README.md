@@ -35,15 +35,16 @@ import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import java.util.Arrays;
 import java.util.List;
-import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 ...
 
@@ -60,13 +61,13 @@ import com.programmerare.shortestpaths.core.api.Weight;
 		createEdge(c, d, createWeight(9))
 	);
 
-	GraphFactory<Edge> graphFactory = new GraphFactoryJgrapht<Edge>();
-	// or: graphFactory = new GraphFactoryBsmock<Edge>();
-	// or: graphFactory = new GraphFactoryYanQi<Edge>();
+	PathFinderFactory<Edge> pathFinderFactory = new PathFinderFactoryJgrapht<Edge>();
+	// or: pathFinderFactory = new PathFinderFactoryBsmock<Edge>();
+	// or: pathFinderFactory = new PathFinderFactoryYanQi<Edge>();
 	// (currently there are three implementations)
 
-	Graph<Edge> graph = graphFactory.createGraph(edges);
-	List<Path<Edge>> shortestPaths = graph.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
+	PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(edges, GraphEdgesValidationDesired.YES);
+	List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
 	for (Path<Edge> path : shortestPaths) {
 		Weight totalWeightForPath = path.getTotalWeightForPath();
 		System.out.println(totalWeightForPath);
@@ -96,7 +97,7 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 	<dependency>
 		<groupId>com.github.TomasJohansson</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>ea38f9b0717d1fe11f6c84492e62e4efcf1c5c1b</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+		<version>34650cce9ae4ea26fddb3301e808cce142b97fe9</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
 	</dependency>      
 </dependencies>
 ```
