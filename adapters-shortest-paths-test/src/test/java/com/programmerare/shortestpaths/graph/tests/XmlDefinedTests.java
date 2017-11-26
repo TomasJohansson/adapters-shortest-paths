@@ -72,7 +72,7 @@ public class XmlDefinedTests {
 	 * to avoid the potential problem that we iterated empty lists of files and then believe everything worked 
 	 * even though we actually tested nothing.
 	 */
-	private int minimumTotalNumberOfXmlTestFiles = 4; // 2 in base directory and 2 in "bsmock" (actually 3 there but one is in the exclusion list of files)  
+	private int minimumTotalNumberOfXmlTestFiles = 11; // 2 in base directory and 2 in "bsmock" (actually 3 there but one is in the exclusion list of files) and some more in yanqi directory,...  
 	
 	@Before
 	public void setUp() throws Exception {
@@ -88,7 +88,7 @@ public class XmlDefinedTests {
 	
 		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(
 			DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, 
-			// DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, // TODO: activate this when ALL the files have been added/created in the directory
+			DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI,
 			BASE_DIRECTORY_FOR_XML_TEST_FILES // yes the base directory itself also currently has some xml test files
 		);
 	}
@@ -101,13 +101,31 @@ public class XmlDefinedTests {
 	 * Therefore it is excluded from the frequent testing.
 	 */
 	private final static String XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01 = "small_road_network_01.xml";
+	
+	/**
+	 * The content of the test data in this xml file is copied from the "yanqi" implementation: 
+	 * 	https://github.com/yan-qi/k-shortest-paths-java-version/blob/master/data/test_50_2
+	 * It takes too long time for one of the implementations and therefore it is excluded from the frequent testing.
+	 */	
+	private final static String XML_FILE_BIG_TEST__50_2 = "test_50_2.xml";
 
+	/**
+	 * The content of the test data in this xml file is copied from the "yanqi" implementation: 
+	 * 	https://github.com/yan-qi/k-shortest-paths-java-version/blob/master/data/test_50
+	 * It takes too long time for one of the implementations and therefore it is excluded from the frequent testing.
+	 */	
+	private final static String XML_FILE_BIG_TEST__50 = "test_50.xml";
+
+	/**
+	 * Regarding why these files are excluded, see the comments where the constants are defined
+	 */
 	private final static List<String> xmlFilesToExclude = Arrays.asList(
-		XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01 // see the comment where the constant is defined    
+		XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01,
+		XML_FILE_BIG_TEST__50_2,
+		XML_FILE_BIG_TEST__50
 	);
 	
 	private boolean shouldBeExcdludedInFrequentTesting(final String xmlFileName) {
-
 		return xmlFilesToExclude.contains(xmlFileName);
 	}
 	
@@ -115,19 +133,26 @@ public class XmlDefinedTests {
 	 * Method for troubleshooting (or for big slow files), when you want to temporary want to focus at one 
 	 * file, as opposed to normal regression testing when all files are iterated through another test method  
 	 */
-	@Test // enable this row when you want to used the method
+	//@Test // enable this row when you want to used the method
 	public void temporaryTest() throws IOException {
 		// Either use all factories as the first row below, or add one or more to the list which is empty after the setup method 
-		graphFactories = graphFactoriesForAllImplementations;
+//		graphFactories = graphFactoriesForAllImplementations;
 		// Use the row above OR INSTEAD some of the rows below, to specify which implementations should be used for the test
 		//graphFactories.add(new GraphFactoryYanQi<Edge>());
 		//graphFactories.add(new GraphFactoryBsmock<Edge>());
-		//graphFactories.add(new GraphFactoryJgrapht<Edge>());
+//		graphFactories.add(new GraphFactoryJgrapht<Edge>()); // 67 seconds, compaerd to less than 1 seconds for the other two implementations 
 		
 //		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", graphFactories);
 //		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", graphFactories);
-		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "network.xml", graphFactories);
-	}
+//		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "network.xml", graphFactories);
+//		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_5.xml", graphFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_50.xml", graphFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6_1.xml", graphFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6_2.xml", graphFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_6.xml", graphFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_7.xml", graphFactories);
+		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_8.xml", graphFactories);
+	}		
 	
 	/**
 	 * Testing xml file with a big graph which takes too long time for some implementations 
@@ -140,10 +165,25 @@ public class XmlDefinedTests {
 		graphFactories.add(new GraphFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
 		// graphFactories.add(new GraphFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
 		// graphFactories.add(new GraphFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
-		//runTestCaseDefinedInXmlFile(BASE_DIRECTORY_FOR_XML_TEST_FILES, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
 	}
 	
-
+	@Test   
+	public void testXmlFile_test_50_2() throws IOException {
+		graphFactories.add(new GraphFactoryYanQi<Edge>());
+		graphFactories.add(new GraphFactoryBsmock<Edge>());
+		//graphFactories.add(new GraphFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, graphFactories);
+	}
+	
+	@Test   
+	public void testXmlFile_test_50() throws IOException {
+		graphFactories.add(new GraphFactoryYanQi<Edge>());
+		graphFactories.add(new GraphFactoryBsmock<Edge>());
+		//graphFactories.add(new GraphFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, graphFactories);
+	}	
+	
 	@Test
 	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method
