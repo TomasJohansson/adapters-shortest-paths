@@ -12,13 +12,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**
@@ -36,20 +36,20 @@ public class SmallGraphTest {
 
 	@Test
 	public void testFindShortestPaths_Bsmock() {
-		testFindShortestPaths(new GraphFactoryBsmock<Edge>());
+		testFindShortestPaths(new PathFinderFactoryBsmock<Edge>());
 	}	
 	
 	@Test
 	public void testFindShortestPaths_Jgrapht() {
-		testFindShortestPaths(new GraphFactoryJgrapht<Edge>());
+		testFindShortestPaths(new PathFinderFactoryJgrapht<Edge>());
 	}
 	
 	@Test
 	public void testFindShortestPaths_YanQi() {
-		testFindShortestPaths(new GraphFactoryYanQi<Edge>());
+		testFindShortestPaths(new PathFinderFactoryYanQi<Edge>());
 	}
 	
-	public void testFindShortestPaths(GraphFactory<Edge> graphFactory) {
+	public void testFindShortestPaths(PathFinderFactory<Edge> graphFactory) {
 		Edge edgeAB3 = createEdge(createVertex("A"), createVertex("B"), createWeight(3));
 		Edge edgeBC5 = createEdge(createVertex("B"), createVertex("C"), createWeight(5));
 		Edge edgeCD7 = createEdge(createVertex("C"), createVertex("D"), createWeight(7));
@@ -64,7 +64,7 @@ public class SmallGraphTest {
 		// A - B - C- D  	, with weight 15 ( 3 + 5 + 7 )
 		// A - B - D  		, with weight 16 ( 3 + 13 )
 		
-		Graph<Edge> graph = graphFactory.createGraph(
+		PathFinder<Edge> graph = graphFactory.createGraph(
 			edges,
 			GraphEdgesValidationDesired.YES // TODO: refactor the construction of edges to able to do the validation only once instead of doing it for each factory
 		);

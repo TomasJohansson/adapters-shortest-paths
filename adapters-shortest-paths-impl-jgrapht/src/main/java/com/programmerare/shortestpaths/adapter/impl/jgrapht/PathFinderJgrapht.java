@@ -12,8 +12,8 @@ import org.jgrapht.alg.KShortestPaths;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
@@ -21,12 +21,12 @@ import com.programmerare.shortestpaths.core.impl.EdgeMapper;
 /**
  * @author Tomas Johansson
  */
-public final class GraphJgrapht<T extends Edge> implements Graph<T> {
+public final class PathFinderJgrapht<T extends Edge> implements PathFinder<T> {
 
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	private final EdgeMapper<T> edgeMapper;
 
-	public GraphJgrapht(
+	public PathFinderJgrapht(
 		final  SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee, 
 		final EdgeMapper<T> edgeMapper
 	) {

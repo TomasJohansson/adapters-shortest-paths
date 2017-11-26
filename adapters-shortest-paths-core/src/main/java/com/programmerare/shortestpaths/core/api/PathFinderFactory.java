@@ -9,9 +9,9 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
   */
-public interface GraphFactory<T extends Edge> {
+public interface PathFinderFactory<T extends Edge> {
 
-	Graph<T> createGraph(
+	PathFinder<T> createGraph(
 		List<T> edges, 
 		GraphEdgesValidationDesired graphEdgesValidationDesired
 	);

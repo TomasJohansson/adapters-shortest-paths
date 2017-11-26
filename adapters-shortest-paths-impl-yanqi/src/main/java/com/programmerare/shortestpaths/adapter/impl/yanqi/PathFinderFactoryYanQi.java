@@ -6,10 +6,10 @@ import java.util.List;
 import com.programmerare.edu.asu.emit.algorithm.graph.EdgeYanQi;
 import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
-import com.programmerare.shortestpaths.core.impl.GraphFactoryBase;
+import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
 /**
@@ -17,9 +17,9 @@ import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralString
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphFactoryYanQi<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
+public final class PathFinderFactoryYanQi<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
 
-	protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();
@@ -36,7 +36,7 @@ public final class GraphFactoryYanQi<T extends Edge> extends GraphFactoryBase<T>
 			vertices
 		);
 		
-		return new GraphYanQi<T>(graphAdaptee, edgeMapper, idMapper);
+		return new PathFinderYanQi<T>(graphAdaptee, edgeMapper, idMapper);
 	}
 
 

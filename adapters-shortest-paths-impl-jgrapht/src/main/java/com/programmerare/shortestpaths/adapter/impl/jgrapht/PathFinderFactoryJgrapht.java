@@ -7,20 +7,20 @@ import java.util.List;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
-import com.programmerare.shortestpaths.core.impl.GraphFactoryBase;
+import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
 
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public class GraphFactoryJgrapht<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
-
-	protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+public class PathFinderFactoryJgrapht<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
+ 
+	protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 		final SimpleDirectedWeightedGraph<String, WeightedEdge>  graphAdaptee = 
 	            new SimpleDirectedWeightedGraph<String, WeightedEdge>
 	            (WeightedEdge.class);
@@ -33,7 +33,7 @@ public class GraphFactoryJgrapht<T extends Edge> extends GraphFactoryBase<T> imp
 			final WeightedEdge weightedEdge = graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
 			graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
 		}
-	    return new GraphJgrapht(graphAdaptee, edgeMapper);
+	    return new PathFinderJgrapht(graphAdaptee, edgeMapper);
 	}
 }
 

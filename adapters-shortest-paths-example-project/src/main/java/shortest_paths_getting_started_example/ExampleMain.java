@@ -1,20 +1,22 @@
 package shortest_paths_getting_started_example;
 
-import static com.programmerare.shortestpaths.adapter.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.adapter.impl.VertexImpl.createVertex;
-import static com.programmerare.shortestpaths.adapter.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
 import java.util.Arrays;
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.Edge;
-import com.programmerare.shortestpaths.adapter.Graph;
-import com.programmerare.shortestpaths.adapter.GraphFactory;
-import com.programmerare.shortestpaths.adapter.Path;
-import com.programmerare.shortestpaths.adapter.Vertex;
-import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 /**
  * This is the only class in a minimal example showing how to use the adapter library for 
@@ -57,22 +59,25 @@ public class ExampleMain {
 			createEdge(c, d, createWeight(9))
 		);
 
-		displayShortestPathBetweenEdges(a, d, edges, new GraphFactoryJgrapht<Edge>());
-		displayShortestPathBetweenEdges(a, d, edges, new GraphFactoryYanQi<Edge>());
-		displayShortestPathBetweenEdges(a, d, edges, new GraphFactoryBsmock<Edge>());
+		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
+		GraphEdgesValidator.validateEdgesForGraphCreation(edges);
+		
+		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryJgrapht<Edge>());
+		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryYanQi<Edge>());
+		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryBsmock<Edge>());
 	}
 
 	// ---------------------------------------------------------------------------------------
 	// TODO: these methods below have been copied to "/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/utils/GraphShortestPathAssertionHelper.java"
 	// and should be refactored into a reusable utiltity method (probably in core project)	
-	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, GraphFactory<Edge> graphFactory) {
+	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, PathFinderFactory<Edge> graphFactory) {
 		System.out.println("Implementation " + graphFactory.getClass().getName());
-		Graph<Edge> graph = graphFactory.createGraph(edgesInput);
+		PathFinder<Edge> graph = graphFactory.createGraph(edgesInput, GraphEdgesValidationDesired.NO); // do the validation one time instead of doing it for each graphFactory
 		List<Path<Edge>> shortestPaths = graph.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
 		for (Path<Edge> path : shortestPaths) {
 			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}
-		System.out.println("-------------------------------------------------------------");
+  		System.out.println("-------------------------------------------------------------");
 	}
 	
 	private static String getPathAsPrettyPrintedStringForConsoleOutput(Path<Edge> path) {

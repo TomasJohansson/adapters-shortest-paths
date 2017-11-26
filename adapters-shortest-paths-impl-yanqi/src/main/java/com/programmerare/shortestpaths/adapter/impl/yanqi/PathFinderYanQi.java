@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
@@ -24,13 +24,13 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphYanQi<T extends Edge> implements Graph<T> { 
+public final class PathFinderYanQi<T extends Edge> implements PathFinder<T> { 
 
 	private final edu.asu.emit.algorithm.graph.Graph graph;
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 	private final EdgeMapper<T> edgeMapper;
 
-	public GraphYanQi(
+	public PathFinderYanQi(
 		final edu.asu.emit.algorithm.graph.Graph graph, 
 		final EdgeMapper<T> edgeMapper, 
 		final MapperForIntegerIdsAndGeneralStringIds idMapper

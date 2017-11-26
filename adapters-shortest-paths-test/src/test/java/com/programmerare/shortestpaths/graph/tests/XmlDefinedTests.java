@@ -2,6 +2,8 @@ package com.programmerare.shortestpaths.graph.tests;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -12,18 +14,15 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.GraphFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.GraphFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.GraphFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
@@ -50,8 +49,8 @@ public class XmlDefinedTests {
 	private GraphShortestPathAssertionHelper graphShortestPathAssertionHelper;
 	private EdgeParser edgeParser;
 
-	private List<GraphFactory<Edge>> graphFactoriesForAllImplementations;
-	private List<GraphFactory<Edge>> graphFactories;
+	private List<PathFinderFactory<Edge>> graphFactoriesForAllImplementations;
+	private List<PathFinderFactory<Edge>> graphFactories;
 
 	private List<String> pathsToResourcesFoldersWithXmlTestFiles;
 
@@ -84,7 +83,7 @@ public class XmlDefinedTests {
 		edgeParser = EdgeParser.createEdgeParser();
 
 		graphFactoriesForAllImplementations = GraphFactories.createGraphFactories();
-		graphFactories = new ArrayList<GraphFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used
+		graphFactories = new ArrayList<PathFinderFactory<Edge>>(); // set to empty here before each test, so add to the list if it needs to be used
 	
 		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(
 			DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, 
@@ -162,25 +161,25 @@ public class XmlDefinedTests {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		graphFactories.add(new GraphFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
-		// graphFactories.add(new GraphFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
-		// graphFactories.add(new GraphFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
+		graphFactories.add(new PathFinderFactoryYanQi<Edge>()); // 16 seconds, reasonable acceptable for frequent regression testing 
+		// graphFactories.add(new PathFinderFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
+		// graphFactories.add(new PathFinderFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, graphFactories);
 	}
 	
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
-		graphFactories.add(new GraphFactoryYanQi<Edge>());
-		graphFactories.add(new GraphFactoryBsmock<Edge>());
-		//graphFactories.add(new GraphFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
+		graphFactories.add(new PathFinderFactoryYanQi<Edge>());
+		graphFactories.add(new PathFinderFactoryBsmock<Edge>());
+		//graphFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, graphFactories);
 	}
 	
 	@Test   
 	public void testXmlFile_test_50() throws IOException {
-		graphFactories.add(new GraphFactoryYanQi<Edge>());
-		graphFactories.add(new GraphFactoryBsmock<Edge>());
-		//graphFactories.add(new GraphFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
+		graphFactories.add(new PathFinderFactoryYanQi<Edge>());
+		graphFactories.add(new PathFinderFactoryBsmock<Edge>());
+		//graphFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, graphFactories);
 	}	
 	
@@ -213,7 +212,7 @@ public class XmlDefinedTests {
 	private void runTestCaseDefinedInXmlFile(
 		final String pathToResourcesFoldersIncludingTrailingSlash, 
 		final String nameOfXmlFileWithoutDirectoryPath,
-		final List<GraphFactory<Edge>> graphFactories
+		final List<PathFinderFactory<Edge>> graphFactories
 	) throws IOException {
 		runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
 			pathToResourcesFoldersIncludingTrailingSlash + nameOfXmlFileWithoutDirectoryPath, 
@@ -223,7 +222,7 @@ public class XmlDefinedTests {
 	
 	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
 		final String pathToResourceXmlFile, 
-		final List<GraphFactory<Edge>> graphFactories
+		final List<PathFinderFactory<Edge>> graphFactories
 	) throws IOException {
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceXmlFile);
 		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/graphDefinition");

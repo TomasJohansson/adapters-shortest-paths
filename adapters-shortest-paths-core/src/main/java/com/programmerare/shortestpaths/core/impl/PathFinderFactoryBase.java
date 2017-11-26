@@ -3,21 +3,21 @@ package com.programmerare.shortestpaths.core.impl;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
-public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T> {
+public abstract class PathFinderFactoryBase<T extends Edge> implements PathFinderFactory<T> {
 	
-	protected GraphFactoryBase() { }
+	protected PathFinderFactoryBase() { }
 
 	/**
 	 * @param edges
 	 * @param graphEdgesValidationDesired should be NO (for performance reason) if validation has already been done
 	 * @return
 	 */
-	public final Graph<T> createGraph(
+	public final PathFinder<T> createGraph(
 		final List<T> edges, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
@@ -33,5 +33,5 @@ public abstract class GraphFactoryBase<T extends Edge> implements GraphFactory<T
 		return createGraphHook(edges, edgeMapper);	
 	}
 
-	protected abstract Graph<T> createGraphHook(List<T> edges, EdgeMapper<T> edgeMapper);
+	protected abstract PathFinder<T> createGraphHook(List<T> edges, EdgeMapper<T> edgeMapper);
 }

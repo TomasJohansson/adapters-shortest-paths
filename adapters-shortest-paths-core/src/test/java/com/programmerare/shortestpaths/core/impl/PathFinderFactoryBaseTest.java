@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
 
@@ -23,15 +23,15 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationExcep
  * @author Tomas Johansson
  *
  */
-public class GraphFactoryBaseTest {
+public class PathFinderFactoryBaseTest {
 
 	private List<Edge> edgesForAcceptableGraph;
 	private List<Edge> edgesForUnacceptableGraph;
-	private GraphFactoryConcreteForTest graphFactory;
+	private PathFinderFactoryConcreteForTest graphFactory;
 
 	@Before
 	public void setUp() throws Exception {
-		graphFactory = new GraphFactoryConcreteForTest<Edge>();
+		graphFactory = new PathFinderFactoryConcreteForTest<Edge>();
 		
 		final Edge edge_A_B = createEdge(createVertex("A"), createVertex("B"), createWeight(123));
 		final Edge edge_B_C = createEdge(createVertex("B"), createVertex("C"), createWeight(456));
@@ -62,8 +62,8 @@ public class GraphFactoryBaseTest {
 		graphFactory.createGraph(edgesForAcceptableGraph, GraphEdgesValidationDesired.YES);
 	}
 
-	public final class GraphFactoryConcreteForTest<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
-		protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	public final class PathFinderFactoryConcreteForTest<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
+		protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 			return null;
 		}
 	}	

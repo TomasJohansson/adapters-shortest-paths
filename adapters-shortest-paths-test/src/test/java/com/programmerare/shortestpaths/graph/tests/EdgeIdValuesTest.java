@@ -16,9 +16,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
@@ -145,8 +145,8 @@ public class EdgeIdValuesTest {
 		
 		final ExpectedPath[] expectedPaths = getExpectedPaths();
 
-		final List<GraphFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
-		for (GraphFactory<Edge> graphFactory : graphFactories) {
+		final List<PathFinderFactory<Edge>> graphFactories = GraphFactories.createGraphFactories();
+		for (PathFinderFactory<Edge> graphFactory : graphFactories) {
 			verifyExpectedPaths(a, d, edges, graphFactory, expectedPaths);	
 		}
 	}
@@ -178,10 +178,10 @@ public class EdgeIdValuesTest {
 		Vertex startVertex, 
 		Vertex endVertex, 
 		List<Edge> edges, 
-		GraphFactory<Edge> graphFactory,
+		PathFinderFactory<Edge> graphFactory,
 		ExpectedPath[] expectedShortestPaths
 	) {
-		Graph<Edge> graph = graphFactory.createGraph(
+		PathFinder<Edge> graph = graphFactory.createGraph(
 			edges, 
 			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
 		);

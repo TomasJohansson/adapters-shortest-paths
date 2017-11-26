@@ -9,8 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
@@ -20,13 +20,13 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
 /**
  * @author Tomas Johansson
  */
-public final class GraphBsmock<T extends Edge> implements Graph<T> {
+public final class PathFinderBsmock<T extends Edge> implements PathFinder<T> {
 	
 	private final Yen yenAlgorithm;
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
 	private final EdgeMapper<T> edgeMapper;
 	
-	public GraphBsmock(
+	public PathFinderBsmock(
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee, 
 		final EdgeMapper<T> edgeMapper
 	) {

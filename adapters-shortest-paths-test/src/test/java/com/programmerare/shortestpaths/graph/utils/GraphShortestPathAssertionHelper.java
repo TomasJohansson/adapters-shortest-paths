@@ -1,8 +1,8 @@
 package com.programmerare.shortestpaths.graph.utils;
 
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
-import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
@@ -49,7 +49,7 @@ public class GraphShortestPathAssertionHelper {
 			final Vertex startVertex,
 			final Vertex endVertex, 
 			final int numberOfPathsToFind, 
-			final List<GraphFactory<Edge>> graphFactoriesForImplementationsToTest
+			final List<PathFinderFactory<Edge>> graphFactoriesForImplementationsToTest
 		) {
 		testResultsWithImplementationsAgainstEachOther(
 			edgesForGraph, 
@@ -74,7 +74,7 @@ public class GraphShortestPathAssertionHelper {
 		final Vertex startVertex,
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
-		final List<GraphFactory<Edge>> graphFactoriesForImplementationsToTest,
+		final List<PathFinderFactory<Edge>> graphFactoriesForImplementationsToTest,
 		final List<Path<Edge>> expectedListOfPaths,
 		final boolean shouldPrettyPrintListOfPathsToTheConsoleOutput
 	) {
@@ -88,10 +88,10 @@ public class GraphShortestPathAssertionHelper {
 		final PathParser pathParser = new PathParser(edgesForGraph);
 		assertThat("At least some implementation should be used", graphFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < graphFactoriesForImplementationsToTest.size(); i++) {
-			final GraphFactory<Edge> graphFactory = graphFactoriesForImplementationsToTest.get(i);
+			final PathFinderFactory<Edge> graphFactory = graphFactoriesForImplementationsToTest.get(i);
 			
 			final TimeMeasurer tm = TimeMeasurer.start();			
-			final Graph<Edge> graph = graphFactory.createGraph(
+			final PathFinder<Edge> graph = graphFactory.createGraph(
 				edgesForGraph,
 				GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each graphFactory
 			);

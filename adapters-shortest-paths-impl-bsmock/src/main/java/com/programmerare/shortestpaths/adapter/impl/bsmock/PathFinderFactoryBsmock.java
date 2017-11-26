@@ -3,19 +3,19 @@ package com.programmerare.shortestpaths.adapter.impl.bsmock;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.GraphFactory;
+import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
-import com.programmerare.shortestpaths.core.impl.GraphFactoryBase;
+import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
 
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class GraphFactoryBsmock<T extends Edge> extends GraphFactoryBase<T> implements GraphFactory<T> {
+public final class PathFinderFactoryBsmock<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
 
-	protected Graph<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
+	protected PathFinder<T> createGraphHook(final List<T> edges, final EdgeMapper<T> edgeMapper) {
 
 		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern
 		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
@@ -27,6 +27,6 @@ public final class GraphFactoryBsmock<T extends Edge> extends GraphFactoryBase<T
 				edge.getEdgeWeight().getWeightValue()
 			);	
 		}
-		return new GraphBsmock(graphAdaptee, edgeMapper);
+		return new PathFinderBsmock(graphAdaptee, edgeMapper);
 	}
 }
