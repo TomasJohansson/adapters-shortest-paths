@@ -1,7 +1,5 @@
 package com.programmerare.shortestpaths.adapter.impl.jgrapht;
 
-import static com.programmerare.shortestpaths.utils.VertexUtility.getAllVerticesFromEdgesButWithoutDuplicates;
-
 import java.util.List;
 
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
