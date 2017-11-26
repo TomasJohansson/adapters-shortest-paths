@@ -39,6 +39,8 @@ public final class GraphJgrapht<T extends Edge> implements Graph<T> {
 		final Vertex endVertex, 
 		final int maxNumberOfPaths
 	) {
+		// TODO: validate here and in oter subclasses (through a new base class)
+		// that the vertices are part of the graph ... and use edgemapper for that purpose
 		final List<Path<T>> paths = new ArrayList<Path<T>>();
 
 		final String sourceVertexId = startVertex.getVertexId();
