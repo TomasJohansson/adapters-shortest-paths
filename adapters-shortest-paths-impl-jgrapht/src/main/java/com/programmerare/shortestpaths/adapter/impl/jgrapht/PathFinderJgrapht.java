@@ -39,12 +39,12 @@ public final class PathFinderJgrapht<T extends Edge> extends PathFinderBase<T> i
 	}
 
 	private void populateGraphAdapteeWithVerticesAndWeights() {
-		final List<Vertex> vertices = this.getGraph().getAllVertices();
+		final List<Vertex> vertices = this.getGraph().getVertices();
 		for (final Vertex vertex : vertices) {
 			this.graphAdaptee.addVertex(vertex.getVertexId());	
 		}
 		
-		final List<T> edges = this.getGraph().getAllEdges();
+		final List<T> edges = this.getGraph().getEdges();
 		for (final T edge : edges) {
 			final WeightedEdge weightedEdge = this.graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
 			this.graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 

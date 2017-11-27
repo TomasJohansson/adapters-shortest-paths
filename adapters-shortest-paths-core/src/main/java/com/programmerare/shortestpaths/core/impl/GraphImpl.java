@@ -27,11 +27,11 @@ public class GraphImpl<T extends Edge> implements Graph<T> {
 		return g;
 	}
 	
-	public List getAllEdges() {
+	public List getEdges() {
 		return edges;
 	}
 
-	public List<Vertex> getAllVertices() {
+	public List<Vertex> getVertices() {
 		final List<Vertex> vertices = new ArrayList<Vertex>();
 		final Map<String, Boolean> map = new HashMap<String, Boolean>();
 		for (final Edge edge : edges) {

@@ -34,7 +34,7 @@ public class GraphImplTest {
 		List<Edge> edges = Arrays.asList(edge1, edge2);
 		Graph<Edge> graph = createGraph(edges);
 		
-		List<Edge> allEdges = graph.getAllEdges();
+		List<Edge> allEdges = graph.getEdges();
 		
 		assertEquals(2,  allEdges.size());
 		assertSame(edge1, allEdges.get(0));
@@ -53,7 +53,7 @@ public class GraphImplTest {
 		);
 		Graph<Edge> graph = createGraph(edges);
 		
-		List<Vertex> vertices = graph.getAllVertices();
+		List<Vertex> vertices = graph.getVertices();
 		
 		List<String> expectedVerticesIds = Arrays.asList("A", "B", "C", "D");
 		

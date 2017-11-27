@@ -25,12 +25,12 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 		// Reason for avoiding the validation: If multiple invocations will be used, it is unnecessary to do the validation multiple times.
 		// However, it is convenient if the default is to do validation internally without having to specify it.	
 		if(graphEdgesValidationDesired == GraphEdgesValidationDesired.YES) {
-			GraphEdgesValidator.validateEdgesForGraphCreation(graph.getAllEdges());
+			GraphEdgesValidator.validateEdgesForGraphCreation(graph.getEdges());
 		}
 		// Prevondition to method below is that validation (as above) is performed i.e. 
 		// the method below will NOT try to validate,
 //		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);		
-		edgeMapper = EdgeMapper.createEdgeMapper(graph.getAllEdges());
+		edgeMapper = EdgeMapper.createEdgeMapper(graph.getEdges());
 	}
 
 

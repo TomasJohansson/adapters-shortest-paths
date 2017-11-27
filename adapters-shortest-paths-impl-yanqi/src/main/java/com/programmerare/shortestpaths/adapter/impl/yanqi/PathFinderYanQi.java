@@ -51,7 +51,7 @@ public final class PathFinderYanQi<T extends Edge> extends PathFinderBase<T> imp
 	}
 
 	private List<EdgeYanQi> createListOfVerticesWhileAlsoPopulatingIdMapper(final MapperForIntegerIdsAndGeneralStringIds idMapper) {
-		final List<T> edges = this.getGraph().getAllEdges();		
+		final List<T> edges = this.getGraph().getEdges();
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();
 		for (final T edge : edges) {
 			final int integerIdForStartVertex = idMapper.createOrRetrieveIntegerId(edge.getStartVertex().getVertexId());

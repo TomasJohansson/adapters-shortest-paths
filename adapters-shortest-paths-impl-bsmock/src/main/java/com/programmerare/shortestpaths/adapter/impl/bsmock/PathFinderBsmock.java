@@ -40,7 +40,7 @@ public final class PathFinderBsmock<T extends Edge> extends PathFinderBase<T> im
 	}
 	
 	private void populateGraphAdapteeWithEdges() {
-		final List<T> edges = this.getGraph().getAllEdges();
+		final List<T> edges = this.getGraph().getEdges();
 		for (final T edge : edges) {
 			this.graphAdaptee.addEdge(
 				edge.getStartVertex().getVertexId(), 
