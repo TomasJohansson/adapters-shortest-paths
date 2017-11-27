@@ -63,7 +63,7 @@ public final class GraphEdgesValidator<T extends Edge> {
 	private void throwExceptionIfConditionTrue(boolean conditionFoExceptionToBeThrown, String exceptionMessagePrefix, StringRenderable edgeOrVertexOrWeight) {
 		if(conditionFoExceptionToBeThrown) {
 			final String exceptionMessageSuffix = edgeOrVertexOrWeight == null ? "null" : edgeOrVertexOrWeight.renderToString();
-			throw new GraphEdgesValidationException(exceptionMessagePrefix + " " + exceptionMessageSuffix);
+			throw new GraphValidationException(exceptionMessagePrefix + " " + exceptionMessageSuffix);
 		}
 	}
 

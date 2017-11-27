@@ -76,22 +76,22 @@ public class GraphEdgesValidatorTest {
 		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, vertexB, weight5));
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonNullObjects_whenEdgeIsNull() {
 		graphEdgesValidator.validateNonNullObjects(null);
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonNullObjects_whenStartVertexIsNull() {
 		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, null, vertexA, weight6));
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonNullObjects_whenEndVertexIsNull() {
 		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, null, weight6));
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonNullObjects_whenWeightIsNull() {
 		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, vertexB, null));
 	}	
@@ -106,51 +106,51 @@ public class GraphEdgesValidatorTest {
 	
 	// - - - - - -
 	// Three tests for edge id:
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenEdgeIdIsNull() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexA, vertexB, weight5));
 	}	
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenEdgeIdIsEmptyString() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexA, vertexB, weight5));
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenEdgeIdIsSomeSpaces() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexA, vertexB, weight5));
 	}	
 	
 	// - - - - - -
 	// Three tests for start vertex id:
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenStartVertexIdIsNull() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexWithNullAsId, vertexB, weight5));
 	}	
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenStartVertexIdIsEmptyString() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexWithEmptyStringAsId, vertexB, weight5));
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenStartVertexIdIsSomeSpaces() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexWithSomeSpacesAsId, vertexB, weight5));
 	}
 	
 	// - - - - - -
 	// Three tests for end vertex id:
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenEndVertexIdIsNull() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexA, vertexWithNullAsId, weight5));
 	}	
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenEndVertexIdIsEmptyString() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexA, vertexWithEmptyStringAsId, weight5));
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateNonBlankIds_whenEndVertexIdIsSomeSpaces() {
 		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexA, vertexWithSomeSpacesAsId, weight5));
 	}
@@ -170,7 +170,7 @@ public class GraphEdgesValidatorTest {
 		graphEdgesValidator.validateUniqueEdgeId(edges.get(2), mapForValidatingUniqueEdgeId);
 	}
 
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateUniqueEdgeId_whenAlllAreNotUnique() {
 		List<Edge> edges = Arrays.asList(
 			createTestEdge(stringIdX, vertexA, vertexB, weight5),
@@ -197,7 +197,7 @@ public class GraphEdgesValidatorTest {
 			graphEdgesValidator.validateUniqueVerticesIds(edges.get(2), mapForValidatingUniqueVerticesIds);		
 	}	
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateUniqueVerticesIds_whenAlllAreNotUnique() {
 		List<Edge> edges = Arrays.asList(
 			createTestEdge(stringIdX, vertexA, vertexB, weight5),
@@ -295,7 +295,7 @@ public class GraphEdgesValidatorTest {
 	}
 
 	// ----------------------------------------------------------------------------------------------
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testValidateAllPathsOnlyContainEdgesDefinedInGraph() {
 		final List<Edge> allEdgesForGraph = new ArrayList<Edge>();
 		allEdgesForGraph.add(createTestEdge("11", createTestVertex("a"), createTestVertex("b"), createTestWeight(1)));

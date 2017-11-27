@@ -8,7 +8,7 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
+import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
@@ -63,7 +63,7 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 			for (T t : edgesForPath) {
 				if(!graph.containsEdge(t)) {
 					// potential improvement: Use Notification pattern to collect all (if more than one) errors instead of throwing at the first error
-					throw new GraphEdgesValidationException("Edge in path is not part of the graph: " + t);
+					throw new GraphValidationException("Edge in path is not part of the graph: " + t);
 				}
 			}
 		}
@@ -86,7 +86,7 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 	 * @param startVertex
 	 */
 	private void throwExceptionBecauseVertexNotIncludedInGraph(final String startOrEndmessagePrefix, final Vertex vertex) {
-		throw new GraphEdgesValidationException(startOrEndmessagePrefix + " vertex is not part of the graph: " + vertex);
+		throw new GraphValidationException(startOrEndmessagePrefix + " vertex is not part of the graph: " + vertex);
 	}
 
 

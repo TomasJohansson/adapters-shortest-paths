@@ -18,7 +18,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
+import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public class PathFinderBaseTest {
 
@@ -67,7 +67,7 @@ public class PathFinderBaseTest {
 		pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesBeingPartOfTheGraph);
 	}
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void validateThatAllEdgesInAllPathsArePartOfTheGraph_SHOULD_throw_exception() {
 		PathFinderConcrete<Edge> pathFinderConcrete = new PathFinderConcrete<Edge>(graph, GraphEdgesValidationDesired.YES);
 		pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesNOTbeingPartOfTheGraph);

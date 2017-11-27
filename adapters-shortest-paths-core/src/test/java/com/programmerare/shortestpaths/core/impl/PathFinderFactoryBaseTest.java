@@ -17,7 +17,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
+import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 /**
  * Testing general behaviour independent of implementation.
@@ -46,7 +46,7 @@ public class PathFinderFactoryBaseTest {
 	}
 
 	
-	@Test(expected = GraphEdgesValidationException.class)
+	@Test(expected = GraphValidationException.class)
 	public void testCreateGraph_SHOULD_throw_exception_for_unacceptable_graph_when_validation_REQUIRED() {
 		pathFinderFactory.createPathFinder(edgesForUnacceptableGraph, GraphEdgesValidationDesired.YES);
 	}
