@@ -51,11 +51,24 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 			maxNumberOfPaths				
 		);
 
-	    // TDOO 2 maybe: use graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph
-	    // but maybe also it should be optional to perform that validation of the output list of paths
+		// TODO: Maybe it should be optional to perform this test (in a parameter)
+		validateThatAllEdgesInAllPathsArePartOfTheGraph(shortestPaths);
 		
 		return shortestPaths;
 	}
+
+	void validateThatAllEdgesInAllPathsArePartOfTheGraph(final List<Path<T>> paths) {
+		for (Path<T> path : paths) {
+			List<T> edgesForPath = path.getEdgesForPath();
+			for (T t : edgesForPath) {
+				if(!graph.containsEdge(t)) {
+					// potential improvement: Use Notification pattern to collect all (if more than one) errors instead of throwing at the first error
+					throw new GraphEdgesValidationException("Edge in path is not part of the graph: " + t);
+				}
+			}
+		}
+	}
+
 
 	private void validateThatBothVerticesArePartOfTheGraph(final Vertex startVertex, final Vertex endVertex) {
 		// potential improvement: Use Notification pattern to collect all (if more than one) errors instead of throwing at the first error
