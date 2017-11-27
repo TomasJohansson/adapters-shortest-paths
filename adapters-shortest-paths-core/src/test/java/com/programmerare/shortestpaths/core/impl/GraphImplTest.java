@@ -52,7 +52,6 @@ public class GraphImplTest {
 			createEdge(createVertex("C"), createVertex("D"), createWeight(6))
 		);
 		Graph<Edge> graph = createGraph(edges);
-		
 		List<Vertex> vertices = graph.getVertices();
 		
 		List<String> expectedVerticesIds = Arrays.asList("A", "B", "C", "D");

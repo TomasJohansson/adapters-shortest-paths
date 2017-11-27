@@ -44,7 +44,7 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 		) {
 		// TODO: validate bot input and ouutput (maybe)
 		
-		// TODO 1 : validate here first that the vertices are part of the graph ... and use edgemapper for that purpose
+		// TODO 1 : validate here first that the vertices are part of the graph
 
 		final List<Path<T>> shortestPaths = findShortestPathHook(
 			startVertex, 

@@ -10,10 +10,15 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Vertex;
 
-public class GraphImpl<T extends Edge> implements Graph<T> {
+public final class GraphImpl<T extends Edge> implements Graph<T> {
 
 	private final List<T> edges;
+	
+	private List<Vertex> vertices; // lazy loaded when it is needed
 
+	// the id is the key
+	private Map<String, Vertex> mapWithVertices; // lazy loaded at the same time some the list is pppulated
+	
 	private GraphImpl(final List<T> edges) {
 		this.edges = Collections.unmodifiableList(edges);
 	}
@@ -32,27 +37,28 @@ public class GraphImpl<T extends Edge> implements Graph<T> {
 	}
 
 	public List<Vertex> getVertices() {
-		final List<Vertex> vertices = new ArrayList<Vertex>();
-		final Map<String, Boolean> map = new HashMap<String, Boolean>();
-		for (final Edge edge : edges) {
-			if(shouldAdd(edge.getStartVertex(), map)) {
-				vertices.add(edge.getStartVertex());
+		if(vertices == null) { // lazy loading
+			final List<Vertex> vertices = new ArrayList<Vertex>(); 
+			final Map<String, Vertex> map = new HashMap<String, Vertex>();
+			for (final Edge edge : edges) {
+				final Vertex startVertex = edge.getStartVertex();
+				final Vertex endVertex = edge.getEndVertex();
+
+				if(!map.containsKey(startVertex.getVertexId())) {
+					map.put(startVertex.getVertexId(), startVertex);
+					vertices.add(startVertex);
+				}
+				
+				if(!map.containsKey(endVertex.getVertexId())) {
+					map.put(endVertex.getVertexId(), endVertex);
+					vertices.add(endVertex);
+				}			
 			}
-			if(shouldAdd(edge.getEndVertex(), map)) {
-				vertices.add(edge.getEndVertex());
-			}			
+			this.vertices = vertices;
+			this.mapWithVertices = map;
 		}
 		return vertices;
 	}
-	// TODO: refactor the above and below method which currently has simply been moved from VertexUtility
-	// which was created before the Graph type was created 
-	private final static boolean shouldAdd(final Vertex startVertex, final Map<String, Boolean> map) {
-		if(map.containsKey(startVertex.getVertexId())) {
-			return false;	
-		}
-		else {
-			map.put(startVertex.getVertexId(), true);
-			return true;	
-		}
-	}
+
+	// TODO: add a public method to check if a vertex is part of the graph, and use for validation from within 'PathFinderBase.findShortestPaths'
 }
