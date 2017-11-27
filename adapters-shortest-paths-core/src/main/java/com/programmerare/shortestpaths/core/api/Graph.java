@@ -22,4 +22,6 @@ public interface Graph<T extends Edge> {
 	 * @return true if there is a vertex in the graph with the same id as the parameter.
 	 */
 	boolean containsVertex(Vertex vertex);
+	
+	boolean containsEdge(T edge);
 }

@@ -16,8 +16,11 @@ public final class GraphImpl<T extends Edge> implements Graph<T> {
 	
 	private List<Vertex> vertices; // lazy loaded when it is needed
 
-	// the id is the key
+	// vertex id is the key
 	private Map<String, Vertex> mapWithVertices; // lazy loaded at the same time some the list is pppulated
+	
+	// edge id is the key
+	private Map<String, Edge> mapWithEdges; // lazy loaded
 	
 	private GraphImpl(final List<T> edges) {
 		this.edges = Collections.unmodifiableList(edges);
@@ -64,5 +67,15 @@ public final class GraphImpl<T extends Edge> implements Graph<T> {
 	public boolean containsVertex(final Vertex vertex) {
 		getVertices(); // triggers the lazy loading if needed, TODO refactor instead of using a getter for this purpose
 		return mapWithVertices.containsKey(vertex.getVertexId());
+	}
+
+	public boolean containsEdge(final T edge) {
+		if(mapWithEdges == null) {
+			mapWithEdges = new HashMap<String, Edge>();
+			for (T t : edges) {
+				mapWithEdges.put(t.getEdgeId(), t);
+			}			
+		}
+		return mapWithEdges.containsKey(edge.getEdgeId());
 	}
 }

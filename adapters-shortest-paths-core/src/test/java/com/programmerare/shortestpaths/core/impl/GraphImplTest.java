@@ -77,4 +77,16 @@ public class GraphImplTest {
 		Vertex vertex = createVertex("QWERTY");
 		assertFalse(graph.containsVertex(vertex));
 	}
+	// TODO: refactor some code duplicated above and below i.e. put some code in setup method
+	@Test
+	public void testContainsEdge() {
+		List<Edge> edges = Arrays.asList(edge1, edge2);
+		Graph<Edge> graph = createGraph(edges);		
+
+		assertTrue(graph.containsEdge(edge1));
+		assertTrue(graph.containsEdge(edge2));
+		
+		Edge edgeNotInTheGraph = createEdge(createVertex("XYZ"), createVertex("QWERTY"), createWeight(987));
+		assertFalse(graph.containsEdge(edgeNotInTheGraph));
+	}	
 }
