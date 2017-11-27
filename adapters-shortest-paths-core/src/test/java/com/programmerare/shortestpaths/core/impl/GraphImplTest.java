@@ -6,8 +6,7 @@ import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +41,7 @@ public class GraphImplTest {
 	}
 	
 	@Test
-	public void testGetAllVerticesFromVerticesButWithoutDuplicates() {
+	public void testGetVertices() {
 		List<Edge> edges = Arrays.asList(
 			createEdge(createVertex("A"), createVertex("B"), createWeight(1)),
 			createEdge(createVertex("A"), createVertex("C"), createWeight(2)),
@@ -63,5 +62,19 @@ public class GraphImplTest {
 			assertThat(expectedVerticesIds, hasItem(edge.getStartVertex().getVertexId()));
 			assertThat(expectedVerticesIds, hasItem(edge.getEndVertex().getVertexId()));
 		}		
-	}	
+	}
+	
+	@Test
+	public void testContainsVertex() {
+		List<Edge> edges = Arrays.asList(edge1, edge2);
+		Graph<Edge> graph = createGraph(edges);		
+
+		assertTrue(graph.containsVertex(edge1.getStartVertex()));
+		assertTrue(graph.containsVertex(edge1.getEndVertex()));
+		assertTrue(graph.containsVertex(edge2.getStartVertex()));
+		assertTrue(graph.containsVertex(edge2.getEndVertex()));
+		
+		Vertex vertex = createVertex("QWERTY");
+		assertFalse(graph.containsVertex(vertex));
+	}
 }

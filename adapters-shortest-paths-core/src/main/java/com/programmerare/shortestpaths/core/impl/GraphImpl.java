@@ -60,5 +60,9 @@ public final class GraphImpl<T extends Edge> implements Graph<T> {
 		return vertices;
 	}
 
-	// TODO: add a public method to check if a vertex is part of the graph, and use for validation from within 'PathFinderBase.findShortestPaths'
+	
+	public boolean containsVertex(final Vertex vertex) {
+		getVertices(); // triggers the lazy loading if needed, TODO refactor instead of using a getter for this purpose
+		return mapWithVertices.containsKey(vertex.getVertexId());
+	}
 }
