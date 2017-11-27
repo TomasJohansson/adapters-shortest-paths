@@ -9,33 +9,49 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.EdgeMapper;
+import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 import edu.ufl.cise.bsmock.graph.ksp.Yen;
 
 /**
+ * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
+ * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderBsmock<T extends Edge> implements PathFinder<T> {
+public final class PathFinderBsmock<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> {
 	
-	private final Yen yenAlgorithm;
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
-	private final EdgeMapper<T> edgeMapper;
+	private final Yen yenAlgorithm;	
 	
-	public PathFinderBsmock(
-		final edu.ufl.cise.bsmock.graph.Graph graphAdaptee, 
-		final EdgeMapper<T> edgeMapper
+	PathFinderBsmock(
+		final Graph<T> graph, 
+		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
-		this.graphAdaptee = graphAdaptee;
-		this.edgeMapper = edgeMapper;
-		yenAlgorithm = new Yen();
+		super(graph, graphEdgesValidationDesired);
+		this.yenAlgorithm = new Yen();
+		this.graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
+		populateGraphAdapteeWithEdges();
 	}
 	
-	public List<Path<T>> findShortestPaths(
+	private void populateGraphAdapteeWithEdges() {
+		final List<T> edges = this.getGraph().getAllEdges();
+		for (final T edge : edges) {
+			this.graphAdaptee.addEdge(
+				edge.getStartVertex().getVertexId(), 
+				edge.getEndVertex().getVertexId(), 
+				edge.getEdgeWeight().getWeightValue()
+			);	
+		}
+	}
+
+	@Override
+	protected List<Path<T>> findShortestPathHook(
 		final Vertex startVertex, 
 		final Vertex endVertex, 
 		final int maxNumberOfPaths
@@ -51,7 +67,7 @@ public final class PathFinderBsmock<T extends Edge> implements PathFinder<T> {
 			final LinkedList<edu.ufl.cise.bsmock.graph.Edge> listOfEdges = path.getEdges();
 			final List<T> edges = new ArrayList<T>();
 			for (edu.ufl.cise.bsmock.graph.Edge edgeAdaptee : listOfEdges) {
-				final T edge = edgeMapper.getOriginalEdgeInstance(edgeAdaptee.getFromNode(), edgeAdaptee.getToNode());
+				final T edge = getOriginalEdgeInstance(edgeAdaptee);
 				edges.add(
 					edge
 				);				
@@ -62,4 +78,7 @@ public final class PathFinderBsmock<T extends Edge> implements PathFinder<T> {
 		return Collections.unmodifiableList(paths);
 	}
 
+	private T getOriginalEdgeInstance(final edu.ufl.cise.bsmock.graph.Edge edgeAdaptee) {
+		return super.getOriginalEdgeInstance(edgeAdaptee.getFromNode(), edgeAdaptee.getToNode());
+	}
 }

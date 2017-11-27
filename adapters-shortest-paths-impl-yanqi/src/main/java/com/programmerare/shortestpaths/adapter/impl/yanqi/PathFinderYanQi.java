@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.programmerare.edu.asu.emit.algorithm.graph.EdgeYanQi;
+import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.EdgeMapper;
+import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
 import edu.asu.emit.algorithm.graph.abstraction.BaseVertex;
@@ -24,20 +28,37 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderYanQi<T extends Edge> implements PathFinder<T> { 
+public final class PathFinderYanQi<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> { 
 
-	private final edu.asu.emit.algorithm.graph.Graph graph;
+	private final edu.asu.emit.algorithm.graph.Graph graphAdaptee;
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
-	private final EdgeMapper<T> edgeMapper;
 
-	public PathFinderYanQi(
-		final edu.asu.emit.algorithm.graph.Graph graph, 
-		final EdgeMapper<T> edgeMapper, 
-		final MapperForIntegerIdsAndGeneralStringIds idMapper
+	PathFinderYanQi(
+		final Graph<T> graph, 
+		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
-		this.graph = graph;
-		this.edgeMapper = edgeMapper;
+		super(graph, graphEdgesValidationDesired);
+
+		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
+		final List<EdgeYanQi> vertices = createListOfVerticesWhileAlsoPopulatingIdMapper(idMapper);
+		
+		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern		
+		this.graphAdaptee = new GraphPossibleToCreateProgrammatically(
+			idMapper.getNumberOfVertices(),
+			vertices
+		);
 		this.idMapper = idMapper;
+	}
+
+	private List<EdgeYanQi> createListOfVerticesWhileAlsoPopulatingIdMapper(final MapperForIntegerIdsAndGeneralStringIds idMapper) {
+		final List<T> edges = this.getGraph().getAllEdges();		
+		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();
+		for (final T edge : edges) {
+			final int integerIdForStartVertex = idMapper.createOrRetrieveIntegerId(edge.getStartVertex().getVertexId());
+			final int integerIdForEndVertex = idMapper.createOrRetrieveIntegerId(edge.getEndVertex().getVertexId());
+			vertices.add(new EdgeYanQi(integerIdForStartVertex, integerIdForEndVertex, edge.getEdgeWeight().getWeightValue()));
+		}
+		return vertices;
 	}
 
 	/**
@@ -47,7 +68,8 @@ public final class PathFinderYanQi<T extends Edge> implements PathFinder<T> {
 	 * Otherwise, if the semantic of the method is not respected it can not for example be tested 
 	 * against results from other implementations since then they would return a different number of paths.      
 	 */
-	public List<Path<T>> findShortestPaths(
+	@Override
+	protected List<Path<T>> findShortestPathHook(
 		final Vertex startVertex, 
 		final Vertex endVertex, 
 		final int maxNumberOfPaths
@@ -55,7 +77,7 @@ public final class PathFinderYanQi<T extends Edge> implements PathFinder<T> {
 		final List<Path<T>> paths = new ArrayList<Path<T>>();
 		final int startVertexId = idMapper.createOrRetrieveIntegerId(startVertex.getVertexId());
 		final int endVertexId = idMapper.createOrRetrieveIntegerId(endVertex.getVertexId());
-		final YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graph, graph.getVertex(startVertexId), graph.getVertex(endVertexId));
+		final YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graphAdaptee, graphAdaptee.getVertex(startVertexId), graphAdaptee.getVertex(endVertexId));
 		while(yenAlg.hasNext()) {
 			final edu.asu.emit.algorithm.graph.Path path = yenAlg.next();
 			final List<T> edges = new ArrayList<T>();
@@ -63,9 +85,7 @@ public final class PathFinderYanQi<T extends Edge> implements PathFinder<T> {
 			for (int i = 1; i < vertexList.size(); i++) {
 				final BaseVertex startVertexForEdge = vertexList.get(i-1);
 				final BaseVertex endVertexForEdge = vertexList.get(i);
-				final String startVertexString = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(startVertexForEdge.getId());
-				final String endVertexString = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(endVertexForEdge.getId());
-				final T edge = edgeMapper.getOriginalEdgeInstance(startVertexString, endVertexString);
+				final T edge = getOriginalEdgeInstance(startVertexForEdge, endVertexForEdge); 
 				edges.add(
 					edge
 				);				
@@ -77,5 +97,11 @@ public final class PathFinderYanQi<T extends Edge> implements PathFinder<T> {
 			}
 		}
 		return Collections.unmodifiableList(paths);
+	}
+
+	private T getOriginalEdgeInstance(final BaseVertex startVertexForEdge, final BaseVertex endVertexForEdge) {
+		final String startVertexId = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(startVertexForEdge.getId());
+		final String endVertexId = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(endVertexForEdge.getId());		
+		return super.getOriginalEdgeInstance(startVertexId, endVertexId);
 	}
 }

@@ -12,8 +12,10 @@ import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
+import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
 
@@ -63,9 +65,21 @@ public class PathFinderFactoryBaseTest {
 		pathFinderFactory.createPathFinder(edgesForAcceptableGraph, GraphEdgesValidationDesired.YES);
 	}
 
-	public final class PathFinderFactoryConcreteForTest<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
-		protected PathFinder<T> createPathFinderHook(final Graph<T> graph, final EdgeMapper<T> edgeMapper) {
+	public final class PathFinderConcreteForTest<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> {
+		public PathFinderConcreteForTest(Graph<T> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
+			super(graph, graphEdgesValidationDesired);
+		}
+		@Override
+		protected List<Path<T>> findShortestPathHook(Vertex startVertex, Vertex endVertex, int maxNumberOfPaths) {
 			return null;
+		}
+	}
+	public final class PathFinderFactoryConcreteForTest<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
+		public PathFinder<T> createPathFinder(Graph<T> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
+			return new PathFinderConcreteForTest<T>(
+				graph, 
+				graphEdgesValidationDesired
+			);
 		}
 	}	
 }
