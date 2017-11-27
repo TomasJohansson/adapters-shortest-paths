@@ -8,6 +8,7 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationException;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
@@ -38,14 +39,12 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 	 * final method to enforce the validation, and then forward to the hook method for the implementations
 	 */
 	public final List<Path<T>> findShortestPaths(
-			final Vertex startVertex, 
-			final Vertex endVertex, 
-			final int maxNumberOfPaths
-		) {
-		// TODO: validate bot input and ouutput (maybe)
+		final Vertex startVertex, 
+		final Vertex endVertex, 
+		final int maxNumberOfPaths
+	) {
+		validateThatBothVerticesArePartOfTheGraph(startVertex, endVertex);
 		
-		// TODO 1 : validate here first that the vertices are part of the graph
-
 		final List<Path<T>> shortestPaths = findShortestPathHook(
 			startVertex, 
 			endVertex, 
@@ -54,10 +53,29 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 
 	    // TDOO 2 maybe: use graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph
 	    // but maybe also it should be optional to perform that validation of the output list of paths
-		//Graph<T> graph = getGraph();
 		
 		return shortestPaths;
 	}
+
+	private void validateThatBothVerticesArePartOfTheGraph(final Vertex startVertex, final Vertex endVertex) {
+		// potential improvement: Use Notification pattern to collect all (if more than one) errors instead of throwing at the first error
+		if(!graph.containsVertex(startVertex)) {
+			throwExceptionBecauseVertexNotIncludedInGraph("start", startVertex);
+		}
+		if(!graph.containsVertex(endVertex)) {
+			throwExceptionBecauseVertexNotIncludedInGraph("end", endVertex);
+		}		
+	}
+
+
+	/**
+	 * @param startOrEndmessagePrefix intended to be one of the strings "start" or "end"
+	 * @param startVertex
+	 */
+	private void throwExceptionBecauseVertexNotIncludedInGraph(final String startOrEndmessagePrefix, final Vertex vertex) {
+		throw new GraphEdgesValidationException(startOrEndmessagePrefix + " vertex is not part of the graph: " + vertex);
+	}
+
 
 	public T getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
 		return edgeMapper.getOriginalEdgeInstance(startVertexId, endVertexId);
