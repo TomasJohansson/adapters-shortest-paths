@@ -4,7 +4,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 /**
  * Used for trying to enforce that implementations of core types (Vertex, Edge, Weight)
- * will output useful string, which is used in validation methods in class {@link GraphEdgesValidator}.
+ * will output useful strings, which is used in validation methods in class {@link GraphEdgesValidator}.
  * Another reason for introducing the interface was to the avoid ugliness of otherwise letting a method 
  * receive type "Object" as a parameter when you want to use "toString" when the actual objects
  * are one of Vertex, Edge or Weight, but those three types did not have any common base type before this interface was introduced.
