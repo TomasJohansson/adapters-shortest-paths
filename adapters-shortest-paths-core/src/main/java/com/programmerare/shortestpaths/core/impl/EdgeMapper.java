@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * Edge is an interface which the implementations will not know of.
@@ -18,9 +19,9 @@ import com.programmerare.shortestpaths.core.api.Vertex;
  * and therefore it is desirable to map them back to the original instances, which is the purpose of this class.
  * @author Tomas Johansson
  */
-public final class EdgeMapper<T extends Edge> {
+public final class EdgeMapper<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 
-	private final Map<String, T> edgeMapWithVertexIdsAsKey = new HashMap<String, T>();
+	private final Map<String, E> edgeMapWithVertexIdsAsKey = new HashMap<String, E>();
 
 	
 	/**
@@ -29,34 +30,34 @@ public final class EdgeMapper<T extends Edge> {
 	 * @param edges a list of edges to be used for constructing a graph. Note that they are assumed to be validated as a precondition.
 	 * @return
 	 */
-	static <T extends Edge> EdgeMapper<T> createEdgeMapper(final List<T> edges) {
-		return new EdgeMapper(edges);
+	static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeMapper<E, V, W> createEdgeMapper(final List<E> edges) {
+		return new EdgeMapper<E, V, W>(edges);
 	}
 	
-	private  EdgeMapper(final List<T> edges) {
-		for (T edge : edges) {
+	private EdgeMapper(final List<E> edges) {
+		for (E edge : edges) {
 			final String idForMapping = getIdForMapping(edge);
 			edgeMapWithVertexIdsAsKey.put(idForMapping, edge);
 		}
 	}
 
-	public List<T> getOriginalObjectInstancesOfTheEdges(final List<T> edges) {
-		final List<T> originalObjectInstancesOfTheEdges = new ArrayList<T>();
-		for (T edge : edges) {
+	public List<E> getOriginalObjectInstancesOfTheEdges(final List<E> edges) {
+		final List<E> originalObjectInstancesOfTheEdges = new ArrayList<E>();
+		for (E edge : edges) {
 			originalObjectInstancesOfTheEdges.add(edgeMapWithVertexIdsAsKey.get(getIdForMapping(edge)));
 		}		
 		return originalObjectInstancesOfTheEdges;
 	}
 
-	public T getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
+	public E getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
 		return edgeMapWithVertexIdsAsKey.get(getIdForMapping(startVertexId, endVertexId));
 	}
 	
-	private String getIdForMapping(final Edge edge) {
+	private String getIdForMapping(final E edge) {
 		return getIdForMapping(edge.getStartVertex(), edge.getEndVertex());
 	}
 	
-	private String getIdForMapping(final Vertex startVertex, final Vertex endVertex) {
+	private String getIdForMapping(final V startVertex, final V endVertex) {
 		return getIdForMapping(startVertex.getVertexId(), endVertex.getVertexId());
 	}
 	

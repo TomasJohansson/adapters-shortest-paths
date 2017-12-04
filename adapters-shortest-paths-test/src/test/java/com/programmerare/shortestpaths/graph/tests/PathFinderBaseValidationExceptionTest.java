@@ -5,7 +5,7 @@ import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -20,6 +20,7 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
@@ -29,8 +30,8 @@ import com.programmerare.shortestpaths.core.validation.GraphValidationException;
  */
 public class PathFinderBaseValidationExceptionTest {
 
-	private Edge edgeAB, edgeBC;
-	private Graph<Edge> graphWithEdges_A_B_and_B_C;
+	private Edge<Vertex, Weight> edgeAB, edgeBC;
+	private Graph<Edge<Vertex, Weight> , Vertex , Weight> graphWithEdges_A_B_and_B_C;
 	private Vertex vertexA, vertexB, vertexC, vertexX_notPartOfGraph;
 	
 	@Before
@@ -42,7 +43,10 @@ public class PathFinderBaseValidationExceptionTest {
 		
 		edgeAB = createEdge(vertexA, vertexB, createWeight(123));
 		edgeBC = createEdge(vertexB, vertexC, createWeight(456));
-		List<Edge> edges = Arrays.asList(edgeAB, edgeBC);
+		List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
+		edges.add(edgeAB);
+		edges.add(edgeBC);
+
 		graphWithEdges_A_B_and_B_C = createGraph(edges);
 	}
 
@@ -51,15 +55,15 @@ public class PathFinderBaseValidationExceptionTest {
 	// Three tests (for three implementations) with start vertex not part of the graph
 	@Test(expected = GraphValidationException.class)
 	public void incorrect_startVertex_shouldThrowException_Bsmock() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock<Edge>(), graphWithEdges_A_B_and_B_C, vertexX_notPartOfGraph, vertexC);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexX_notPartOfGraph, vertexC);
 	}	
 	@Test(expected = GraphValidationException.class)
 	public void incorrect_startVertex_shouldThrowException_Jgrapht() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht<Edge>(), graphWithEdges_A_B_and_B_C, vertexX_notPartOfGraph, vertexC);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexX_notPartOfGraph, vertexC);
 	}
 	@Test(expected = GraphValidationException.class)
 	public void incorrect_startVertex_shouldThrowException_YanQi() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi<Edge>(), graphWithEdges_A_B_and_B_C, vertexX_notPartOfGraph, vertexC);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexX_notPartOfGraph, vertexC);
 	}
 	
 	
@@ -67,15 +71,15 @@ public class PathFinderBaseValidationExceptionTest {
 	// Three tests (for three implementations) with end vertex not part of the graph 
 	@Test(expected = GraphValidationException.class)
 	public void incorrect_endVertex_shouldThrowException_Bsmock() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock<Edge>(), graphWithEdges_A_B_and_B_C, vertexA, vertexX_notPartOfGraph);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexA, vertexX_notPartOfGraph);
 	}	
 	@Test(expected = GraphValidationException.class)
 	public void incorrect_endVertex_shouldThrowException_Jgrapht() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht<Edge>(), graphWithEdges_A_B_and_B_C, vertexA, vertexX_notPartOfGraph);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexA, vertexX_notPartOfGraph);
 	}
 	@Test(expected = GraphValidationException.class)
 	public void incorrect_endVertex_shouldThrowException_YanQi() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi<Edge>(), graphWithEdges_A_B_and_B_C, vertexA, vertexX_notPartOfGraph);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexA, vertexX_notPartOfGraph);
 	}
 
 	
@@ -84,27 +88,27 @@ public class PathFinderBaseValidationExceptionTest {
 	// The purpose of the test is simply to show that these do not throw an exception (as the other tests do) and thus no assertions are done about the found paths
 	@Test
 	public void correct_startAndEndVertex_should_NOT_ThrowException_Bsmock() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock<Edge>(), graphWithEdges_A_B_and_B_C, vertexA, vertexC);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexA, vertexC);
 	}	
 	@Test
 	public void correct_startAndEndVertex_should_NOT_ThrowException_Jgrapht() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht<Edge>(), graphWithEdges_A_B_and_B_C, vertexA, vertexC);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexA, vertexC);
 	}
 	@Test
 	public void correct_startAndEndVertex_should_NOT_ThrowException__YanQi() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi<Edge>(), graphWithEdges_A_B_and_B_C, vertexA, vertexC);
+		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>(), graphWithEdges_A_B_and_B_C, vertexA, vertexC);
 	}	
 	// -------------------------------------------------------------
 
 	
 	private void shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(
-		PathFinderFactory<Edge> pathFinderFactory, 
-		Graph<Edge> graph, 
+		PathFinderFactory<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight> pathFinderFactory, 
+		Graph<Edge<Vertex, Weight> , Vertex , Weight> graph, 
 		Vertex startVertex, 
 		Vertex endVertex
 	) {
-		PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(graph, GraphEdgesValidationDesired.YES);
-		List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, maxNumberOfPaths);
+		PathFinder<Edge<Vertex, Weight> , Vertex , Weight> pathFinder = pathFinderFactory.createPathFinder(graph, GraphEdgesValidationDesired.YES);
+		List<Path<Edge<Vertex, Weight> , Vertex , Weight>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, maxNumberOfPaths);
 	}
 	
 	private final static int maxNumberOfPaths = 1;

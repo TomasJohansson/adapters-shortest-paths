@@ -5,9 +5,9 @@ import java.util.List;
 /**
  * @author Tomas Johansson
  */
-public interface Path<T extends Edge> {
+public interface Path<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 	
-	Weight getTotalWeightForPath();
+	W getTotalWeightForPath();
 	
-	List<T> getEdgesForPath();
+	List<E> getEdgesForPath();
 }

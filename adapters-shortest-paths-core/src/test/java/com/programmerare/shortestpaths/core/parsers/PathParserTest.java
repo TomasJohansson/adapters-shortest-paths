@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public class PathParserTest {
@@ -20,7 +22,7 @@ public class PathParserTest {
 	@Before
 	public void setUp() throws Exception {
 		final EdgeParser edgeParser = EdgeParser.createEdgeParser();
-		final List<Edge> edges = edgeParser.fromMultiLinedStringToListOfEdges("A B 5\r\n" + 
+		final List<Edge<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges("A B 5\r\n" + 
 				"A C 6\r\n" + 
 				"B C 7\r\n" + 
 				"B D 8\r\n" + 
@@ -43,15 +45,15 @@ public class PathParserTest {
 //			21 A B C D
 //	    </outputExpected>
 		
-		List<Path<Edge>> lListOfPaths = pathParser.fromStringToListOfPaths("13 A B D\r\n" + 
+		List<Path<Edge<Vertex, Weight>, Vertex, Weight>> lListOfPaths = pathParser.fromStringToListOfPaths("13 A B D\r\n" + 
 				"15 A C D\r\n" + 
 				"21 A B C D");
 		assertNotNull(lListOfPaths);
 		assertEquals(3,  lListOfPaths.size());
 		
-		Path<Edge> path1 = lListOfPaths.get(0); // 13 A B D
-		Path<Edge> path2 = lListOfPaths.get(1); // 15 A C D 
-		Path<Edge> path3 = lListOfPaths.get(2); // 21 A B C D
+		Path<Edge<Vertex, Weight>, Vertex, Weight> path1 = lListOfPaths.get(0); // 13 A B D
+		Path<Edge<Vertex, Weight>, Vertex, Weight> path2 = lListOfPaths.get(1); // 15 A C D 
+		Path<Edge<Vertex, Weight>, Vertex, Weight> path3 = lListOfPaths.get(2); // 21 A B C D
 		assertNotNull(path1);
 		assertNotNull(path2);
 		assertNotNull(path3);
@@ -59,9 +61,9 @@ public class PathParserTest {
 		assertEquals(15.0, path2.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		assertEquals(21.0, path3.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		
-		List<Edge> edgesForPath1 = path1.getEdgesForPath();
-		List<Edge> edgesForPath2 = path2.getEdgesForPath();
-		List<Edge> edgesForPath3 = path3.getEdgesForPath();
+		List<Edge<Vertex, Weight>> edgesForPath1 = path1.getEdgesForPath();
+		List<Edge<Vertex, Weight>> edgesForPath2 = path2.getEdgesForPath();
+		List<Edge<Vertex, Weight>> edgesForPath3 = path3.getEdgesForPath();
 		assertNotNull(edgesForPath1);
 		assertNotNull(edgesForPath2);
 		assertNotNull(edgesForPath3);
@@ -95,7 +97,7 @@ public class PathParserTest {
 		// the pathParser is constructed in setup method with  two edges: A -> B (weight 5) and B -> D (weight 8) 
 		final String inputPathString = "13 A B D";
 		
-		final Path<Edge> path = pathParser.fromStringToPath(inputPathString);
+		Path<Edge<Vertex, Weight>, Vertex, Weight> path = pathParser.fromStringToPath(inputPathString);
 		// TODO: test below and above methods from separate test methods
 		final String outputPathString = pathParser.fromPathToString(path);
 		

@@ -2,6 +2,7 @@ package com.programmerare.shortestpaths.core.validation;
 
 import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -21,7 +22,8 @@ import com.programmerare.shortestpaths.core.api.Weight;
  */
 public class GraphEdgesValidatorTest {
 
-	private GraphEdgesValidator<Edge> graphEdgesValidator;
+	// <P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight>
+	private GraphEdgesValidator<  Path< Edge<Vertex , Weight> ,Vertex , Weight> , Edge<Vertex , Weight> , Vertex , Weight > graphEdgesValidator;
 
 	private Vertex vertexA;
 	private Vertex vertexB;
@@ -297,13 +299,13 @@ public class GraphEdgesValidatorTest {
 	// ----------------------------------------------------------------------------------------------
 	@Test(expected = GraphValidationException.class)
 	public void testValidateAllPathsOnlyContainEdgesDefinedInGraph() {
-		final List<Edge> allEdgesForGraph = new ArrayList<Edge>();
+		final List<Edge<Vertex , Weight>> allEdgesForGraph = new ArrayList<Edge<Vertex , Weight>>();
 		allEdgesForGraph.add(createTestEdge("11", createTestVertex("a"), createTestVertex("b"), createTestWeight(1)));
 
-		final List<Edge> edgesForPath = new ArrayList<Edge>();
+		final List<Edge<Vertex , Weight>> edgesForPath = new ArrayList<Edge<Vertex , Weight>>();
 		edgesForPath.add(createTestEdge("11", createTestVertex("a"), createTestVertex("c"), createTestWeight(1)));
-		final Path<Edge> path = createPath(createTestWeight(1), edgesForPath);
-		List<Path<Edge>> paths = Arrays.asList(path);
+		final Path< Edge<Vertex , Weight> ,Vertex , Weight> path = createPath(createTestWeight(1), edgesForPath);
+		List<Path< Edge<Vertex , Weight> ,Vertex , Weight>> paths = Arrays.asList(path);
 
 		graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(paths, allEdgesForGraph);
 

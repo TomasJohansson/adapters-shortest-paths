@@ -7,4 +7,5 @@ public interface Vertex extends StringRenderable {
 	
 	String getVertexId();
 	
+//	Vertex create(String id);
 }

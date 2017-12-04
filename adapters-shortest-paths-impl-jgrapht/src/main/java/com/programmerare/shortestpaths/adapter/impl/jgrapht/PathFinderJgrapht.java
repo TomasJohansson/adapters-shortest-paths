@@ -25,12 +25,17 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderJgrapht<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> {
+public final class PathFinderJgrapht
+< E extends Edge<V, W> , V extends Vertex , W extends Weight>
+extends PathFinderBase< E, V, W> 
+implements PathFinder<E, V, W>
+//<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> 
+{
 
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	
 	PathFinderJgrapht(
-		final Graph<T> graph, 
+		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
 		super(graph, graphEdgesValidationDesired);
@@ -39,25 +44,25 @@ public final class PathFinderJgrapht<T extends Edge> extends PathFinderBase<T> i
 	}
 
 	private void populateGraphAdapteeWithVerticesAndWeights() {
-		final List<Vertex> vertices = this.getGraph().getVertices();
+		final List<V> vertices = this.getGraph().getVertices();
 		for (final Vertex vertex : vertices) {
 			this.graphAdaptee.addVertex(vertex.getVertexId());	
 		}
 		
-		final List<T> edges = this.getGraph().getEdges();
-		for (final T edge : edges) {
+		final List<E> edges = this.getGraph().getEdges();
+		for (final E edge : edges) {
 			final WeightedEdge weightedEdge = this.graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
 			this.graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
 		}		
 	}
 
 	@Override
-	protected List<Path<T>> findShortestPathHook(
-		final Vertex startVertex, 
-		final Vertex endVertex, 
+	protected List<Path<E, V, W>> findShortestPathHook(
+		final V startVertex, 
+		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path<T>> paths = new ArrayList<Path<T>>();
+		final List<Path<E, V, W>> paths = new ArrayList<Path<E, V, W>>();
 
 		final String sourceVertexId = startVertex.getVertexId();
 		final String targetVertexId = endVertex.getVertexId();
@@ -66,19 +71,20 @@ public final class PathFinderJgrapht<T extends Edge> extends PathFinderBase<T> i
 	    final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(targetVertexId);
 	    
 	    for (final GraphPath<String, WeightedEdge> graphPath : listOfPaths) {
-	    	final List<T> edges = new ArrayList<T>();
+	    	final List<E> edges = new ArrayList<E>();
 	    	final List<WeightedEdge> edgeList = graphPath.getEdgeList();
 	    	for (final WeightedEdge weightedEdge : edgeList) {
-	    		final T edge = getOriginalEdgeInstance(weightedEdge);
+	    		final E edge = getOriginalEdgeInstance(weightedEdge);
 	    		edges.add(edge);
 			}
-	    	final Weight totalWeight = createWeight(graphPath.getWeight());
+			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
+	    	final W totalWeight = createWeightInstance(graphPath.getWeight(), edges);
 			paths.add(createPath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}
 
-	private T getOriginalEdgeInstance(final WeightedEdge weightedEdge) {
+	private E getOriginalEdgeInstance(final WeightedEdge weightedEdge) {
 		return super.getOriginalEdgeInstance(weightedEdge.getSourceIdAsStringValue(), weightedEdge.getTargetIdAsStringValue());
 	}
 }

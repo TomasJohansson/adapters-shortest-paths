@@ -13,10 +13,12 @@ import java.util.List;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 
 
 /**
@@ -67,22 +69,22 @@ public class BigGraphTest {
 		final int numberOfVertices, 
 		final int numberOfPathsToFind
 	) throws IOException {
-		final List<Edge> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
+		final List<Edge<Vertex, Weight>> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
 		final Vertex startVertex = edgesForBigGraph.get(0).getStartVertex();
 		final Vertex endVertex = edgesForBigGraph.get(edgesForBigGraph.size()-1).getEndVertex();
-		final List<PathFinderFactory<Edge>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+		final List<PathFinderFactory<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
 		
 		GraphShortestPathAssertionHelper graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(isExecutingThroughTheMainMethod);
 		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(edgesForBigGraph, startVertex, endVertex, numberOfPathsToFind, pathFinderFactories);
 	}
 
-	private List<Edge> createEdgesForBigGraph(final int numberOfVertices) {
+	private List<Edge<Vertex, Weight>> createEdgesForBigGraph(final int numberOfVertices) {
 		final List<Vertex> vertices = createVertices(numberOfVertices);
 		assertEquals(numberOfVertices, vertices.size());
 		
 		double decreasingWeightValue = 10 * numberOfVertices;
 		
-		final List<Edge> edges = new ArrayList<Edge>();
+		final List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
 		
 		for(int i=0; i<numberOfVertices-1; i++) {
 			edges.add(createEdge(vertices.get(i), vertices.get(i+1), createWeight(--decreasingWeightValue)));

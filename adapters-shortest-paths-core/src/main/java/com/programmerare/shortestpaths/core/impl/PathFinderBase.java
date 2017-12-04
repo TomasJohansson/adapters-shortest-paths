@@ -1,5 +1,6 @@
 package com.programmerare.shortestpaths.core.impl;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
@@ -7,17 +8,19 @@ import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
+import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
-public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
+// public interface PathFinder<P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public abstract class PathFinderBase<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements PathFinder<E, V, W> {
 
-	private final Graph<T> graph;
-	private final EdgeMapper<T> edgeMapper;
+	private final Graph<E, V, W> graph;
+	private final EdgeMapper<E, V, W> edgeMapper;
 	
 	protected PathFinderBase(
-		final Graph<T> graph, 
+		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
 		this.graph = graph;
@@ -38,14 +41,14 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 	/**
 	 * final method to enforce the validation, and then forward to the hook method for the implementations
 	 */
-	public final List<Path<T>> findShortestPaths(
-		final Vertex startVertex, 
-		final Vertex endVertex, 
+	public final List<Path<E, V, W>> findShortestPaths(
+		final V startVertex, 
+		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
 		validateThatBothVerticesArePartOfTheGraph(startVertex, endVertex);
 		
-		final List<Path<T>> shortestPaths = findShortestPathHook(
+		final List<Path<E, V, W>> shortestPaths = findShortestPathHook(
 			startVertex, 
 			endVertex, 
 			maxNumberOfPaths				
@@ -57,20 +60,20 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 		return shortestPaths;
 	}
 
-	void validateThatAllEdgesInAllPathsArePartOfTheGraph(final List<Path<T>> paths) {
-		for (Path<T> path : paths) {
-			List<T> edgesForPath = path.getEdgesForPath();
-			for (T t : edgesForPath) {
-				if(!graph.containsEdge(t)) {
+	void validateThatAllEdgesInAllPathsArePartOfTheGraph(final List<Path<E, V, W>> paths) {
+		for (Path<E, V, W> path : paths) {
+			List<E> edgesForPath = path.getEdgesForPath();
+			for (E e : edgesForPath) {
+				if(!graph.containsEdge(e)) {
 					// potential improvement: Use Notification pattern to collect all (if more than one) errors instead of throwing at the first error
-					throw new GraphValidationException("Edge in path is not part of the graph: " + t);
+					throw new GraphValidationException("Edge in path is not part of the graph: " + e);
 				}
 			}
 		}
 	}
 
 
-	private void validateThatBothVerticesArePartOfTheGraph(final Vertex startVertex, final Vertex endVertex) {
+	private void validateThatBothVerticesArePartOfTheGraph(final V startVertex, final V endVertex) {
 		// potential improvement: Use Notification pattern to collect all (if more than one) errors instead of throwing at the first error
 		if(!graph.containsVertex(startVertex)) {
 			throwExceptionBecauseVertexNotIncludedInGraph("start", startVertex);
@@ -85,19 +88,40 @@ public abstract class PathFinderBase <T extends Edge> implements PathFinder<T> {
 	 * @param startOrEndmessagePrefix intended to be one of the strings "start" or "end"
 	 * @param startVertex
 	 */
-	private void throwExceptionBecauseVertexNotIncludedInGraph(final String startOrEndmessagePrefix, final Vertex vertex) {
+	private void throwExceptionBecauseVertexNotIncludedInGraph(final String startOrEndmessagePrefix, final V vertex) {
 		throw new GraphValidationException(startOrEndmessagePrefix + " vertex is not part of the graph: " + vertex);
 	}
 
 
-	public T getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
+	public E getOriginalEdgeInstance(final String startVertexId, final String endVertexId) {
 		return edgeMapper.getOriginalEdgeInstance(startVertexId, endVertexId);
 	}
 
-	protected Graph<T> getGraph() {
+	protected Graph<E, V, W> getGraph() {
 		return graph;
 	}
 
 	// "Hook" : see the Template Method Design Pattern
-	protected abstract List<Path<T>> findShortestPathHook(Vertex startVertex, Vertex endVertex, int maxNumberOfPaths);	
+	protected abstract List<Path<E, V, W>> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths);
+	
+	protected W createWeightInstance(final double totalCost, final Class<? extends Weight> weightClass) {
+		// TODO maybe: reflection is currently ALWAYS used.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
+		try {
+			final Constructor<? extends Weight> constructor = weightClass.getDeclaredConstructor(double.class);
+			constructor.setAccessible(true);
+			final W w = (W)constructor.newInstance(totalCost);
+			return w;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// convenience method
+	protected W createWeightInstance(final double totalCost, final List<E> edgesUsedForDeterminingWeightClass) {
+		// TODO maybe: reflection is currently ALWAYS used.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
+		final W w = edgesUsedForDeterminingWeightClass.get(0).getEdgeWeight();
+		final Class<? extends Weight> weightClass = w.getClass();
+		return createWeightInstance(totalCost, weightClass);
+	}
+	
 }

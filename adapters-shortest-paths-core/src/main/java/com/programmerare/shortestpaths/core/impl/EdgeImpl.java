@@ -7,32 +7,35 @@ import com.programmerare.shortestpaths.core.api.Weight;
 /**
  * @author Tomas Johansson
  */
-public final class EdgeImpl implements Edge {
+public class EdgeImpl<V extends Vertex , W extends Weight> implements Edge<V , W> {
 
 	private final String id;
-	private final Vertex startVertex;
-	private final Vertex endVertex;
-	private final Weight weight;
+	private final V startVertex;
+	private final V endVertex;
+	private final W weight;
 
-	public static <T extends Edge> T createEdge(
+	//public static <E extends Edge<V,W> , V extends Vertex , W extends Weight> E createEdge(
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Edge<V,W> createEdge(
 		final String edgeId,
-		final Vertex startVertex, 
-		final Vertex endVertex, 
-		final Weight weight			
+		final V startVertex, 
+		final V endVertex, 
+		final W weight			
 	) {
-		Edge e = new EdgeImpl(
+		Edge<V, W> e = new EdgeImpl<V, W>(
 			edgeId,
 			startVertex, 
 			endVertex, 
 			weight				
 		);
-		return (T)e;
+		return e;
 	}
+
 	
-	public static <T extends Edge> T createEdge(
-		final Vertex startVertex, 
-		final Vertex endVertex, 
-		final Weight weight			
+	//public static <T extends Edge<V,W> , V extends Vertex , W extends Weight> T createEdge(
+	public static <V extends Vertex , W extends Weight> Edge<V,W> createEdge(
+		final V startVertex, 
+		final V endVertex, 
+		final W weight			
 	) {
 		return createEdge(
 			createEdgeIdValue(startVertex.getVertexId(), endVertex.getVertexId()),
@@ -42,28 +45,27 @@ public final class EdgeImpl implements Edge {
 		);
 	}
 
-	private EdgeImpl(
+	protected EdgeImpl(
 		final String edgeId,
-		final Vertex startVertex, 
-		final Vertex endVertex, 
-		final Weight weight
+		final V startVertex, 
+		final V endVertex, 
+		final W weight
 	) {
 		this.startVertex = startVertex;
 		this.endVertex = endVertex;
 		this.weight = weight;
 		this.id = edgeId;
-		
 	}
 	
-	public Vertex getStartVertex() {
+	public V getStartVertex() {
 		return startVertex;
 	}
 
-	public Vertex getEndVertex() {
+	public V getEndVertex() {
 		return endVertex;
 	}
 
-	public Weight getEdgeWeight() {
+	public W getEdgeWeight() {
 		return weight;
 	}
 	
@@ -88,6 +90,7 @@ public final class EdgeImpl implements Edge {
 				+ "]";
 	}
 
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -98,6 +101,7 @@ public final class EdgeImpl implements Edge {
 		result = prime * result + ((weight == null) ? 0 : weight.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -131,7 +135,14 @@ public final class EdgeImpl implements Edge {
 		return true;
 	}
 
+
 	public String renderToString() {
 		return toString();
-	}	
+	}
+
+
+//	public E create(String edgeId, V startVertex, V endVertex, W weight) {
+//		return createEdge(edgeId, startVertex, endVertex, weight);
+//	}
+
 }

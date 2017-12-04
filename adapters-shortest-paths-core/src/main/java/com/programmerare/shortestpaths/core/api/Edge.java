@@ -3,12 +3,19 @@ package com.programmerare.shortestpaths.core.api;
 /**
  * @author Tomas Johansson
  */
-public interface Edge extends StringRenderable {
+public interface Edge<V extends Vertex , W extends Weight> extends StringRenderable { 
 
 	String getEdgeId();
 	
-	Vertex getStartVertex();
-	Vertex getEndVertex();
+	V getStartVertex();
+	V getEndVertex();
 	
-	Weight getEdgeWeight();
+	W getEdgeWeight();
+	
+//	E create(
+//		String edgeId,
+//		V startVertex, 
+//		V endVertex, 
+//		W weight			
+//	);	
 }

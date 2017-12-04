@@ -9,27 +9,28 @@ import java.util.Map;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 
-public final class GraphImpl<T extends Edge> implements Graph<T> {
+public class GraphImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements Graph<E, V, W> {
 
-	private final List<T> edges;
+	private final List<E> edges;
 	
-	private List<Vertex> vertices; // lazy loaded when it is needed
+	private List<V> vertices; // lazy loaded when it is needed
 
 	// vertex id is the key
-	private Map<String, Vertex> mapWithVertices; // lazy loaded at the same time some the list is pppulated
+	private Map<String, V> mapWithVertices; // lazy loaded at the same time some the list is pppulated
 	
 	// edge id is the key
-	private Map<String, Edge> mapWithEdges; // lazy loaded
+	private Map<String, E> mapWithEdges; // lazy loaded
 	
-	private GraphImpl(final List<T> edges) {
+	protected GraphImpl(final List<E> edges) {
 		this.edges = Collections.unmodifiableList(edges);
 	}
 
-	public static <T extends Edge> Graph<T> createGraph(
-		final List<T> edges
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Graph<E, V, W> createGraph(
+		final List<E> edges
 	) {
-		final GraphImpl<T> g = new GraphImpl<T>(
+		final GraphImpl<E, V, W> g = new GraphImpl<E, V, W>(
 			edges				
 		);
 		return g;
@@ -39,13 +40,13 @@ public final class GraphImpl<T extends Edge> implements Graph<T> {
 		return edges;
 	}
 
-	public List<Vertex> getVertices() {
+	public List<V> getVertices() {
 		if(vertices == null) { // lazy loading
-			final List<Vertex> vertices = new ArrayList<Vertex>(); 
-			final Map<String, Vertex> map = new HashMap<String, Vertex>();
-			for (final Edge edge : edges) {
-				final Vertex startVertex = edge.getStartVertex();
-				final Vertex endVertex = edge.getEndVertex();
+			final List<V> vertices = new ArrayList<V>(); 
+			final Map<String, V> map = new HashMap<String, V>();
+			for (final E edge : edges) {
+				final V startVertex = edge.getStartVertex();
+				final V  endVertex = edge.getEndVertex();
 
 				if(!map.containsKey(startVertex.getVertexId())) {
 					map.put(startVertex.getVertexId(), startVertex);
@@ -64,16 +65,16 @@ public final class GraphImpl<T extends Edge> implements Graph<T> {
 	}
 
 	
-	public boolean containsVertex(final Vertex vertex) {
+	public boolean containsVertex(final V vertex) {
 		getVertices(); // triggers the lazy loading if needed, TODO refactor instead of using a getter for this purpose
 		return mapWithVertices.containsKey(vertex.getVertexId());
 	}
 
-	public boolean containsEdge(final T edge) {
+	public boolean containsEdge(final E edge) {
 		if(mapWithEdges == null) {
-			mapWithEdges = new HashMap<String, Edge>();
-			for (T t : edges) {
-				mapWithEdges.put(t.getEdgeId(), t);
+			mapWithEdges = new HashMap<String, E>();
+			for (E e : edges) {
+				mapWithEdges.put(e.getEdgeId(), e);
 			}			
 		}
 		return mapWithEdges.containsKey(edge.getEdgeId());

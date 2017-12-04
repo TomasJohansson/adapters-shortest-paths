@@ -14,8 +14,8 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
@@ -28,20 +28,21 @@ import com.programmerare.shortestpaths.core.validation.GraphValidationException;
  */
 public class PathFinderFactoryBaseTest {
 
-	private List<Edge> edgesForAcceptableGraph;
-	private List<Edge> edgesForUnacceptableGraph;
+	private List<Edge<Vertex,Weight>> edgesForAcceptableGraph;
+	private List<Edge<Vertex,Weight>> edgesForUnacceptableGraph;
 	private PathFinderFactoryConcreteForTest pathFinderFactory;
 
 	@Before
 	public void setUp() throws Exception {
-		pathFinderFactory = new PathFinderFactoryConcreteForTest<Edge>();
+		pathFinderFactory = new PathFinderFactoryConcreteForTest();
 		
-		final Edge edge_A_B = createEdge(createVertex("A"), createVertex("B"), createWeight(123));
-		final Edge edge_B_C = createEdge(createVertex("B"), createVertex("C"), createWeight(456));
+		
+		final Edge<Vertex,Weight> edge_A_B = createEdge(createVertex("A"), createVertex("B"), createWeight(123));
+		final Edge<Vertex,Weight> edge_B_C = createEdge(createVertex("B"), createVertex("C"), createWeight(456));
 		edgesForAcceptableGraph = Arrays.asList(edge_A_B, edge_B_C);
 
 		// the same edge (A to B) defined once again is NOT correct
-		final Edge edge_A_B_again = createEdge(createVertex("A"), createVertex("B"), createWeight(789));
+		final Edge<Vertex,Weight> edge_A_B_again = createEdge(createVertex("A"), createVertex("B"), createWeight(789));
 		edgesForUnacceptableGraph = Arrays.asList(edge_A_B, edge_A_B_again);
 	}
 
@@ -65,21 +66,39 @@ public class PathFinderFactoryBaseTest {
 		pathFinderFactory.createPathFinder(edgesForAcceptableGraph, GraphEdgesValidationDesired.YES);
 	}
 
-	public final class PathFinderConcreteForTest<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> {
-		public PathFinderConcreteForTest(Graph<T> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
+	// TODO: refactor duplication ... the same etst class as below is duplicated in another test class file
+	public final class PathFinderConcreteTest extends PathFinderBase 
+		<  
+		Edge<Vertex , Weight> , 
+		Vertex , 
+		Weight 
+		>
+	{
+		protected PathFinderConcreteTest(Graph<Edge<Vertex, Weight>, Vertex, Weight> graph,
+				GraphEdgesValidationDesired graphEdgesValidationDesired) {
 			super(graph, graphEdgesValidationDesired);
 		}
+
 		@Override
-		protected List<Path<T>> findShortestPathHook(Vertex startVertex, Vertex endVertex, int maxNumberOfPaths) {
+		protected List<Path<Edge<Vertex, Weight>, Vertex, Weight>> findShortestPathHook(Vertex startVertex,
+				Vertex endVertex, int maxNumberOfPaths) {
+			// TODO Auto-generated method stub
 			return null;
 		}
+
 	}
-	public final class PathFinderFactoryConcreteForTest<T extends Edge> extends PathFinderFactoryBase<T> implements PathFinderFactory<T> {
-		public PathFinder<T> createPathFinder(Graph<T> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
-			return new PathFinderConcreteForTest<T>(
+	
+	public final class PathFinderFactoryConcreteForTest extends PathFinderFactoryBase
+	< PathFinder<Edge<Vertex,Weight>,Vertex,Weight> , Edge<Vertex , Weight> , Vertex , Weight>
+	{
+		public PathFinder<Edge<Vertex, Weight>, Vertex, Weight> createPathFinder(
+				Graph<Edge<Vertex, Weight>, Vertex, Weight> graph,
+				GraphEdgesValidationDesired graphEdgesValidationDesired) {
+			return new PathFinderConcreteTest(
 				graph, 
 				graphEdgesValidationDesired
 			);
+
 		}
 	}	
 }

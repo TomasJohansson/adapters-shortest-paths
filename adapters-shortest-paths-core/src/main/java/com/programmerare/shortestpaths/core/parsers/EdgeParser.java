@@ -17,7 +17,7 @@ import com.programmerare.shortestpaths.utils.StringUtility;
  *  
  * @author Tomas Johansson
  */
-public final class EdgeParser {
+public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 
 	/**
 	 * when splitting, an regular expression can be used e.g. "\\s++" for matching one or more white space characters
@@ -37,6 +37,9 @@ public final class EdgeParser {
 	private final int orderForStartVertex;
 	private final int orderForEndVertex;
 	private final int orderForWeight;
+//	private E e;
+//	private V v;
+//	private W w;
 
 	/**
 	 * @param separatorBetweenEdgesAndWeightWhenSplitting
@@ -51,7 +54,13 @@ public final class EdgeParser {
 		final int orderForStartVertex, 
 		final int orderForEndVertex, 
 		final int orderForWeight
+//		final E e,
+//		final V v,
+//		final W w
 	) {
+//		this.e = e;
+//		this.v = v;
+//		this.w = w;
 		this.separatorBetweenEdgesAndWeightWhenSplitting = separatorBetweenEdgesAndWeightWhenSplitting;
 		this.separatorBetweenEdgesAndWeightWhenCreating = separatorBetweenEdgesAndWeightWhenCreating;
 		this.orderForStartVertex = orderForStartVertex;
@@ -73,26 +82,29 @@ public final class EdgeParser {
 	 * TODO: if/when this method is opened for public use, then write tests for validatinng correct input data.
 	 * @return
 	 */
-	public static EdgeParser createEdgeParser() {
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser() {
 		return createEdgeParser("\\s+", " ", 1, 2, 3);
 	}
 	
+	
 	// TODO: if this method is "opened" for client code i.e. made public then write some tests with validation of input
-	private static EdgeParser createEdgeParser(
+	private static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser(
 		final String separatorBetweenEdgesAndWeightWhenSplitting, 
 		final String separatorBetweenEdgesAndWeightWhenCreating, 
 		final int orderForStartVertex, 
 		final int orderForEndVertex, 
 		final int orderForWeight	
 	) {
-		return new EdgeParser(
+		return new EdgeParser<E, V, W>(
 			separatorBetweenEdgesAndWeightWhenSplitting, 
 			separatorBetweenEdgesAndWeightWhenCreating, 
 			orderForStartVertex, 
 			orderForEndVertex, 
-			orderForWeight				
+			orderForWeight
+//			null, null, null
 		);
 	}
+	
 	
 	/**
 	 * Typical (intended) usage of the method:
@@ -101,13 +113,13 @@ public final class EdgeParser {
 	 * 	for example "X Y 12.34" for an edge from vertex X to vertex Y with 12.34 as the weight 
 	 * @return
 	 */
-	public Edge fromStringToEdge(final String stringRepresentationOfEdge) {
+	public  E fromStringToEdge(final String stringRepresentationOfEdge) {
 		final String[] array = stringRepresentationOfEdge.split(separatorBetweenEdgesAndWeightWhenSplitting);
 		// if(split.length < 3) // TODO throw
-		final Vertex startVertexId = createVertex(array[orderForStartVertex-1]);
-		final Vertex endVertexId = createVertex(array[orderForEndVertex-1]);
-		final Weight weight = createWeight(Double.parseDouble(array[orderForWeight-1]));
-		final Edge edge = createEdge(startVertexId, endVertexId, weight);
+		final V startVertexId = (V)createVertex(array[orderForStartVertex-1]);
+		final V endVertexId = (V)createVertex(array[orderForEndVertex-1]);
+		final W weight = (W)createWeight(Double.parseDouble(array[orderForWeight-1]));
+		final E edge = (E)createEdge(startVertexId, endVertexId, weight);
 		return edge;
 	}
 	
@@ -126,7 +138,7 @@ public final class EdgeParser {
 	 * @param edge
 	 * @return
 	 */
-	public String fromEdgeToString(final Edge edge) {
+	public String fromEdgeToString(final E edge) {
 		// if(edge == null) // TODO throw		
 		String[] array = new String[3];
 		array[orderForStartVertex-1] = edge.getStartVertex().getVertexId();
@@ -146,8 +158,8 @@ public final class EdgeParser {
 	    C D 9    
 	 * @return
 	 */
-	public List<Edge> fromMultiLinedStringToListOfEdges(final String multiLinedString) {
-		final List<Edge> edges = new ArrayList<Edge>();
+	public List<E> fromMultiLinedStringToListOfEdges(final String multiLinedString) {
+		final List<E> edges = new ArrayList<E>();
 		final List<String> edgesAsStrings = StringUtility.getMultilineStringAsListOfTrimmedStringsIgnoringLinesWithOnlyWhiteSpace(multiLinedString);
 		for (String string : edgesAsStrings) {
 			edges.add(fromStringToEdge(string));

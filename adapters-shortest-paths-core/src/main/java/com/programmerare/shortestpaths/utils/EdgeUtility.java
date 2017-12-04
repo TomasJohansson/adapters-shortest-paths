@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 
 public final class EdgeUtility {
 
@@ -17,26 +19,26 @@ public final class EdgeUtility {
 		tableLookupMapForSelectionStrategies.put(SelectionStrategyWhenEdgesAreDuplicated.LARGEST_WEIGHT, new SelectionStrategyLargestWeight());
 	}
 	
-	public final static List<Edge> getEdgesWithoutDuplicates(
-		final List<Edge> edges, 
+	public final static List<Edge<Vertex, Weight>> getEdgesWithoutDuplicates(
+		final List<Edge<Vertex, Weight>> edges, 
 		final SelectionStrategyWhenEdgesAreDuplicated selectionStrategyWhenEdgesAreDuplicated
 	) {
-		final Map<String, List<Edge>> map = getMap(edges);
-		final List<Edge> reduced = getReduced(edges, map, tableLookupMapForSelectionStrategies.get(selectionStrategyWhenEdgesAreDuplicated));
+		final Map<String, List<Edge<Vertex, Weight>>> map = getMap(edges);
+		final List<Edge<Vertex, Weight>> reduced = getReduced(edges, map, tableLookupMapForSelectionStrategies.get(selectionStrategyWhenEdgesAreDuplicated));
 		return reduced;
 	}
 	
-	private static List<Edge> getReduced(
-		final List<Edge> edges, 
-		final Map<String, List<Edge>> map,
+	private static List<Edge<Vertex, Weight>> getReduced(
+		final List<Edge<Vertex, Weight>> edges, 
+		final Map<String, List<Edge<Vertex, Weight>>> map,
 		final SelectionStrategy selectionStrategy
 	) {
-		final List<Edge> edgesToReturn = new ArrayList<Edge>(); 	
-		for (final Edge edge : edges) {
+		final List<Edge<Vertex, Weight>> edgesToReturn = new ArrayList<Edge<Vertex, Weight>>(); 	
+		for (final Edge<Vertex, Weight> edge : edges) {
 			final String key = edge.getEdgeId();
 			if(map.containsKey(key)) {
-				final List<Edge> list = map.get(key);
-				final Edge reduce = selectionStrategy.reduce(list);
+				final List<Edge<Vertex, Weight>> list = map.get(key);
+				final Edge<Vertex, Weight> reduce = selectionStrategy.reduce(list);
 				edgesToReturn.add(reduce);
 				map.remove(key);
 			}
@@ -44,16 +46,16 @@ public final class EdgeUtility {
 		return edgesToReturn;
 	}
 
-	private static Map<String, List<Edge>> getMap(final List<Edge> edges) {
-		final Map<String, List<Edge>> map = new HashMap<String, List<Edge>>();
-		for (final Edge edge : edges) {
-			final List<Edge> list;
+	private static Map<String, List<Edge<Vertex, Weight>>> getMap(final List<Edge<Vertex, Weight>> edges) {
+		final Map<String, List<Edge<Vertex, Weight>>> map = new HashMap<String, List<Edge<Vertex, Weight>>>();
+		for (final Edge<Vertex, Weight> edge : edges) {
+			final List<Edge<Vertex, Weight>> list;
 			final String key = edge.getEdgeId();
 			if(map.containsKey(key)) {
 				list = map.get(key);	
 			}
 			else {
-				list = new ArrayList<Edge>();
+				list = new ArrayList<Edge<Vertex, Weight>>();
 				map.put(key, list);
 			}
 			list.add(edge);
@@ -69,24 +71,24 @@ public final class EdgeUtility {
 	}
 	
 	public static interface SelectionStrategy {
-		Edge reduce(List<Edge> edges);
+		Edge<Vertex, Weight> reduce(List<Edge<Vertex, Weight>> edges);
 	}
 	public static class SelectionStrategyFirst implements SelectionStrategy {
-		public Edge reduce(final List<Edge> edges) {
+		public Edge<Vertex, Weight> reduce(final List<Edge<Vertex, Weight>> edges) {
 			return edges.get(0);
 		}
 	}
 	public static class SelectionStrategyLast implements SelectionStrategy {
-		public Edge reduce(final List<Edge> edges) {
+		public Edge<Vertex, Weight> reduce(final List<Edge<Vertex, Weight>> edges) {
 			return edges.get(edges.size()-1);
 		}
 	}
 	
 	public static class SelectionStrategySmallestWeight implements SelectionStrategy {
-		public Edge reduce(final List<Edge> edges) {
+		public Edge<Vertex, Weight> reduce(final List<Edge<Vertex, Weight>> edges) {
 			double weightMin = Double.MAX_VALUE;
-			Edge edgeToReturn = null;
-			for (Edge edge : edges) {
+			Edge<Vertex, Weight> edgeToReturn = null;
+			for (Edge<Vertex, Weight> edge : edges) {
 				double w = edge.getEdgeWeight().getWeightValue();
 				if(w < weightMin) {
 					weightMin = w;
@@ -98,10 +100,10 @@ public final class EdgeUtility {
 	}
 	// TODO: refactor above and below class to reduce duplication
 	public static class SelectionStrategyLargestWeight implements SelectionStrategy {
-		public Edge reduce(final List<Edge> edges) {
+		public Edge<Vertex, Weight> reduce(final List<Edge<Vertex, Weight>> edges) {
 			double weightMax = Double.MIN_VALUE;
-			Edge edgeToReturn = null;
-			for (Edge edge : edges) {
+			Edge<Vertex, Weight> edgeToReturn = null;
+			for (Edge<Vertex, Weight> edge : edges) {
 				double w = edge.getEdgeWeight().getWeightValue();
 				if(w > weightMax) {
 					weightMax = w;
@@ -111,4 +113,4 @@ public final class EdgeUtility {
 			return edgeToReturn;
 		}
 	}	
-}
+} 

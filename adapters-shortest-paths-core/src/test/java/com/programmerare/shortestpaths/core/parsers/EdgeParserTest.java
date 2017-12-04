@@ -32,7 +32,7 @@ public class EdgeParserTest {
 
 	@Test
 	public void testFromStringToEdge() {
-		Edge edge = edgeParser.fromStringToEdge("A B 3.7");
+		Edge<Vertex, Weight> edge = edgeParser.fromStringToEdge("A B 3.7");
 		assertNotNull(edge);
 		assertNotNull(edge.getStartVertex());
 		assertNotNull(edge.getEndVertex());
@@ -47,7 +47,7 @@ public class EdgeParserTest {
 		Vertex startVertex = createVertex("A");
 		Vertex endVertex = createVertex("B");
 		Weight weight = createWeight(3.7);		
-		Edge edge = createEdge(startVertex, endVertex, weight);
+		Edge<Vertex, Weight> edge = createEdge(startVertex, endVertex, weight);
 		assertEquals("A B 3.7", edgeParser.fromEdgeToString(edge));
 	}
 	
@@ -65,11 +65,11 @@ public class EdgeParserTest {
 				"B C 7\r\n" + 
 				"B D 8\r\n" + 
 				"C D 9";
-		final List<Edge> edges = edgeParser.fromMultiLinedStringToListOfEdges(multiLinedString);
+		final List<Edge<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(multiLinedString);
 		assertNotNull(edges);
 		assertEquals(5,  edges.size());
-		final Edge firstEdge = edges.get(0);
-		final Edge lastEdge = edges.get(4);		
+		final Edge<Vertex, Weight> firstEdge = edges.get(0);
+		final Edge<Vertex, Weight> lastEdge = edges.get(4);		
 		assertNotNulls(firstEdge);
 		assertNotNulls(lastEdge);
 		
@@ -82,7 +82,7 @@ public class EdgeParserTest {
 		assertEquals(9, lastEdge.getEdgeWeight().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 	}
 
-	private void assertNotNulls(Edge edge) {
+	private void assertNotNulls(Edge<Vertex, Weight> edge) {
 		assertNotNull(edge);
 		assertNotNull(edge.getStartVertex());
 		assertNotNull(edge.getEndVertex());

@@ -7,7 +7,7 @@ import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +20,7 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
@@ -94,14 +95,15 @@ public class EdgeIdValuesTest {
 	 */
 	@Test
 	public void testDefaultEdgeIdValuesWhenNotExplicitlyDefined() {
-		List<Edge> edges = Arrays.asList(
+		List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
+		//edges.add(e)
 			// Note there are not explicit names of the edges when they are created  
-			createEdge(a, b, createWeight(WEIGHT_A_to_B)), // the edge Id will be a concatenation i.e. "A_B"
-			createEdge(a, c, createWeight(WEIGHT_A_to_C)),
-			createEdge(b, c, createWeight(WEIGHT_B_to_C)),
-			createEdge(b, d, createWeight(WEIGHT_B_to_D)),
-			createEdge(c, d, createWeight(WEIGHT_C_to_D))
-		);
+		edges.add(createEdge(a, b, createWeight(WEIGHT_A_to_B))); // the edge Id will be a concatenation i.e. "A_B"
+		edges.add(createEdge(a, c, createWeight(WEIGHT_A_to_C)));
+		edges.add(createEdge(b, c, createWeight(WEIGHT_B_to_C)));
+		edges.add(createEdge(b, d, createWeight(WEIGHT_B_to_D)));
+		edges.add(createEdge(c, d, createWeight(WEIGHT_C_to_D)));
+
 		// There are three possible paths, below sorted in the best order regarding shortest total weight:
 		//    A to B to D (total cost: 13 = 5 + 8)
 		//    A to C to D (total cost: 15 = 6 + 9)
@@ -127,28 +129,31 @@ public class EdgeIdValuesTest {
 	 */
 	@Test
 	public void testCreateEdgesWithoutExplicitNames2() {
-		List<Edge> edges = Arrays.asList(
-			createEdge(EDGE_A_to_B, a, b, createWeight(WEIGHT_A_to_B)),
-			createEdge(EDGE_A_to_C, a, c, createWeight(WEIGHT_A_to_C)),
-			createEdge(EDGE_B_to_C, b, c, createWeight(WEIGHT_B_to_C)),
-			createEdge(EDGE_B_to_D, b, d, createWeight(WEIGHT_B_to_D)),
-			createEdge(EDGE_C_to_D, c, d, createWeight(WEIGHT_C_to_D))
-		);
+		List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
+		edges.add(createEdge(EDGE_A_to_B, a, b, createWeight(WEIGHT_A_to_B)));
+		edges.add(createEdge(EDGE_A_to_C, a, c, createWeight(WEIGHT_A_to_C)));
+		edges.add(createEdge(EDGE_B_to_C, b, c, createWeight(WEIGHT_B_to_C)));
+		edges.add(createEdge(EDGE_B_to_D, b, d, createWeight(WEIGHT_B_to_D)));
+		edges.add(createEdge(EDGE_C_to_D, c, d, createWeight(WEIGHT_C_to_D)));
 		edgeIdValueStrategy = new EdgeIdValueExplicitlySpecified();
 		verifyExpectedResults(edges);
 	}
 	
 
-	private void verifyExpectedResults(List<Edge> edges) {
+	private void verifyExpectedResults(List<Edge<Vertex, Weight>> edges) {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first		
 		GraphEdgesValidator.validateEdgesForGraphCreation(edges);
 		
 		final ExpectedPath[] expectedPaths = getExpectedPaths();
 
-		final List<PathFinderFactory<Edge>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
-		for (PathFinderFactory<Edge> pathFinderFactory : pathFinderFactories) {
-			verifyExpectedPaths(a, d, edges, pathFinderFactory, expectedPaths);	
+		List<PathFinderFactory<PathFinder<Edge<Vertex, Weight>, Vertex, Weight>, Edge<Vertex, Weight>, Vertex, Weight>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+		for (PathFinderFactory<PathFinder<Edge<Vertex, Weight>, Vertex, Weight>, Edge<Vertex, Weight>, Vertex, Weight> pathFinderFactory : pathFinderFactories) {
+			verifyExpectedPaths(a, d, edges, pathFinderFactory, expectedPaths);
 		}
+//		final List<PathFinderFactory<Edge>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+//		for (PathFinderFactory<Edge> pathFinderFactory : pathFinderFactories) {
+//			verifyExpectedPaths(a, d, edges, pathFinderFactory, expectedPaths);	
+//		}
 	}
 	
 	private ExpectedPath[] getExpectedPaths() {
@@ -177,15 +182,15 @@ public class EdgeIdValuesTest {
 	private void verifyExpectedPaths(
 		Vertex startVertex, 
 		Vertex endVertex, 
-		List<Edge> edges, 
-		PathFinderFactory<Edge> pathFinderFactory,
+		List<Edge<Vertex, Weight>> edges, 
+		PathFinderFactory<PathFinder<Edge<Vertex, Weight>, Vertex, Weight>, Edge<Vertex, Weight>, Vertex, Weight> pathFinderFactory,
 		ExpectedPath[] expectedShortestPaths
 	) {
-		PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(
+		PathFinder<Edge<Vertex, Weight> , Vertex , Weight> pathFinder = pathFinderFactory.createPathFinder(
 			edges, 
 			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 		);
-		List<Path<Edge>> actualShortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10);
+		List<Path<Edge<Vertex, Weight> , Vertex , Weight>> actualShortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10);
 		
 		assertEquals(expectedShortestPaths.length, actualShortestPaths.size());
 
@@ -193,10 +198,10 @@ public class EdgeIdValuesTest {
 		for (int i = 0; i < expectedShortestPaths.length; i++) {
 			errorContext += " , i: "+ i;
 			ExpectedPath expectedPath = expectedShortestPaths[i];
-			Path<Edge> actualPath = actualShortestPaths.get(i);
+			Path<Edge<Vertex, Weight> , Vertex , Weight> actualPath = actualShortestPaths.get(i);
 			assertEquals(errorContext, expectedPath.totalWeight, actualPath.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 			ExpectedEdge[] expectedEdgesForPath = expectedPath.expectedEdges;
-			List<Edge> actualEdgesForPath = actualPath.getEdgesForPath();
+			List<Edge<Vertex, Weight>> actualEdgesForPath = actualPath.getEdgesForPath();
 			assertEquals(errorContext, expectedEdgesForPath.length, actualEdgesForPath.size());
 			for (int j = 0; j < expectedEdgesForPath.length; j++) {
 				errorContext += " , j=" + j;

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.utils.FileReader;
 
@@ -30,7 +32,7 @@ public final class FileReaderForGraphEdges {
 	}
 
 
-	public List<Edge> readEdgesFromFile(final String filePath) {
+	public List<Edge<Vertex, Weight>> readEdgesFromFile(final String filePath) {
 		return readEdgesFromFile(filePath, FileReader.CHARSET_UTF_8);		
 	}
 
@@ -41,8 +43,8 @@ public final class FileReaderForGraphEdges {
 	 * @param charsetForInputFile
 	 * @return
 	 */
-	public List<Edge> readEdgesFromFile(final String filePath, Charset charsetForInputFile) {
-		final List<Edge> edges = new ArrayList<Edge>();
+	public List<Edge<Vertex, Weight>> readEdgesFromFile(final String filePath, Charset charsetForInputFile) {
+		final List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
 		
 		final List<String> linesFromFileWithGraphEdges = fileReader.readLines(filePath, charsetForInputFile);
 		for (String lineInFileRepresengingEdge : linesFromFileWithGraphEdges) {

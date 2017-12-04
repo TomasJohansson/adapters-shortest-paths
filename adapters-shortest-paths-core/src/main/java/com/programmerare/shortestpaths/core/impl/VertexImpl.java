@@ -8,7 +8,7 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 public final class VertexImpl implements Vertex {
 
 	private final String id;
-
+	
 	public static Vertex createVertex(
 		final String id		
 	) {
@@ -24,6 +24,7 @@ public final class VertexImpl implements Vertex {
 	}
 	
 
+	
 	private VertexImpl(final String id) {
 		this.id = id;
 	}
@@ -65,5 +66,9 @@ public final class VertexImpl implements Vertex {
 	public String renderToString() {
 		return toString();
 	}
+
+//	public Vertex create(final String id) {
+//		return createVertex(id);
+//	}
 	
 }

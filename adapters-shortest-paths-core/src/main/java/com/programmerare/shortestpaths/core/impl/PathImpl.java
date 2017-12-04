@@ -7,17 +7,22 @@ import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * @author Tomas Johansson
  */
-public class PathImpl<T extends Edge> implements Path<T> {
+//public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements Path<E, V, W> {
+public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements Path<E, V, W> {
 
-	private final Weight totalWeight;
-	private final List<T> edges;
+	private final W totalWeight;
+	private final List<E> edges;
 
-	public static <T extends Edge> Path<T> createPath(final Weight totalWeight, final List<T> edges) {
+	//public static <T extends Edge> Path<T> createPath(final Weight totalWeight, final List<T> edges) {
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Path<E, V, W> createPath(
+		final W totalWeight, final List<E> edges
+	) {
 		return createPath(totalWeight, edges, false, false);
 	}
 
@@ -29,9 +34,9 @@ public class PathImpl<T extends Edge> implements Path<T> {
 	 * @param shouldThrowExceptionIfAnyMismatchingVertex
 	 * @return
 	 */
-	public static <T extends Edge> Path<T> createPath(
-		final Weight totalWeight, 
-		final List<T> edges, 
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Path<E, V, W> createPath(
+		final W totalWeight, 
+		final List<E> edges, 
 		boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
 		boolean shouldThrowExceptionIfAnyMismatchingVertex
 	) {
@@ -45,21 +50,21 @@ public class PathImpl<T extends Edge> implements Path<T> {
 				throw new RuntimeException("Mismatching vertices detected " + edges);
 			}
 		}
-		return new PathImpl<T>(totalWeight, edges);
+		return new PathImpl<E, V, W>(totalWeight, edges);
 	}	
 	
-	private static <T extends Edge> boolean isTotalWeightNotCorrect(List<T> edges, Weight totalWeight) {
+	private static <E extends Edge<V, W> , V extends Vertex , W extends Weight> boolean isTotalWeightNotCorrect(List<E> edges, W totalWeight) {
 		double tot = 0;
-		for (T edge : edges) {
+		for (E edge : edges) {
 			tot += edge.getEdgeWeight().getWeightValue();
 		}
 		return Math.abs(totalWeight.getWeightValue() - tot) > SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 	}
 
-	private static <T extends Edge> boolean isAnyVertexMismatching(List<T> edges) {
+	private static <E extends Edge<V, W> , V extends Vertex , W extends Weight> boolean isAnyVertexMismatching(List<E> edges) {
 		for (int i = 1; i < edges.size(); i++) {
-			Edge edge = edges.get(i-1);
-			Edge nextEdge = edges.get(i);
+			E edge = edges.get(i-1);
+			E nextEdge = edges.get(i);
 			if(!edge.getEndVertex().equals(nextEdge.getStartVertex())) {
 				return true;
 			}
@@ -68,18 +73,18 @@ public class PathImpl<T extends Edge> implements Path<T> {
 	}
 
 	private PathImpl(
-		final Weight totalWeight, 
-		final List<T> edges
+		final W totalWeight, 
+		final List<E> edges
 	) {
 		this.totalWeight = totalWeight;
 		this.edges = Collections.unmodifiableList(edges);
 	}	
 	
-	public Weight getTotalWeightForPath() {
+	public W getTotalWeightForPath() {
 		return totalWeight;
 	}
 
-	public List<T> getEdgesForPath() {
+	public List<E> getEdgesForPath() {
 		return edges;
 	}
 

@@ -13,6 +13,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
 
 public class EdgeUtilityTest {
@@ -27,7 +29,7 @@ public class EdgeUtilityTest {
 	private final static double weightBaseValueFor_C_D = 3;
 	
 	
-	private List<Edge> edges = new ArrayList<Edge>();
+	private List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
 	// there will be 12 edges, 3 (A_B , B_C , C_D) for each multiplier value below
 	
 	private final static List<Integer> multipliers = Arrays.asList(10, 1, 1000, 100);
@@ -42,7 +44,7 @@ public class EdgeUtilityTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		edges = new ArrayList<Edge>();
+		edges = new ArrayList<Edge<Vertex, Weight>>();
 		for (Integer multiplier : multipliers) {
 			edges.add(createEdge(createVertex(A), createVertex(B), createWeight(weightBaseValueFor_A_B * multiplier)));
 			edges.add(createEdge(createVertex(B), createVertex(C), createWeight(weightBaseValueFor_B_C * multiplier)));
@@ -53,29 +55,29 @@ public class EdgeUtilityTest {
 
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_First() {
-		List<Edge> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
+		List<Edge<Vertex, Weight>> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
 		assertResult(result, startIndexForFirst);
 	}
 
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_Last() {
-		List<Edge> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LAST_IN_LIST_OF_EDGES);
+		List<Edge<Vertex, Weight>> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LAST_IN_LIST_OF_EDGES);
 		assertResult(result, startIndexForLast);
 	}
 
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_Smallest() {
-		List<Edge> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.SMALLEST_WEIGHT);
+		List<Edge<Vertex, Weight>> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.SMALLEST_WEIGHT);
 		assertResult(result, startIndexForSmallest);
 	}
 	
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_Largest() {
-		List<Edge> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LARGEST_WEIGHT);
+		List<Edge<Vertex, Weight>> result = EdgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LARGEST_WEIGHT);
 		assertResult(result, startIndexForLargest);
 	}
 
-	private void assertResult(List<Edge> result, int startIndex) {
+	private void assertResult(List<Edge<Vertex, Weight>> result, int startIndex) {
 		assertEquals(3, result.size());		
 		assertEquals(edges.get(startIndex++), result.get(0));
 		assertEquals(edges.get(startIndex++), result.get(1));

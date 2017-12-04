@@ -5,23 +5,23 @@ import java.util.List;
 /**
  * @author Tomas Johansson
  */
-public interface Graph<T extends Edge> {
+public interface Graph<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 
 	/**
 	 * @return all edges in the graph
 	 */
-	List<T> getEdges();
+	List<E> getEdges();
 
 	/**
 	 * @return all vertices in the graph
 	 */
-	List<Vertex> getVertices();
+	List<V> getVertices();
 
 	/**
 	 * @param vertex 
 	 * @return true if there is a vertex in the graph with the same id as the parameter.
 	 */
-	boolean containsVertex(Vertex vertex);
+	boolean containsVertex(V vertex);
 	
-	boolean containsEdge(T edge);
+	boolean containsEdge(E edge);
 }

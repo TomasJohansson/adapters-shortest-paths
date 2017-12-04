@@ -7,4 +7,5 @@ public interface Weight extends StringRenderable {
 	
 	double getWeightValue();
 	
+//	Weight create(double value);
 }

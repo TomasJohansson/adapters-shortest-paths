@@ -1,7 +1,6 @@
 package com.programmerare.shortestpaths.adapter.impl.bsmock;
 
 import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
-import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,13 +23,17 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderBsmock<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> {
+public class PathFinderBsmock 
+< E extends Edge<V, W> , V extends Vertex , W extends Weight>
+extends PathFinderBase< E, V, W> 
+implements PathFinder<E, V, W> 
+{
 	
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
 	private final Yen yenAlgorithm;	
 	
-	PathFinderBsmock(
-		final Graph<T> graph, 
+	protected PathFinderBsmock(
+		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
 		super(graph, graphEdgesValidationDesired);
@@ -40,8 +43,8 @@ public final class PathFinderBsmock<T extends Edge> extends PathFinderBase<T> im
 	}
 	
 	private void populateGraphAdapteeWithEdges() {
-		final List<T> edges = this.getGraph().getEdges();
-		for (final T edge : edges) {
+		final List<E> edges = this.getGraph().getEdges();
+		for (final E edge : edges) {
 			this.graphAdaptee.addEdge(
 				edge.getStartVertex().getVertexId(), 
 				edge.getEndVertex().getVertexId(), 
@@ -51,12 +54,13 @@ public final class PathFinderBsmock<T extends Edge> extends PathFinderBase<T> im
 	}
 
 	@Override
-	protected List<Path<T>> findShortestPathHook(
-		final Vertex startVertex, 
-		final Vertex endVertex, 
+	protected List<Path<E, V, W>> findShortestPathHook(
+		final V startVertex, 
+		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path<T>> paths = new ArrayList<Path<T>>();		
+		final List<Path<E, V, W>> paths = new ArrayList<Path<E, V, W>>();
+		
 		final List<edu.ufl.cise.bsmock.graph.util.Path> pathList = yenAlgorithm.ksp(
 			graphAdaptee, 
 			startVertex.getVertexId(), 
@@ -65,20 +69,22 @@ public final class PathFinderBsmock<T extends Edge> extends PathFinderBase<T> im
 		);
 		for (edu.ufl.cise.bsmock.graph.util.Path path : pathList) {
 			final LinkedList<edu.ufl.cise.bsmock.graph.Edge> listOfEdges = path.getEdges();
-			final List<T> edges = new ArrayList<T>();
+			final List<E> edges = new ArrayList<E>();
 			for (edu.ufl.cise.bsmock.graph.Edge edgeAdaptee : listOfEdges) {
-				final T edge = getOriginalEdgeInstance(edgeAdaptee);
+				final E edge = getOriginalEdgeInstance(edgeAdaptee);
 				edges.add(
 					edge
 				);				
 			}
-			final Weight totalWeight = createWeight(path.getTotalCost());
+			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
+			final W totalWeight = createWeightInstance(path.getTotalCost(), edges);
 			paths.add(createPath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}
 
-	private T getOriginalEdgeInstance(final edu.ufl.cise.bsmock.graph.Edge edgeAdaptee) {
+	private E getOriginalEdgeInstance(final edu.ufl.cise.bsmock.graph.Edge edgeAdaptee) {
 		return super.getOriginalEdgeInstance(edgeAdaptee.getFromNode(), edgeAdaptee.getToNode());
 	}
+
 }

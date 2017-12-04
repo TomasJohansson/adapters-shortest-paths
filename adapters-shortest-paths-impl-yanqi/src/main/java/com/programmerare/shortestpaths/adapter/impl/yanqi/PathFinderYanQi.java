@@ -13,9 +13,11 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
@@ -28,13 +30,17 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderYanQi<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> { 
+public final class PathFinderYanQi 
+< E extends Edge<V, W> , V extends Vertex , W extends Weight>
+extends PathFinderBase< E, V, W> 
+implements PathFinder<E, V, W> 
+{ 
 
 	private final edu.asu.emit.algorithm.graph.Graph graphAdaptee;
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 
 	PathFinderYanQi(
-		final Graph<T> graph, 
+		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
 		super(graph, graphEdgesValidationDesired);
@@ -51,9 +57,9 @@ public final class PathFinderYanQi<T extends Edge> extends PathFinderBase<T> imp
 	}
 
 	private List<EdgeYanQi> createListOfVerticesWhileAlsoPopulatingIdMapper(final MapperForIntegerIdsAndGeneralStringIds idMapper) {
-		final List<T> edges = this.getGraph().getEdges();
+		final List<E> edges = this.getGraph().getEdges();
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();
-		for (final T edge : edges) {
+		for (final E edge : edges) {
 			final int integerIdForStartVertex = idMapper.createOrRetrieveIntegerId(edge.getStartVertex().getVertexId());
 			final int integerIdForEndVertex = idMapper.createOrRetrieveIntegerId(edge.getEndVertex().getVertexId());
 			vertices.add(new EdgeYanQi(integerIdForStartVertex, integerIdForEndVertex, edge.getEdgeWeight().getWeightValue()));
@@ -69,28 +75,29 @@ public final class PathFinderYanQi<T extends Edge> extends PathFinderBase<T> imp
 	 * against results from other implementations since then they would return a different number of paths.      
 	 */
 	@Override
-	protected List<Path<T>> findShortestPathHook(
-		final Vertex startVertex, 
-		final Vertex endVertex, 
+	protected List<Path<E, V, W>> findShortestPathHook(
+		final V startVertex, 
+		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path<T>> paths = new ArrayList<Path<T>>();
+		final List<Path<E, V, W>> paths = new ArrayList<Path<E, V, W>>();
 		final int startVertexId = idMapper.createOrRetrieveIntegerId(startVertex.getVertexId());
 		final int endVertexId = idMapper.createOrRetrieveIntegerId(endVertex.getVertexId());
 		final YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graphAdaptee, graphAdaptee.getVertex(startVertexId), graphAdaptee.getVertex(endVertexId));
 		while(yenAlg.hasNext()) {
 			final edu.asu.emit.algorithm.graph.Path path = yenAlg.next();
-			final List<T> edges = new ArrayList<T>();
+			final List<E> edges = new ArrayList<E>();
 			final List<BaseVertex> vertexList = path.getVertexList();
 			for (int i = 1; i < vertexList.size(); i++) {
 				final BaseVertex startVertexForEdge = vertexList.get(i-1);
 				final BaseVertex endVertexForEdge = vertexList.get(i);
-				final T edge = getOriginalEdgeInstance(startVertexForEdge, endVertexForEdge); 
+				final E edge = getOriginalEdgeInstance(startVertexForEdge, endVertexForEdge); 
 				edges.add(
 					edge
 				);				
 			}
-			final Weight totalWeight = createWeight(path.getWeight());
+			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
+			final W totalWeight = createWeightInstance(path.getWeight(), edges);			
 			paths.add(createPath(totalWeight, edges));
 			if(maxNumberOfPaths == paths.size()) {
 				break;
@@ -99,7 +106,7 @@ public final class PathFinderYanQi<T extends Edge> extends PathFinderBase<T> imp
 		return Collections.unmodifiableList(paths);
 	}
 
-	private T getOriginalEdgeInstance(final BaseVertex startVertexForEdge, final BaseVertex endVertexForEdge) {
+	private E getOriginalEdgeInstance(final BaseVertex startVertexForEdge, final BaseVertex endVertexForEdge) {
 		final String startVertexId = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(startVertexForEdge.getId());
 		final String endVertexId = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(endVertexForEdge.getId());		
 		return super.getOriginalEdgeInstance(startVertexId, endVertexId);

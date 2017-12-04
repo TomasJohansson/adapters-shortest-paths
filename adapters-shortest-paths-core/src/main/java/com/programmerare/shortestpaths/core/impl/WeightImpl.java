@@ -58,5 +58,9 @@ public final class WeightImpl implements Weight {
 	
 	public String renderToString() {
 		return toString();
-	}	
+	}
+
+//	public Weight create(final double value) {
+//		return createWeight(value);
+//	}	
 }

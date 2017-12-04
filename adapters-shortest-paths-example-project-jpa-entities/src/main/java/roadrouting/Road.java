@@ -5,8 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * 
@@ -14,7 +12,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
  *
  */
 @Entity
-public class Road implements Edge {
+public class Road implements Edge<City , WeightDeterminedByRoadLengthAndQuality> {
 	
 	@Id
 	private int roadKey;
@@ -39,7 +37,7 @@ public class Road implements Edge {
 	private City cityTo;
 	
 	@Transient
-	private Weight edgeWeight;
+	private WeightDeterminedByRoadLengthAndQuality edgeWeight;
 
 
 	protected Road()  {	}
@@ -115,20 +113,21 @@ public class Road implements Edge {
 		return getCityFrom().getVertexId() + "_" + getCityTo().getVertexId();
 	}
 
-	public Vertex getStartVertex() {
+	public City getStartVertex() {
 		return getCityFrom();
 	}
 
-	public Vertex getEndVertex() {
+	public City getEndVertex() {
 		return getCityTo();
 	}	
 
-	public Weight getEdgeWeight() {
+	public WeightDeterminedByRoadLengthAndQuality getEdgeWeight() {
 		if(edgeWeight == null) { // lazy loading, using the twop persisted fields
-			edgeWeight = new WeightDeterminedByRoadLengthAndQuality(roadLength, roadQuality);	
+			edgeWeight = new WeightDeterminedByRoadLengthAndQuality(roadLength, roadQuality);
 		}
 		return edgeWeight;
-	}	
+	}
+	
 	// ------------------------------------------------------------
 	
 	public String renderToString() {
