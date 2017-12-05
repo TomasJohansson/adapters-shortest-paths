@@ -72,7 +72,7 @@ public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight
 		return false;
 	}
 
-	private PathImpl(
+	protected PathImpl(
 		final W totalWeight, 
 		final List<E> edges
 	) {

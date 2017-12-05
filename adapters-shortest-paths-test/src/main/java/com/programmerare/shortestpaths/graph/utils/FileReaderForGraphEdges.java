@@ -17,22 +17,25 @@ import com.programmerare.shortestpaths.utils.FileReader;
  * 
  * @author Tomas Johansson
  */
-public final class FileReaderForGraphEdges {
+public final class FileReaderForGraphEdges<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 	
 	private final FileReader fileReader;
-	private final EdgeParser edgeParser;
+	private final EdgeParser<E, V, W> edgeParser;
 	
-	private FileReaderForGraphEdges() {
+	private FileReaderForGraphEdges(Class edgeClass) {
 		fileReader = new FileReader();
-		edgeParser = EdgeParser.createEdgeParser();
+		edgeParser = EdgeParser.createEdgeParser(edgeClass);
 	}
 	
-	public static FileReaderForGraphEdges createFileReaderForGraphEdges() {
-		return new FileReaderForGraphEdges();
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> FileReaderForGraphEdges<E, V, W> createFileReaderForGraphEdges(Class edgeClass) {
+		return new FileReaderForGraphEdges<E, V, W>(edgeClass);
 	}
 
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> FileReaderForGraphEdges<E, V, W> createFileReaderForGraphEdges() {
+		return createFileReaderForGraphEdges(null);
+	}	
 
-	public List<Edge<Vertex, Weight>> readEdgesFromFile(final String filePath) {
+	public List<E> readEdgesFromFile(final String filePath) {
 		return readEdgesFromFile(filePath, FileReader.CHARSET_UTF_8);		
 	}
 
@@ -43,8 +46,8 @@ public final class FileReaderForGraphEdges {
 	 * @param charsetForInputFile
 	 * @return
 	 */
-	public List<Edge<Vertex, Weight>> readEdgesFromFile(final String filePath, Charset charsetForInputFile) {
-		final List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
+	public List<E> readEdgesFromFile(final String filePath, Charset charsetForInputFile) {
+		final List<E> edges = new ArrayList<E>();
 		
 		final List<String> linesFromFileWithGraphEdges = fileReader.readLines(filePath, charsetForInputFile);
 		for (String lineInFileRepresengingEdge : linesFromFileWithGraphEdges) {

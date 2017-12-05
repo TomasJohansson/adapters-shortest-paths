@@ -24,9 +24,9 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
 public class PathFinderBsmock 
-< E extends Edge<V, W> , V extends Vertex , W extends Weight>
-extends PathFinderBase< E, V, W> 
-implements PathFinder<E, V, W> 
+< P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight>
+extends PathFinderBase<P,  E, V, W> 
+implements PathFinder<P, E, V, W> 
 {
 	
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
@@ -54,12 +54,12 @@ implements PathFinder<E, V, W>
 	}
 
 	@Override
-	protected List<Path<E, V, W>> findShortestPathHook(
+	protected List<P> findShortestPathHook(
 		final V startVertex, 
 		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path<E, V, W>> paths = new ArrayList<Path<E, V, W>>();
+		final List<P> paths = new ArrayList<P>();
 		
 		final List<edu.ufl.cise.bsmock.graph.util.Path> pathList = yenAlgorithm.ksp(
 			graphAdaptee, 
@@ -78,7 +78,7 @@ implements PathFinder<E, V, W>
 			}
 			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
 			final W totalWeight = createWeightInstance(path.getTotalCost(), edges);
-			paths.add(createPath(totalWeight, edges));
+			paths.add(createThePath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}

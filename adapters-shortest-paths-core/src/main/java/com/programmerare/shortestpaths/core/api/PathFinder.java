@@ -5,8 +5,8 @@ import java.util.List;
 /**
  * @author Tomas Johansson
  */
-public interface PathFinder<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public interface PathFinder<P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 	
-	List<Path<E, V, W>> findShortestPaths(V startVertex, V endVertex, int maxNumberOfPaths);
+	List<P> findShortestPaths(V startVertex, V endVertex, int maxNumberOfPaths);
 
 }

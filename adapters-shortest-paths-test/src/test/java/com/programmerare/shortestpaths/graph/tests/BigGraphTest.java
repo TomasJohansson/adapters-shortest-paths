@@ -1,5 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
+import static com.programmerare.shortestpaths.core.api.EdgeDefaultImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -13,8 +14,10 @@ import java.util.List;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
@@ -69,35 +72,35 @@ public class BigGraphTest {
 		final int numberOfVertices, 
 		final int numberOfPathsToFind
 	) throws IOException {
-		final List<Edge<Vertex, Weight>> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
+		final List<EdgeDefault> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
 		final Vertex startVertex = edgesForBigGraph.get(0).getStartVertex();
 		final Vertex endVertex = edgesForBigGraph.get(edgesForBigGraph.size()-1).getEndVertex();
-		final List<PathFinderFactory<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+		final List<PathFinderFactoryDefault> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
 		
 		GraphShortestPathAssertionHelper graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(isExecutingThroughTheMainMethod);
 		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(edgesForBigGraph, startVertex, endVertex, numberOfPathsToFind, pathFinderFactories);
 	}
 
-	private List<Edge<Vertex, Weight>> createEdgesForBigGraph(final int numberOfVertices) {
+	private List<EdgeDefault> createEdgesForBigGraph(final int numberOfVertices) {
 		final List<Vertex> vertices = createVertices(numberOfVertices);
 		assertEquals(numberOfVertices, vertices.size());
 		
 		double decreasingWeightValue = 10 * numberOfVertices;
 		
-		final List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
+		final List<EdgeDefault> edges = new ArrayList<EdgeDefault>();
 		
 		for(int i=0; i<numberOfVertices-1; i++) {
-			edges.add(createEdge(vertices.get(i), vertices.get(i+1), createWeight(--decreasingWeightValue)));
+			edges.add(createEdgeDefault(vertices.get(i), vertices.get(i+1), createWeight(--decreasingWeightValue)));
 		}
 		assertEquals(numberOfVertices-1, edges.size());
 				
 		for(int i=0; i<numberOfVertices-10; i+=10) {
-			edges.add(createEdge(vertices.get(i), vertices.get(i+10), createWeight(--decreasingWeightValue)));
+			edges.add(createEdgeDefault(vertices.get(i), vertices.get(i+10), createWeight(--decreasingWeightValue)));
 		}
 		
 		for(int i=0; i<numberOfVertices-100; i+=100) {
 			decreasingWeightValue--;
-			edges.add(createEdge(vertices.get(i), vertices.get(i+100), createWeight(--decreasingWeightValue)));
+			edges.add(createEdgeDefault(vertices.get(i), vertices.get(i+100), createWeight(--decreasingWeightValue)));
 		}		
 
 		// now construct a really short path with the smallest value as each weight and only a few edges from start vertex to end vertex
@@ -110,10 +113,10 @@ public class BigGraphTest {
 		final Vertex startVertex = vertices.get(0);
 		final Vertex endVertex = vertices.get(numberOfVertices-1);
 		
-		edges.add(createEdge(startVertex, secondVertex, createWeight(--decreasingWeightValue)));
-		edges.add(createEdge(secondVertex, thirdVertex, createWeight(--decreasingWeightValue)));
-		edges.add(createEdge(thirdVertex, fourthVertex, createWeight(--decreasingWeightValue)));
-		edges.add(createEdge(fourthVertex, endVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdgeDefault(startVertex, secondVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdgeDefault(secondVertex, thirdVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdgeDefault(thirdVertex, fourthVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdgeDefault(fourthVertex, endVertex, createWeight(--decreasingWeightValue)));
 		
 		assertTrue(decreasingWeightValue > 0); 
 		

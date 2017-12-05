@@ -68,7 +68,8 @@ public class PathFinderFactoryBaseTest {
 
 	// TODO: refactor duplication ... the same etst class as below is duplicated in another test class file
 	public final class PathFinderConcreteTest extends PathFinderBase 
-		<  
+		<
+		Path<Edge<Vertex, Weight>, Vertex, Weight>,
 		Edge<Vertex , Weight> , 
 		Vertex , 
 		Weight 
@@ -89,16 +90,26 @@ public class PathFinderFactoryBaseTest {
 	}
 	
 	public final class PathFinderFactoryConcreteForTest extends PathFinderFactoryBase
-	< PathFinder<Edge<Vertex,Weight>,Vertex,Weight> , Edge<Vertex , Weight> , Vertex , Weight>
+	< PathFinder<Path<Edge<Vertex,Weight>,Vertex,Weight> , Edge<Vertex,Weight>,Vertex,Weight> , Path<Edge<Vertex,Weight>,Vertex,Weight> , Edge<Vertex , Weight> , Vertex , Weight>
 	{
-		public PathFinder<Edge<Vertex, Weight>, Vertex, Weight> createPathFinder(
+
+		public PathFinder<Path<Edge<Vertex, Weight>, Vertex, Weight>, Edge<Vertex, Weight>, Vertex, Weight> createPathFinder(
 				Graph<Edge<Vertex, Weight>, Vertex, Weight> graph,
 				GraphEdgesValidationDesired graphEdgesValidationDesired) {
 			return new PathFinderConcreteTest(
 				graph, 
 				graphEdgesValidationDesired
 			);
-
 		}
+		//
+		
+//		public PathFinder<Edge<Vertex, Weight>, Vertex, Weight> createPathFinder(
+//				Graph<Edge<Vertex, Weight>, Vertex, Weight> graph,
+//				GraphEdgesValidationDesired graphEdgesValidationDesired) {
+//			return new PathFinderConcreteTest(
+//				graph, 
+//				graphEdgesValidationDesired
+//			);
+//		}
 	}	
 }

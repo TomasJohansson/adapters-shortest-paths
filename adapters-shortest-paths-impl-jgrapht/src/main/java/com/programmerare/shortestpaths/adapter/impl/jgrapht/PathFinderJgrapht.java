@@ -25,16 +25,16 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderJgrapht
-< E extends Edge<V, W> , V extends Vertex , W extends Weight>
-extends PathFinderBase< E, V, W> 
-implements PathFinder<E, V, W>
+public class PathFinderJgrapht
+<P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight>
+extends PathFinderBase<P, E, V, W> 
+implements PathFinder<P, E, V, W> 
 //<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> 
 {
 
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	
-	PathFinderJgrapht(
+	protected PathFinderJgrapht(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
@@ -57,12 +57,12 @@ implements PathFinder<E, V, W>
 	}
 
 	@Override
-	protected List<Path<E, V, W>> findShortestPathHook(
+	protected List<P> findShortestPathHook(
 		final V startVertex, 
 		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path<E, V, W>> paths = new ArrayList<Path<E, V, W>>();
+		final List<P> paths = new ArrayList<P>();
 
 		final String sourceVertexId = startVertex.getVertexId();
 		final String targetVertexId = endVertex.getVertexId();
@@ -79,7 +79,7 @@ implements PathFinder<E, V, W>
 			}
 			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
 	    	final W totalWeight = createWeightInstance(graphPath.getWeight(), edges);
-			paths.add(createPath(totalWeight, edges));
+	    	paths.add(createThePath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}

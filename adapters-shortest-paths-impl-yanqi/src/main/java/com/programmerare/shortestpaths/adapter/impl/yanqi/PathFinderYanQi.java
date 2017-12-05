@@ -1,8 +1,5 @@
 package com.programmerare.shortestpaths.adapter.impl.yanqi;
 
-import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
-import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,11 +10,9 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
-import com.programmerare.shortestpaths.core.impl.PathFinderFactoryBase;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
@@ -30,16 +25,16 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public final class PathFinderYanQi 
-< E extends Edge<V, W> , V extends Vertex , W extends Weight>
-extends PathFinderBase< E, V, W> 
-implements PathFinder<E, V, W> 
+public class PathFinderYanQi 
+<P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight>
+extends PathFinderBase<P, E, V, W> 
+implements PathFinder<P, E, V, W> 
 { 
 
 	private final edu.asu.emit.algorithm.graph.Graph graphAdaptee;
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 
-	PathFinderYanQi(
+	protected PathFinderYanQi(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
@@ -75,12 +70,12 @@ implements PathFinder<E, V, W>
 	 * against results from other implementations since then they would return a different number of paths.      
 	 */
 	@Override
-	protected List<Path<E, V, W>> findShortestPathHook(
+	protected List<P> findShortestPathHook(
 		final V startVertex, 
 		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
-		final List<Path<E, V, W>> paths = new ArrayList<Path<E, V, W>>();
+		final List<P> paths = new ArrayList<P>();
 		final int startVertexId = idMapper.createOrRetrieveIntegerId(startVertex.getVertexId());
 		final int endVertexId = idMapper.createOrRetrieveIntegerId(endVertex.getVertexId());
 		final YenTopKShortestPathsAlg yenAlg = new YenTopKShortestPathsAlg(graphAdaptee, graphAdaptee.getVertex(startVertexId), graphAdaptee.getVertex(endVertexId));
@@ -98,13 +93,16 @@ implements PathFinder<E, V, W>
 			}
 			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
 			final W totalWeight = createWeightInstance(path.getWeight(), edges);			
-			paths.add(createPath(totalWeight, edges));
+			paths.add(createThePath(totalWeight, edges));
+			
 			if(maxNumberOfPaths == paths.size()) {
 				break;
 			}
 		}
 		return Collections.unmodifiableList(paths);
 	}
+
+
 
 	private E getOriginalEdgeInstance(final BaseVertex startVertexForEdge, final BaseVertex endVertexForEdge) {
 		final String startVertexId = idMapper.getBackThePreviouslyStoredGeneralStringIdForInteger(startVertexForEdge.getId());

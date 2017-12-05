@@ -9,7 +9,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
   */
-public interface PathFinderFactory<F extends PathFinder<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {  
+public interface PathFinderFactory<F extends PathFinder<P,E,V,W> , P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight> {  
 	
 	F createPathFinder(
 		Graph<E, V, W> graph, 

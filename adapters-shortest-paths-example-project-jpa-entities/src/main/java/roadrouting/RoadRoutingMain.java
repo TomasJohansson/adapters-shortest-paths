@@ -30,12 +30,10 @@ public class RoadRoutingMain {
 		final City startCity = cityRoadService.getStartCity();
 		final City endCity = cityRoadService.getEndCity();
 
-		PathFinderFactory<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>  aaa = null;
-		
-		final List<PathFinderFactory<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories = new ArrayList<PathFinderFactory<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>>();
-		pathFinderFactories.add(new PathFinderFactoryYanQi<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>());
-		pathFinderFactories.add(new PathFinderFactoryBsmock<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>());
-		pathFinderFactories.add(new PathFinderFactoryJgrapht<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>());
+		final List<PathFinderFactory< PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories = new ArrayList<PathFinderFactory< PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>>();
+		pathFinderFactories.add(new PathFinderFactoryYanQi<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
+		pathFinderFactories.add(new PathFinderFactoryBsmock<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
+		pathFinderFactories.add(new PathFinderFactoryJgrapht<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
 		performRoadRoutingForTheImplementations(
 			roads, 
 			startCity, 
@@ -48,12 +46,11 @@ public class RoadRoutingMain {
 		final List<Road> roads, 
 		final City startCity, 
 		final City endCity, 
-		final List<PathFinderFactory<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories
+		final List<PathFinderFactory<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories
 	) {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 		GraphEdgesValidator.validateEdgesForGraphCreation(roads);
-		
-		for (PathFinderFactory<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality> pathFinderFactory : pathFinderFactories) {
+		for (PathFinderFactory<PathFinder<Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality>, Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinderFactory : pathFinderFactories) {
 			performRoadRouting(roads, startCity, endCity, pathFinderFactory);	
 		}
 	}
@@ -62,7 +59,7 @@ public class RoadRoutingMain {
 		final List<Road> roads, 
 		final City startCity, 
 		final City endCity, 
-		final PathFinderFactory<PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> , Road , City , WeightDeterminedByRoadLengthAndQuality> pathFinderFactory
+		final PathFinderFactory<PathFinder<Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality>, Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinderFactory
 	) {
 		System.out.println("--------------------------------");
 		System.out.println("Implementation starts for " + pathFinderFactory.getClass().getSimpleName());
@@ -71,11 +68,10 @@ public class RoadRoutingMain {
 		// of domain object you can create yourself.
 		// Note that such an object must implement the interface "Edge" and in particular must pay attention to 
 		// how the method "getEdgeId()" must be implemented as documented in the Edge interface.
-		final PathFinder<Road , City , WeightDeterminedByRoadLengthAndQuality> pathFinder = pathFinderFactory.createPathFinder(
+		final PathFinder<Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinder = pathFinderFactory.createPathFinder(
 			roads, 
 			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 		); 
-		
 		
 		final List<Path<Road , City , WeightDeterminedByRoadLengthAndQuality>> paths = pathFinder.findShortestPaths(startCity, endCity, 10);
 		// Now also note that you can retrieve your own domain object (for example "Road" above) 

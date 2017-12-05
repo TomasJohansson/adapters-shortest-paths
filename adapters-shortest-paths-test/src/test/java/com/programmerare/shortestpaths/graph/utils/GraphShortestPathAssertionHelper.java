@@ -12,9 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
@@ -46,14 +50,14 @@ public class GraphShortestPathAssertionHelper {
 	 * See also comment at class level.
 	 */
 	public void testResultsWithImplementationsAgainstEachOther(
-			final List<Edge<Vertex, Weight>> edgesForGraph, 
+			final List<EdgeDefault> edgesForBigGraph, 
 			final Vertex startVertex,
 			final Vertex endVertex, 
 			final int numberOfPathsToFind, 
-			final List<PathFinderFactory<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>> pathFinderFactoriesForImplementationsToTest
+			final List<PathFinderFactoryDefault> pathFinderFactoriesForImplementationsToTest
 		) {
 		testResultsWithImplementationsAgainstEachOther(
-			edgesForGraph, 
+			edgesForBigGraph, 
 			startVertex,
 			endVertex, 
 			numberOfPathsToFind, 
@@ -71,32 +75,34 @@ public class GraphShortestPathAssertionHelper {
 	 * See comment at class level.
 	 */	
 	public void testResultsWithImplementationsAgainstEachOther(
-		final List<Edge<Vertex, Weight>> edgesForGraph, 
+		final List<EdgeDefault> edgesForBigGraph, 
 		final Vertex startVertex,
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
-		final List<PathFinderFactory<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight>> pathFinderFactoriesForImplementationsToTest,
-		final List<Path<Edge<Vertex, Weight> , Vertex , Weight>> expectedListOfPaths,
+		final List<PathFinderFactoryDefault> pathFinderFactoriesForImplementationsToTest,
+		final List<PathDefault> expectedListOfPaths,
 		final boolean shouldPrettyPrintListOfPathsToTheConsoleOutput
 	) {
-		output("Number of edges in the graph to be tested : " + edgesForGraph.size());
-
-		final Map<String, List<Path<Edge<Vertex, Weight> , Vertex , Weight>>> shortestPathsPerImplementation = new HashMap<String, List<Path<Edge<Vertex, Weight> , Vertex , Weight>>>();
+		output("Number of edges in the graph to be tested : " + edgesForBigGraph.size());
+		
+		final Map<String, List<PathDefault>> shortestPathsPerImplementation = new HashMap<String, List<PathDefault>>();
 
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
-		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForGraph);
+		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForBigGraph);
 		
-		final PathParser pathParser = new PathParser(edgesForGraph);
+		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = new PathParser<PathDefault, EdgeDefault, Vertex, Weight>(edgesForBigGraph);
+		
 		assertThat("At least some implementation should be used", pathFinderFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < pathFinderFactoriesForImplementationsToTest.size(); i++) {
-			final PathFinderFactory<PathFinder<Edge<Vertex, Weight> , Vertex , Weight> , Edge<Vertex, Weight> , Vertex , Weight> pathFinderFactory = pathFinderFactoriesForImplementationsToTest.get(i);
+			final PathFinderFactoryDefault pathFinderFactory = pathFinderFactoriesForImplementationsToTest.get(i);
+//			System.out.println("pathFinderFactory " + pathFinderFactory.getClass());
 			
 			final TimeMeasurer tm = TimeMeasurer.start(); 			
-			final PathFinder<Edge<Vertex, Weight> , Vertex , Weight> pathFinder = pathFinderFactory.createPathFinder(
-				edgesForGraph,
+			final PathFinderDefault pathFinder = pathFinderFactory.createPathFinder(
+				edgesForBigGraph,
 				GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 			);
-			final List<Path<Edge<Vertex, Weight> , Vertex , Weight>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
+			List<PathDefault> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			assertNotNull(shortestPaths);
 			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
 			output("seconds : " + tm.getSeconds() + " for implementation " + pathFinder.getClass().getName());
@@ -106,14 +112,14 @@ public class GraphShortestPathAssertionHelper {
 				displayAsPathStringsWhichCanBeUsedInXml(shortestPaths, pathParser);
 			}
 			
-			for (Path<Edge<Vertex, Weight> , Vertex , Weight> path : shortestPaths) {
-				// output("shortest path weight " + path.getTotalWeightForPath().getWeightValue());
-			}
+//			for (PathDefault path : shortestPaths) {
+//				// output("shortest path weight " + path.getTotalWeightForPath().getWeightValue());
+//			}
 			
 			shortestPathsPerImplementation.put(pathFinder.getClass().getName(), shortestPaths);
 			
-			final Path<Edge<Vertex, Weight> , Vertex , Weight> shortestPath = shortestPaths.get(0);
-			final List<Edge<Vertex, Weight>> edgesForShortestPaths = shortestPath.getEdgesForPath();
+			final PathDefault shortestPath = shortestPaths.get(0);
+			final List<EdgeDefault> edgesForShortestPaths = shortestPath.getEdgesForPath();
 			for (int j = 0; j < edgesForShortestPaths.size(); j++) {
 				// output("edge " + j + " : " + edgesForShortestPaths.get(j));
 			}
@@ -122,7 +128,7 @@ public class GraphShortestPathAssertionHelper {
 		final List<String> nameOfImplementations = new ArrayList<String>(shortestPathsPerImplementation.keySet());
 		for (int i = 0; i < nameOfImplementations.size(); i++) {
 			final String nameOfImplementation_1 = nameOfImplementations.get(i);
-			final List<Path<Edge<Vertex, Weight> , Vertex , Weight>> pathsFoundByImplementation_1 = shortestPathsPerImplementation.get(nameOfImplementation_1);
+			final List<PathDefault> pathsFoundByImplementation_1 = shortestPathsPerImplementation.get(nameOfImplementation_1);
 			if(expectedListOfPaths != null) {
 				final String failureMessage = nameOfImplementation_1 + " failed when comparing with expected result according to xml file"; 
 				assertEquals("Mismatching number of paths, " + failureMessage, expectedListOfPaths.size(), pathsFoundByImplementation_1.size());
@@ -133,7 +139,7 @@ public class GraphShortestPathAssertionHelper {
 			
 			for (int j = i+1; j < nameOfImplementations.size(); j++) {
 				final String nameOfImplementation_2 = nameOfImplementations.get(j);
-				final List<Path<Edge<Vertex, Weight> , Vertex , Weight>> pathsFoundByImplementation_2 = shortestPathsPerImplementation.get(nameOfImplementation_2);
+				final List<PathDefault> pathsFoundByImplementation_2 = shortestPathsPerImplementation.get(nameOfImplementation_2);
 				assertEquals(pathsFoundByImplementation_1.size(), pathsFoundByImplementation_2.size());
 				for (int k = 0; k < pathsFoundByImplementation_2.size(); k++) {
 					assertEqualPaths("fail for i,j,k " + i + " , " + j + " , " + k , pathsFoundByImplementation_1.get(k), pathsFoundByImplementation_2.get(k));
@@ -145,10 +151,10 @@ public class GraphShortestPathAssertionHelper {
 		}
 	}
 
-	private void displayAsPathStringsWhichCanBeUsedInXml(List<Path<Edge<Vertex, Weight> , Vertex , Weight>> shortestPaths, PathParser pathParser) {
+	private void displayAsPathStringsWhichCanBeUsedInXml(List<PathDefault> shortestPaths, PathParser pathParser) {
 		output("-----");
 		output("The below output is in a format which can be used in xml files with test cases defining the expected output");
-		for (Path<Edge<Vertex, Weight> , Vertex , Weight> path : shortestPaths) {
+		for (PathDefault path : shortestPaths) {
 			output(pathParser.fromPathToString(path));
 		}
 		output("-----");
@@ -169,14 +175,14 @@ public class GraphShortestPathAssertionHelper {
 		return consoleOutputDesired;
 	}
 
-	private void assertEqualPaths(final String message, final Path<Edge<Vertex, Weight> , Vertex , Weight> expectedPath, final Path<Edge<Vertex, Weight> , Vertex , Weight> actualPath) {
+	private void assertEqualPaths(final String message, final PathDefault expectedPath, final PathDefault actualPath) {
 		assertNotNull(expectedPath); // the expected list SHOULD not be null but you never know for sure, since it might originate from an xml file which was not properly defined or read
 		assertNotNull(actualPath);
 		assertNotNull(expectedPath.getTotalWeightForPath());
 		assertNotNull(actualPath.getTotalWeightForPath());
 		
-		final List<Edge<Vertex, Weight>> expectedEdges = expectedPath.getEdgesForPath(); 
-		final List<Edge<Vertex, Weight>> actualEdges = actualPath.getEdgesForPath();
+		final List<EdgeDefault> expectedEdges = expectedPath.getEdgesForPath(); 
+		final List<EdgeDefault> actualEdges = actualPath.getEdgesForPath();
 		assertNotNull(message, expectedEdges); // same comment as above, regarding why the expected value is asserted
 		assertNotNull(message, actualEdges);
 		double weightTotal = 0;
@@ -227,17 +233,17 @@ public class GraphShortestPathAssertionHelper {
 //		List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
 //		displayListOfShortestPath(shortestPaths);
 //	}
-	private static void displayListOfShortestPath(List<Path<Edge<Vertex, Weight> , Vertex , Weight>> shortestPaths) {
-		for (Path<Edge<Vertex, Weight> , Vertex , Weight> path : shortestPaths) {
+	private static void displayListOfShortestPath(List<PathDefault> shortestPaths) {
+		for (PathDefault path : shortestPaths) {
 			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}
 		System.out.println("-------------------------------------------------------------");		
 	}
 	
-	private static String getPathAsPrettyPrintedStringForConsoleOutput(Path<Edge<Vertex, Weight> , Vertex , Weight> path) {
+	private static String getPathAsPrettyPrintedStringForConsoleOutput(PathDefault path) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(path.getTotalWeightForPath().getWeightValue() + " ( ");
-		List<Edge<Vertex, Weight>> edges = path.getEdgesForPath();
+		List<EdgeDefault> edges = path.getEdgesForPath();
 		for (int i = 0; i < edges.size(); i++) {
 			if(i > 0) {
 				sb.append(" + ");		

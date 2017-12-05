@@ -1,20 +1,27 @@
 package com.programmerare.shortestpaths.core.impl;
 
+import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
+
 import java.lang.reflect.Constructor;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.EdgeDefaultImpl;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathDefault;
+import com.programmerare.shortestpaths.core.api.PathDefaultImpl;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 // public interface PathFinder<P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
-public abstract class PathFinderBase<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements PathFinder<E, V, W> {
+public abstract class PathFinderBase<P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> implements PathFinder<P, E, V, W> {
 
 	private final Graph<E, V, W> graph;
 	private final EdgeMapper<E, V, W> edgeMapper;
@@ -41,14 +48,14 @@ public abstract class PathFinderBase<E extends Edge<V, W> , V extends Vertex , W
 	/**
 	 * final method to enforce the validation, and then forward to the hook method for the implementations
 	 */
-	public final List<Path<E, V, W>> findShortestPaths(
+	public final List<P> findShortestPaths(
 		final V startVertex, 
 		final V endVertex, 
 		final int maxNumberOfPaths
 	) {
 		validateThatBothVerticesArePartOfTheGraph(startVertex, endVertex);
 		
-		final List<Path<E, V, W>> shortestPaths = findShortestPathHook(
+		final List<P> shortestPaths = findShortestPathHook(
 			startVertex, 
 			endVertex, 
 			maxNumberOfPaths				
@@ -60,8 +67,8 @@ public abstract class PathFinderBase<E extends Edge<V, W> , V extends Vertex , W
 		return shortestPaths;
 	}
 
-	void validateThatAllEdgesInAllPathsArePartOfTheGraph(final List<Path<E, V, W>> paths) {
-		for (Path<E, V, W> path : paths) {
+	void validateThatAllEdgesInAllPathsArePartOfTheGraph(final List<P> paths) {
+		for (P path : paths) {
 			List<E> edgesForPath = path.getEdgesForPath();
 			for (E e : edgesForPath) {
 				if(!graph.containsEdge(e)) {
@@ -102,7 +109,7 @@ public abstract class PathFinderBase<E extends Edge<V, W> , V extends Vertex , W
 	}
 
 	// "Hook" : see the Template Method Design Pattern
-	protected abstract List<Path<E, V, W>> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths);
+	protected abstract List<P> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths);
 	
 	protected W createWeightInstance(final double totalCost, final Class<? extends Weight> weightClass) {
 		// TODO maybe: reflection is currently ALWAYS used.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
@@ -123,5 +130,9 @@ public abstract class PathFinderBase<E extends Edge<V, W> , V extends Vertex , W
 		final Class<? extends Weight> weightClass = w.getClass();
 		return createWeightInstance(totalCost, weightClass);
 	}
+	
+	protected P createThePath(W totalWeight, List<E> edges) {
+		return PathParser.createPathWithHorribleCode(totalWeight, edges);
+	}	
 	
 }

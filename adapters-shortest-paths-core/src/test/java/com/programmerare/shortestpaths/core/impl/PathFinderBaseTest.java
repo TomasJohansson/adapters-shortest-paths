@@ -32,7 +32,8 @@ public class PathFinderBaseTest {
 	
 	@Test
 	public void testCreateWeightInstance() {
-		PathFinderConcrete<Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
+		
+		PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight>, Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight> , Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
 		// TDOO: refactor duplicated creations as above
 		
 		Weight weightForTest = new WeightForTest(123.12);
@@ -44,7 +45,7 @@ public class PathFinderBaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		final EdgeParser edgeParser = EdgeParser.createEdgeParser();		
+		final EdgeParser edgeParser = EdgeParser.createEdgeParser(null);		
 		final List<Edge<Vertex,Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(
 				"A B 5" + NEWLINE +  
 				"B C 6" + NEWLINE +
@@ -75,24 +76,24 @@ public class PathFinderBaseTest {
 	@Test
 	public void validateThatAllEdgesInAllPathsArePartOfTheGraph_should_NOT_throw_exception() {
 		//Path<Edge<Vertex,Weight>, Vertex, Weight> 
-		PathFinderConcrete<Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
+		PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight>, Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight>, Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
 		pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesBeingPartOfTheGraph);
 	}
 	
 	@Test(expected = GraphValidationException.class)
 	public void validateThatAllEdgesInAllPathsArePartOfTheGraph_SHOULD_throw_exception() {
-		PathFinderConcrete<Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
+		PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight>, Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight>, Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
 		pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesNOTbeingPartOfTheGraph);
 	}
 
 	// TODO: refactor duplication ... the same etst class as below is duplicated in another test class file
-	public final class PathFinderConcrete<E extends Edge<V, W> , V extends Vertex , W extends Weight> extends PathFinderBase<E, V, W> {
+	public final class PathFinderConcrete<P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight> extends PathFinderBase<P, E, V, W> {
 		protected PathFinderConcrete(Graph<E, V, W> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
 			super(graph, graphEdgesValidationDesired);
 		}
 
 		@Override
-		protected List<Path<E,V,W>> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths) {
+		protected List<P> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths) {
 			// TODO Auto-generated method stub
 			return null;
 		}

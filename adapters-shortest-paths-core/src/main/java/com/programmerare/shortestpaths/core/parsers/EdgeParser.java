@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.EdgeDefaultImpl;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.utils.StringUtility;
@@ -19,6 +21,9 @@ import com.programmerare.shortestpaths.utils.StringUtility;
  */
 public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
 
+	// private final Class<T> clazz;
+	private Class<E> edgeClass;
+	
 	/**
 	 * when splitting, an regular expression can be used e.g. "\\s++" for matching one or more white space characters
 	 * while at the creation you need to be precise e.g. create a string with exactly one space.
@@ -49,6 +54,7 @@ public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extend
 	 * @param orderForWeight
 	 */
 	private EdgeParser(
+		final Class<E> edgeClass,
 		final String separatorBetweenEdgesAndWeightWhenSplitting, 
 		final String separatorBetweenEdgesAndWeightWhenCreating, 
 		final int orderForStartVertex, 
@@ -61,6 +67,8 @@ public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extend
 //		this.e = e;
 //		this.v = v;
 //		this.w = w;
+		this.edgeClass = edgeClass;
+		
 		this.separatorBetweenEdgesAndWeightWhenSplitting = separatorBetweenEdgesAndWeightWhenSplitting;
 		this.separatorBetweenEdgesAndWeightWhenCreating = separatorBetweenEdgesAndWeightWhenCreating;
 		this.orderForStartVertex = orderForStartVertex;
@@ -82,13 +90,17 @@ public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extend
 	 * TODO: if/when this method is opened for public use, then write tests for validatinng correct input data.
 	 * @return
 	 */
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser() {
-		return createEdgeParser("\\s+", " ", 1, 2, 3);
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser(Class edgeClass) {
+		return createEdgeParser(edgeClass, "\\s+", " ", 1, 2, 3);
 	}
-	
+
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser() {
+		return createEdgeParser(null);
+	}	
 	
 	// TODO: if this method is "opened" for client code i.e. made public then write some tests with validation of input
 	private static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser(
+		final Class<E> edgeClass,
 		final String separatorBetweenEdgesAndWeightWhenSplitting, 
 		final String separatorBetweenEdgesAndWeightWhenCreating, 
 		final int orderForStartVertex, 
@@ -96,6 +108,7 @@ public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extend
 		final int orderForWeight	
 	) {
 		return new EdgeParser<E, V, W>(
+			edgeClass,
 			separatorBetweenEdgesAndWeightWhenSplitting, 
 			separatorBetweenEdgesAndWeightWhenCreating, 
 			orderForStartVertex, 
@@ -114,15 +127,35 @@ public final class EdgeParser<E extends Edge<V, W> , V extends Vertex , W extend
 	 * @return
 	 */
 	public  E fromStringToEdge(final String stringRepresentationOfEdge) {
+//		System.out.println("fromStringToEdge edgeClass.getName() " + edgeClass.getName());
+		
 		final String[] array = stringRepresentationOfEdge.split(separatorBetweenEdgesAndWeightWhenSplitting);
 		// if(split.length < 3) // TODO throw
-		final V startVertexId = (V)createVertex(array[orderForStartVertex-1]);
-		final V endVertexId = (V)createVertex(array[orderForEndVertex-1]);
-		final W weight = (W)createWeight(Double.parseDouble(array[orderForWeight-1]));
-		final E edge = (E)createEdge(startVertexId, endVertexId, weight);
-		return edge;
+		final String startVertexId = array[orderForStartVertex-1];
+		final String endVertexId = array[orderForEndVertex-1];
+		final double weightValue = Double.parseDouble(array[orderForWeight-1]);
+		
+		final E e = createEdgeWithHorribleCode(startVertexId, endVertexId, weightValue);
+		return e;
 	}
-	
+
+	// the purpose of the method name is not reduce the risk of forgetting to refactor .... 
+	private E createEdgeWithHorribleCode(String startVertexId, String endVertexId, double weightValue) {
+		final Vertex startVertex = createVertex(startVertexId);
+		final Vertex endVertex = createVertex(endVertexId);
+		final Weight weight = createWeight(weightValue);
+		if(edgeClass != null && edgeClass.getName().equals(EdgeDefaultImpl.class.getName())) {
+			EdgeDefault edgeDefault = EdgeDefaultImpl.createEdgeDefault(startVertex, endVertex, weight);
+			E edgeDefault2 = (E) edgeDefault;
+//			System.out.println("ok this far: " + edgeDefault2.getClass());
+			return edgeDefault2; 
+		}
+		else {
+			final E edge = (E)createEdge((V)startVertex, (V)endVertex, (W)weight);
+			return edge;			
+		}
+	}
+
 	/**
 	 * An example usage of this method can be to generate )e.g. randomly) lots of Edges for a Graph, to be used in testing.
 	 * Then we cab convert the edges to string format with this method and write them to a file, 
