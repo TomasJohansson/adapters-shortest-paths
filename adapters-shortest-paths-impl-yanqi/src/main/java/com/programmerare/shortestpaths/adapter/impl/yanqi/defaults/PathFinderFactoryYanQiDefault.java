@@ -2,11 +2,13 @@ package com.programmerare.shortestpaths.adapter.impl.yanqi.defaults;
 
 import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 public class PathFinderFactoryYanQiDefault 
 	extends PathFinderFactoryYanQi<
@@ -18,7 +20,11 @@ public class PathFinderFactoryYanQiDefault
 		>	
 	implements PathFinderFactoryDefault 
 {
-	public PathFinderFactoryYanQiDefault() {
-		super(PathFinderYanQiDefault.class);
-	}
+	@Override
+	public PathFinderDefault createPathFinder(
+		final Graph<EdgeDefault, Vertex, Weight> graph,
+		final GraphEdgesValidationDesired graphEdgesValidationDesired
+	) {
+		return new PathFinderYanQiDefault(graph, graphEdgesValidationDesired);
+	}	
 }
