@@ -9,8 +9,6 @@ public final class WeightDeterminedByRoadLengthAndQuality implements Weight {
 
 	private final double weightValue;
 
-	
-	// needed for method PathFinderBase.createWeightInstance , using reflection
 	private WeightDeterminedByRoadLengthAndQuality(final double weightValue) {
 		this.weightValue = weightValue;
 	}
@@ -33,7 +31,15 @@ public final class WeightDeterminedByRoadLengthAndQuality implements Weight {
 		return "WeightDeterminedByRoadLengthAndQuality [weightValue=" + weightValue + "]";
 	}
 
-	
+
+	// the purpose of these two methods below is to see that they can be used even in the instance created by the algorithms as the total weight
+	public double getLengthInKiloMeters() {
+		return getWeightValue();
+	}
+	public double getLengthInMeters() {
+		return 1000 * getLengthInKiloMeters();
+	}
+	public Weight create(double value) {
+		return new WeightDeterminedByRoadLengthAndQuality(value);
+	}
 }
-//
-//

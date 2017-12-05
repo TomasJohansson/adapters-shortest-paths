@@ -60,6 +60,10 @@ public final class WeightImpl implements Weight {
 		return toString();
 	}
 
+	public Weight create(double value) {
+		return WeightImpl.createWeight(value);
+	}
+
 //	public Weight create(final double value) {
 //		return createWeight(value);
 //	}	

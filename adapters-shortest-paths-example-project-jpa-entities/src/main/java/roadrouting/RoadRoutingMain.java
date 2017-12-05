@@ -21,7 +21,7 @@ public class RoadRoutingMain {
 	 * @param args "1" if you want to use the database, otherwise hardcoded values be used.
 	 */
 	public static void main(String[] args) {
-		final boolean useDatabase = true; // false; // parseArguments(args);
+		final boolean useDatabase = parseArguments(args);
 		
 		final CityRoadService cityRoadService = CityRoadServiceFactory.createCityRoadService(useDatabase);
 
@@ -86,6 +86,20 @@ public class RoadRoutingMain {
 	}
 	
 	private static String getPrettyPrintedPath(Path<Road , City , WeightDeterminedByRoadLengthAndQuality> path) {
+		// Note that the code you now are looking at corresponds to client code, i.e. code you could have written yourself.
+		// The Path interface is included in the library, but not WeightDeterminedByRoadLengthAndQuality
+		// which should be thought of as your own defined type (subtype of Weight in the library).
+		// Still the path will return it strongly typed below thanks to usage of Generics.
+		// It should also be noted that reflection is NOT used for instantiating the object with the total weight
+		// but instead the create method of the Weight interface will be used for creating the instance 
+		// from within the class PathFinderBase.
+		WeightDeterminedByRoadLengthAndQuality totalWeightForPath = path.getTotalWeightForPath();
+		System.out.println("totalWeightForPath " + totalWeightForPath);
+		System.out.println("totalWeightForPath.getLengthInMeters() " + totalWeightForPath.getLengthInMeters());
+		System.out.println("totalWeightForPath.getLengthInKiloMeters() " + totalWeightForPath.getLengthInKiloMeters());
+		// The reason that the above code works is that a prototypical instance of WeightDeterminedByRoadLengthAndQuality
+		// will be used for creating an instance of itself. 
+		
 		final List<Road> roadsForPath = path.getEdgesForPath();
 		StringBuilder sb = new StringBuilder();
 		sb.append("Total weight: " + path.getTotalWeightForPath().getWeightValue() + " | ");
@@ -111,4 +125,5 @@ public class RoadRoutingMain {
 		if(args == null || args.length < 1) return false;
 		return args[0].equals("1");
 	}
+	
 }

@@ -257,6 +257,9 @@ public class GraphEdgesValidatorTest {
 		public String toString() {
 			return "WeightTestImpl [value=" + value + "]";
 		}
+		public Weight create(double value) {
+			return new WeightTestImpl(value);
+		}
 	}
 	private final static class EdgeTestImpl implements Edge {
 		private final String id;

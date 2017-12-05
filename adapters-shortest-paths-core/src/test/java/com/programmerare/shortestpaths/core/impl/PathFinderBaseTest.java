@@ -36,11 +36,13 @@ public class PathFinderBaseTest {
 		PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight>, Edge<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<Path<Edge<Vertex,Weight>,Vertex,Weight> , Edge<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
 		// TDOO: refactor duplicated creations as above
 		
-		Weight weightForTest = new WeightForTest(123.12);
-		Weight weightInstance = pathFinderConcrete.createWeightInstance(12.456, weightForTest.getClass());
-		assertNotNull(weightInstance);
-		assertEquals(weightForTest.getClass(), weightInstance.getClass());
-		assertEquals(12.456, weightInstance.getWeightValue(), 0.0001);
+		List<Edge<Vertex, Weight>> edges = graph.getEdges();
+		Weight weightForFirstEdge = edges.get(0).getEdgeWeight();
+		
+		Weight createdWeightInstance = pathFinderConcrete.createInstanceWithTotalWeight(12.456, edges);
+		assertNotNull(createdWeightInstance);
+		assertEquals(weightForFirstEdge.getClass(), createdWeightInstance.getClass());
+		assertEquals(12.456, createdWeightInstance.getWeightValue(), 0.0001);
 	}
 
 	@Before
@@ -95,19 +97,6 @@ public class PathFinderBaseTest {
 		@Override
 		protected List<P> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths) {
 			// TODO Auto-generated method stub
-			return null;
-		}
-	}
-
-	public final static class WeightForTest implements Weight {
-		private final double value;
-		private  WeightForTest(final double value) {
-			this.value = value;
-		}
-		public double getWeightValue() {
-			return value;
-		}
-		public String renderToString() {
 			return null;
 		}
 	}

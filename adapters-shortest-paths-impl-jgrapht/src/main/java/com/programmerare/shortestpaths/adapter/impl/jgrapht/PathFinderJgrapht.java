@@ -77,8 +77,7 @@ implements PathFinder<P, E, V, W>
 	    		final E edge = getOriginalEdgeInstance(weightedEdge);
 	    		edges.add(edge);
 			}
-			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
-	    	final W totalWeight = createWeightInstance(graphPath.getWeight(), edges);
+	    	final W totalWeight = super.createInstanceWithTotalWeight(graphPath.getWeight(), edges);
 	    	paths.add(createThePath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);

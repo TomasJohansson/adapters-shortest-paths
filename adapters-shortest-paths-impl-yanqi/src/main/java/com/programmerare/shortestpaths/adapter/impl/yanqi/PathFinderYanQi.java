@@ -91,10 +91,8 @@ implements PathFinder<P, E, V, W>
 					edge
 				);				
 			}
-			// TODO maybe: reflection is currently ALWAYS used in below method.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
-			final W totalWeight = createWeightInstance(path.getWeight(), edges);			
+			final W totalWeight = super.createInstanceWithTotalWeight(path.getWeight(), edges);			
 			paths.add(createThePath(totalWeight, edges));
-			
 			if(maxNumberOfPaths == paths.size()) {
 				break;
 			}

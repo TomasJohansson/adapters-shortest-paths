@@ -1,17 +1,10 @@
 package com.programmerare.shortestpaths.core.impl;
 
-import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
-
-import java.lang.reflect.Constructor;
 import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.EdgeDefaultImpl;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathDefaultImpl;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -20,18 +13,26 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
-// public interface PathFinder<P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
-public abstract class PathFinderBase<P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> implements PathFinder<P, E, V, W> {
+public abstract class PathFinderBase
+	<
+		P extends Path<E, V, W> , 
+		E extends Edge<V, W> , 
+		V extends Vertex , 
+		W extends Weight
+	> 
+	implements PathFinder<P, E, V, W> 
+{
 
 	private final Graph<E, V, W> graph;
 	private final EdgeMapper<E, V, W> edgeMapper;
+
+	private W weightProotypeFactory = null;
 	
 	protected PathFinderBase(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
 		this.graph = graph;
-		//final List<T> edges = graph.getAllEdges();
 		
 		// Reason for avoiding the validation: If multiple invocations will be used, it is unnecessary to do the validation multiple times.
 		// However, it is convenient if the default is to do validation internally without having to specify it.	
@@ -111,28 +112,19 @@ public abstract class PathFinderBase<P extends Path<E, V, W> , E extends Edge<V,
 	// "Hook" : see the Template Method Design Pattern
 	protected abstract List<P> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths);
 	
-	protected W createWeightInstance(final double totalCost, final Class<? extends Weight> weightClass) {
-		// TODO maybe: reflection is currently ALWAYS used.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
-		try {
-			final Constructor<? extends Weight> constructor = weightClass.getDeclaredConstructor(double.class);
-			constructor.setAccessible(true);
-			final W w = (W)constructor.newInstance(totalCost);
-			return w;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+	protected W createInstanceWithTotalWeight(final double totalWeight, final List<E> edgesUsedForDeterminingWeightClass) {
+		if(weightProotypeFactory == null) {
+			if(edgesUsedForDeterminingWeightClass.size() > 0) {
+				E e = edgesUsedForDeterminingWeightClass.get(0);
+				weightProotypeFactory = e.getEdgeWeight();
+			}
+			// else throw exception may be a good idea since it does not seem to make any sense with a path witz zero edges 
 		}
-	}
-
-	// convenience method
-	protected W createWeightInstance(final double totalCost, final List<E> edgesUsedForDeterminingWeightClass) {
-		// TODO maybe: reflection is currently ALWAYS used.  Maybe use a special case for direct instantiating Weight if it is WeightImpl
-		final W w = edgesUsedForDeterminingWeightClass.get(0).getEdgeWeight();
-		final Class<? extends Weight> weightClass = w.getClass();
-		return createWeightInstance(totalCost, weightClass);
+		return (W)weightProotypeFactory.create(totalWeight);
 	}
 	
 	protected P createThePath(W totalWeight, List<E> edges) {
+		// TODO: improve this code:
 		return PathParser.createPathWithHorribleCode(totalWeight, edges);
 	}	
-	
 }
