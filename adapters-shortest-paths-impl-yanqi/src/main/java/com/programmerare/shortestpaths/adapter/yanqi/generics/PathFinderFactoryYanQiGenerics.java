@@ -8,7 +8,6 @@ import com.programmerare.shortestpaths.core.api.generics.PathFinderFactoryGeneri
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderFactoryGenericsBase;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**
  * @author Tomas Johansson
@@ -18,13 +17,11 @@ public class PathFinderFactoryYanQiGenerics<F extends PathFinderGenerics<P, E,V,
 	implements PathFinderFactoryGenerics<F,P,E,V,W> 
 {
 	public F createPathFinder(
-		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired
+		final GraphGenerics<E, V, W> graph 
 	) {
 		// TODO: try to get rid of the casting below ( warning: "Type safety: Unchecked cast from PathFinderYanQi<P,E,V,W> to F" )
 		return (F) new PathFinderYanQiGenerics<P, E, V, W>(
-			graph, 
-			graphEdgesValidationDesired
+			graph 
 		);
 	}	
 }

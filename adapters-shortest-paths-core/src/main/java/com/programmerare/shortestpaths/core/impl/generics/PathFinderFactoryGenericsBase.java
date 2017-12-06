@@ -28,7 +28,7 @@ public abstract class PathFinderFactoryGenericsBase
 		final List<E> edges, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
-		final GraphGenerics<E, V, W> graph = createGraphGenerics(edges);
-		return createPathFinder(graph, graphEdgesValidationDesired); // the overloaded method must be implemented by subclasses
+		final GraphGenerics<E, V, W> graph = createGraphGenerics(edges, graphEdgesValidationDesired);
+		return createPathFinder(graph); // the overloaded method must be implemented by subclasses
 	}
 }

@@ -10,8 +10,6 @@ import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryGenerics;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public abstract class PathFinderBase
@@ -31,12 +29,10 @@ public abstract class PathFinderBase
 	private W weightProtoypeFactory = null;
 
 	protected PathFinderBase(
-		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired
+		final GraphGenerics<E, V, W> graph 
 	) {
 		this(
 			graph, 
-			graphEdgesValidationDesired,
 			null
 		);
 	}
@@ -48,20 +44,13 @@ public abstract class PathFinderBase
 	 */
 	protected PathFinderBase(
 		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {
 		this.graph = graph;		
 		this.pathFactory = pathFactory != null ? pathFactory : createStandardInstanceOfPathFactory();
-		
-		// Reason for avoiding the validation: If multiple invocations will be used, it is unnecessary to do the validation multiple times.
-		// However, it is convenient if the default is to do validation internally without having to specify it.	
-		if(graphEdgesValidationDesired == GraphEdgesValidationDesired.YES) {
-			GraphEdgesValidator.validateEdgesForGraphCreation(graph.getEdges());
-		}
-		// Prevondition to method below is that validation (as above) is performed i.e. 
+
+		// Prevondition to method below is that validation is performed i.e. 
 		// the method below will NOT try to validate,
-//		final EdgeMapper<T> edgeMapper = EdgeMapper.createEdgeMapper(edges);		
 		edgeMapper = EdgeMapper.createEdgeMapper(graph.getEdges());
 	}
 

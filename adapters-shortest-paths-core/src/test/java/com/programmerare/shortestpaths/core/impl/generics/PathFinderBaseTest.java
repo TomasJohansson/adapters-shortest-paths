@@ -9,6 +9,7 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -90,12 +91,11 @@ public class PathFinderBaseTest {
 	// TODO: refactor duplication ... the same etst class as below is duplicated in another test class file
 	public final class PathFinderConcrete<P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> extends PathFinderBase<P, E, V, W> {
 		protected PathFinderConcrete(GraphGenerics<E, V, W> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
-			super(graph, graphEdgesValidationDesired);
+			super(graph);
 		}
 
 		@Override
 		protected List<P> findShortestPathHook(V startVertex, V endVertex, int maxNumberOfPaths) {
-			// TODO Auto-generated method stub
 			return null;
 		}
 	}

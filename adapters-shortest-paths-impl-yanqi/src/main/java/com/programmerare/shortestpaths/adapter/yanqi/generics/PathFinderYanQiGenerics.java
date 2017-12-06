@@ -14,7 +14,6 @@ import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
 import edu.asu.emit.algorithm.graph.abstraction.BaseVertex;
@@ -40,21 +39,18 @@ public class PathFinderYanQiGenerics
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 
 	protected PathFinderYanQiGenerics(
-		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired		
+		final GraphGenerics<E, V, W> graph 
 	) {
 		this(
 			graph, 
-			graphEdgesValidationDesired,
 			null				
 		);
 	}
 	protected PathFinderYanQiGenerics(
 		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {
-		super(graph, graphEdgesValidationDesired, pathFactory);
+		super(graph, pathFactory);
 
 		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
 		final List<EdgeYanQi> vertices = createListOfVerticesWhileAlsoPopulatingIdMapper(idMapper);

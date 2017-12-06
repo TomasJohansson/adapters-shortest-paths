@@ -10,6 +10,8 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 public class GraphGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements GraphGenerics<E, V, W> {
 
@@ -23,15 +25,34 @@ public class GraphGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex ,
 	// edge id is the key
 	private Map<String, E> mapWithEdges; // lazy loaded
 	
-	protected GraphGenericsImpl(final List<E> edges) {
+	protected GraphGenericsImpl(
+		final List<E> edges,
+		final GraphEdgesValidationDesired graphEdgesValidationDesired
+	) {
 		this.edges = Collections.unmodifiableList(edges);
+		if(graphEdgesValidationDesired == GraphEdgesValidationDesired.YES) {
+			GraphEdgesValidator.validateEdgesForGraphCreation(this.edges);
+		}		
 	}
 
+	/**
+	 * Creates a graph instance, but will validate the edges and throw an exception if validation fails.
+	 * If validation is not desired, then use the overloaded method. 
+	 * @param edges
+	 */	
 	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> GraphGenerics<E, V, W> createGraphGenerics(
 		final List<E> edges
 	) {
+		return createGraphGenerics(edges, GraphEdgesValidationDesired.YES);
+	}
+	
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> GraphGenerics<E, V, W> createGraphGenerics(
+		final List<E> edges,
+		final GraphEdgesValidationDesired graphEdgesValidationDesired
+	) {
 		final GraphGenericsImpl<E, V, W> g = new GraphGenericsImpl<E, V, W>(
-			edges				
+			edges,
+			graphEdgesValidationDesired
 		);
 		return g;
 	}

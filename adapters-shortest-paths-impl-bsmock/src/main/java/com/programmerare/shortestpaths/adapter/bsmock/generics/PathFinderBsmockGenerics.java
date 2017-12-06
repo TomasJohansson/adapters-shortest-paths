@@ -13,7 +13,6 @@ import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 import edu.ufl.cise.bsmock.graph.ksp.Yen;
 
@@ -36,21 +35,18 @@ public class PathFinderBsmockGenerics
 	private final Yen yenAlgorithm;	
 	
 	protected PathFinderBsmockGenerics(
-		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired		
+		final GraphGenerics<E, V, W> graph 
 	) {
 		this(
 			graph, 
-			graphEdgesValidationDesired,
 			null				
 		);
 	}
 	protected PathFinderBsmockGenerics(
 		final GraphGenerics<E, V, W> graph, 
-		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {
-		super(graph, graphEdgesValidationDesired, pathFactory);
+		super(graph, pathFactory);
 		this.yenAlgorithm = new Yen();
 		this.graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
 		populateGraphAdapteeWithEdges();

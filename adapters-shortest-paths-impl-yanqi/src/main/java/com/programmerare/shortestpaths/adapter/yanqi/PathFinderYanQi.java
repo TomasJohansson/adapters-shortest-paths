@@ -8,7 +8,6 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryDefault;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 public class PathFinderYanQi 
 	extends PathFinderYanQiGenerics<
@@ -20,9 +19,8 @@ public class PathFinderYanQi
 	implements PathFinder
 {
 	protected PathFinderYanQi(
-		final GraphGenerics<Edge, Vertex, Weight> graph,
-		final GraphEdgesValidationDesired graphEdgesValidationDesired
+		final GraphGenerics<Edge, Vertex, Weight> graph
 	) {
-		super(graph, graphEdgesValidationDesired, new PathFactoryDefault());
+		super(graph, new PathFactoryDefault());
 	}
 }

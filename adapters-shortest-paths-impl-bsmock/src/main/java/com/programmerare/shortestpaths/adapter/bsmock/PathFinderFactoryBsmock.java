@@ -22,9 +22,8 @@ public class PathFinderFactoryBsmock
 {
 	@Override
 	public PathFinder createPathFinder(
-		final GraphGenerics<Edge, Vertex, Weight> graph,
-		final GraphEdgesValidationDesired graphEdgesValidationDesired
+		final GraphGenerics<Edge, Vertex, Weight> graph
 	) {
-		return new PathFinderBsmock(graph, graphEdgesValidationDesired);
+		return new PathFinderBsmock(graph);
 	}
 }
