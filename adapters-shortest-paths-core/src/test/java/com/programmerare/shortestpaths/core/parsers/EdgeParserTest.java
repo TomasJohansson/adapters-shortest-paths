@@ -1,10 +1,10 @@
 package com.programmerare.shortestpaths.core.parsers;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 import static com.programmerare.shortestpaths.core.parsers.EdgeParser.createEdgeParser;
 import static org.junit.Assert.*;
 
@@ -63,7 +63,7 @@ public class EdgeParserTest {
 		Vertex startVertex = createVertex("A");
 		Vertex endVertex = createVertex("B");
 		Weight weight = createWeight(3.7);		
-		EdgeGenerics<Vertex, Weight> edge = createEdge(startVertex, endVertex, weight);
+		EdgeGenerics<Vertex, Weight> edge = createEdgeGenerics(startVertex, endVertex, weight);
 		assertEquals("A B 3.7", edgeParserGenerics.fromEdgeToString(edge));
 	}
 	// TODO: refactor away duplication from above and below methods	
@@ -72,7 +72,7 @@ public class EdgeParserTest {
 		Vertex startVertex = createVertex("A");
 		Vertex endVertex = createVertex("B");
 		Weight weight = createWeight(3.7);
-		Edge edge = createEdgeDefault(startVertex, endVertex, weight);
+		Edge edge = createEdge(startVertex, endVertex, weight);
 		assertEquals("A B 3.7", edgeParserDefault.fromEdgeToString(edge));
 	}
 	

@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.core.impl.generics;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -30,9 +30,9 @@ public class EdgeGenericsImplTest {
 		vertexB = createVertex("B");
 		weightValue = 123.45;
 		weight = createWeight(weightValue);
-		edgeX = createEdge(vertexA, vertexB, weight);
+		edgeX = createEdgeGenerics(vertexA, vertexB, weight);
 		
-		edgeY = createEdge(createVertex("A"), createVertex("B"), createWeight(weightValue));
+		edgeY = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(weightValue));
 	}
 
 

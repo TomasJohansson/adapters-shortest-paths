@@ -1,8 +1,8 @@
 package com.programmerare.shortestpaths.core.impl.generics;
 
+import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPathGenerics;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
-import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPath;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
@@ -18,7 +17,6 @@ import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.generics.Graph;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
-import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
@@ -59,17 +57,17 @@ public class PathFinderBaseTest {
 		final List<EdgeGenerics<Vertex,Weight>> edgeForPath1 = edgeParser.fromMultiLinedStringToListOfEdges(
 				"A B 5" + NEWLINE +  
 				"B C 7" + NEWLINE);
-		PathGenerics<EdgeGenerics<Vertex,Weight>, Vertex, Weight> path1 = createPath(createWeight(1234), edgeForPath1);
+		PathGenerics<EdgeGenerics<Vertex,Weight>, Vertex, Weight> path1 = createPathGenerics(createWeight(1234), edgeForPath1);
 		
 		final List<EdgeGenerics<Vertex,Weight>> edgeForPath2 = edgeParser.fromMultiLinedStringToListOfEdges(
 				"B C 5" + NEWLINE +  
 				"C D 7" + NEWLINE);
-		PathGenerics<EdgeGenerics<Vertex,Weight>, Vertex, Weight>  path2 = createPath(createWeight(1234), edgeForPath2);
+		PathGenerics<EdgeGenerics<Vertex,Weight>, Vertex, Weight>  path2 = createPathGenerics(createWeight(1234), edgeForPath2);
 
 		final List<EdgeGenerics<Vertex,Weight>> edgeForPath3 = edgeParser.fromMultiLinedStringToListOfEdges(
 				"A B 5" + NEWLINE +  
 				"E F 7" + NEWLINE); // NOT part of the graph
-		PathGenerics<EdgeGenerics<Vertex,Weight>, Vertex, Weight>  path3 = createPath(createWeight(1234), edgeForPath3);
+		PathGenerics<EdgeGenerics<Vertex,Weight>, Vertex, Weight>  path3 = createPathGenerics(createWeight(1234), edgeForPath3);
 		
 		pathWithAllEdgesBeingPartOfTheGraph = Arrays.asList(path1, path2);
 		pathWithAllEdgesNOTbeingPartOfTheGraph = Arrays.asList(path2, path3);

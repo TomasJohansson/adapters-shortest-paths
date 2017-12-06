@@ -12,7 +12,7 @@ public final class PathFactoryGenerics<P extends PathGenerics<E, V, W> , E exten
 	implements PathFactory<P, E, V, W>
 {
 	public P createPath(final W totalWeight, final List<E> edges) {
-		final PathGenerics<E, V, W> path = PathGenericsImpl.createPath(totalWeight, edges);
+		final PathGenerics<E, V, W> path = PathGenericsImpl.createPathGenerics(totalWeight, edges);
 		final P p = (P) path;
 		// System.out.println("PathFactory created PathFactoryGenerics " + path.getClass());
 		return p;

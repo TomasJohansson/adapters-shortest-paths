@@ -2,7 +2,7 @@ package com.programmerare.shortestpaths.core.impl.generics;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,8 +29,8 @@ public class GraphImplTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		edge1 = createEdge(createVertex("A"), createVertex("B"), createWeight(123));
-		edge2 = createEdge(createVertex("B"), createVertex("C"), createWeight(456));		
+		edge1 = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(123));
+		edge2 = createEdgeGenerics(createVertex("B"), createVertex("C"), createWeight(456));		
 	}
 
 	@Test
@@ -52,12 +52,12 @@ public class GraphImplTest {
 	@Test
 	public void testGetVertices() {
 		List<EdgeGenerics<Vertex,Weight>> edges = new ArrayList<EdgeGenerics<Vertex,Weight>>();
-		edges.add(createEdge(createVertex("A"), createVertex("B"), createWeight(1)));
-		edges.add(createEdge(createVertex("A"), createVertex("C"), createWeight(2)));
-		edges.add(createEdge(createVertex("A"), createVertex("D"), createWeight(3)));
-		edges.add(createEdge(createVertex("B"), createVertex("C"), createWeight(4)));
-		edges.add(createEdge(createVertex("B"), createVertex("D"), createWeight(5)));
-		edges.add(createEdge(createVertex("C"), createVertex("D"), createWeight(6)));
+		edges.add(createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(1)));
+		edges.add(createEdgeGenerics(createVertex("A"), createVertex("C"), createWeight(2)));
+		edges.add(createEdgeGenerics(createVertex("A"), createVertex("D"), createWeight(3)));
+		edges.add(createEdgeGenerics(createVertex("B"), createVertex("C"), createWeight(4)));
+		edges.add(createEdgeGenerics(createVertex("B"), createVertex("D"), createWeight(5)));
+		edges.add(createEdgeGenerics(createVertex("C"), createVertex("D"), createWeight(6)));
 		
 		Graph<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraph(edges);
 		
@@ -104,7 +104,7 @@ public class GraphImplTest {
 		assertTrue(graph.containsEdge(edge1));
 		assertTrue(graph.containsEdge(edge2));
 		
-		EdgeGenerics<Vertex,Weight> edgeNotInTheGraph = createEdge(createVertex("XYZ"), createVertex("QWERTY"), createWeight(987));
+		EdgeGenerics<Vertex,Weight> edgeNotInTheGraph = createEdgeGenerics(createVertex("XYZ"), createVertex("QWERTY"), createWeight(987));
 		assertFalse(graph.containsEdge(edgeNotInTheGraph));
 	}	
 }

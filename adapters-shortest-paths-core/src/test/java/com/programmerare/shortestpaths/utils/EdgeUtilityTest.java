@@ -2,7 +2,7 @@ package com.programmerare.shortestpaths.utils;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -48,9 +48,9 @@ public class EdgeUtilityTest {
 		edgeUtility = EdgeUtility.create();
 		edges = new ArrayList<EdgeGenerics<Vertex, Weight>>();
 		for (Integer multiplier : multipliers) {
-			edges.add(createEdge(createVertex(A), createVertex(B), createWeight(weightBaseValueFor_A_B * multiplier)));
-			edges.add(createEdge(createVertex(B), createVertex(C), createWeight(weightBaseValueFor_B_C * multiplier)));
-			edges.add(createEdge(createVertex(C), createVertex(D), createWeight(weightBaseValueFor_C_D * multiplier)));
+			edges.add(createEdgeGenerics(createVertex(A), createVertex(B), createWeight(weightBaseValueFor_A_B * multiplier)));
+			edges.add(createEdgeGenerics(createVertex(B), createVertex(C), createWeight(weightBaseValueFor_B_C * multiplier)));
+			edges.add(createEdgeGenerics(createVertex(C), createVertex(D), createWeight(weightBaseValueFor_C_D * multiplier)));
 		}
 		assertEquals(3 * multipliers.size(), edges.size());
 	}

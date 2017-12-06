@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -98,11 +98,11 @@ public class EdgeIdValuesTest {
 		List<Edge> edges = new ArrayList<Edge>();
 		//edges.add(e)
 			// Note there are not explicit names of the edges when they are created  
-		edges.add(createEdgeDefault(a, b, createWeight(WEIGHT_A_to_B))); // the edge Id will be a concatenation i.e. "A_B"
-		edges.add(createEdgeDefault(a, c, createWeight(WEIGHT_A_to_C)));
-		edges.add(createEdgeDefault(b, c, createWeight(WEIGHT_B_to_C)));
-		edges.add(createEdgeDefault(b, d, createWeight(WEIGHT_B_to_D)));
-		edges.add(createEdgeDefault(c, d, createWeight(WEIGHT_C_to_D)));
+		edges.add(createEdge(a, b, createWeight(WEIGHT_A_to_B))); // the edge Id will be a concatenation i.e. "A_B"
+		edges.add(createEdge(a, c, createWeight(WEIGHT_A_to_C)));
+		edges.add(createEdge(b, c, createWeight(WEIGHT_B_to_C)));
+		edges.add(createEdge(b, d, createWeight(WEIGHT_B_to_D)));
+		edges.add(createEdge(c, d, createWeight(WEIGHT_C_to_D)));
 
 		// There are three possible paths, below sorted in the best order regarding shortest total weight:
 		//    A to B to D (total cost: 13 = 5 + 8)
@@ -130,11 +130,11 @@ public class EdgeIdValuesTest {
 	@Test
 	public void testCreateEdgesWithoutExplicitNames2() {
 		List<Edge> edges = new ArrayList<Edge>();
-		edges.add(createEdgeDefault(EDGE_A_to_B, a, b, createWeight(WEIGHT_A_to_B)));
-		edges.add(createEdgeDefault(EDGE_A_to_C, a, c, createWeight(WEIGHT_A_to_C)));
-		edges.add(createEdgeDefault(EDGE_B_to_C, b, c, createWeight(WEIGHT_B_to_C)));
-		edges.add(createEdgeDefault(EDGE_B_to_D, b, d, createWeight(WEIGHT_B_to_D)));
-		edges.add(createEdgeDefault(EDGE_C_to_D, c, d, createWeight(WEIGHT_C_to_D)));
+		edges.add(createEdge(EDGE_A_to_B, a, b, createWeight(WEIGHT_A_to_B)));
+		edges.add(createEdge(EDGE_A_to_C, a, c, createWeight(WEIGHT_A_to_C)));
+		edges.add(createEdge(EDGE_B_to_C, b, c, createWeight(WEIGHT_B_to_C)));
+		edges.add(createEdge(EDGE_B_to_D, b, d, createWeight(WEIGHT_B_to_D)));
+		edges.add(createEdge(EDGE_C_to_D, c, d, createWeight(WEIGHT_C_to_D)));
 		edgeIdValueStrategy = new EdgeIdValueExplicitlySpecified();
 		verifyExpectedResults(edges);
 	}

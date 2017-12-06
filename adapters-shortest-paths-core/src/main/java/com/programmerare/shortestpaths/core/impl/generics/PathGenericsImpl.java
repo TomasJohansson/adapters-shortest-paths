@@ -20,10 +20,10 @@ public class PathGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	private final List<E> edges;
 
 	//public static <T extends Edge> Path<T> createPath(final Weight totalWeight, final List<T> edges) {
-	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPath(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPathGenerics(
 		final W totalWeight, final List<E> edges
 	) {
-		return createPath(totalWeight, edges, false, false);
+		return createPathGenerics(totalWeight, edges, false, false);
 	}
 
 	/**
@@ -34,11 +34,11 @@ public class PathGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	 * @param shouldThrowExceptionIfAnyMismatchingVertex
 	 * @return
 	 */
-	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPath(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPathGenerics(
 		final W totalWeight, 
 		final List<E> edges, 
-		boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
-		boolean shouldThrowExceptionIfAnyMismatchingVertex
+		final boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
+		final boolean shouldThrowExceptionIfAnyMismatchingVertex
 	) {
 		if(shouldThrowExceptionIfTotalWeightIsMismatching) {
 			if(isTotalWeightNotCorrect(edges, totalWeight)) {

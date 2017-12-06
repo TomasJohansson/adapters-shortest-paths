@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
@@ -41,8 +41,8 @@ public class PathFinderBaseValidationExceptionTest {
 		vertexC = createVertex("C");
 		vertexX_notPartOfGraph = createVertex("X");
 		
-		edgeAB = createEdgeDefault(vertexA, vertexB, createWeight(123));
-		edgeBC = createEdgeDefault(vertexB, vertexC, createWeight(456));
+		edgeAB = createEdge(vertexA, vertexB, createWeight(123));
+		edgeBC = createEdge(vertexB, vertexC, createWeight(456));
 		List<Edge> edges = new ArrayList<Edge>();
 		edges.add(edgeAB);
 		edges.add(edgeBC);

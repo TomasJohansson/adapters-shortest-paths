@@ -12,7 +12,7 @@ public final class PathFactoryDefault
 	implements PathFactory<Path , Edge , Vertex , Weight>
 {
 	public Path createPath(final Weight totalWeight, final List<Edge> edges) {
-		final Path pathDefault = PathImpl.createPathDefault((Weight)totalWeight, edges);
+		final Path pathDefault = PathImpl.createPath((Weight)totalWeight, edges);
 		// System.out.println("PathFactory created PathFactoryDefault " + pathDefault.getClass());
 		return pathDefault;
 	}

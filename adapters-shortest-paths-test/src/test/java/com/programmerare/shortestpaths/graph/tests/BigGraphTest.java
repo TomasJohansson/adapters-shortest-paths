@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
@@ -85,17 +85,17 @@ public class BigGraphTest {
 		final List<Edge> edges = new ArrayList<Edge>();
 		
 		for(int i=0; i<numberOfVertices-1; i++) {
-			edges.add(createEdgeDefault(vertices.get(i), vertices.get(i+1), createWeight(--decreasingWeightValue)));
+			edges.add(createEdge(vertices.get(i), vertices.get(i+1), createWeight(--decreasingWeightValue)));
 		}
 		assertEquals(numberOfVertices-1, edges.size());
 				
 		for(int i=0; i<numberOfVertices-10; i+=10) {
-			edges.add(createEdgeDefault(vertices.get(i), vertices.get(i+10), createWeight(--decreasingWeightValue)));
+			edges.add(createEdge(vertices.get(i), vertices.get(i+10), createWeight(--decreasingWeightValue)));
 		}
 		
 		for(int i=0; i<numberOfVertices-100; i+=100) {
 			decreasingWeightValue--;
-			edges.add(createEdgeDefault(vertices.get(i), vertices.get(i+100), createWeight(--decreasingWeightValue)));
+			edges.add(createEdge(vertices.get(i), vertices.get(i+100), createWeight(--decreasingWeightValue)));
 		}		
 
 		// now construct a really short path with the smallest value as each weight and only a few edges from start vertex to end vertex
@@ -108,10 +108,10 @@ public class BigGraphTest {
 		final Vertex startVertex = vertices.get(0);
 		final Vertex endVertex = vertices.get(numberOfVertices-1);
 		
-		edges.add(createEdgeDefault(startVertex, secondVertex, createWeight(--decreasingWeightValue)));
-		edges.add(createEdgeDefault(secondVertex, thirdVertex, createWeight(--decreasingWeightValue)));
-		edges.add(createEdgeDefault(thirdVertex, fourthVertex, createWeight(--decreasingWeightValue)));
-		edges.add(createEdgeDefault(fourthVertex, endVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdge(startVertex, secondVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdge(secondVertex, thirdVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdge(thirdVertex, fourthVertex, createWeight(--decreasingWeightValue)));
+		edges.add(createEdge(fourthVertex, endVertex, createWeight(--decreasingWeightValue)));
 		
 		assertTrue(decreasingWeightValue > 0); 
 		

@@ -14,8 +14,7 @@ public class PathImpl extends PathGenericsImpl<Edge , Vertex , Weight> implement
 		super(totalWeight, edges);
 	}
 
-	// TODO rename without suffix Default
-	public static Path createPathDefault(final Weight totalWeight, final List<Edge> edges) {
+	public static Path createPath(final Weight totalWeight, final List<Edge> edges) {
 		return new PathImpl(totalWeight, edges);
 	}
 

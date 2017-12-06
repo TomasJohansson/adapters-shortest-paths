@@ -235,14 +235,14 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 //			return null;
 //		}
 		public E createEdge(V startVertex, V endVertex, W weight) {
-			EdgeGenerics<V, W> edge = EdgeGenericsImpl.createEdge(startVertex, endVertex, weight);
+			EdgeGenerics<V, W> edge = EdgeGenericsImpl.createEdgeGenerics(startVertex, endVertex, weight);
 			return (E) edge;
 		}
 	}
 	
 	public static class EdgeFactoryDefault implements EdgeFactory<Edge , Vertex , Weight> {
 		public Edge createEdge(Vertex startVertex, Vertex endVertex, Weight weight) {
-			Edge edge  = EdgeImpl.createEdgeDefault(startVertex, endVertex, weight);
+			Edge edge  = EdgeImpl.createEdge(startVertex, endVertex, weight);
 			return edge;
 		}
 		

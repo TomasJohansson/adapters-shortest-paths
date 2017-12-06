@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -59,10 +59,10 @@ public class SmallGraphTest {
 	public void testFindShortestPaths(
 			PathFinderFactoryDefault pathFinderFactory
 	) {
-		Edge edgeAB3 = createEdgeDefault(createVertex("A"), createVertex("B"), createWeight(3));
-		Edge edgeBC5 = createEdgeDefault(createVertex("B"), createVertex("C"), createWeight(5));
-		Edge edgeCD7 = createEdgeDefault(createVertex("C"), createVertex("D"), createWeight(7));
-		Edge edgeBD13= createEdgeDefault(createVertex("B"), createVertex("D"), createWeight(13));
+		Edge edgeAB3 = createEdge(createVertex("A"), createVertex("B"), createWeight(3));
+		Edge edgeBC5 = createEdge(createVertex("B"), createVertex("C"), createWeight(5));
+		Edge edgeCD7 = createEdge(createVertex("C"), createVertex("D"), createWeight(7));
+		Edge edgeBD13= createEdge(createVertex("B"), createVertex("D"), createWeight(13));
 		
 		List<Edge> edges = new ArrayList<Edge>();
 		edges.add(edgeAB3);

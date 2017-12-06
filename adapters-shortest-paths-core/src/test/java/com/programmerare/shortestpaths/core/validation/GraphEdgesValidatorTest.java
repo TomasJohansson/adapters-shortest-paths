@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.core.validation;
 
-import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPath;
+import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPathGenerics;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 
 import java.util.ArrayList;
@@ -307,7 +307,7 @@ public class GraphEdgesValidatorTest {
 
 		final List<EdgeGenerics<Vertex , Weight>> edgesForPath = new ArrayList<EdgeGenerics<Vertex , Weight>>();
 		edgesForPath.add(createTestEdge("11", createTestVertex("a"), createTestVertex("c"), createTestWeight(1)));
-		final PathGenerics< EdgeGenerics<Vertex , Weight> ,Vertex , Weight> path = createPath(createTestWeight(1), edgesForPath);
+		final PathGenerics< EdgeGenerics<Vertex , Weight> ,Vertex , Weight> path = createPathGenerics(createTestWeight(1), edgesForPath);
 		List<PathGenerics< EdgeGenerics<Vertex , Weight> ,Vertex , Weight>> paths = Arrays.asList(path);
 
 		graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(paths, allEdgesForGraph);

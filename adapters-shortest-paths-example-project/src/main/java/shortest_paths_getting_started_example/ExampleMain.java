@@ -1,6 +1,6 @@
 package shortest_paths_getting_started_example;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
@@ -55,11 +55,11 @@ public class ExampleMain {
 		Vertex d = createVertex("D");
 
 		List<Edge> edges = new ArrayList<Edge>();
-		edges.add(createEdgeDefault(a, b, createWeight(5)));
-		edges.add(createEdgeDefault(a, c, createWeight(6)));
-		edges.add(createEdgeDefault(b, c, createWeight(7)));
-		edges.add(createEdgeDefault(b, d, createWeight(8)));
-		edges.add(createEdgeDefault(c, d, createWeight(9)));
+		edges.add(createEdge(a, b, createWeight(5)));
+		edges.add(createEdge(a, c, createWeight(6)));
+		edges.add(createEdge(b, c, createWeight(7)));
+		edges.add(createEdge(b, d, createWeight(8)));
+		edges.add(createEdge(c, d, createWeight(9)));
 
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 //		GraphEdgesValidator.validateEdgesForGraphCreation(edges);

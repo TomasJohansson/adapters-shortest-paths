@@ -15,7 +15,7 @@ public class EdgeGenericsImpl<V extends Vertex , W extends Weight> implements Ed
 	private final W weight;
 
 	//public static <E extends Edge<V,W> , V extends Vertex , W extends Weight> E createEdge(
-	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeGenerics<V,W> createEdge(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeGenerics<V,W> createEdgeGenerics(
 		final String edgeId,
 		final V startVertex, 
 		final V endVertex, 
@@ -32,12 +32,12 @@ public class EdgeGenericsImpl<V extends Vertex , W extends Weight> implements Ed
 
 	
 	//public static <T extends Edge<V,W> , V extends Vertex , W extends Weight> T createEdge(
-	public static <V extends Vertex , W extends Weight> EdgeGenerics<V,W> createEdge(
+	public static <V extends Vertex , W extends Weight> EdgeGenerics<V,W> createEdgeGenerics(
 		final V startVertex, 
 		final V endVertex, 
 		final W weight			
 	) {
-		return createEdge(
+		return createEdgeGenerics(
 			createEdgeIdValue(startVertex.getVertexId(), endVertex.getVertexId()),
 			startVertex, 
 			endVertex, 

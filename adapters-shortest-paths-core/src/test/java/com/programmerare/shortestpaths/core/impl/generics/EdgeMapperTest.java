@@ -2,7 +2,7 @@ package com.programmerare.shortestpaths.core.impl.generics;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -24,11 +24,11 @@ public class EdgeMapperTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		edgeX1 = createEdge(createVertex("A"), createVertex("B"), createWeight(7));
-		edgeX2 = createEdge(createVertex("A"), createVertex("B"), createWeight(7));
+		edgeX1 = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(7));
+		edgeX2 = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(7));
 		
-		edgeY1 = createEdge(createVertex("B"), createVertex("C"), createWeight(8));
-		edgeY2 = createEdge(createVertex("B"), createVertex("C"), createWeight(8));
+		edgeY1 = createEdgeGenerics(createVertex("B"), createVertex("C"), createWeight(8));
+		edgeY2 = createEdgeGenerics(createVertex("B"), createVertex("C"), createWeight(8));
 		
 		
 	}

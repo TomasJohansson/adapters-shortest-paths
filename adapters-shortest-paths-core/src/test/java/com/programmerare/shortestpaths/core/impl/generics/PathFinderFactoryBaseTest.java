@@ -2,7 +2,7 @@ package com.programmerare.shortestpaths.core.impl.generics;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,12 +39,12 @@ public class PathFinderFactoryBaseTest {
 		pathFinderFactory = new PathFinderFactoryConcreteForTest();
 		
 		
-		final EdgeGenerics<Vertex,Weight> edge_A_B = createEdge(createVertex("A"), createVertex("B"), createWeight(123));
-		final EdgeGenerics<Vertex,Weight> edge_B_C = createEdge(createVertex("B"), createVertex("C"), createWeight(456));
+		final EdgeGenerics<Vertex,Weight> edge_A_B = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(123));
+		final EdgeGenerics<Vertex,Weight> edge_B_C = createEdgeGenerics(createVertex("B"), createVertex("C"), createWeight(456));
 		edgesForAcceptableGraph = Arrays.asList(edge_A_B, edge_B_C);
 
 		// the same edge (A to B) defined once again is NOT correct
-		final EdgeGenerics<Vertex,Weight> edge_A_B_again = createEdge(createVertex("A"), createVertex("B"), createWeight(789));
+		final EdgeGenerics<Vertex,Weight> edge_A_B_again = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(789));
 		edgesForUnacceptableGraph = Arrays.asList(edge_A_B, edge_A_B_again);
 	}
 
