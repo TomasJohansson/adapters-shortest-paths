@@ -14,6 +14,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 import edu.ufl.cise.bsmock.graph.ksp.Yen;
@@ -37,6 +38,17 @@ implements PathFinder<P, E, V, W>
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
 		super(graph, graphEdgesValidationDesired);
+		this.yenAlgorithm = new Yen();
+		this.graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
+		populateGraphAdapteeWithEdges();
+	}
+	// TODO: refactor constructor duplication
+	protected PathFinderBsmock(
+		final Graph<E, V, W> graph, 
+		final GraphEdgesValidationDesired graphEdgesValidationDesired,
+		final PathFactory<P, E, V, W> pathFactory
+	) {
+		super(graph, graphEdgesValidationDesired, pathFactory);
 		this.yenAlgorithm = new Yen();
 		this.graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
 		populateGraphAdapteeWithEdges();
@@ -77,7 +89,7 @@ implements PathFinder<P, E, V, W>
 				);				
 			}
 			final W totalWeight = super.createInstanceWithTotalWeight(path.getTotalCost(), edges);
-			paths.add(createThePath(totalWeight, edges));
+			paths.add(super.createPath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}

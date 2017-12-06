@@ -87,7 +87,7 @@ public class GraphShortestPathAssertionHelper {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForBigGraph);
 		
-		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParser(edgesForBigGraph);
+		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParserDefault(edgesForBigGraph);
 		
 		assertThat("At least some implementation should be used", pathFinderFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < pathFinderFactoriesForImplementationsToTest.size(); i++) {

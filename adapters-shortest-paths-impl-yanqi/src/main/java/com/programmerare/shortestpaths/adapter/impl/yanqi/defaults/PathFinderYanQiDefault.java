@@ -7,6 +7,7 @@ import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.pathfactories.PathFactoryDefault;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 public class PathFinderYanQiDefault 
@@ -22,6 +23,6 @@ public class PathFinderYanQiDefault
 		final Graph<EdgeDefault, Vertex, Weight> graph,
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
-		super(graph, graphEdgesValidationDesired);
+		super(graph, graphEdgesValidationDesired, new PathFactoryDefault());
 	}
 }

@@ -13,6 +13,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
 
@@ -50,7 +51,25 @@ implements PathFinder<P, E, V, W>
 		);
 		this.idMapper = idMapper;
 	}
+	// TODO: refactor constructor duplication	
+	protected PathFinderYanQi(
+		final Graph<E, V, W> graph, 
+		final GraphEdgesValidationDesired graphEdgesValidationDesired,
+		final PathFactory<P, E, V, W> pathFactory
+	) {
+		super(graph, graphEdgesValidationDesired, pathFactory);
 
+		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
+		final List<EdgeYanQi> vertices = createListOfVerticesWhileAlsoPopulatingIdMapper(idMapper);
+		
+		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern		
+		this.graphAdaptee = new GraphPossibleToCreateProgrammatically(
+			idMapper.getNumberOfVertices(),
+			vertices
+		);
+		this.idMapper = idMapper;
+	}
+	
 	private List<EdgeYanQi> createListOfVerticesWhileAlsoPopulatingIdMapper(final MapperForIntegerIdsAndGeneralStringIds idMapper) {
 		final List<E> edges = this.getGraph().getEdges();
 		final List<EdgeYanQi> vertices = new ArrayList<EdgeYanQi>();
@@ -92,7 +111,7 @@ implements PathFinder<P, E, V, W>
 				);				
 			}
 			final W totalWeight = super.createInstanceWithTotalWeight(path.getWeight(), edges);			
-			paths.add(createThePath(totalWeight, edges));
+			paths.add(super.createPath(totalWeight, edges));
 			if(maxNumberOfPaths == paths.size()) {
 				break;
 			}

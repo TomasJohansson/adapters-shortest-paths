@@ -40,12 +40,12 @@ public class PathParserTest {
 		
 		final EdgeParser<Edge<Vertex, Weight>, Vertex, Weight> edgeParser = EdgeParser.createEdgeParserGenerics();
 		final List<Edge<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(stringWithEdges);
-		pathParserGenerics = PathParser.createPathParser(edges);
+		pathParserGenerics = PathParser.createPathParserGenerics(edges);
 	
 		final EdgeParser<EdgeDefault, Vertex, Weight> edgeParserDefault = EdgeParser.createEdgeParserDefault();
 		List<EdgeDefault> edgesDefault = edgeParserDefault.fromMultiLinedStringToListOfEdges(stringWithEdges);
-		System.out.println("edgesDefault.get(0).getClass() " + edgesDefault.get(0).getClass());
-		pathParserPathDefault = PathParser.createPathParser(edgesDefault);
+//		System.out.println("edgesDefault.get(0).getClass() " + edgesDefault.get(0).getClass());
+		pathParserPathDefault = PathParser.createPathParserDefault(edgesDefault);
 	}
 
 	@Test

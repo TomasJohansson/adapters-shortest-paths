@@ -255,7 +255,7 @@ public class XmlDefinedTests {
 		
 //		System.out.println("efetr getEdgesWithoutDuplicates  " + edgesForGraph.get(0).getClass());
 		
-		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParser(edgesForGraph);
+		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParserDefault(edgesForGraph);
 		
 		final NodeList nodeListWithTestCases = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/testCase");
 		assertNotNull(nodeListWithTestCases); // shouold be zero rather than null i.e. this is okay to test
@@ -350,7 +350,7 @@ public class XmlDefinedTests {
 		final Vertex startVertex = createVertex(startVertexId);
 		final Vertex endVertex = createVertex(endVertexId);
 		final List<EdgeDefault> edgesForGraph = fileReaderForGraphTestData.readEdgesFromFile(filePath);
-		System.out.println("edgesForGraph " + edgesForGraph.get(0).getClass());
+//		System.out.println("edgesForGraph " + edgesForGraph.get(0).getClass());
 		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(
 			edgesForGraph, 
 			startVertex, 

@@ -18,6 +18,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**
@@ -42,7 +43,17 @@ implements PathFinder<P, E, V, W>
 		graphAdaptee = new SimpleDirectedWeightedGraph<String, WeightedEdge>(WeightedEdge.class);
 		populateGraphAdapteeWithVerticesAndWeights();
 	}
-
+	// TODO: refactor constructor duplication
+	protected PathFinderJgrapht(
+		final Graph<E, V, W> graph, 
+		final GraphEdgesValidationDesired graphEdgesValidationDesired,
+		final PathFactory<P, E, V, W> pathFactory
+	) {
+		super(graph, graphEdgesValidationDesired, pathFactory);
+		graphAdaptee = new SimpleDirectedWeightedGraph<String, WeightedEdge>(WeightedEdge.class);
+		populateGraphAdapteeWithVerticesAndWeights();
+	}
+	
 	private void populateGraphAdapteeWithVerticesAndWeights() {
 		final List<V> vertices = this.getGraph().getVertices();
 		for (final Vertex vertex : vertices) {
@@ -78,7 +89,7 @@ implements PathFinder<P, E, V, W>
 	    		edges.add(edge);
 			}
 	    	final W totalWeight = super.createInstanceWithTotalWeight(graphPath.getWeight(), edges);
-	    	paths.add(createThePath(totalWeight, edges));
+	    	paths.add(super.createPath(totalWeight, edges));
 		}
 		return Collections.unmodifiableList(paths);
 	}
