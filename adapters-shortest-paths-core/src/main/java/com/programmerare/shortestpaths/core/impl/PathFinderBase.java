@@ -37,16 +37,22 @@ public abstract class PathFinderBase
 		this(
 			graph, 
 			graphEdgesValidationDesired,
-			new PathFactoryGenerics<P, E, V, W>()
+			null
 		);
 	}
+	
+	/**
+	 * @param graph
+	 * @param graphEdgesValidationDesired
+	 * @param pathFactory if null then a default instance will be created
+	 */
 	protected PathFinderBase(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {
 		this.graph = graph;		
-		this.pathFactory = pathFactory;
+		this.pathFactory = pathFactory != null ? pathFactory : createStandardInstanceOfPathFactory();
 		
 		// Reason for avoiding the validation: If multiple invocations will be used, it is unnecessary to do the validation multiple times.
 		// However, it is convenient if the default is to do validation internally without having to specify it.	
@@ -59,7 +65,9 @@ public abstract class PathFinderBase
 		edgeMapper = EdgeMapper.createEdgeMapper(graph.getEdges());
 	}
 
-
+	private PathFactory<P, E, V, W> createStandardInstanceOfPathFactory() {
+		return new PathFactoryGenerics<P, E, V, W>();
+	}
 	/**
 	 * final method to enforce the validation, and then forward to the hook method for the implementations
 	 */

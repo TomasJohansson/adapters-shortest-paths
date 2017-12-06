@@ -25,11 +25,15 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
 public class PathFinderBsmock 
-< P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight>
-extends PathFinderBase<P,  E, V, W> 
-implements PathFinder<P, E, V, W> 
+	< 
+		P extends Path<E, V, W>,  
+		E extends Edge<V, W>, 
+		V extends Vertex, 
+		W extends Weight
+	>
+	extends PathFinderBase<P,  E, V, W> 
+	implements PathFinder<P, E, V, W>
 {
-	
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
 	private final Yen yenAlgorithm;	
 	
@@ -37,12 +41,12 @@ implements PathFinder<P, E, V, W>
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
-		super(graph, graphEdgesValidationDesired);
-		this.yenAlgorithm = new Yen();
-		this.graphAdaptee = new edu.ufl.cise.bsmock.graph.Graph();
-		populateGraphAdapteeWithEdges();
+		this(
+			graph, 
+			graphEdgesValidationDesired,
+			null				
+		);
 	}
-	// TODO: refactor constructor duplication
 	protected PathFinderBsmock(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,

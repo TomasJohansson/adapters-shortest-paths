@@ -27,11 +27,15 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
 public class PathFinderYanQi 
-<P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight>
-extends PathFinderBase<P, E, V, W> 
-implements PathFinder<P, E, V, W> 
+	< 
+		P extends Path<E, V, W>,  
+		E extends Edge<V, W>, 
+		V extends Vertex, 
+		W extends Weight
+	>
+	extends PathFinderBase<P,  E, V, W> 
+	implements PathFinder<P, E, V, W>
 { 
-
 	private final edu.asu.emit.algorithm.graph.Graph graphAdaptee;
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 
@@ -39,19 +43,12 @@ implements PathFinder<P, E, V, W>
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
-		super(graph, graphEdgesValidationDesired);
-
-		final MapperForIntegerIdsAndGeneralStringIds idMapper = MapperForIntegerIdsAndGeneralStringIds.createIdMapper(0);
-		final List<EdgeYanQi> vertices = createListOfVerticesWhileAlsoPopulatingIdMapper(idMapper);
-		
-		// "Adaptee" https://en.wikipedia.org/wiki/Adapter_pattern		
-		this.graphAdaptee = new GraphPossibleToCreateProgrammatically(
-			idMapper.getNumberOfVertices(),
-			vertices
+		this(
+			graph, 
+			graphEdgesValidationDesired,
+			null				
 		);
-		this.idMapper = idMapper;
 	}
-	// TODO: refactor constructor duplication	
 	protected PathFinderYanQi(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,

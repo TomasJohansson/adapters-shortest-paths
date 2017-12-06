@@ -27,23 +27,27 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
 public class PathFinderJgrapht
-<P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight>
-extends PathFinderBase<P, E, V, W> 
-implements PathFinder<P, E, V, W> 
-//<T extends Edge> extends PathFinderBase<T> implements PathFinder<T> 
+	< 
+		P extends Path<E, V, W>,  
+		E extends Edge<V, W>, 
+		V extends Vertex, 
+		W extends Weight
+	>
+	extends PathFinderBase<P,  E, V, W> 
+	implements PathFinder<P, E, V, W> 
 {
-
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	
 	protected PathFinderJgrapht(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
-		super(graph, graphEdgesValidationDesired);
-		graphAdaptee = new SimpleDirectedWeightedGraph<String, WeightedEdge>(WeightedEdge.class);
-		populateGraphAdapteeWithVerticesAndWeights();
+		this(
+			graph, 
+			graphEdgesValidationDesired,
+			null				
+		);
 	}
-	// TODO: refactor constructor duplication
 	protected PathFinderJgrapht(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
