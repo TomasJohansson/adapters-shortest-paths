@@ -9,7 +9,7 @@ import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgr
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
@@ -40,7 +40,7 @@ public class PathFinderYanQiGenerics
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 
 	protected PathFinderYanQiGenerics(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
 		this(
@@ -50,7 +50,7 @@ public class PathFinderYanQiGenerics
 		);
 	}
 	protected PathFinderYanQiGenerics(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {

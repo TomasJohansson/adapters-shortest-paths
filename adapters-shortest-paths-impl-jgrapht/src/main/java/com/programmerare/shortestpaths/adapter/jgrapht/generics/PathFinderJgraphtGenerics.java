@@ -11,7 +11,7 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
@@ -36,7 +36,7 @@ public class PathFinderJgraphtGenerics
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	
 	protected PathFinderJgraphtGenerics(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
 		this(
@@ -46,7 +46,7 @@ public class PathFinderJgraphtGenerics
 		);
 	}
 	protected PathFinderJgraphtGenerics(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {

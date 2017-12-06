@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
@@ -77,7 +77,7 @@ public class PathFinderFactoryBaseTest {
 		Weight 
 		>
 	{
-		protected PathFinderConcreteTest(Graph<EdgeGenerics<Vertex, Weight>, Vertex, Weight> graph,
+		protected PathFinderConcreteTest(GraphGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> graph,
 				GraphEdgesValidationDesired graphEdgesValidationDesired) {
 			super(graph, graphEdgesValidationDesired);
 		}
@@ -96,7 +96,7 @@ public class PathFinderFactoryBaseTest {
 	{
 
 		public PathFinderGenerics<PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight>, EdgeGenerics<Vertex, Weight>, Vertex, Weight> createPathFinder(
-				Graph<EdgeGenerics<Vertex, Weight>, Vertex, Weight> graph,
+				GraphGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> graph,
 				GraphEdgesValidationDesired graphEdgesValidationDesired) {
 			return new PathFinderConcreteTest(
 				graph, 

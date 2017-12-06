@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.graph.tests;
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
+import static com.programmerare.shortestpaths.core.impl.generics.GraphGenericsImpl.createGraphGenerics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.graph.Graph;
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
@@ -20,7 +21,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
@@ -31,7 +32,7 @@ import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 public class PathFinderBaseValidationExceptionTest {
 
 	private Edge edgeAB, edgeBC;
-	private Graph<Edge, Vertex , Weight> graphWithEdges_A_B_and_B_C;
+	private GraphGenerics<Edge, Vertex , Weight> graphWithEdges_A_B_and_B_C;
 	private Vertex vertexA, vertexB, vertexC, vertexX_notPartOfGraph;
 	
 	@Before
@@ -47,7 +48,7 @@ public class PathFinderBaseValidationExceptionTest {
 		edges.add(edgeAB);
 		edges.add(edgeBC);
 
-		graphWithEdges_A_B_and_B_C = createGraph(edges);
+		graphWithEdges_A_B_and_B_C = createGraphGenerics(edges);
 	}
 
 	
@@ -103,7 +104,7 @@ public class PathFinderBaseValidationExceptionTest {
 	
 	private void shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(
 		PathFinderFactory pathFinderFactory, 
-		Graph<Edge , Vertex , Weight> graph, 
+		GraphGenerics<Edge , Vertex , Weight> graph, 
 		Vertex startVertex, 
 		Vertex endVertex
 	) {

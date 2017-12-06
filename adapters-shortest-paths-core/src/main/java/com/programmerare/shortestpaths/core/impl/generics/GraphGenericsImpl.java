@@ -9,9 +9,9 @@ import java.util.Map;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 
-public class GraphImpl<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements Graph<E, V, W> {
+public class GraphGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements GraphGenerics<E, V, W> {
 
 	private final List<E> edges;
 	
@@ -23,14 +23,14 @@ public class GraphImpl<E extends EdgeGenerics<V, W> , V extends Vertex , W exten
 	// edge id is the key
 	private Map<String, E> mapWithEdges; // lazy loaded
 	
-	protected GraphImpl(final List<E> edges) {
+	protected GraphGenericsImpl(final List<E> edges) {
 		this.edges = Collections.unmodifiableList(edges);
 	}
 
-	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> Graph<E, V, W> createGraph(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> GraphGenerics<E, V, W> createGraphGenerics(
 		final List<E> edges
 	) {
-		final GraphImpl<E, V, W> g = new GraphImpl<E, V, W>(
+		final GraphGenericsImpl<E, V, W> g = new GraphGenericsImpl<E, V, W>(
 			edges				
 		);
 		return g;

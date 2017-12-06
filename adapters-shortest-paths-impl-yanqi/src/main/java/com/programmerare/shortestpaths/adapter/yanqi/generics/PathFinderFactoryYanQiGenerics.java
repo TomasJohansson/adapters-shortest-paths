@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.adapter.yanqi.generics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderFactoryGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
@@ -18,7 +18,7 @@ public class PathFinderFactoryYanQiGenerics<F extends PathFinderGenerics<P, E,V,
 	implements PathFinderFactoryGenerics<F,P,E,V,W> 
 {
 	public F createPathFinder(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
 		// TODO: try to get rid of the casting below ( warning: "Type safety: Unchecked cast from PathFinderYanQi<P,E,V,W> to F" )

@@ -2,7 +2,7 @@ package com.programmerare.shortestpaths.core.impl.generics;
 
 import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPathGenerics;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
+import static com.programmerare.shortestpaths.core.impl.generics.GraphGenericsImpl.createGraphGenerics;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -15,7 +15,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
@@ -23,7 +23,7 @@ import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public class PathFinderBaseTest {
 
-	private Graph<EdgeGenerics<Vertex,Weight>,Vertex,Weight> graph;
+	private GraphGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight> graph;
 	private List<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight>> pathWithAllEdgesBeingPartOfTheGraph;
 	private List<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight>> pathWithAllEdgesNOTbeingPartOfTheGraph;
 	
@@ -52,7 +52,7 @@ public class PathFinderBaseTest {
 				"B C 6" + NEWLINE +
 				"C D 7" + NEWLINE +
 				"D E 8" + NEWLINE);
-		graph = createGraph(edges);	
+		graph = createGraphGenerics(edges);	
 		
 		final List<EdgeGenerics<Vertex,Weight>> edgeForPath1 = edgeParser.fromMultiLinedStringToListOfEdges(
 				"A B 5" + NEWLINE +  
@@ -89,7 +89,7 @@ public class PathFinderBaseTest {
 
 	// TODO: refactor duplication ... the same etst class as below is duplicated in another test class file
 	public final class PathFinderConcrete<P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> extends PathFinderBase<P, E, V, W> {
-		protected PathFinderConcrete(Graph<E, V, W> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
+		protected PathFinderConcrete(GraphGenerics<E, V, W> graph, GraphEdgesValidationDesired graphEdgesValidationDesired) {
 			super(graph, graphEdgesValidationDesired);
 		}
 

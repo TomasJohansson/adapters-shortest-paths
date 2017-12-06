@@ -33,7 +33,7 @@ public interface PathFinderFactoryGenerics<F extends PathFinderGenerics<P,E,V,W>
 	 * @return an Adapter implementation of the PathFinder, which will use some "Adaptee" (third-part library) for finding shortest paths.
 	 */	
 	F createPathFinder(
-		Graph<E, V, W> graph, 
+		GraphGenerics<E, V, W> graph, 
 		GraphEdgesValidationDesired graphEdgesValidationDesired
 	);
 

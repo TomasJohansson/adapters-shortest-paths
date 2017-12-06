@@ -6,7 +6,7 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryDefault;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
@@ -20,7 +20,7 @@ public class PathFinderBsmock
 	implements PathFinder
 {
 	protected PathFinderBsmock(
-		final Graph<Edge, Vertex, Weight> graph,
+		final GraphGenerics<Edge, Vertex, Weight> graph,
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
 		super(graph, graphEdgesValidationDesired, new PathFactoryDefault());

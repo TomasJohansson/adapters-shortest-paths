@@ -5,7 +5,7 @@ import java.util.List;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
@@ -25,13 +25,13 @@ public abstract class PathFinderBase
 {
 	private PathFactory<P, E, V, W> pathFactory; // new PathFactoryGenerics<P, E, V, W> or new PathFactoryDefault()
 	
-	private final Graph<E, V, W> graph;
+	private final GraphGenerics<E, V, W> graph;
 	private final EdgeMapper<E, V, W> edgeMapper;
 
 	private W weightProtoypeFactory = null;
 
 	protected PathFinderBase(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
 		this(
@@ -47,7 +47,7 @@ public abstract class PathFinderBase
 	 * @param pathFactory if null then a default instance will be created
 	 */
 	protected PathFinderBase(
-		final Graph<E, V, W> graph, 
+		final GraphGenerics<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory
 	) {
@@ -125,7 +125,7 @@ public abstract class PathFinderBase
 		return edgeMapper.getOriginalEdgeInstance(startVertexId, endVertexId);
 	}
 
-	protected Graph<E, V, W> getGraph() {
+	protected GraphGenerics<E, V, W> getGraph() {
 		return graph;
 	}
 

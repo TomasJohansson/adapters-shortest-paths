@@ -7,7 +7,7 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 public class PathFinderFactoryBsmock 
@@ -22,7 +22,7 @@ public class PathFinderFactoryBsmock
 {
 	@Override
 	public PathFinder createPathFinder(
-		final Graph<Edge, Vertex, Weight> graph,
+		final GraphGenerics<Edge, Vertex, Weight> graph,
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
 		return new PathFinderBsmock(graph, graphEdgesValidationDesired);

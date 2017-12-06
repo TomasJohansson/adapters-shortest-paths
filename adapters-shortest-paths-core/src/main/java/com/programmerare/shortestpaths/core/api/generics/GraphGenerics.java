@@ -11,7 +11,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
  * 
  * @author Tomas Johansson
  */
-public interface Graph<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
+public interface GraphGenerics<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	/**
 	 * @return all edges in the graph

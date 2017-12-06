@@ -3,7 +3,7 @@ package com.programmerare.shortestpaths.core.impl.generics;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
-import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
+import static com.programmerare.shortestpaths.core.impl.generics.GraphGenericsImpl.createGraphGenerics;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -21,9 +21,9 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.GraphGenerics;
 
-public class GraphImplTest {
+public class GraphGenericsImplTest {
 
 	private EdgeGenerics<Vertex,Weight> edge1, edge2;
 	
@@ -40,7 +40,7 @@ public class GraphImplTest {
 		edges.add(edge2);
 		// refactor the above three rows (duplicated)
 
-		Graph<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraph(edges);
+		GraphGenerics<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraphGenerics(edges);
 		
 		List<EdgeGenerics<Vertex, Weight>> allEdges = graph.getEdges();
 		
@@ -59,7 +59,7 @@ public class GraphImplTest {
 		edges.add(createEdgeGenerics(createVertex("B"), createVertex("D"), createWeight(5)));
 		edges.add(createEdgeGenerics(createVertex("C"), createVertex("D"), createWeight(6)));
 		
-		Graph<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraph(edges);
+		GraphGenerics<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraphGenerics(edges);
 		
 		List<Vertex> vertices = graph.getVertices();
 		
@@ -81,7 +81,7 @@ public class GraphImplTest {
 		edges.add(edge2);
 		// refactor the above three rows (duplicated)
 		
-		Graph<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraph(edges);
+		GraphGenerics<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraphGenerics(edges);
 
 		assertTrue(graph.containsVertex(edge1.getStartVertex()));
 		assertTrue(graph.containsVertex(edge1.getEndVertex()));
@@ -99,7 +99,7 @@ public class GraphImplTest {
 		edges.add(edge2);
 		// refactor the above three rows (duplicated)
 		
-		Graph<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraph(edges);		
+		GraphGenerics<EdgeGenerics<Vertex,Weight>, Vertex,Weight> graph = createGraphGenerics(edges);		
 
 		assertTrue(graph.containsEdge(edge1));
 		assertTrue(graph.containsEdge(edge2));
