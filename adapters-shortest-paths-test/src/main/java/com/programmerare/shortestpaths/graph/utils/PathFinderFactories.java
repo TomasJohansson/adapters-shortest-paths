@@ -3,9 +3,9 @@ package com.programmerare.shortestpaths.graph.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 
 public final class PathFinderFactories {

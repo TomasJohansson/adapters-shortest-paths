@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl.bsmock;
+package com.programmerare.shortestpaths.adapter.bsmock.generics;
 
 import java.util.ArrayList;
 import java.util.Collections;

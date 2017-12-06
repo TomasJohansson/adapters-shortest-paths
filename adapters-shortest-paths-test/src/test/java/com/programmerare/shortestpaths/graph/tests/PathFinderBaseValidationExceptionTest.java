@@ -11,9 +11,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;

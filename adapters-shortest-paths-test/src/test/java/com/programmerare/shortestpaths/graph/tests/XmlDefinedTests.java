@@ -18,8 +18,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;

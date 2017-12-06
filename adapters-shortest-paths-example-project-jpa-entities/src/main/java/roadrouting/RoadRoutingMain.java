@@ -3,9 +3,9 @@ package roadrouting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmockGenerics;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgraphtGenerics;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQiGenerics;
+import com.programmerare.shortestpaths.adapter.bsmock.generics.PathFinderFactoryBsmockGenerics;
+import com.programmerare.shortestpaths.adapter.jgrapht.generics.PathFinderFactoryJgraphtGenerics;
+import com.programmerare.shortestpaths.adapter.yanqi.generics.PathFinderFactoryYanQiGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderFactoryGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;

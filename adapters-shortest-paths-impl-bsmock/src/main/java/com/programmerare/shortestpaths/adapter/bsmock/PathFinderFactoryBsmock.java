@@ -1,6 +1,6 @@
-package com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults;
+package com.programmerare.shortestpaths.adapter.bsmock;
 
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgraphtGenerics;
+import com.programmerare.shortestpaths.adapter.bsmock.generics.PathFinderFactoryBsmockGenerics;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
@@ -10,21 +10,21 @@ import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.Graph;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
-public class PathFinderFactoryJgrapht 
-	extends PathFinderFactoryJgraphtGenerics<
+public class PathFinderFactoryBsmock 
+	extends PathFinderFactoryBsmockGenerics<
 			PathFinder, // PathFinder< Edge<Vertex , Weight> , Vertex , Weight> ,
 			Path,
 			Edge, // Edge<Vertex , Weight> ,  
 			Vertex,
 			Weight
 		>	
-	implements PathFinderFactory
+	implements PathFinderFactory 
 {
 	@Override
 	public PathFinder createPathFinder(
 		final Graph<Edge, Vertex, Weight> graph,
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
-		return new PathFinderJgrapht(graph, graphEdgesValidationDesired);
+		return new PathFinderBsmock(graph, graphEdgesValidationDesired);
 	}
 }

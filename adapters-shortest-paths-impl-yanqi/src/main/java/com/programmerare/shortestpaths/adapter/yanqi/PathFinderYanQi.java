@@ -1,6 +1,6 @@
-package com.programmerare.shortestpaths.adapter.impl.yanqi.defaults;
+package com.programmerare.shortestpaths.adapter.yanqi;
 
-import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderYanQiGenerics;
+import com.programmerare.shortestpaths.adapter.yanqi.generics.PathFinderYanQiGenerics;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;

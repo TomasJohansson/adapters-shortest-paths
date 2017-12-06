@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl.jgrapht;
+package com.programmerare.shortestpaths.adapter.bsmock.generics;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -13,7 +13,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
 /**
  * @author Tomas Johansson
  */
-public class PathFinderFactoryJgraphtGenerics<F extends PathFinderGenerics<P,E,V,W> , P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight>
+public class PathFinderFactoryBsmockGenerics<F extends PathFinderGenerics<P, E,V,W> , P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> 
 	extends PathFinderFactoryGenericsBase<F,P,E,V,W> 
 	implements PathFinderFactoryGenerics<F,P,E,V,W>
 {
@@ -21,8 +21,8 @@ public class PathFinderFactoryJgraphtGenerics<F extends PathFinderGenerics<P,E,V
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired
 	) {
-		// TODO: try to get rid of the casting below ( warning: "Type safety: Unchecked cast from PathFinderJgrapht<P,E,V,W> to F" )
-		return (F) new PathFinderJgraphtGenerics<P, E, V, W>(
+		// TODO: try to get rid of the casting below ( warning: "Type safety: Unchecked cast from PathFinderBsmock<P,E,V,W> to F" )		
+		return (F) new PathFinderBsmockGenerics<P, E, V, W>(
 			graph, 
 			graphEdgesValidationDesired
 		);

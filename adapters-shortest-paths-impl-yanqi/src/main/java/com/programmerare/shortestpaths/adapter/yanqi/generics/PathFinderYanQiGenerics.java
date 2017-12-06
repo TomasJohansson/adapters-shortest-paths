@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl.yanqi;
+package com.programmerare.shortestpaths.adapter.yanqi.generics;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.programmerare.shortestpaths.adapter.impl.jgrapht;
+package com.programmerare.shortestpaths.adapter.jgrapht.generics;
 
 import java.util.ArrayList;
 import java.util.Collections;
