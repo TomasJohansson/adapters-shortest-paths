@@ -61,13 +61,20 @@ public class ExampleMain {
 		edges.add(createEdge(b, d, createWeight(8)));
 		edges.add(createEdge(c, d, createWeight(9)));
 
-		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
-//		GraphEdgesValidator.validateEdgesForGraphCreation(edges);
-		GraphEdgesValidator.<Path, Edge, Vertex, Weight>validateEdgesForGraphCreation(edges);
+		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first		
+		validateEdges(edges);
 		
 		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryJgrapht());
 		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryYanQi());
 		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryBsmock());
+	}
+
+	private static void validateEdges(List<Edge> edges) {
+		GraphEdgesValidator.<Path, Edge, Vertex, Weight>validateEdgesForGraphCreation(edges);
+		
+		// Alternative code for doing the above validation:
+		//final GraphEdgesValidator<Path, Edge, Vertex, Weight> graphEdgesValidator = GraphEdgesValidator.createGraphEdgesValidator();
+		//graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);
 	}
 
 	// ---------------------------------------------------------------------------------------

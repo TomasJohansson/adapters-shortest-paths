@@ -143,7 +143,8 @@ public final class GraphEdgesValidator<P extends PathGenerics<E,V,W> , E extends
 	}
 
 	/**
-	 * Static convenience method.
+	 * Static convenience method. Can be invoked like this:
+	 * GraphEdgesValidator.<Path, Edge, Vertex, Weight>validateEdgesForGraphCreation(edges);
 	 * @param edges
 	 */
 	//public static <E extends Edge> void validateEdgesForGraphCreation(final List<E> edges) {
