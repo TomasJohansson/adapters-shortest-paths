@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.core.impl;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
@@ -13,14 +13,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.impl.EdgeMapper;
 
 /**
  * @author Tomas Johansson
  */
 public class EdgeMapperTest {
-	private Edge edgeX1, edgeX2, edgeY1, edgeY2;
+	private EdgeGenerics edgeX1, edgeX2, edgeY1, edgeY2;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -35,8 +35,8 @@ public class EdgeMapperTest {
 
 	@Test
 	public void testGetOriginalObjectInstancesOfTheEdges() {
-		List<Edge> originalEdges = Arrays.asList(edgeX1, edgeY1);
-		List<Edge> equalEdgesButOtherInstances = Arrays.asList(edgeX2, edgeY2);
+		List<EdgeGenerics> originalEdges = Arrays.asList(edgeX1, edgeY1);
+		List<EdgeGenerics> equalEdgesButOtherInstances = Arrays.asList(edgeX2, edgeY2);
 		
 		assertEquals(originalEdges.get(0), equalEdgesButOtherInstances.get(0));
 		assertEquals(originalEdges.get(1), equalEdgesButOtherInstances.get(1));
@@ -46,7 +46,7 @@ public class EdgeMapperTest {
 
 		
 		EdgeMapper edgeMapper = EdgeMapper.createEdgeMapper(originalEdges);
-		List<Edge> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(equalEdgesButOtherInstances);
+		List<EdgeGenerics> originalObjectInstancesOfTheEdges = edgeMapper.getOriginalObjectInstancesOfTheEdges(equalEdgesButOtherInstances);
 		// Note that the input parameter above vas the list which did NOT have the same instances as the original
 		// list (i.e. the list passed into the constructor of EdgeMapper) but the returned list should have the same 
 		// instances, and they should be mapped through the id of the edge
@@ -56,7 +56,7 @@ public class EdgeMapperTest {
 	
 	@Test
 	public void testGetOriginalEdgeInstance() {
-		List<Edge> originalEdges = Arrays.asList(edgeX1, edgeY1);
+		List<EdgeGenerics> originalEdges = Arrays.asList(edgeX1, edgeY1);
 		
 		EdgeMapper edgeMapper = EdgeMapper.createEdgeMapper(originalEdges);
 

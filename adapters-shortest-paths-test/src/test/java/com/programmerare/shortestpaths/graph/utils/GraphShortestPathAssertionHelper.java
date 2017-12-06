@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
@@ -183,7 +183,7 @@ public class GraphShortestPathAssertionHelper {
 		assertNotNull(message, expectedEdges); // same comment as above, regarding why the expected value is asserted
 		assertNotNull(message, actualEdges);
 		double weightTotal = 0;
-		for (Edge edge : actualEdges) {
+		for (EdgeGenerics edge : actualEdges) {
 			assertNotNull(edge.getEdgeWeight());
 			weightTotal += edge.getEdgeWeight().getWeightValue();
 		}
@@ -203,8 +203,8 @@ public class GraphShortestPathAssertionHelper {
 
 		assertEquals("Mismatching number of vertices/edges in the path, " + message, expectedEdges.size(), actualEdges.size());
 		for (int i = 0; i < actualEdges.size(); i++) {
-			final Edge actualEdge = actualEdges.get(i);
-			final Edge expectedEdge = expectedEdges.get(i);
+			final EdgeGenerics actualEdge = actualEdges.get(i);
+			final EdgeGenerics expectedEdge = expectedEdges.get(i);
 			assertNotNull(message, expectedEdge); // same comment as above, regarding why the expected value is asserted 
 			assertNotNull(message, actualEdge);
 			assertEquals(message, expectedEdge.getStartVertex(), actualEdge.getStartVertex());
@@ -250,7 +250,7 @@ public class GraphShortestPathAssertionHelper {
 		sb.append(")");
 		return sb.toString();
 	}
-	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(Edge edge) {
+	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(EdgeGenerics edge) {
 		return edge.getEdgeWeight().getWeightValue()  + "[" + edge.getStartVertex().getVertexId() + "--->" + edge.getEndVertex().getVertexId() + "] ";		
 	}
 	// ---------------------------------------------------------------------------------------	

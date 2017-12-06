@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.core.validation;
 
-import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
+import static com.programmerare.shortestpaths.core.impl.PathGenericsImpl.createPath;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 
 import java.util.ArrayList;
@@ -12,8 +12,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
@@ -23,7 +23,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
 public class GraphEdgesValidatorTest {
 
 	// <P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight>
-	private GraphEdgesValidator<  Path< Edge<Vertex , Weight> ,Vertex , Weight> , Edge<Vertex , Weight> , Vertex , Weight > graphEdgesValidator;
+	private GraphEdgesValidator<  PathGenerics< EdgeGenerics<Vertex , Weight> ,Vertex , Weight> , EdgeGenerics<Vertex , Weight> , Vertex , Weight > graphEdgesValidator;
 
 	private Vertex vertexA;
 	private Vertex vertexB;
@@ -162,7 +162,7 @@ public class GraphEdgesValidatorTest {
 	// tests for validateUniqueEdgeId below	
 	@Test
 	public void testValidateUniqueEdgeId_whenAlllAreUnique() {
-		List<Edge> edges = Arrays.asList(
+		List<EdgeGenerics> edges = Arrays.asList(
 			createTestEdge(stringIdX, vertexA, vertexB, weight5),
 			createTestEdge(stringIdY, vertexB, vertexC, weight6),
 			createTestEdge(stringIdZ, vertexC, vertexD, weight7)
@@ -174,7 +174,7 @@ public class GraphEdgesValidatorTest {
 
 	@Test(expected = GraphValidationException.class)
 	public void testValidateUniqueEdgeId_whenAlllAreNotUnique() {
-		List<Edge> edges = Arrays.asList(
+		List<EdgeGenerics> edges = Arrays.asList(
 			createTestEdge(stringIdX, vertexA, vertexB, weight5),
 			createTestEdge(stringIdY, vertexB, vertexC, weight6),
 			createTestEdge(stringIdX, vertexC, vertexD, weight7) // Note X again, i.e. x NOT unique, should cause Exception 
@@ -189,7 +189,7 @@ public class GraphEdgesValidatorTest {
 	
 	@Test
 	public void testValidateUniqueVerticesIds_whenAlllAreUnique() {
-		List<Edge> edges = Arrays.asList(
+		List<EdgeGenerics> edges = Arrays.asList(
 				createTestEdge(stringIdX, vertexA, vertexB, weight5),
 				createTestEdge(stringIdY, vertexB, vertexC, weight6),
 				createTestEdge(stringIdZ, vertexC, vertexD, weight7)
@@ -201,7 +201,7 @@ public class GraphEdgesValidatorTest {
 	
 	@Test(expected = GraphValidationException.class)
 	public void testValidateUniqueVerticesIds_whenAlllAreNotUnique() {
-		List<Edge> edges = Arrays.asList(
+		List<EdgeGenerics> edges = Arrays.asList(
 			createTestEdge(stringIdX, vertexA, vertexB, weight5),
 			createTestEdge(stringIdY, vertexB, vertexC, weight6),
 			createTestEdge(stringIdZ, vertexB, vertexC, weight7) //  // Note "B to C" again, i.e. x NOT unique, should cause Exception
@@ -218,7 +218,7 @@ public class GraphEdgesValidatorTest {
 		return new WeightTestImpl(value);
 	}
 	
-	private Edge createTestEdge(String edgeId, Vertex startVertex, Vertex endVertex, Weight weight) {
+	private EdgeGenerics createTestEdge(String edgeId, Vertex startVertex, Vertex endVertex, Weight weight) {
 		return new EdgeTestImpl(edgeId, startVertex, endVertex, weight);
 	}
 	
@@ -261,7 +261,7 @@ public class GraphEdgesValidatorTest {
 			return new WeightTestImpl(value);
 		}
 	}
-	private final static class EdgeTestImpl implements Edge {
+	private final static class EdgeTestImpl implements EdgeGenerics {
 		private final String id;
 		private final Vertex startVertex;
 		private final Vertex endVertex;
@@ -302,13 +302,13 @@ public class GraphEdgesValidatorTest {
 	// ----------------------------------------------------------------------------------------------
 	@Test(expected = GraphValidationException.class)
 	public void testValidateAllPathsOnlyContainEdgesDefinedInGraph() {
-		final List<Edge<Vertex , Weight>> allEdgesForGraph = new ArrayList<Edge<Vertex , Weight>>();
+		final List<EdgeGenerics<Vertex , Weight>> allEdgesForGraph = new ArrayList<EdgeGenerics<Vertex , Weight>>();
 		allEdgesForGraph.add(createTestEdge("11", createTestVertex("a"), createTestVertex("b"), createTestWeight(1)));
 
-		final List<Edge<Vertex , Weight>> edgesForPath = new ArrayList<Edge<Vertex , Weight>>();
+		final List<EdgeGenerics<Vertex , Weight>> edgesForPath = new ArrayList<EdgeGenerics<Vertex , Weight>>();
 		edgesForPath.add(createTestEdge("11", createTestVertex("a"), createTestVertex("c"), createTestWeight(1)));
-		final Path< Edge<Vertex , Weight> ,Vertex , Weight> path = createPath(createTestWeight(1), edgesForPath);
-		List<Path< Edge<Vertex , Weight> ,Vertex , Weight>> paths = Arrays.asList(path);
+		final PathGenerics< EdgeGenerics<Vertex , Weight> ,Vertex , Weight> path = createPath(createTestWeight(1), edgesForPath);
+		List<PathGenerics< EdgeGenerics<Vertex , Weight> ,Vertex , Weight>> paths = Arrays.asList(path);
 
 		graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(paths, allEdgesForGraph);
 

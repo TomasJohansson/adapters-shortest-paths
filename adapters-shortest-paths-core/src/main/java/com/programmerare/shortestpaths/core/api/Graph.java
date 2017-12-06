@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author Tomas Johansson
  */
-public interface Graph<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public interface Graph<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	/**
 	 * @return all edges in the graph

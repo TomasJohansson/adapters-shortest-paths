@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.EdgeImpl;
+import com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl;
 import com.programmerare.shortestpaths.core.impl.WeightImpl;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryDefault;
@@ -34,7 +34,7 @@ import com.programmerare.shortestpaths.utils.StringUtility;
  * @author Tomas Johansson
  *
  */
-public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public final class PathParser<P extends PathGenerics<E, V, W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	//<P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> implements PathFinder<P, E, V, W>
 	
@@ -57,19 +57,19 @@ public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V
 		
 		mapWithEdgesAndVertexConcatenationAsKey = new HashMap<String, E>();
 		for (E edge : edgesUsedForFindingTheWeightsBetweenVerticesInPath) {
-			final String key = EdgeImpl.createEdgeIdValue(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId());
+			final String key = EdgeGenericsImpl.createEdgeIdValue(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId());
 			mapWithEdgesAndVertexConcatenationAsKey.put(key, edge);
 		}
 	}
 	
-	public static <P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> PathParser<P, E, V, W> createPathParser(
+	public static <P extends PathGenerics<E, V, W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathParser<P, E, V, W> createPathParser(
 		final PathFactory<P, E, V, W> pathFactory,
 		final List<E> edgesUsedForFindingTheWeightsBetweenVerticesInPath
 	) {
 		return new PathParser<P, E, V, W>(pathFactory, edgesUsedForFindingTheWeightsBetweenVerticesInPath);
 	}
 	
-	public static <P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> PathParser<P, E, V, W> createPathParserGenerics(
+	public static <P extends PathGenerics<E, V, W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathParser<P, E, V, W> createPathParserGenerics(
 		final List<E> edgesUsedForFindingTheWeightsBetweenVerticesInPath
 	) {
 		return createPathParser(new PathFactoryGenerics<P, E, V, W>(), edgesUsedForFindingTheWeightsBetweenVerticesInPath);
@@ -134,7 +134,7 @@ public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V
 	}
 
 	public E getEdgeIncludingTheWeight(final String startVertexId, final String endVertexId) {
-		final String key = EdgeImpl.createEdgeIdValue(startVertexId, endVertexId);
+		final String key = EdgeGenericsImpl.createEdgeIdValue(startVertexId, endVertexId);
 		if(!mapWithEdgesAndVertexConcatenationAsKey.containsKey(key)) {
 			throw new GraphValidationException("No edge with these vertices: from " + startVertexId + " to " + endVertexId);
 		}

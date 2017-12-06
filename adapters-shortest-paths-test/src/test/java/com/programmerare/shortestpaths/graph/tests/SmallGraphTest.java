@@ -15,7 +15,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgraphtDefault;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
@@ -99,7 +99,7 @@ public class SmallGraphTest {
 		assertEqualsAndTheSameInstance(edgeBD13,  edgesForPath2.get(1));
 	}
 
-	private void assertEqualsAndTheSameInstance(Edge edgeFromOriginalInput, Edge edgeFromResultingPath) {
+	private void assertEqualsAndTheSameInstance(EdgeGenerics edgeFromOriginalInput, EdgeGenerics edgeFromResultingPath) {
 		assertEquals(edgeFromOriginalInput,  edgeFromResultingPath);
 		// Note that the below assertion works thanks to the class EdgeMappe
 		assertSame(edgeFromOriginalInput, edgeFromResultingPath);

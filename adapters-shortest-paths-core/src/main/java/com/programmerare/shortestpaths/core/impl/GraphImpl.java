@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
-public class GraphImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements Graph<E, V, W> {
+public class GraphImpl<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements Graph<E, V, W> {
 
 	private final List<E> edges;
 	
@@ -27,7 +27,7 @@ public class GraphImpl<E extends Edge<V, W> , V extends Vertex , W extends Weigh
 		this.edges = Collections.unmodifiableList(edges);
 	}
 
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Graph<E, V, W> createGraph(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> Graph<E, V, W> createGraph(
 		final List<E> edges
 	) {
 		final GraphImpl<E, V, W> g = new GraphImpl<E, V, W>(

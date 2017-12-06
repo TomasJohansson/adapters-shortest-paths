@@ -1,7 +1,7 @@
 package com.programmerare.shortestpaths.core.impl;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
+import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.PathGenericsImpl.createPath;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -13,20 +13,20 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 
 /**
  * @author Tomas Johansson
  */
 public class PathImplTest {
 
-	private Edge edgeAB3;
-	private Edge edgeBC5;
-	private Edge edgeCD7;
+	private EdgeGenerics edgeAB3;
+	private EdgeGenerics edgeBC5;
+	private EdgeGenerics edgeCD7;
 	private String firstVertex, secondVertex, thirdVertex, fourthVertex;
 	private double weightFirstEdge, weightSecondEdge, weightThirdEdge, totalWeight;
-	private Path path; 
+	private PathGenerics path; 
 			
 	@Before
 	public void setUp() throws Exception {
@@ -54,7 +54,7 @@ public class PathImplTest {
 
 	@Test
 	public void testGetEdgesForPath() {
-		List<? extends Edge> edgesForPath = path.getEdgesForPath();
+		List<? extends EdgeGenerics> edgesForPath = path.getEdgesForPath();
 		assertEquals(3, edgesForPath.size());
 		assertEquals(edgeAB3, edgesForPath.get(0));
 		assertEquals(edgeBC5, edgesForPath.get(1));

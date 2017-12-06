@@ -5,8 +5,8 @@ import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_V
 import java.util.Collections;
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
@@ -14,13 +14,13 @@ import com.programmerare.shortestpaths.core.api.Weight;
  * @author Tomas Johansson
  */
 //public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements Path<E, V, W> {
-public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements Path<E, V, W> {
+public class PathGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements PathGenerics<E, V, W> {
 
 	private final W totalWeight;
 	private final List<E> edges;
 
 	//public static <T extends Edge> Path<T> createPath(final Weight totalWeight, final List<T> edges) {
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Path<E, V, W> createPath(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPath(
 		final W totalWeight, final List<E> edges
 	) {
 		return createPath(totalWeight, edges, false, false);
@@ -34,7 +34,7 @@ public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight
 	 * @param shouldThrowExceptionIfAnyMismatchingVertex
 	 * @return
 	 */
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Path<E, V, W> createPath(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPath(
 		final W totalWeight, 
 		final List<E> edges, 
 		boolean shouldThrowExceptionIfTotalWeightIsMismatching, 
@@ -50,10 +50,10 @@ public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight
 				throw new RuntimeException("Mismatching vertices detected " + edges);
 			}
 		}
-		return new PathImpl<E, V, W>(totalWeight, edges);
+		return new PathGenericsImpl<E, V, W>(totalWeight, edges);
 	}	
 	
-	private static <E extends Edge<V, W> , V extends Vertex , W extends Weight> boolean isTotalWeightNotCorrect(List<E> edges, W totalWeight) {
+	private static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> boolean isTotalWeightNotCorrect(List<E> edges, W totalWeight) {
 		double tot = 0;
 		for (E edge : edges) {
 			tot += edge.getEdgeWeight().getWeightValue();
@@ -61,7 +61,7 @@ public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight
 		return Math.abs(totalWeight.getWeightValue() - tot) > SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 	}
 
-	private static <E extends Edge<V, W> , V extends Vertex , W extends Weight> boolean isAnyVertexMismatching(List<E> edges) {
+	private static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> boolean isAnyVertexMismatching(List<E> edges) {
 		for (int i = 1; i < edges.size(); i++) {
 			E edge = edges.get(i-1);
 			E nextEdge = edges.get(i);
@@ -72,7 +72,7 @@ public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight
 		return false;
 	}
 
-	protected PathImpl(
+	protected PathGenericsImpl(
 		final W totalWeight, 
 		final List<E> edges
 	) {
@@ -110,9 +110,9 @@ public class PathImpl<E extends Edge<V, W> , V extends Vertex , W extends Weight
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof PathImpl))
+		if (!(obj instanceof PathGenericsImpl))
 			return false;
-		PathImpl other = (PathImpl) obj;
+		PathGenericsImpl other = (PathGenericsImpl) obj;
 		if (edges == null) {
 			if (other.edges != null)
 				return false;

@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -19,7 +19,7 @@ import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public class PathParserTest {
 
-	private PathParser<Path<Edge<Vertex, Weight>, Vertex, Weight>, Edge<Vertex, Weight>, Vertex, Weight> pathParserGenerics;
+	private PathParser<PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight>, EdgeGenerics<Vertex, Weight>, Vertex, Weight> pathParserGenerics;
 	
 	private PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParserPathDefault;
 
@@ -38,8 +38,8 @@ public class PathParserTest {
 //	    C D 9    
 //	 	</graphDefinition>
 		
-		final EdgeParser<Edge<Vertex, Weight>, Vertex, Weight> edgeParser = EdgeParser.createEdgeParserGenerics();
-		final List<Edge<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(stringWithEdges);
+		final EdgeParser<EdgeGenerics<Vertex, Weight>, Vertex, Weight> edgeParser = EdgeParser.createEdgeParserGenerics();
+		final List<EdgeGenerics<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(stringWithEdges);
 		pathParserGenerics = PathParser.createPathParserGenerics(edges);
 	
 		final EdgeParser<EdgeDefault, Vertex, Weight> edgeParserDefault = EdgeParser.createEdgeParserDefault();
@@ -56,15 +56,15 @@ public class PathParserTest {
 //			21 A B C D
 //	    </outputExpected>
 		
-		List<Path<Edge<Vertex, Weight>, Vertex, Weight>> lListOfPaths = pathParserGenerics.fromStringToListOfPaths("13 A B D\r\n" + 
+		List<PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight>> lListOfPaths = pathParserGenerics.fromStringToListOfPaths("13 A B D\r\n" + 
 				"15 A C D\r\n" + 
 				"21 A B C D");
 		assertNotNull(lListOfPaths);
 		assertEquals(3,  lListOfPaths.size());
 		
-		Path<Edge<Vertex, Weight>, Vertex, Weight> path1 = lListOfPaths.get(0); // 13 A B D
-		Path<Edge<Vertex, Weight>, Vertex, Weight> path2 = lListOfPaths.get(1); // 15 A C D 
-		Path<Edge<Vertex, Weight>, Vertex, Weight> path3 = lListOfPaths.get(2); // 21 A B C D
+		PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> path1 = lListOfPaths.get(0); // 13 A B D
+		PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> path2 = lListOfPaths.get(1); // 15 A C D 
+		PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> path3 = lListOfPaths.get(2); // 21 A B C D
 		assertNotNull(path1);
 		assertNotNull(path2);
 		assertNotNull(path3);
@@ -72,9 +72,9 @@ public class PathParserTest {
 		assertEquals(15.0, path2.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		assertEquals(21.0, path3.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 		
-		List<Edge<Vertex, Weight>> edgesForPath1 = path1.getEdgesForPath();
-		List<Edge<Vertex, Weight>> edgesForPath2 = path2.getEdgesForPath();
-		List<Edge<Vertex, Weight>> edgesForPath3 = path3.getEdgesForPath();
+		List<EdgeGenerics<Vertex, Weight>> edgesForPath1 = path1.getEdgesForPath();
+		List<EdgeGenerics<Vertex, Weight>> edgesForPath2 = path2.getEdgesForPath();
+		List<EdgeGenerics<Vertex, Weight>> edgesForPath3 = path3.getEdgesForPath();
 		assertNotNull(edgesForPath1);
 		assertNotNull(edgesForPath2);
 		assertNotNull(edgesForPath3);
@@ -108,7 +108,7 @@ public class PathParserTest {
 		// the pathParser is constructed in setup method with  two edges: A -> B (weight 5) and B -> D (weight 8) 
 		final String inputPathString = "13 A B D";
 		
-		Path<Edge<Vertex, Weight>, Vertex, Weight> path = pathParserGenerics.fromStringToPath(inputPathString);
+		PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> path = pathParserGenerics.fromStringToPath(inputPathString);
 		// TODO: test below and above methods from separate test methods
 		final String outputPathString = pathParserGenerics.fromPathToString(path);
 		

@@ -6,8 +6,8 @@ import java.util.List;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
-import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
+import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
@@ -30,10 +30,10 @@ public class RoadRoutingMain {
 		final City startCity = cityRoadService.getStartCity();
 		final City endCity = cityRoadService.getEndCity();
 
-		final List<PathFinderFactory< PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories = new ArrayList<PathFinderFactory< PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>>();
-		pathFinderFactories.add(new PathFinderFactoryYanQi<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
-		pathFinderFactories.add(new PathFinderFactoryBsmock<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
-		pathFinderFactories.add(new PathFinderFactoryJgrapht<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
+		final List<PathFinderFactory< PathFinderGenerics<  PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories = new ArrayList<PathFinderFactory< PathFinderGenerics<  PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>>();
+		pathFinderFactories.add(new PathFinderFactoryYanQi<PathFinderGenerics<  PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
+		pathFinderFactories.add(new PathFinderFactoryBsmock<PathFinderGenerics<  PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
+		pathFinderFactories.add(new PathFinderFactoryJgrapht<PathFinderGenerics<  PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>());
 		performRoadRoutingForTheImplementations(
 			roads, 
 			startCity, 
@@ -46,11 +46,11 @@ public class RoadRoutingMain {
 		final List<Road> roads, 
 		final City startCity, 
 		final City endCity, 
-		final List<PathFinderFactory<PathFinder<  Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories
+		final List<PathFinderFactory<PathFinderGenerics<  PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality>   , Road ,  City , WeightDeterminedByRoadLengthAndQuality > , PathGenerics<Road ,  City , WeightDeterminedByRoadLengthAndQuality> ,  Road ,  City , WeightDeterminedByRoadLengthAndQuality>> pathFinderFactories
 	) {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 		GraphEdgesValidator.validateEdgesForGraphCreation(roads);
-		for (PathFinderFactory<PathFinder<Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality>, Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinderFactory : pathFinderFactories) {
+		for (PathFinderFactory<PathFinderGenerics<PathGenerics<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality>, PathGenerics<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinderFactory : pathFinderFactories) {
 			performRoadRouting(roads, startCity, endCity, pathFinderFactory);	
 		}
 	}
@@ -59,7 +59,7 @@ public class RoadRoutingMain {
 		final List<Road> roads, 
 		final City startCity, 
 		final City endCity, 
-		final PathFinderFactory<PathFinder<Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality>, Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinderFactory
+		final PathFinderFactory<PathFinderGenerics<PathGenerics<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality>, PathGenerics<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinderFactory
 	) {
 		System.out.println("--------------------------------");
 		System.out.println("Implementation starts for " + pathFinderFactory.getClass().getSimpleName());
@@ -68,24 +68,24 @@ public class RoadRoutingMain {
 		// of domain object you can create yourself.
 		// Note that such an object must implement the interface "Edge" and in particular must pay attention to 
 		// how the method "getEdgeId()" must be implemented as documented in the Edge interface.
-		final PathFinder<Path<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinder = pathFinderFactory.createPathFinder(
+		final PathFinderGenerics<PathGenerics<Road, City, WeightDeterminedByRoadLengthAndQuality>, Road, City, WeightDeterminedByRoadLengthAndQuality> pathFinder = pathFinderFactory.createPathFinder(
 			roads, 
 			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 		); 
 		
-		final List<Path<Road , City , WeightDeterminedByRoadLengthAndQuality>> paths = pathFinder.findShortestPaths(startCity, endCity, 10);
+		final List<PathGenerics<Road , City , WeightDeterminedByRoadLengthAndQuality>> paths = pathFinder.findShortestPaths(startCity, endCity, 10);
 		// Now also note that you can retrieve your own domain object (for example "Road" above) 
 		// through the returned paths when iterating the path edges, i.e. instead of a list typed as "Edge"
 		// you now have a list with "Road" and thus can use methods of that class, e.g. "getRoadName()" as below
 		
 		System.out.println("Paths size "+ paths.size());
-		for (Path<Road , City , WeightDeterminedByRoadLengthAndQuality> path : paths) {
+		for (PathGenerics<Road , City , WeightDeterminedByRoadLengthAndQuality> path : paths) {
 			System.out.println(getPrettyPrintedPath(path));
 		}
 		System.out.println("--------------------------------");
 	}
 	
-	private static String getPrettyPrintedPath(Path<Road , City , WeightDeterminedByRoadLengthAndQuality> path) {
+	private static String getPrettyPrintedPath(PathGenerics<Road , City , WeightDeterminedByRoadLengthAndQuality> path) {
 		// Note that the code you now are looking at corresponds to client code, i.e. code you could have written yourself.
 		// The Path interface is included in the library, but not WeightDeterminedByRoadLengthAndQuality
 		// which should be thought of as your own defined type (subtype of Weight in the library).

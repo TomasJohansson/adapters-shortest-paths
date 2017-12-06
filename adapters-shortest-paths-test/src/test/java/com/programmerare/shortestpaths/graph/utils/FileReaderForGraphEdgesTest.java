@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
@@ -32,8 +32,8 @@ public class FileReaderForGraphEdgesTest {
 		assertNotNull(edges);
 		assertEquals(2, edges.size());
 		
-		final Edge edge1 = edges.get(0); // A B 7
-		final Edge edge2 = edges.get(1); // X Y 8
+		final EdgeGenerics edge1 = edges.get(0); // A B 7
+		final EdgeGenerics edge2 = edges.get(1); // X Y 8
 		assertNonNulls(edge1);
 		assertNonNulls(edge2);
 
@@ -47,7 +47,7 @@ public class FileReaderForGraphEdgesTest {
 		
 	}
 
-	private void assertNonNulls(Edge edge) {
+	private void assertNonNulls(EdgeGenerics edge) {
 		assertNotNull(edge);
 		assertNotNull(edge.getStartVertex());
 		assertNotNull(edge.getEndVertex());

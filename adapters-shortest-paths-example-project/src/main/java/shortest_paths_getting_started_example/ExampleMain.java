@@ -10,8 +10,8 @@ import java.util.List;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgraphtDefault;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
@@ -96,7 +96,7 @@ public class ExampleMain {
 		sb.append(")");
 		return sb.toString();
 	}
-	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(Edge<Vertex, Weight> edge) {
+	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(EdgeGenerics<Vertex, Weight> edge) {
 		return edge.getEdgeWeight().getWeightValue()  + "[" + edge.getStartVertex().getVertexId() + "--->" + edge.getEndVertex().getVertexId() + "] ";		
 	}
 }

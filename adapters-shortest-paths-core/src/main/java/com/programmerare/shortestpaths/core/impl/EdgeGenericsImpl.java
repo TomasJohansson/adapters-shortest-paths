@@ -1,13 +1,13 @@
 package com.programmerare.shortestpaths.core.impl;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * @author Tomas Johansson
  */
-public class EdgeImpl<V extends Vertex , W extends Weight> implements Edge<V , W> {
+public class EdgeGenericsImpl<V extends Vertex , W extends Weight> implements EdgeGenerics<V , W> {
 
 	private final String id;
 	private final V startVertex;
@@ -15,13 +15,13 @@ public class EdgeImpl<V extends Vertex , W extends Weight> implements Edge<V , W
 	private final W weight;
 
 	//public static <E extends Edge<V,W> , V extends Vertex , W extends Weight> E createEdge(
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> Edge<V,W> createEdge(
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeGenerics<V,W> createEdge(
 		final String edgeId,
 		final V startVertex, 
 		final V endVertex, 
 		final W weight			
 	) {
-		Edge<V, W> e = new EdgeImpl<V, W>(
+		EdgeGenerics<V, W> e = new EdgeGenericsImpl<V, W>(
 			edgeId,
 			startVertex, 
 			endVertex, 
@@ -32,7 +32,7 @@ public class EdgeImpl<V extends Vertex , W extends Weight> implements Edge<V , W
 
 	
 	//public static <T extends Edge<V,W> , V extends Vertex , W extends Weight> T createEdge(
-	public static <V extends Vertex , W extends Weight> Edge<V,W> createEdge(
+	public static <V extends Vertex , W extends Weight> EdgeGenerics<V,W> createEdge(
 		final V startVertex, 
 		final V endVertex, 
 		final W weight			
@@ -45,7 +45,7 @@ public class EdgeImpl<V extends Vertex , W extends Weight> implements Edge<V , W
 		);
 	}
 
-	protected EdgeImpl(
+	protected EdgeGenericsImpl(
 		final String edgeId,
 		final V startVertex, 
 		final V endVertex, 
@@ -109,9 +109,9 @@ public class EdgeImpl<V extends Vertex , W extends Weight> implements Edge<V , W
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof EdgeImpl))
+		if (!(obj instanceof EdgeGenericsImpl))
 			return false;
-		EdgeImpl other = (EdgeImpl) obj;
+		EdgeGenericsImpl other = (EdgeGenericsImpl) obj;
 		if (endVertex == null) {
 			if (other.endVertex != null)
 				return false;

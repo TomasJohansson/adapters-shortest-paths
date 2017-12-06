@@ -4,17 +4,17 @@ import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
+import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 public abstract class PathFinderFactoryBase
-	<F extends PathFinder<P, E,V,W> , P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight> 
+	<F extends PathFinderGenerics<P, E,V,W> , P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> 
 	implements PathFinderFactory<F , P, E , V , W> 
 {
 	protected PathFinderFactoryBase() { }

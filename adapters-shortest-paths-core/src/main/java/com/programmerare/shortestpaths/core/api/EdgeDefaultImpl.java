@@ -1,8 +1,8 @@
 package com.programmerare.shortestpaths.core.api;
 
-import com.programmerare.shortestpaths.core.impl.EdgeImpl;
+import com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl;
 
-public class EdgeDefaultImpl extends EdgeImpl<Vertex, Weight> implements EdgeDefault {
+public class EdgeDefaultImpl extends EdgeGenericsImpl<Vertex, Weight> implements EdgeDefault {
 
 	protected EdgeDefaultImpl(String edgeId, Vertex startVertex, Vertex endVertex, Weight weight) {
 		super(edgeId, startVertex, endVertex, weight);

@@ -1,7 +1,7 @@
 package com.programmerare.shortestpaths.core.parsers;
 
 import static com.programmerare.shortestpaths.core.api.EdgeDefaultImpl.createEdgeDefault;
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -25,12 +25,12 @@ import com.programmerare.shortestpaths.core.parsers.EdgeParser;
  */
 public class EdgeParserTest {
 
-	private EdgeParser<Edge<Vertex, Weight>, Vertex, Weight> edgeParserGenerics;
+	private EdgeParser<EdgeGenerics<Vertex, Weight>, Vertex, Weight> edgeParserGenerics;
 	private EdgeParser<EdgeDefault, Vertex, Weight> edgeParserDefault;
 	
 	@Before
 	public void setUp() throws Exception {
-		edgeParserGenerics = EdgeParser.createEdgeParser(new EdgeParser.EdgeFactoryGenerics<Edge<Vertex, Weight>, Vertex, Weight>());
+		edgeParserGenerics = EdgeParser.createEdgeParser(new EdgeParser.EdgeFactoryGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight>());
 		edgeParserDefault = EdgeParser.createEdgeParser(new EdgeParser.EdgeFactoryDefault());
 	}
 
@@ -48,7 +48,7 @@ public class EdgeParserTest {
 	// TODO: refactor away duplication from above and below methods
 	@Test
 	public void testFromStringToEdgeGenerics() {
-		Edge<Vertex, Weight> edge = edgeParserGenerics.fromStringToEdge("A B 3.7");
+		EdgeGenerics<Vertex, Weight> edge = edgeParserGenerics.fromStringToEdge("A B 3.7");
 		assertNotNull(edge);
 		assertNotNull(edge.getStartVertex());
 		assertNotNull(edge.getEndVertex());
@@ -63,7 +63,7 @@ public class EdgeParserTest {
 		Vertex startVertex = createVertex("A");
 		Vertex endVertex = createVertex("B");
 		Weight weight = createWeight(3.7);		
-		Edge<Vertex, Weight> edge = createEdge(startVertex, endVertex, weight);
+		EdgeGenerics<Vertex, Weight> edge = createEdge(startVertex, endVertex, weight);
 		assertEquals("A B 3.7", edgeParserGenerics.fromEdgeToString(edge));
 	}
 	// TODO: refactor away duplication from above and below methods	
@@ -90,11 +90,11 @@ public class EdgeParserTest {
 				"B C 7\r\n" + 
 				"B D 8\r\n" + 
 				"C D 9";
-		final List<Edge<Vertex, Weight>> edges = edgeParserGenerics.fromMultiLinedStringToListOfEdges(multiLinedString);
+		final List<EdgeGenerics<Vertex, Weight>> edges = edgeParserGenerics.fromMultiLinedStringToListOfEdges(multiLinedString);
 		assertNotNull(edges);
 		assertEquals(5,  edges.size());
-		final Edge<Vertex, Weight> firstEdge = edges.get(0);
-		final Edge<Vertex, Weight> lastEdge = edges.get(4);		
+		final EdgeGenerics<Vertex, Weight> firstEdge = edges.get(0);
+		final EdgeGenerics<Vertex, Weight> lastEdge = edges.get(4);		
 		assertNotNulls(firstEdge);
 		assertNotNulls(lastEdge);
 		
@@ -124,8 +124,8 @@ public class EdgeParserTest {
 		final List<EdgeDefault> edges = edgeParserDefault.fromMultiLinedStringToListOfEdges(multiLinedString);
 		assertNotNull(edges);
 		assertEquals(5,  edges.size());
-		final Edge<Vertex, Weight> firstEdge = edges.get(0);
-		final Edge<Vertex, Weight> lastEdge = edges.get(4);		
+		final EdgeGenerics<Vertex, Weight> firstEdge = edges.get(0);
+		final EdgeGenerics<Vertex, Weight> lastEdge = edges.get(4);		
 		assertNotNulls(firstEdge);
 		assertNotNulls(lastEdge);
 		
@@ -138,7 +138,7 @@ public class EdgeParserTest {
 		assertEquals(9, lastEdge.getEdgeWeight().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 	}
 	
-	private void assertNotNulls(Edge<Vertex, Weight> edge) {
+	private void assertNotNulls(EdgeGenerics<Vertex, Weight> edge) {
 		assertNotNull(edge);
 		assertNotNull(edge.getStartVertex());
 		assertNotNull(edge.getEndVertex());

@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.StringRenderable;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.utils.EdgeUtility;
 
-public final class GraphEdgesValidator<P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public final class GraphEdgesValidator<P extends PathGenerics<E,V,W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	private final static String nameOfClassForRemovingDuplicateEdges;
 	static {
@@ -21,7 +21,7 @@ public final class GraphEdgesValidator<P extends Path<E,V,W> , E extends Edge<V,
 	
 	private GraphEdgesValidator() {	}
 	
-	public static <P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> GraphEdgesValidator<P, E, V, W> createGraphEdgesValidator() {
+	public static <P extends PathGenerics<E,V,W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> GraphEdgesValidator<P, E, V, W> createGraphEdgesValidator() {
 		return new GraphEdgesValidator<P, E, V, W>();
 	}	
 
@@ -147,7 +147,7 @@ public final class GraphEdgesValidator<P extends Path<E,V,W> , E extends Edge<V,
 	 * @param edges
 	 */
 	//public static <E extends Edge> void validateEdgesForGraphCreation(final List<E> edges) {
-	public static <P extends Path<E,V,W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> void validateEdgesForGraphCreation(final List<E> edges) {
+	public static <P extends PathGenerics<E,V,W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> void validateEdgesForGraphCreation(final List<E> edges) {
 		final GraphEdgesValidator<P, E, V, W> graphEdgesValidator = createGraphEdgesValidator();
 		graphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edges);
 	}

@@ -8,7 +8,7 @@ import java.util.List;
  * 
  * @author Tomas Johansson
  */
-public interface Path<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public interface PathGenerics<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 	
 	/**
 	 * @return a list of Edge instances which together represent the Path.

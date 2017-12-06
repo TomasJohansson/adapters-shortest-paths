@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.utils;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;
@@ -12,14 +12,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
 
 public class EdgeUtilityTest {
 
-	EdgeUtility<Edge<Vertex,Weight>, Vertex, Weight> edgeUtility;
+	EdgeUtility<EdgeGenerics<Vertex,Weight>, Vertex, Weight> edgeUtility;
 	private final static String A = "A";
 	private final static String B = "B";
 	private final static String C = "C";
@@ -30,7 +30,7 @@ public class EdgeUtilityTest {
 	private final static double weightBaseValueFor_C_D = 3;
 	
 	
-	private List<Edge<Vertex, Weight>> edges = new ArrayList<Edge<Vertex, Weight>>();
+	private List<EdgeGenerics<Vertex, Weight>> edges = new ArrayList<EdgeGenerics<Vertex, Weight>>();
 	// there will be 12 edges, 3 (A_B , B_C , C_D) for each multiplier value below
 	
 	private final static List<Integer> multipliers = Arrays.asList(10, 1, 1000, 100);
@@ -46,7 +46,7 @@ public class EdgeUtilityTest {
 	@Before
 	public void setUp() throws Exception {
 		edgeUtility = EdgeUtility.create();
-		edges = new ArrayList<Edge<Vertex, Weight>>();
+		edges = new ArrayList<EdgeGenerics<Vertex, Weight>>();
 		for (Integer multiplier : multipliers) {
 			edges.add(createEdge(createVertex(A), createVertex(B), createWeight(weightBaseValueFor_A_B * multiplier)));
 			edges.add(createEdge(createVertex(B), createVertex(C), createWeight(weightBaseValueFor_B_C * multiplier)));
@@ -57,29 +57,29 @@ public class EdgeUtilityTest {
 
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_First() {
-		List<Edge<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
+		List<EdgeGenerics<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
 		assertResult(result, startIndexForFirst);
 	}
 
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_Last() {
-		List<Edge<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LAST_IN_LIST_OF_EDGES);
+		List<EdgeGenerics<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LAST_IN_LIST_OF_EDGES);
 		assertResult(result, startIndexForLast);
 	}
 
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_Smallest() {
-		List<Edge<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.SMALLEST_WEIGHT);
+		List<EdgeGenerics<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.SMALLEST_WEIGHT);
 		assertResult(result, startIndexForSmallest);
 	}
 	
 	@Test
 	public void testGetEdgesWithoutDuplicates_Selecting_Largest() {
-		List<Edge<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LARGEST_WEIGHT);
+		List<EdgeGenerics<Vertex, Weight>> result = edgeUtility.getEdgesWithoutDuplicates(edges, SelectionStrategyWhenEdgesAreDuplicated.LARGEST_WEIGHT);
 		assertResult(result, startIndexForLargest);
 	}
 
-	private void assertResult(List<Edge<Vertex, Weight>> result, int startIndex) {
+	private void assertResult(List<EdgeGenerics<Vertex, Weight>> result, int startIndex) {
 		assertEquals(3, result.size());		
 		assertEquals(edges.get(startIndex++), result.get(0));
 		assertEquals(edges.get(startIndex++), result.get(1));

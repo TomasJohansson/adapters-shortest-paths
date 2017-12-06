@@ -14,7 +14,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * 
  * @author Tomas Johansson
   */
-public interface PathFinderFactory<F extends PathFinder<P,E,V,W> , P extends Path<E, V, W> ,  E extends Edge<V, W> , V extends Vertex , W extends Weight> {  
+public interface PathFinderFactory<F extends PathFinderGenerics<P,E,V,W> , P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {  
 
 	/**
 	 * @param graph the Graph which the implementation should forward to the PathFinder implementations, which must keep a reference to it,

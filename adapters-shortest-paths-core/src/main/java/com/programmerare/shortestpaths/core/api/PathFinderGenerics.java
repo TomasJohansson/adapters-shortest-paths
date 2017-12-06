@@ -14,7 +14,7 @@ import java.util.List;
  * 
  * @author Tomas Johansson
  */
-public interface PathFinder<P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public interface PathFinderGenerics<P extends PathGenerics<E, V, W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	/**
 	 * Finds the shortest paths from the start Vertex to the end Vertex.

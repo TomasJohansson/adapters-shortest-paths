@@ -2,8 +2,8 @@ package com.programmerare.shortestpaths.core.pathfactories;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
@@ -23,6 +23,6 @@ import com.programmerare.shortestpaths.core.api.Weight;
  * 
  * @author Tomas Johansson
  */
-public interface PathFactory<P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public interface PathFactory<P extends PathGenerics<E, V, W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 	P createPath(W totalWeight, List<E> edges);
 }

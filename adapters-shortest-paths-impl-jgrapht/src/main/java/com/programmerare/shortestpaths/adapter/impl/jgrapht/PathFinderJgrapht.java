@@ -1,8 +1,5 @@
 package com.programmerare.shortestpaths.adapter.impl.jgrapht;
 
-import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
-import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,10 +8,10 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.alg.KShortestPaths;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
@@ -28,13 +25,13 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  */
 public class PathFinderJgrapht
 	< 
-		P extends Path<E, V, W>,  
-		E extends Edge<V, W>, 
+		P extends PathGenerics<E, V, W>,  
+		E extends EdgeGenerics<V, W>, 
 		V extends Vertex, 
 		W extends Weight
 	>
 	extends PathFinderBase<P,  E, V, W> 
-	implements PathFinder<P, E, V, W> 
+	implements PathFinderGenerics<P, E, V, W> 
 {
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	

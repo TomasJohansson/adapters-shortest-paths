@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
@@ -19,7 +19,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
  * and therefore it is desirable to map them back to the original instances, which is the purpose of this class.
  * @author Tomas Johansson
  */
-public final class EdgeMapper<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public final class EdgeMapper<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	private final Map<String, E> edgeMapWithVertexIdsAsKey = new HashMap<String, E>();
 
@@ -30,7 +30,7 @@ public final class EdgeMapper<E extends Edge<V, W> , V extends Vertex , W extend
 	 * @param edges a list of edges to be used for constructing a graph. Note that they are assumed to be validated as a precondition.
 	 * @return
 	 */
-	static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeMapper<E, V, W> createEdgeMapper(final List<E> edges) {
+	static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeMapper<E, V, W> createEdgeMapper(final List<E> edges) {
 		return new EdgeMapper<E, V, W>(edges);
 	}
 	
@@ -62,6 +62,6 @@ public final class EdgeMapper<E extends Edge<V, W> , V extends Vertex , W extend
 	}
 	
 	private String getIdForMapping(final String startVertexId, final String endVertexId) {
-		return EdgeImpl.createEdgeIdValue(startVertexId, endVertexId);
+		return EdgeGenericsImpl.createEdgeIdValue(startVertexId, endVertexId);
 	}	
 }

@@ -6,7 +6,7 @@ package com.programmerare.shortestpaths.core.api;
  * 
  * @author Tomas Johansson
  */
-public interface Edge<V extends Vertex , W extends Weight> extends StringRenderable { 
+public interface EdgeGenerics<V extends Vertex , W extends Weight> extends StringRenderable { 
 
 	/**
 	 * @return an id which must be unique within a Graph, i.e. a Graph should not have more than one Edge with the same id. 

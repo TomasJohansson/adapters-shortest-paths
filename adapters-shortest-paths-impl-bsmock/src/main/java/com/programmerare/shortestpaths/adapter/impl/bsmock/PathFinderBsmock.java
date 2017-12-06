@@ -1,16 +1,14 @@
 package com.programmerare.shortestpaths.adapter.impl.bsmock;
 
-import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.api.PathFinder;
+import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.PathFinderBase;
@@ -26,13 +24,13 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
  */
 public class PathFinderBsmock 
 	< 
-		P extends Path<E, V, W>,  
-		E extends Edge<V, W>, 
+		P extends PathGenerics<E, V, W>,  
+		E extends EdgeGenerics<V, W>, 
 		V extends Vertex, 
 		W extends Weight
 	>
 	extends PathFinderBase<P,  E, V, W> 
-	implements PathFinder<P, E, V, W>
+	implements PathFinderGenerics<P, E, V, W>
 {
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
 	private final Yen yenAlgorithm;	

@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 
 /**
  * 
@@ -12,7 +12,7 @@ import com.programmerare.shortestpaths.core.api.Edge;
  *
  */
 @Entity
-public class Road implements Edge<City , WeightDeterminedByRoadLengthAndQuality> {
+public class Road implements EdgeGenerics<City , WeightDeterminedByRoadLengthAndQuality> {
 	
 	@Id
 	private int roadKey;

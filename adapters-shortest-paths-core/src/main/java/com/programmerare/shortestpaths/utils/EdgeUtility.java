@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 
-public final class EdgeUtility<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+public final class EdgeUtility<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
 	private EdgeUtility() {
 	}
 	
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeUtility<E, V, W> create() {
+	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeUtility<E, V, W> create() {
 		return new EdgeUtility<E, V, W>();
 	}
 	
@@ -82,21 +82,21 @@ public final class EdgeUtility<E extends Edge<V, W> , V extends Vertex , W exten
 		LARGEST_WEIGHT;
 	}
 	
-	public static interface SelectionStrategy<E extends Edge<V, W> , V extends Vertex , W extends Weight> {
+	public static interface SelectionStrategy<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 		E reduce(List<E> edges);
 	}
-	public static class SelectionStrategyFirst<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
+	public static class SelectionStrategyFirst<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
 		public E reduce(final List<E> edges) {
 			return edges.get(0);
 		}
 	}
-	public static class SelectionStrategyLast<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
+	public static class SelectionStrategyLast<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
 		public E reduce(final List<E> edges) {
 			return edges.get(edges.size()-1);
 		}
 	}
 	
-	public static class SelectionStrategySmallestWeight<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
+	public static class SelectionStrategySmallestWeight<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
 		public E reduce(final List<E> edges) {
 			double weightMin = Double.MAX_VALUE;
 			E edgeToReturn = null;
@@ -111,7 +111,7 @@ public final class EdgeUtility<E extends Edge<V, W> , V extends Vertex , W exten
 		}
 	}
 	// TODO: refactor above and below class to reduce duplication
-	public static class SelectionStrategyLargestWeight<E extends Edge<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
+	public static class SelectionStrategyLargestWeight<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements SelectionStrategy<E, V, W> {
 		public E reduce(final List<E> edges) {
 			double weightMax = Double.MIN_VALUE;
 			E edgeToReturn = null;
