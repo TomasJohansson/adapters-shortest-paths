@@ -1,13 +1,13 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 
 /**
  * Edge is an interface which the implementations will not know of.

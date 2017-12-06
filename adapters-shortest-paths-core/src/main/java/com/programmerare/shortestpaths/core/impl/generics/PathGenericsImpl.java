@@ -1,14 +1,14 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 
 import java.util.Collections;
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 
 /**
  * @author Tomas Johansson

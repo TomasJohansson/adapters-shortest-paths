@@ -1,5 +1,6 @@
 package com.programmerare.shortestpaths.core.api;
 
+import com.programmerare.shortestpaths.core.api.generics.PathFinderFactory;
 
 public interface PathFinderFactoryDefault 
 	extends PathFinderFactory<

@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.api.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static org.junit.Assert.assertEquals;

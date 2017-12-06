@@ -6,9 +6,9 @@ import java.util.List;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
-import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 

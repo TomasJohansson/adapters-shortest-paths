@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.StringRenderable;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.utils.EdgeUtility;
 
 public final class GraphEdgesValidator<P extends PathGenerics<E,V,W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {

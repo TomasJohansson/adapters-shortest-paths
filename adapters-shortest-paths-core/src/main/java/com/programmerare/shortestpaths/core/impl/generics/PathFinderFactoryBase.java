@@ -1,16 +1,16 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
-import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
+import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
-import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 public abstract class PathFinderFactoryBase

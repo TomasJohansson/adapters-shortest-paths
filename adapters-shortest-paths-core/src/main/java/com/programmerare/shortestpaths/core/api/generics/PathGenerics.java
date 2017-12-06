@@ -1,6 +1,9 @@
-package com.programmerare.shortestpaths.core.api;
+package com.programmerare.shortestpaths.core.api.generics;
 
 import java.util.List;
+
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * A path represents a connection between two Vertices, the start Vertex in the first Edge of the edge List, 

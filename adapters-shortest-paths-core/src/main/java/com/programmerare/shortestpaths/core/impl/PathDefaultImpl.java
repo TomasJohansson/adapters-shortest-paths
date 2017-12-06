@@ -1,8 +1,12 @@
-package com.programmerare.shortestpaths.core.api;
+package com.programmerare.shortestpaths.core.impl;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.impl.PathGenericsImpl;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.PathDefault;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl;
 
 public class PathDefaultImpl extends PathGenericsImpl<EdgeDefault , Vertex , Weight> implements PathDefault {
 

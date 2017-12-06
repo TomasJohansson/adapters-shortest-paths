@@ -1,8 +1,8 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,12 +10,14 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
-import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
+import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
+import com.programmerare.shortestpaths.core.impl.generics.PathFinderFactoryBase;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 

@@ -1,8 +1,8 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -13,8 +13,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.impl.EdgeMapper;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.impl.generics.EdgeMapper;
 
 /**
  * @author Tomas Johansson

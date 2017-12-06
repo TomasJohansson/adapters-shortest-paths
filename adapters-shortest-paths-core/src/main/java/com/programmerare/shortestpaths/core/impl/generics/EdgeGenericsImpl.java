@@ -1,8 +1,8 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 
 /**
  * @author Tomas Johansson

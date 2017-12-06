@@ -1,10 +1,10 @@
 package com.programmerare.shortestpaths.core.parsers;
 
-import static com.programmerare.shortestpaths.core.api.EdgeDefaultImpl.createEdgeDefault;
-import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.parsers.EdgeParser.createEdgeParser;
 import static org.junit.Assert.*;
 
@@ -14,10 +14,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 
 /**

@@ -1,10 +1,10 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
-import static com.programmerare.shortestpaths.core.impl.PathGenericsImpl.createPath;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPath;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -13,13 +13,13 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 
 /**
  * @author Tomas Johansson
  */
-public class PathImplTest {
+public class PathGenericsImplTest {
 
 	private EdgeGenerics edgeAB3;
 	private EdgeGenerics edgeBC5;

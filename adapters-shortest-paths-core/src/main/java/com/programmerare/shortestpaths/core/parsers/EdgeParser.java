@@ -6,12 +6,12 @@ import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.EdgeDefaultImpl;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl;
+import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 import com.programmerare.shortestpaths.utils.StringUtility;
 
 /**

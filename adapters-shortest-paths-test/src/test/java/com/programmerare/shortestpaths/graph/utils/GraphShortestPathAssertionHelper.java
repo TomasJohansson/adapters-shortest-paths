@@ -11,13 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;

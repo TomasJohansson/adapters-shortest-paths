@@ -9,12 +9,12 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public class PathParserTest {

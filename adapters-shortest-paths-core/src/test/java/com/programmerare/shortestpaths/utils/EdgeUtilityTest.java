@@ -1,8 +1,8 @@
 package com.programmerare.shortestpaths.utils;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdge;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
 
 public class EdgeUtilityTest {

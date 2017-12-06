@@ -1,4 +1,8 @@
-package com.programmerare.shortestpaths.core.api;
+package com.programmerare.shortestpaths.core.api.generics;
+
+import com.programmerare.shortestpaths.core.api.StringRenderable;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * An Edge represents a path between two vertices,  the start Vertex and the end Vertex,  with an associated weight.

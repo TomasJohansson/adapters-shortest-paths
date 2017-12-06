@@ -9,7 +9,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;

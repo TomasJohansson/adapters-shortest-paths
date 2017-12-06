@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 
 /**
  * 

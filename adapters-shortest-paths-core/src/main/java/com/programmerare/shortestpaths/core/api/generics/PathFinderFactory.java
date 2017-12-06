@@ -1,6 +1,9 @@
-package com.programmerare.shortestpaths.core.api;
+package com.programmerare.shortestpaths.core.api.generics;
 
 import java.util.List;
+
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**

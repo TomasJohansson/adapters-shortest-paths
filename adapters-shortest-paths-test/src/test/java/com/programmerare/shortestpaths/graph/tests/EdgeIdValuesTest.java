@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.api.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -15,17 +15,13 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;

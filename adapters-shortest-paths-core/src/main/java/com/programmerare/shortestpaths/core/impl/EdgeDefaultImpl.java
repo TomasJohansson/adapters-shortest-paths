@@ -1,6 +1,9 @@
-package com.programmerare.shortestpaths.core.api;
+package com.programmerare.shortestpaths.core.impl;
 
-import com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 
 public class EdgeDefaultImpl extends EdgeGenericsImpl<Vertex, Weight> implements EdgeDefault {
 

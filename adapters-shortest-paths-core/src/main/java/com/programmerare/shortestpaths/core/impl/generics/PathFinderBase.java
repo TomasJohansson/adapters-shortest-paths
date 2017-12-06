@@ -1,13 +1,13 @@
-package com.programmerare.shortestpaths.core.impl;
+package com.programmerare.shortestpaths.core.impl.generics;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
-import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;

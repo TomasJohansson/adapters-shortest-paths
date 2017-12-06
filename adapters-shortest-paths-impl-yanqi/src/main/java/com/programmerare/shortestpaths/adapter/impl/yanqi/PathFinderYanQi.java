@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.programmerare.edu.asu.emit.algorithm.graph.EdgeYanQi;
 import com.programmerare.edu.asu.emit.algorithm.graph.GraphPossibleToCreateProgrammatically;
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.Graph;
-import com.programmerare.shortestpaths.core.api.PathFinderGenerics;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.PathFinderBase;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.Graph;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
+import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;

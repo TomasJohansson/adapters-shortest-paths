@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.core.validation;
 
-import static com.programmerare.shortestpaths.core.impl.PathGenericsImpl.createPath;
+import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPath;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 
 /**
  * @author Tomas Johansson

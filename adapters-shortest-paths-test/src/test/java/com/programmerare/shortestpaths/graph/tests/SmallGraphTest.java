@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.api.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -15,11 +15,11 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgraphtDefault;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**

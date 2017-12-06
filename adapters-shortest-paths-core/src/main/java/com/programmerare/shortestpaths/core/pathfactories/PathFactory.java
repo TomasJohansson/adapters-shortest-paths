@@ -2,10 +2,10 @@ package com.programmerare.shortestpaths.core.pathfactories;
 
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 
 /**
  * Used for creating an instance of Path<E, V, W>.

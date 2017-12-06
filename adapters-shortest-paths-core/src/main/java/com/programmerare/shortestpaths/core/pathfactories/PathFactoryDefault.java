@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathDefaultImpl;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.impl.PathDefaultImpl;
 
 public final class PathFactoryDefault
 	implements PathFactory<PathDefault , EdgeDefault , Vertex , Weight>

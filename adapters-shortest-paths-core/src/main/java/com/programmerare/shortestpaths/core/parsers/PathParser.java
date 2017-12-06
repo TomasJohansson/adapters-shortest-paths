@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathGenerics;
 import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.impl.EdgeGenericsImpl;
+import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
+import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.WeightImpl;
+import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryDefault;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryGenerics;
