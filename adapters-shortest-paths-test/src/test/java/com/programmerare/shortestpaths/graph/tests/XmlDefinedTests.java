@@ -18,17 +18,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.EdgeDefaultImpl;
-import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathFinder;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -36,8 +30,8 @@ import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
-import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 import com.programmerare.shortestpaths.utils.EdgeUtility;
 import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
 import com.programmerare.shortestpaths.utils.ResourceReader;
@@ -86,12 +80,12 @@ public class XmlDefinedTests {
 	public void setUp() throws Exception {
 		edgeUtility = EdgeUtility.create();
 		
-		fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(EdgeDefaultImpl.class);
+		fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(new EdgeParser.EdgeFactoryDefault());
 		graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(false);
 		
 		xmlFileReader = new XmlFileReader();
 		resourceReader = new ResourceReader();
-		edgeParser = EdgeParser.createEdgeParser(EdgeDefaultImpl.class);
+		edgeParser = EdgeParser.createEdgeParserDefault();
 
 		pathFinderFactoriesForAllImplementations = PathFinderFactories.createPathFinderFactories();
 		pathFinderFactories = new ArrayList<PathFinderFactoryDefault>(); // set to empty here before each test, so add to the list if it needs to be used
@@ -261,7 +255,7 @@ public class XmlDefinedTests {
 		
 //		System.out.println("efetr getEdgesWithoutDuplicates  " + edgesForGraph.get(0).getClass());
 		
-		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = new PathParser<PathDefault, EdgeDefault, Vertex, Weight>(edgesForGraph);
+		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParser(edgesForGraph);
 		
 		final NodeList nodeListWithTestCases = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/testCase");
 		assertNotNull(nodeListWithTestCases); // shouold be zero rather than null i.e. this is okay to test
@@ -355,7 +349,8 @@ public class XmlDefinedTests {
 	) {
 		final Vertex startVertex = createVertex(startVertexId);
 		final Vertex endVertex = createVertex(endVertexId);
-		final List<EdgeDefault> edgesForGraph = fileReaderForGraphTestData.readEdgesFromFile(filePath); 
+		final List<EdgeDefault> edgesForGraph = fileReaderForGraphTestData.readEdgesFromFile(filePath);
+		System.out.println("edgesForGraph " + edgesForGraph.get(0).getClass());
 		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(
 			edgesForGraph, 
 			startVertex, 

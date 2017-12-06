@@ -10,31 +10,42 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
 public class PathParserTest {
 
-	private PathParser pathParser;
+	private PathParser<Path<Edge<Vertex, Weight>, Vertex, Weight>, Edge<Vertex, Weight>, Vertex, Weight> pathParserGenerics;
+	
+	private PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParserPathDefault;
 
 	@Before
 	public void setUp() throws Exception {
-		final EdgeParser edgeParser = EdgeParser.createEdgeParser();
-		final List<Edge<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges("A B 5\r\n" + 
+		final String stringWithEdges = "A B 5\r\n" + 
 				"A C 6\r\n" + 
 				"B C 7\r\n" + 
 				"B D 8\r\n" + 
-				"C D 9");
+				"C D 9";
 //	    <graphDefinition>
 //	    A B 5
 //	    A C 6
 //	    B C 7
 //	    B D 8
 //	    C D 9    
-//	 	</graphDefinition>		
-		pathParser = new PathParser(edges);
+//	 	</graphDefinition>
+		
+		final EdgeParser<Edge<Vertex, Weight>, Vertex, Weight> edgeParser = EdgeParser.createEdgeParserGenerics();
+		final List<Edge<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(stringWithEdges);
+		pathParserGenerics = PathParser.createPathParser(edges);
+	
+		final EdgeParser<EdgeDefault, Vertex, Weight> edgeParserDefault = EdgeParser.createEdgeParserDefault();
+		List<EdgeDefault> edgesDefault = edgeParserDefault.fromMultiLinedStringToListOfEdges(stringWithEdges);
+		System.out.println("edgesDefault.get(0).getClass() " + edgesDefault.get(0).getClass());
+		pathParserPathDefault = PathParser.createPathParser(edgesDefault);
 	}
 
 	@Test
@@ -45,7 +56,7 @@ public class PathParserTest {
 //			21 A B C D
 //	    </outputExpected>
 		
-		List<Path<Edge<Vertex, Weight>, Vertex, Weight>> lListOfPaths = pathParser.fromStringToListOfPaths("13 A B D\r\n" + 
+		List<Path<Edge<Vertex, Weight>, Vertex, Weight>> lListOfPaths = pathParserGenerics.fromStringToListOfPaths("13 A B D\r\n" + 
 				"15 A C D\r\n" + 
 				"21 A B C D");
 		assertNotNull(lListOfPaths);
@@ -72,36 +83,47 @@ public class PathParserTest {
 		assertEquals(3, edgesForPath3.size());
 
 		// edgesForPath1 "13 A B D" means path "A -> B" and "B -> D"
-		assertEquals(pathParser.getEdgeIncludingTheWeight("A", "B"), edgesForPath1.get(0));
-		assertEquals(pathParser.getEdgeIncludingTheWeight("B", "D"), edgesForPath1.get(1));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("A", "B"), edgesForPath1.get(0));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("B", "D"), edgesForPath1.get(1));
 
 		// edgesForPath2 // 15 A C D
-		assertEquals(pathParser.getEdgeIncludingTheWeight("A", "C"), edgesForPath2.get(0));
-		assertEquals(pathParser.getEdgeIncludingTheWeight("C", "D"), edgesForPath2.get(1));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("A", "C"), edgesForPath2.get(0));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("C", "D"), edgesForPath2.get(1));
 		
 		// 21 A B C D
-		assertEquals(pathParser.getEdgeIncludingTheWeight("A", "B"), edgesForPath3.get(0));
-		assertEquals(pathParser.getEdgeIncludingTheWeight("B", "C"), edgesForPath3.get(1));
-		assertEquals(pathParser.getEdgeIncludingTheWeight("C", "D"), edgesForPath3.get(2));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("A", "B"), edgesForPath3.get(0));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("B", "C"), edgesForPath3.get(1));
+		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("C", "D"), edgesForPath3.get(2));
 	}
 	
 	@Test(expected = GraphValidationException.class)
 	public void testgetEdgeIncludingTheWeight_should_throw_exception_when_edge_does_not_exist() {
 		// the edges in the setup method do not contain any edge between vertices A and D
-		pathParser.getEdgeIncludingTheWeight("A", "D");	
+		pathParserGenerics.getEdgeIncludingTheWeight("A", "D");	
 	}
 
 	// yes, I am lazy here, with two methods tested, convenient with strings compared to creating Path and Edge objects 
+	@Test
+	public void test_fromStringToPath_Generic_and_fromPathToString() {
+		// the pathParser is constructed in setup method with  two edges: A -> B (weight 5) and B -> D (weight 8) 
+		final String inputPathString = "13 A B D";
+		
+		Path<Edge<Vertex, Weight>, Vertex, Weight> path = pathParserGenerics.fromStringToPath(inputPathString);
+		// TODO: test below and above methods from separate test methods
+		final String outputPathString = pathParserGenerics.fromPathToString(path);
+		
+		assertEquals(inputPathString, outputPathString);
+	}
+	
 	@Test
 	public void test_fromStringToPath_and_fromPathToString() {
 		// the pathParser is constructed in setup method with  two edges: A -> B (weight 5) and B -> D (weight 8) 
 		final String inputPathString = "13 A B D";
 		
-		Path<Edge<Vertex, Weight>, Vertex, Weight> path = pathParser.fromStringToPath(inputPathString);
+		PathDefault path = pathParserPathDefault.fromStringToPath(inputPathString);
 		// TODO: test below and above methods from separate test methods
-		final String outputPathString = pathParser.fromPathToString(path);
+		final String outputPathString = pathParserPathDefault.fromPathToString(path);
 		
 		assertEquals(inputPathString, outputPathString);
-	}
-	
+	}	
 }

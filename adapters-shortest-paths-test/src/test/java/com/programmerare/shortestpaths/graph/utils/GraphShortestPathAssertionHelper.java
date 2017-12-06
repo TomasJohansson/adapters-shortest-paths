@@ -13,11 +13,8 @@ import java.util.Map;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderDefault;
-import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -90,7 +87,7 @@ public class GraphShortestPathAssertionHelper {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 		GraphEdgesValidator.validateEdgesForGraphCreation(edgesForBigGraph);
 		
-		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = new PathParser<PathDefault, EdgeDefault, Vertex, Weight>(edgesForBigGraph);
+		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParser(edgesForBigGraph);
 		
 		assertThat("At least some implementation should be used", pathFinderFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < pathFinderFactoriesForImplementationsToTest.size(); i++) {

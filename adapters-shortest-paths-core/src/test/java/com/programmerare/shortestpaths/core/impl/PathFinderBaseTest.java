@@ -47,7 +47,7 @@ public class PathFinderBaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		final EdgeParser edgeParser = EdgeParser.createEdgeParser(null);		
+		final EdgeParser<Edge<Vertex, Weight>, Vertex, Weight> edgeParser = EdgeParser.createEdgeParserGenerics();
 		final List<Edge<Vertex,Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(
 				"A B 5" + NEWLINE +  
 				"B C 6" + NEWLINE +

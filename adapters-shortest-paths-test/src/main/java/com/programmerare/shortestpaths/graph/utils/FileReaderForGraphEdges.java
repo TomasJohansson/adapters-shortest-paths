@@ -8,6 +8,7 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
+import com.programmerare.shortestpaths.core.parsers.EdgeParser.EdgeFactory;
 import com.programmerare.shortestpaths.utils.FileReader;
 
 /**
@@ -22,18 +23,18 @@ public final class FileReaderForGraphEdges<E extends Edge<V, W> , V extends Vert
 	private final FileReader fileReader;
 	private final EdgeParser<E, V, W> edgeParser;
 	
-	private FileReaderForGraphEdges(Class edgeClass) {
+	private FileReaderForGraphEdges(final EdgeFactory<E, V , W> edgeFactory) {
 		fileReader = new FileReader();
-		edgeParser = EdgeParser.createEdgeParser(edgeClass);
+		edgeParser = EdgeParser.createEdgeParser(edgeFactory);
 	}
 	
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> FileReaderForGraphEdges<E, V, W> createFileReaderForGraphEdges(Class edgeClass) {
-		return new FileReaderForGraphEdges<E, V, W>(edgeClass);
+	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> FileReaderForGraphEdges<E, V, W> createFileReaderForGraphEdges(final EdgeFactory<E, V , W> edgeFactory) {
+		return new FileReaderForGraphEdges<E, V, W>(edgeFactory);
 	}
 
-	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> FileReaderForGraphEdges<E, V, W> createFileReaderForGraphEdges() {
-		return createFileReaderForGraphEdges(null);
-	}	
+//	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> FileReaderForGraphEdges<E, V, W> createFileReaderForGraphEdges() {
+//		return createFileReaderForGraphEdges(null);
+//	}	
 
 	public List<E> readEdgesFromFile(final String filePath) {
 		return readEdgesFromFile(filePath, FileReader.CHARSET_UTF_8);		
@@ -46,9 +47,8 @@ public final class FileReaderForGraphEdges<E extends Edge<V, W> , V extends Vert
 	 * @param charsetForInputFile
 	 * @return
 	 */
-	public List<E> readEdgesFromFile(final String filePath, Charset charsetForInputFile) {
+	public List<E> readEdgesFromFile(final String filePath, final Charset charsetForInputFile) {
 		final List<E> edges = new ArrayList<E>();
-		
 		final List<String> linesFromFileWithGraphEdges = fileReader.readLines(filePath, charsetForInputFile);
 		for (String lineInFileRepresengingEdge : linesFromFileWithGraphEdges) {
 			edges.add(edgeParser.fromStringToEdge(lineInFileRepresengingEdge));

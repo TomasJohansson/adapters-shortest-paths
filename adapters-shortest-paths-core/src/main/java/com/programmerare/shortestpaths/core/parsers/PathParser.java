@@ -43,7 +43,7 @@ public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V
 	
 	private final Map<String, E> mapWithEdgesAndVertexConcatenationAsKey;
 	
-	public PathParser(final List<E> edgesUsedForFindingTheWeightsBetweenVerticesInPath) {
+	private PathParser(final List<E> edgesUsedForFindingTheWeightsBetweenVerticesInPath) {
 		// TOOD: use input validator here when that branch has been merged into the same code base
 //		this.edgesUsedForFindingTheWeightsBetweenVerticesInPath = edgesUsedForFindingTheWeightsBetweenVerticesInPath;
 		
@@ -52,6 +52,10 @@ public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V
 			final String key = EdgeImpl.createEdgeIdValue(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId());
 			mapWithEdgesAndVertexConcatenationAsKey.put(key, edge);
 		}
+	}
+	
+	public static <P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> PathParser<P, E, V, W> createPathParser(final List<E> edgesUsedForFindingTheWeightsBetweenVerticesInPath) {
+		return new PathParser<P, E, V, W>(edgesUsedForFindingTheWeightsBetweenVerticesInPath);
 	}
 	
 	public List<P> fromStringToListOfPaths(String multiLinedString) {
@@ -90,13 +94,13 @@ public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V
 		return createPathWithHorribleCode((W)weight, edges);
 	}
 	
-	public String fromPathToString(final Path<Edge<Vertex, Weight>,Vertex, Weight> path) {
+	public String fromPathToString(final P path) {
 		final StringBuilder sb = new StringBuilder();
 		final double d = path.getTotalWeightForPath().getWeightValue();
 		final String s = StringUtility.getDoubleAsStringWithoutZeroesAndDotIfNotRelevant(d);
 		sb.append(s);
-		final List<Edge<Vertex, Weight>> edgesForPath = path.getEdgesForPath();
-		for (final Edge<Vertex, Weight> edge : edgesForPath) {
+		final List<E> edgesForPath = path.getEdgesForPath();
+		for (final E edge : edgesForPath) {
 			sb.append(" ");			
 			sb.append(edge.getStartVertex().getVertexId());
 		}
@@ -115,9 +119,9 @@ public final class PathParser<P extends Path<E, V, W> , E extends Edge<V, W> , V
 
 	// the purpose of the method name is not reduce the risk of forgetting to refactor ....
 	public static <P extends Path<E, V, W> , E extends Edge<V, W> , V extends Vertex , W extends Weight> P createPathWithHorribleCode(W totalWeight, List<E> edges) {
-		// TODO: fix this HORRIBLE code !!!
+		// TODO: fix this HORRIBLE code !!! 
 		E e = edges.get(0);
-		//System.out.println("createThePath e class : " + e.getClass()); // EdgeDefaultImpl
+		System.out.println("createThePath e class : " + e.getClass()); // EdgeDefaultImpl
 		if(e.getClass().equals(EdgeDefaultImpl.class)) {
 			List<EdgeDefault> aa = (List<EdgeDefault>) edges;
 			PathDefault pathDefault = PathDefaultImpl.createPathDefault(totalWeight, aa);

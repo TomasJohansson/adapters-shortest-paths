@@ -12,6 +12,7 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.EdgeDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 
 /**
  * @author Tomas Johansson
@@ -26,7 +27,7 @@ public class FileReaderForGraphEdgesTest {
 		//A B 7
 		//X Y 8
 		
-		final FileReaderForGraphEdges<EdgeDefault, Vertex, Weight> fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(); 
+		final FileReaderForGraphEdges<EdgeDefault, Vertex, Weight> fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(new EdgeParser.EdgeFactoryDefault());
 		final List<EdgeDefault> edges = fileReaderForGraphTestData.readEdgesFromFile(filePath);
 		assertNotNull(edges);
 		assertEquals(2, edges.size());
