@@ -1,6 +1,6 @@
 package shortest_paths_getting_started_example;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
@@ -10,9 +10,9 @@ import java.util.List;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgraphtDefault;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathFinderDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -54,7 +54,7 @@ public class ExampleMain {
 		Vertex c = createVertex("C");
 		Vertex d = createVertex("D");
 
-		List<EdgeDefault> edges = new ArrayList<EdgeDefault>();
+		List<Edge> edges = new ArrayList<Edge>();
 		edges.add(createEdgeDefault(a, b, createWeight(5)));
 		edges.add(createEdgeDefault(a, c, createWeight(6)));
 		edges.add(createEdgeDefault(b, c, createWeight(7)));
@@ -63,7 +63,7 @@ public class ExampleMain {
 
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
 //		GraphEdgesValidator.validateEdgesForGraphCreation(edges);
-		GraphEdgesValidator.<PathDefault, EdgeDefault, Vertex, Weight>validateEdgesForGraphCreation(edges);
+		GraphEdgesValidator.<Path, Edge, Vertex, Weight>validateEdgesForGraphCreation(edges);
 		
 		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryJgraphtDefault());
 		displayShortestPathBetweenEdges(a, d, edges, new PathFinderFactoryYanQiDefault());
@@ -73,20 +73,20 @@ public class ExampleMain {
 	// ---------------------------------------------------------------------------------------
 	// TODO: these methods below have been copied to "/adapters-shortest-paths-test/src/test/java/com/programmerare/shortestpaths/adapter/utils/GraphShortestPathAssertionHelper.java"
 	// and should be refactored into a reusable utiltity method (probably in core project)	
-	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<EdgeDefault> edgesInput, PathFinderFactoryDefault  pathFinderFactory) {
+	private static void displayShortestPathBetweenEdges(Vertex startVertex, Vertex endVertex, List<Edge> edgesInput, PathFinderFactoryDefault  pathFinderFactory) {
 		System.out.println("Implementation " + pathFinderFactory.getClass().getName());
-		final PathFinderDefault pathFinder = pathFinderFactory.createPathFinder(edgesInput, GraphEdgesValidationDesired.NO); // do the validation one time instead of doing it for each pathFinderFactory
-		final List<PathDefault> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
-		for (PathDefault path : shortestPaths) {
+		final PathFinder pathFinder = pathFinderFactory.createPathFinder(edgesInput, GraphEdgesValidationDesired.NO); // do the validation one time instead of doing it for each pathFinderFactory
+		final List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10); // 10 is max but in this case there are only 3 possible paths to return
+		for (Path path : shortestPaths) {
 			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}
   		System.out.println("-------------------------------------------------------------");
 	}
 	
-	private static String getPathAsPrettyPrintedStringForConsoleOutput(final PathDefault path) {
+	private static String getPathAsPrettyPrintedStringForConsoleOutput(final Path path) {
 		StringBuffer sb = new StringBuffer();
 		sb.append(path.getTotalWeightForPath().getWeightValue() + " ( ");
-		List<EdgeDefault> edges = path.getEdgesForPath();
+		List<Edge> edges = path.getEdgesForPath();
 		for (int i = 0; i < edges.size(); i++) {
 			if(i > 0) {
 				sb.append(" + ");		

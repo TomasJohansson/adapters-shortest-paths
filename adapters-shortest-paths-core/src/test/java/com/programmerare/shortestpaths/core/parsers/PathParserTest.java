@@ -9,8 +9,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
@@ -21,7 +21,7 @@ public class PathParserTest {
 
 	private PathParser<PathGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight>, EdgeGenerics<Vertex, Weight>, Vertex, Weight> pathParserGenerics;
 	
-	private PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParserPathDefault;
+	private PathParser<Path, Edge, Vertex, Weight> pathParserPathDefault;
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,8 +42,8 @@ public class PathParserTest {
 		final List<EdgeGenerics<Vertex, Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(stringWithEdges);
 		pathParserGenerics = PathParser.createPathParserGenerics(edges);
 	
-		final EdgeParser<EdgeDefault, Vertex, Weight> edgeParserDefault = EdgeParser.createEdgeParserDefault();
-		List<EdgeDefault> edgesDefault = edgeParserDefault.fromMultiLinedStringToListOfEdges(stringWithEdges);
+		final EdgeParser<Edge, Vertex, Weight> edgeParserDefault = EdgeParser.createEdgeParserDefault();
+		List<Edge> edgesDefault = edgeParserDefault.fromMultiLinedStringToListOfEdges(stringWithEdges);
 //		System.out.println("edgesDefault.get(0).getClass() " + edgesDefault.get(0).getClass());
 		pathParserPathDefault = PathParser.createPathParserDefault(edgesDefault);
 	}
@@ -120,7 +120,7 @@ public class PathParserTest {
 		// the pathParser is constructed in setup method with  two edges: A -> B (weight 5) and B -> D (weight 8) 
 		final String inputPathString = "13 A B D";
 		
-		PathDefault path = pathParserPathDefault.fromStringToPath(inputPathString);
+		Path path = pathParserPathDefault.fromStringToPath(inputPathString);
 		// TODO: test below and above methods from separate test methods
 		final String outputPathString = pathParserPathDefault.fromPathToString(path);
 		

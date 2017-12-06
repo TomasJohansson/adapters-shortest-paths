@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -15,9 +15,9 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathFinderDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
@@ -95,7 +95,7 @@ public class EdgeIdValuesTest {
 	 */
 	@Test
 	public void testDefaultEdgeIdValuesWhenNotExplicitlyDefined() {
-		List<EdgeDefault> edges = new ArrayList<EdgeDefault>();
+		List<Edge> edges = new ArrayList<Edge>();
 		//edges.add(e)
 			// Note there are not explicit names of the edges when they are created  
 		edges.add(createEdgeDefault(a, b, createWeight(WEIGHT_A_to_B))); // the edge Id will be a concatenation i.e. "A_B"
@@ -129,7 +129,7 @@ public class EdgeIdValuesTest {
 	 */
 	@Test
 	public void testCreateEdgesWithoutExplicitNames2() {
-		List<EdgeDefault> edges = new ArrayList<EdgeDefault>();
+		List<Edge> edges = new ArrayList<Edge>();
 		edges.add(createEdgeDefault(EDGE_A_to_B, a, b, createWeight(WEIGHT_A_to_B)));
 		edges.add(createEdgeDefault(EDGE_A_to_C, a, c, createWeight(WEIGHT_A_to_C)));
 		edges.add(createEdgeDefault(EDGE_B_to_C, b, c, createWeight(WEIGHT_B_to_C)));
@@ -140,7 +140,7 @@ public class EdgeIdValuesTest {
 	}
 	
 
-	private void verifyExpectedResults(List<EdgeDefault> edges) {
+	private void verifyExpectedResults(List<Edge> edges) {
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first		
 		GraphEdgesValidator.validateEdgesForGraphCreation(edges);
 		
@@ -182,15 +182,15 @@ public class EdgeIdValuesTest {
 	private void verifyExpectedPaths(
 		Vertex startVertex, 
 		Vertex endVertex, 
-		List<EdgeDefault> edges, 
+		List<Edge> edges, 
 		PathFinderFactoryDefault pathFinderFactory,
 		ExpectedPath[] expectedShortestPaths
 	) {
-		PathFinderDefault pathFinder = pathFinderFactory.createPathFinder(
+		PathFinder pathFinder = pathFinderFactory.createPathFinder(
 			edges, 
 			GraphEdgesValidationDesired.NO // do the validation one time instead of doing it for each pathFinderFactory
 		);
-		List<PathDefault> actualShortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10);
+		List<Path> actualShortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10);
 		
 		assertEquals(expectedShortestPaths.length, actualShortestPaths.size());
 
@@ -198,10 +198,10 @@ public class EdgeIdValuesTest {
 		for (int i = 0; i < expectedShortestPaths.length; i++) {
 			errorContext += " , i: "+ i;
 			ExpectedPath expectedPath = expectedShortestPaths[i];
-			PathDefault actualPath = actualShortestPaths.get(i);
+			Path actualPath = actualShortestPaths.get(i);
 			assertEquals(errorContext, expectedPath.totalWeight, actualPath.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
 			ExpectedEdge[] expectedEdgesForPath = expectedPath.expectedEdges;
-			List<EdgeDefault> actualEdgesForPath = actualPath.getEdgesForPath();
+			List<Edge> actualEdgesForPath = actualPath.getEdgesForPath();
 			assertEquals(errorContext, expectedEdgesForPath.length, actualEdgesForPath.size());
 			for (int j = 0; j < expectedEdgesForPath.length; j++) {
 				errorContext += " , j=" + j;

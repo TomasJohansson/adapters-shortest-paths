@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -27,8 +27,8 @@ public class FileReaderForGraphEdgesTest {
 		//A B 7
 		//X Y 8
 		
-		final FileReaderForGraphEdges<EdgeDefault, Vertex, Weight> fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(new EdgeParser.EdgeFactoryDefault());
-		final List<EdgeDefault> edges = fileReaderForGraphTestData.readEdgesFromFile(filePath);
+		final FileReaderForGraphEdges<Edge, Vertex, Weight> fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(new EdgeParser.EdgeFactoryDefault());
+		final List<Edge> edges = fileReaderForGraphTestData.readEdgesFromFile(filePath);
 		assertNotNull(edges);
 		assertEquals(2, edges.size());
 		

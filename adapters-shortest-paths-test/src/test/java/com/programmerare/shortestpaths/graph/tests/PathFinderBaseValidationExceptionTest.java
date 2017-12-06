@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.graph.tests;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.GraphImpl.createGraph;
@@ -14,9 +14,9 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
 import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgraphtDefault;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathDefault;
-import com.programmerare.shortestpaths.core.api.PathFinderDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
+import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -30,8 +30,8 @@ import com.programmerare.shortestpaths.core.validation.GraphValidationException;
  */
 public class PathFinderBaseValidationExceptionTest {
 
-	private EdgeDefault edgeAB, edgeBC;
-	private Graph<EdgeDefault , Vertex , Weight> graphWithEdges_A_B_and_B_C;
+	private Edge edgeAB, edgeBC;
+	private Graph<Edge, Vertex , Weight> graphWithEdges_A_B_and_B_C;
 	private Vertex vertexA, vertexB, vertexC, vertexX_notPartOfGraph;
 	
 	@Before
@@ -43,7 +43,7 @@ public class PathFinderBaseValidationExceptionTest {
 		
 		edgeAB = createEdgeDefault(vertexA, vertexB, createWeight(123));
 		edgeBC = createEdgeDefault(vertexB, vertexC, createWeight(456));
-		List<EdgeDefault> edges = new ArrayList<EdgeDefault>();
+		List<Edge> edges = new ArrayList<Edge>();
 		edges.add(edgeAB);
 		edges.add(edgeBC);
 
@@ -103,12 +103,12 @@ public class PathFinderBaseValidationExceptionTest {
 	
 	private void shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(
 		PathFinderFactoryDefault pathFinderFactory, 
-		Graph<EdgeDefault , Vertex , Weight> graph, 
+		Graph<Edge , Vertex , Weight> graph, 
 		Vertex startVertex, 
 		Vertex endVertex
 	) {
-		PathFinderDefault pathFinder = pathFinderFactory.createPathFinder(graph, GraphEdgesValidationDesired.YES);
-		List<PathDefault> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, maxNumberOfPaths);
+		PathFinder pathFinder = pathFinderFactory.createPathFinder(graph, GraphEdgesValidationDesired.YES);
+		List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, maxNumberOfPaths);
 	}
 	
 	private final static int maxNumberOfPaths = 1;

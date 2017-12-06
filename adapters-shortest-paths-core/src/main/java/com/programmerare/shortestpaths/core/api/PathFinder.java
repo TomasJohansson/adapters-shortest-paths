@@ -2,10 +2,10 @@ package com.programmerare.shortestpaths.core.api;
 
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 
-public interface PathFinderDefault 
+public interface PathFinder 
 	extends PathFinderGenerics<
-		PathDefault,
-		EdgeDefault,  // Edge<Vertex , Weight>
+		Path,
+		Edge,  // Edge<Vertex , Weight>
 		Vertex , 
 		Weight
 	>

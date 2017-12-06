@@ -1,6 +1,6 @@
 package com.programmerare.shortestpaths.core.parsers;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl.createEdgeDefault;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdgeDefault;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
@@ -26,7 +26,7 @@ import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 public class EdgeParserTest {
 
 	private EdgeParser<EdgeGenerics<Vertex, Weight>, Vertex, Weight> edgeParserGenerics;
-	private EdgeParser<EdgeDefault, Vertex, Weight> edgeParserDefault;
+	private EdgeParser<Edge, Vertex, Weight> edgeParserDefault;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -36,7 +36,7 @@ public class EdgeParserTest {
 
 	@Test
 	public void testFromStringToEdge() {
-		EdgeDefault edge = edgeParserDefault.fromStringToEdge("A B 3.7");
+		Edge edge = edgeParserDefault.fromStringToEdge("A B 3.7");
 		assertNotNull(edge);
 		assertNotNull(edge.getStartVertex());
 		assertNotNull(edge.getEndVertex());
@@ -72,7 +72,7 @@ public class EdgeParserTest {
 		Vertex startVertex = createVertex("A");
 		Vertex endVertex = createVertex("B");
 		Weight weight = createWeight(3.7);
-		EdgeDefault edge = createEdgeDefault(startVertex, endVertex, weight);
+		Edge edge = createEdgeDefault(startVertex, endVertex, weight);
 		assertEquals("A B 3.7", edgeParserDefault.fromEdgeToString(edge));
 	}
 	
@@ -121,7 +121,7 @@ public class EdgeParserTest {
 				"B C 7\r\n" + 
 				"B D 8\r\n" + 
 				"C D 9";
-		final List<EdgeDefault> edges = edgeParserDefault.fromMultiLinedStringToListOfEdges(multiLinedString);
+		final List<Edge> edges = edgeParserDefault.fromMultiLinedStringToListOfEdges(multiLinedString);
 		assertNotNull(edges);
 		assertEquals(5,  edges.size());
 		final EdgeGenerics<Vertex, Weight> firstEdge = edges.get(0);

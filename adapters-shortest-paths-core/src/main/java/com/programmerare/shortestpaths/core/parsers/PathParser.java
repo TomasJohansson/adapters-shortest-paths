@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
@@ -75,8 +75,8 @@ public final class PathParser<P extends PathGenerics<E, V, W> , E extends EdgeGe
 		return createPathParser(new PathFactoryGenerics<P, E, V, W>(), edgesUsedForFindingTheWeightsBetweenVerticesInPath);
 	}	
 
-	public static PathParser<PathDefault , EdgeDefault , Vertex , Weight> createPathParserDefault(
-		final List<EdgeDefault> edgesUsedForFindingTheWeightsBetweenVerticesInPath
+	public static PathParser<Path , Edge , Vertex , Weight> createPathParserDefault(
+		final List<Edge> edgesUsedForFindingTheWeightsBetweenVerticesInPath
 	) {
 		return createPathParser(new PathFactoryDefault(), edgesUsedForFindingTheWeightsBetweenVerticesInPath);
 	}	

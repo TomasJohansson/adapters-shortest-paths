@@ -6,11 +6,11 @@ import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.impl.EdgeDefaultImpl;
+import com.programmerare.shortestpaths.core.impl.EdgeImpl;
 import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 import com.programmerare.shortestpaths.utils.StringUtility;
 
@@ -105,7 +105,7 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 		return createEdgeParser(new EdgeParser.EdgeFactoryGenerics<E, V, W>());
 	}
 	
-	public static EdgeParser<EdgeDefault, Vertex, Weight> createEdgeParserDefault() {
+	public static EdgeParser<Edge, Vertex, Weight> createEdgeParserDefault() {
 		return createEdgeParser(new EdgeParser.EdgeFactoryDefault());
 	}	
 //	edgeParserGenerics = EdgeParser.createEdgeParser();
@@ -240,9 +240,9 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 		}
 	}
 	
-	public static class EdgeFactoryDefault implements EdgeFactory<EdgeDefault , Vertex , Weight> {
-		public EdgeDefault createEdge(Vertex startVertex, Vertex endVertex, Weight weight) {
-			EdgeDefault edge  = EdgeDefaultImpl.createEdgeDefault(startVertex, endVertex, weight);
+	public static class EdgeFactoryDefault implements EdgeFactory<Edge , Vertex , Weight> {
+		public Edge createEdge(Vertex startVertex, Vertex endVertex, Weight weight) {
+			Edge edge  = EdgeImpl.createEdgeDefault(startVertex, endVertex, weight);
 			return edge;
 		}
 		

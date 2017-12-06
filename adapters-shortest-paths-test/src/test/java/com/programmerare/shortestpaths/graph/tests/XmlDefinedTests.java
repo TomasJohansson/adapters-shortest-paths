@@ -20,8 +20,8 @@ import org.w3c.dom.NodeList;
 
 import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
 import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
-import com.programmerare.shortestpaths.core.api.EdgeDefault;
-import com.programmerare.shortestpaths.core.api.PathDefault;
+import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -44,12 +44,12 @@ import com.programmerare.shortestpaths.utils.XmlFileReader;
  */
 public class XmlDefinedTests {
 
-	private EdgeUtility<EdgeDefault, Vertex, Weight> edgeUtility;
+	private EdgeUtility<Edge, Vertex, Weight> edgeUtility;
 	private XmlFileReader xmlFileReader;
 	private ResourceReader resourceReader;
-	private FileReaderForGraphEdges<EdgeDefault, Vertex, Weight> fileReaderForGraphTestData;
+	private FileReaderForGraphEdges<Edge, Vertex, Weight> fileReaderForGraphTestData;
 	private GraphShortestPathAssertionHelper graphShortestPathAssertionHelper;
-	private EdgeParser<EdgeDefault, Vertex, Weight> edgeParser;
+	private EdgeParser<Edge, Vertex, Weight> edgeParser;
 
 	private List<PathFinderFactoryDefault> pathFinderFactoriesForAllImplementations;
 	private List<PathFinderFactoryDefault> pathFinderFactories;
@@ -238,7 +238,7 @@ public class XmlDefinedTests {
 		assertNotNull(nodeWithGraphDefinition);
 
 
-		final List<EdgeDefault> edgesForGraphPotentiallyIncludingDuplicatedEdges = edgeParser.fromMultiLinedStringToListOfEdges(nodeWithGraphDefinition.getTextContent());
+		final List<Edge> edgesForGraphPotentiallyIncludingDuplicatedEdges = edgeParser.fromMultiLinedStringToListOfEdges(nodeWithGraphDefinition.getTextContent());
 		
 //		System.out.println("efetr fromMultiLinedStringToListOfEdges  " + edgesForGraphPotentiallyIncludingDuplicatedEdges.get(0).getClass());
 		
@@ -246,7 +246,7 @@ public class XmlDefinedTests {
 		// There can be duplicates in the list of edges, whcih would cause exception at validation,
 		// so therefore below instead remove duplicated with a chosen strategy 
 		// and one example file with many duplicated edges is "small_road_network_01.xml"
-		final List<EdgeDefault> edgesForGraph = edgeUtility.getEdgesWithoutDuplicates(edgesForGraphPotentiallyIncludingDuplicatedEdges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
+		final List<Edge> edgesForGraph = edgeUtility.getEdgesWithoutDuplicates(edgesForGraphPotentiallyIncludingDuplicatedEdges, SelectionStrategyWhenEdgesAreDuplicated.FIRST_IN_LIST_OF_EDGES);
 		//System.out.println("edgesForGraph " + edgesForGraph.size());
 		// edgesForGraphPotentiallyIncludingDuplicatedEdges 28524
 		// edgesForGraph 28320
@@ -254,7 +254,7 @@ public class XmlDefinedTests {
 		
 //		System.out.println("efetr getEdgesWithoutDuplicates  " + edgesForGraph.get(0).getClass());
 		
-		final PathParser<PathDefault, EdgeDefault, Vertex, Weight> pathParser = PathParser.createPathParserDefault(edgesForGraph);
+		final PathParser<Path, Edge, Vertex, Weight> pathParser = PathParser.createPathParserDefault(edgesForGraph);
 		
 		final NodeList nodeListWithTestCases = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/testCase");
 		assertNotNull(nodeListWithTestCases); // shouold be zero rather than null i.e. this is okay to test
@@ -265,9 +265,9 @@ public class XmlDefinedTests {
 			final String outputExpectedAsMultiLinedString  = xmlFileReader.getTextContentNodeOfFirstSubNode(itemWithTestCase, "outputExpected");
 //			System.out.println("outputExpectedAsMultiLinedString " + outputExpectedAsMultiLinedString);
 			//List fromStringToListOfPaths = pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);			
-			final List<PathDefault> expectedListOfPaths  = outputExpectedAsMultiLinedString == null || outputExpectedAsMultiLinedString.trim().equals("") ? null : pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
+			final List<Path> expectedListOfPaths  = outputExpectedAsMultiLinedString == null || outputExpectedAsMultiLinedString.trim().equals("") ? null : pathParser.fromStringToListOfPaths(outputExpectedAsMultiLinedString);
 			
-			final GraphEdgesValidator<PathDefault, EdgeDefault, Vertex, Weight> edgeGraphEdgesValidator = createGraphEdgesValidator();
+			final GraphEdgesValidator<Path, Edge, Vertex, Weight> edgeGraphEdgesValidator = createGraphEdgesValidator();
 			edgeGraphEdgesValidator.validateEdgesAsAcceptableInputForGraphConstruction(edgesForGraph);
 			if(expectedListOfPaths != null) {
 				edgeGraphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(expectedListOfPaths, edgesForGraph);	
@@ -348,7 +348,7 @@ public class XmlDefinedTests {
 	) {
 		final Vertex startVertex = createVertex(startVertexId);
 		final Vertex endVertex = createVertex(endVertexId);
-		final List<EdgeDefault> edgesForGraph = fileReaderForGraphTestData.readEdgesFromFile(filePath);
+		final List<Edge> edgesForGraph = fileReaderForGraphTestData.readEdgesFromFile(filePath);
 //		System.out.println("edgesForGraph " + edgesForGraph.get(0).getClass());
 		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(
 			edgesForGraph, 
@@ -358,5 +358,4 @@ public class XmlDefinedTests {
 			pathFinderFactoriesForAllImplementations
 		);
 	}
-	
 }
