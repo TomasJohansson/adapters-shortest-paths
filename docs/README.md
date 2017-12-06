@@ -30,22 +30,21 @@ For example, the vertices might represent cities, and the edges might represent 
 The Java code below can be used for finding the shortest paths (sorted with the shortest first) from A to D :
 
 ```java
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
-import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import java.util.Arrays;
 import java.util.List;
-import com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFactoryBsmock;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.PathFinderFactoryJgrapht;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.Edge;
+import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
-import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
+import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
+import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 
 ...
 
@@ -61,15 +60,17 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 		createEdge(b, d, createWeight(8)),
 		createEdge(c, d, createWeight(9))
 	);
+	
+	Graph graph = createGraph(edges, GraphEdgesValidationDesired.YES); 
 
-	PathFinderFactory<Edge> pathFinderFactory = new PathFinderFactoryJgrapht<Edge>();
-	// or: pathFinderFactory = new PathFinderFactoryBsmock<Edge>();
-	// or: pathFinderFactory = new PathFinderFactoryYanQi<Edge>();
+	PathFinderFactory pathFinderFactory = new PathFinderFactoryJgrapht();
+	// or: pathFinderFactory = new PathFinderFactoryBsmock();
+	//or: pathFinderFactory = new PathFinderFactoryYanQi();
 	// (currently there are three implementations)
 
-	PathFinder<Edge> pathFinder = pathFinderFactory.createPathFinder(edges, GraphEdgesValidationDesired.YES);
-	List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
-	for (Path<Edge> path : shortestPaths) {
+	PathFinder pathFinder = pathFinderFactory.createPathFinder(graph);
+	List<Path> shortestPaths = pathFinder.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
+	for (Path path : shortestPaths) {
 		Weight totalWeightForPath = path.getTotalWeightForPath();
 		System.out.println(totalWeightForPath);
 		List<Edge> pathEdges = path.getEdgesForPath();
@@ -82,6 +83,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 			System.out.println(edgeWeight);
 		}			
 	}
+}
 ```
 Assuming you are using Maven, to be able to use the above code, you can use the following configuration in your "pom.xml" file :
 ```xml
