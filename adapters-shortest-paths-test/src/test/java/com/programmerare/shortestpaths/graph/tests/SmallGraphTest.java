@@ -12,13 +12,13 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
-import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgraphtDefault;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
+import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.jgrapht.defaults.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
-import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
@@ -38,26 +38,26 @@ public class SmallGraphTest {
 	@Test
 	public void testFindShortestPaths_Bsmock() {
 		testFindShortestPaths(
-			new PathFinderFactoryBsmockDefault()
+			new PathFinderFactoryBsmock()
 		);		
 	}	
 	
 	@Test
 	public void testFindShortestPaths_Jgrapht() {
 		testFindShortestPaths(
-			new PathFinderFactoryJgraphtDefault()
+			new PathFinderFactoryJgrapht()
 		);		
 	}
 	
 	@Test
 	public void testFindShortestPaths_YanQi() {
 		testFindShortestPaths(
-			new PathFinderFactoryYanQiDefault()
+			new PathFinderFactoryYanQi()
 		);
 	}
 	
 	public void testFindShortestPaths(
-			PathFinderFactoryDefault pathFinderFactory
+			PathFinderFactory pathFinderFactory
 	) {
 		Edge edgeAB3 = createEdge(createVertex("A"), createVertex("B"), createWeight(3));
 		Edge edgeBC5 = createEdge(createVertex("B"), createVertex("C"), createWeight(5));

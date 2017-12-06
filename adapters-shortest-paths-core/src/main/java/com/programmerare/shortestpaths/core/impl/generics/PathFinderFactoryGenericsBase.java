@@ -8,16 +8,16 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.generics.Graph;
-import com.programmerare.shortestpaths.core.api.generics.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderFactoryGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
-public abstract class PathFinderFactoryBase
+public abstract class PathFinderFactoryGenericsBase
 	<F extends PathFinderGenerics<P, E,V,W> , P extends PathGenerics<E, V, W> ,  E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> 
-	implements PathFinderFactory<F , P, E , V , W> 
+	implements PathFinderFactoryGenerics<F , P, E , V , W> 
 {
-	protected PathFinderFactoryBase() { }
+	protected PathFinderFactoryGenericsBase() { }
 
 	/**
 	 * @param edges

@@ -22,7 +22,7 @@ import edu.ufl.cise.bsmock.graph.ksp.Yen;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public class PathFinderBsmock 
+public class PathFinderBsmockGenerics 
 	< 
 		P extends PathGenerics<E, V, W>,  
 		E extends EdgeGenerics<V, W>, 
@@ -35,7 +35,7 @@ public class PathFinderBsmock
 	private final edu.ufl.cise.bsmock.graph.Graph graphAdaptee;
 	private final Yen yenAlgorithm;	
 	
-	protected PathFinderBsmock(
+	protected PathFinderBsmockGenerics(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
@@ -45,7 +45,7 @@ public class PathFinderBsmock
 			null				
 		);
 	}
-	protected PathFinderBsmock(
+	protected PathFinderBsmockGenerics(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory

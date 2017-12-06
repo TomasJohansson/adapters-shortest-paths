@@ -14,7 +14,7 @@ import java.util.Map;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
-import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
@@ -51,7 +51,7 @@ public class GraphShortestPathAssertionHelper {
 			final Vertex startVertex,
 			final Vertex endVertex, 
 			final int numberOfPathsToFind, 
-			final List<PathFinderFactoryDefault> pathFinderFactoriesForImplementationsToTest
+			final List<PathFinderFactory> pathFinderFactoriesForImplementationsToTest
 		) {
 		testResultsWithImplementationsAgainstEachOther(
 			edgesForBigGraph, 
@@ -76,7 +76,7 @@ public class GraphShortestPathAssertionHelper {
 		final Vertex startVertex,
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
-		final List<PathFinderFactoryDefault> pathFinderFactoriesForImplementationsToTest,
+		final List<PathFinderFactory> pathFinderFactoriesForImplementationsToTest,
 		final List<Path> expectedListOfPaths,
 		final boolean shouldPrettyPrintListOfPathsToTheConsoleOutput
 	) {
@@ -91,7 +91,7 @@ public class GraphShortestPathAssertionHelper {
 		
 		assertThat("At least some implementation should be used", pathFinderFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < pathFinderFactoriesForImplementationsToTest.size(); i++) {
-			final PathFinderFactoryDefault pathFinderFactory = pathFinderFactoriesForImplementationsToTest.get(i);
+			final PathFinderFactory pathFinderFactory = pathFinderFactoriesForImplementationsToTest.get(i);
 //			System.out.println("pathFinderFactory " + pathFinderFactory.getClass());
 			
 			final TimeMeasurer tm = TimeMeasurer.start(); 			

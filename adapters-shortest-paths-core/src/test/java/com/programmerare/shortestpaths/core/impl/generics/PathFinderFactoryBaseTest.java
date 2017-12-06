@@ -17,7 +17,7 @@ import com.programmerare.shortestpaths.core.api.generics.Graph;
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
-import com.programmerare.shortestpaths.core.impl.generics.PathFinderFactoryBase;
+import com.programmerare.shortestpaths.core.impl.generics.PathFinderFactoryGenericsBase;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
 
@@ -91,7 +91,7 @@ public class PathFinderFactoryBaseTest {
 
 	}
 	
-	public final class PathFinderFactoryConcreteForTest extends PathFinderFactoryBase
+	public final class PathFinderFactoryConcreteForTest extends PathFinderFactoryGenericsBase
 	< PathFinderGenerics<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight> , EdgeGenerics<Vertex,Weight>,Vertex,Weight> , PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight> , EdgeGenerics<Vertex , Weight> , Vertex , Weight>
 	{
 

@@ -26,7 +26,7 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public class PathFinderYanQi 
+public class PathFinderYanQiGenerics 
 	< 
 		P extends PathGenerics<E, V, W>,  
 		E extends EdgeGenerics<V, W>, 
@@ -39,7 +39,7 @@ public class PathFinderYanQi
 	private final edu.asu.emit.algorithm.graph.Graph graphAdaptee;
 	private final MapperForIntegerIdsAndGeneralStringIds idMapper;
 
-	protected PathFinderYanQi(
+	protected PathFinderYanQiGenerics(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired		
 	) {
@@ -49,7 +49,7 @@ public class PathFinderYanQi
 			null				
 		);
 	}
-	protected PathFinderYanQi(
+	protected PathFinderYanQiGenerics(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory

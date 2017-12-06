@@ -13,7 +13,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
-import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
 import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
@@ -70,7 +70,7 @@ public class BigGraphTest {
 		final List<Edge> edgesForBigGraph = createEdgesForBigGraph(numberOfVertices);
 		final Vertex startVertex = edgesForBigGraph.get(0).getStartVertex();
 		final Vertex endVertex = edgesForBigGraph.get(edgesForBigGraph.size()-1).getEndVertex();
-		final List<PathFinderFactoryDefault> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+		final List<PathFinderFactory> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
 		
 		GraphShortestPathAssertionHelper graphShortestPathAssertionHelper = new GraphShortestPathAssertionHelper(isExecutingThroughTheMainMethod);
 		graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(edgesForBigGraph, startVertex, endVertex, numberOfPathsToFind, pathFinderFactories);

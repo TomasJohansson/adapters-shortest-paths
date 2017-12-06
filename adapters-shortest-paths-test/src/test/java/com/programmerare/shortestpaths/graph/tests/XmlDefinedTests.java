@@ -18,11 +18,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmockDefault;
-import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQiDefault;
+import com.programmerare.shortestpaths.adapter.impl.bsmock.defaults.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.impl.yanqi.defaults.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
-import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.EdgeParser;
@@ -51,8 +51,8 @@ public class XmlDefinedTests {
 	private GraphShortestPathAssertionHelper graphShortestPathAssertionHelper;
 	private EdgeParser<Edge, Vertex, Weight> edgeParser;
 
-	private List<PathFinderFactoryDefault> pathFinderFactoriesForAllImplementations;
-	private List<PathFinderFactoryDefault> pathFinderFactories;
+	private List<PathFinderFactory> pathFinderFactoriesForAllImplementations;
+	private List<PathFinderFactory> pathFinderFactories;
 
 	private List<String> pathsToResourcesFoldersWithXmlTestFiles;
 
@@ -87,7 +87,7 @@ public class XmlDefinedTests {
 		edgeParser = EdgeParser.createEdgeParserDefault();
 
 		pathFinderFactoriesForAllImplementations = PathFinderFactories.createPathFinderFactories();
-		pathFinderFactories = new ArrayList<PathFinderFactoryDefault>(); // set to empty here before each test, so add to the list if it needs to be used
+		pathFinderFactories = new ArrayList<PathFinderFactory>(); // set to empty here before each test, so add to the list if it needs to be used
 	
 		pathsToResourcesFoldersWithXmlTestFiles = Arrays.asList(
 			DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, 
@@ -165,7 +165,7 @@ public class XmlDefinedTests {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		pathFinderFactories.add(new PathFinderFactoryYanQiDefault()); // 16 seconds, reasonable acceptable for frequent regression testing 
+		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 16 seconds, reasonable acceptable for frequent regression testing 
 		// pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
 		// pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
@@ -174,16 +174,16 @@ public class XmlDefinedTests {
 
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
-		pathFinderFactories.add(new PathFinderFactoryYanQiDefault());
-		pathFinderFactories.add(new PathFinderFactoryBsmockDefault());
+		pathFinderFactories.add(new PathFinderFactoryYanQi());
+		pathFinderFactories.add(new PathFinderFactoryBsmock());
 		//pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
 	
 	@Test   
 	public void testXmlFile_test_50() throws IOException {
-		pathFinderFactories.add(new PathFinderFactoryYanQiDefault());
-		pathFinderFactories.add(new PathFinderFactoryBsmockDefault());
+		pathFinderFactories.add(new PathFinderFactoryYanQi());
+		pathFinderFactories.add(new PathFinderFactoryBsmock());
 		//pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, pathFinderFactories);
 	}	
@@ -217,7 +217,7 @@ public class XmlDefinedTests {
 	private void runTestCaseDefinedInXmlFile(
 		final String pathToResourcesFoldersIncludingTrailingSlash, 
 		final String nameOfXmlFileWithoutDirectoryPath,
-		final List<PathFinderFactoryDefault> pathFinderFactories
+		final List<PathFinderFactory> pathFinderFactories
 	) throws IOException {
 		runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
 			pathToResourcesFoldersIncludingTrailingSlash + nameOfXmlFileWithoutDirectoryPath, 
@@ -227,7 +227,7 @@ public class XmlDefinedTests {
 	
 	private void runTestCaseDefinedInXmlFileWithPathIncludingDirectory(
 		final String pathToResourceXmlFile, 
-		final List<PathFinderFactoryDefault> pathFinderFactories
+		final List<PathFinderFactory> pathFinderFactories
 	) throws IOException {
 		final Document document = xmlFileReader.getResourceFileAsXmlDocument(pathToResourceXmlFile);
 		final NodeList nodeList = xmlFileReader.getNodeListMatchingXPathExpression(document, "graphTestData/graphDefinition");

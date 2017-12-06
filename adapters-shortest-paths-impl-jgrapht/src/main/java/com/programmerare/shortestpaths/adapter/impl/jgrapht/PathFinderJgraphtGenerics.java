@@ -23,7 +23,7 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
  * @author Tomas Johansson
  * @see https://en.wikipedia.org/wiki/Adapter_pattern
  */
-public class PathFinderJgrapht
+public class PathFinderJgraphtGenerics
 	< 
 		P extends PathGenerics<E, V, W>,  
 		E extends EdgeGenerics<V, W>, 
@@ -35,7 +35,7 @@ public class PathFinderJgrapht
 {
 	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
 	
-	protected PathFinderJgrapht(
+	protected PathFinderJgraphtGenerics(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired			
 	) {
@@ -45,7 +45,7 @@ public class PathFinderJgrapht
 			null				
 		);
 	}
-	protected PathFinderJgrapht(
+	protected PathFinderJgraphtGenerics(
 		final Graph<E, V, W> graph, 
 		final GraphEdgesValidationDesired graphEdgesValidationDesired,
 		final PathFactory<P, E, V, W> pathFactory

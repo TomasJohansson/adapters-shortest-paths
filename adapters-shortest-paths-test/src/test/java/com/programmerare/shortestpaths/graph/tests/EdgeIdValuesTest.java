@@ -18,7 +18,7 @@ import org.junit.Test;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
-import com.programmerare.shortestpaths.core.api.PathFinderFactoryDefault;
+import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
@@ -146,8 +146,8 @@ public class EdgeIdValuesTest {
 		
 		final ExpectedPath[] expectedPaths = getExpectedPaths();
 
-		final List<PathFinderFactoryDefault> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
-		for (PathFinderFactoryDefault pathFinderFactory : pathFinderFactories) {
+		final List<PathFinderFactory> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
+		for (PathFinderFactory pathFinderFactory : pathFinderFactories) {
 			verifyExpectedPaths(a, d, edges, pathFinderFactory, expectedPaths);
 		}
 //		final List<PathFinderFactory<Edge>> pathFinderFactories = PathFinderFactories.createPathFinderFactories();
@@ -183,7 +183,7 @@ public class EdgeIdValuesTest {
 		Vertex startVertex, 
 		Vertex endVertex, 
 		List<Edge> edges, 
-		PathFinderFactoryDefault pathFinderFactory,
+		PathFinderFactory pathFinderFactory,
 		ExpectedPath[] expectedShortestPaths
 	) {
 		PathFinder pathFinder = pathFinderFactory.createPathFinder(

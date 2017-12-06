@@ -1,9 +1,9 @@
 package com.programmerare.shortestpaths.core.api;
 
-import com.programmerare.shortestpaths.core.api.generics.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.generics.PathFinderFactoryGenerics;
 
-public interface PathFinderFactoryDefault 
-	extends PathFinderFactory<
+public interface PathFinderFactory 
+	extends PathFinderFactoryGenerics<
 			PathFinder , // PathFinder< Edge<Vertex , Weight> , Vertex , Weight> ,
 			Path,
 			Edge, // Edge<Vertex , Weight> ,  
