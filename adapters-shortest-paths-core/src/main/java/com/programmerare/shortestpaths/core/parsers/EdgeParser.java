@@ -150,12 +150,12 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 		final String endVertexId = array[orderForEndVertex-1];
 		final double weightValue = Double.parseDouble(array[orderForWeight-1]);
 		
-		final E e = createEdgeWithHorribleCode(startVertexId, endVertexId, weightValue);
+		final E e = createEdge(startVertexId, endVertexId, weightValue);
 		return e;
 	}
 
 	// the purpose of the method name is not reduce the risk of forgetting to refactor .... 
-	private E createEdgeWithHorribleCode(String startVertexId, String endVertexId, double weightValue) {
+	private E createEdge(final String startVertexId, final String endVertexId, final double weightValue) {
 		
 		final V startVertex = (V)createVertex(startVertexId);
 		final V endVertex = (V)createVertex(endVertexId);
