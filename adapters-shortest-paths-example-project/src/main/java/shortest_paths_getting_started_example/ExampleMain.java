@@ -49,6 +49,14 @@ Implementation com.programmerare.shortestpaths.adapter.impl.bsmock.PathFinderFac
  */
 public class ExampleMain {
 
+	/**
+	 * 
+	 * Use the following commands to run the main method with Maven:
+	 * 		cd adapters-shortest-paths-example-project
+	 * 		mvn compile 
+	 * 		mvn exec:java -Dexec.mainClass="shortest_paths_getting_started_example.ExampleMain"
+	 * @param args not used
+	 */
 	public static void main(String[] args) {
 	
 		Vertex a = createVertex("A");

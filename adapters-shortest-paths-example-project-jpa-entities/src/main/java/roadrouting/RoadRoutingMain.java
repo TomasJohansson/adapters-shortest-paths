@@ -18,7 +18,13 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 public class RoadRoutingMain {
 	
 	/**
-	 * @param args "1" if you want to use the database, otherwise hardcoded values be used.
+	 * Use the following commands to run the main method with Maven
+	* 			(but use the last "1" argument only if you want to use SQLite database,
+	* 		 	 so for example use "0" if you want hardcoded 'entities' instead) :
+	 * 		cd adapters-shortest-paths-example-project-jpa-entities
+	 * 		mvn compile 
+	 * 		mvn exec:java -Dexec.mainClass="roadrouting.RoadRoutingMain" -Dexec.args="1"
+	 * @param args "1" if you want to use the database, otherwise hardcoded 'entities' will be used.
 	 */
 	public static void main(String[] args) {
 		final boolean useDatabase = parseArguments(args);
