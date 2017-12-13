@@ -7,7 +7,6 @@ import com.programmerare.shortestpaths.core.api.Weight;
 
 /**
  * A Graph represents a collection of Edge instances.
- *  
  * 
  * @author Tomas Johansson
  */

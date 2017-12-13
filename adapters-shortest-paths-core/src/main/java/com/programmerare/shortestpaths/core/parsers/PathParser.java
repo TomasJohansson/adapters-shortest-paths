@@ -29,8 +29,13 @@ import com.programmerare.shortestpaths.utils.StringUtility;
  * Each line ns a string is first the total weight and then the sequence of vertices.
  * Example:  "13 A B D"
  * The simple representation (without weight informatin) is the reason why the list of edges is also needed,
- * i.e. to find the weights.  
- * 
+ * i.e. to find the weights.
+ *
+ * @param <P> path
+ * @param <E> edge
+ * @param <V> vertex
+ * @param <W> weight
+ 
  * @author Tomas Johansson
  *
  */

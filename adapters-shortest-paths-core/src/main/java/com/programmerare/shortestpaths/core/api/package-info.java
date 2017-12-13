@@ -10,8 +10,7 @@
  * However, note that the interfaces may extend other interfaces with generics type parameters.
  * 
  * Interfaces with generics type parameters should be placed in the sub package "api.generics".
- */
-/**
+ * 
  * @author Tomas Johansson
  *
  */

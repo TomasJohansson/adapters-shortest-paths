@@ -57,6 +57,7 @@ public abstract class PathFinderBase
 	private PathFactory<P, E, V, W> createStandardInstanceOfPathFactory() {
 		return new PathFactoryGenerics<P, E, V, W>();
 	}
+	
 	/**
 	 * final method to enforce the validation, and then forward to the hook method for the implementations
 	 */

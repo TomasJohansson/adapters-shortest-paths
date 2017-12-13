@@ -80,10 +80,16 @@ public class PathGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , 
 		this.edges = Collections.unmodifiableList(edges);
 	}	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	public W getTotalWeightForPath() {
 		return totalWeight;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */	
 	public List<E> getEdgesForPath() {
 		return edges;
 	}

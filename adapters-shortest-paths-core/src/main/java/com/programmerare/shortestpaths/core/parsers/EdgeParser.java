@@ -16,15 +16,16 @@ import com.programmerare.shortestpaths.utils.StringUtility;
 
 /**
  * See javadoc comments at the two essential methods in this class, i.e. the methods which convert between String and Edge.
- *  
+
  * @author Tomas Johansson
+ *
+ * @param <E> edge
+ * @param <V> vertex
+ * @param <W> weight
  */
 public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 
-	// private final Class<T> clazz;
-//	@Deprecated
-//	private Class<E> edgeClass;
-	private EdgeFactory<E, V , W> edgeFactory;// = new EdgeFactoryGenerics<E, V , W>();
+	private EdgeFactory<E, V , W> edgeFactory;
 	
 	/**
 	 * when splitting, an regular expression can be used e.g. "\\s++" for matching one or more white space characters
@@ -44,9 +45,6 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	private final int orderForStartVertex;
 	private final int orderForEndVertex;
 	private final int orderForWeight;
-//	private E e;
-//	private V v;
-//	private W w;
 
 	/**
 	 * @param separatorBetweenEdgesAndWeightWhenSplitting
@@ -56,21 +54,13 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	 * @param orderForWeight
 	 */
 	private EdgeParser(
-//		final Class<E> edgeClass,
 		final EdgeFactory<E, V , W> edgeFactory,
 		final String separatorBetweenEdgesAndWeightWhenSplitting, 
 		final String separatorBetweenEdgesAndWeightWhenCreating, 
 		final int orderForStartVertex, 
 		final int orderForEndVertex, 
 		final int orderForWeight
-//		final E e,
-//		final V v,
-//		final W w
 	) {
-//		this.e = e;
-//		this.v = v;
-//		this.w = w;
-//		this.edgeClass = edgeClass;
 		this.edgeFactory = edgeFactory;
 		
 		this.separatorBetweenEdgesAndWeightWhenSplitting = separatorBetweenEdgesAndWeightWhenSplitting;
@@ -97,24 +87,56 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 //	public static <E extends Edge<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser(Class edgeClass) {
 //		return createEdgeParser(edgeClass, "\\s+", " ", 1, 2, 3);
 //	}
+
+	/**
+	 * @param <E> edge
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @param edgeFactory factory object used for creating Edge instances
+	 * @return an instance of EdgeParser 
+	 */
 	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser(final EdgeFactory<E, V , W> edgeFactory) {
 		return createEdgeParser(edgeFactory, "\\s+", " ", 1, 2, 3);
 	}	
+
 	
+	/**
+	 * Convenience methods.
+	 * @param <E> edge
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @return an instance of EdgeParser constructed with a generics version of the edgeFactory 
+	 */
 	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParserGenerics() {
 		return createEdgeParser(new EdgeParser.EdgeFactoryGenerics<E, V, W>());
 	}
-	
+
+	/**
+	 * Convenience methods.
+	 * @param <E> edge
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @return an instance of EdgeParser constructed with a simple/standard version of the edgeFactory 
+	 */
 	public static EdgeParser<Edge, Vertex, Weight> createEdgeParserDefault() {
 		return createEdgeParser(new EdgeParser.EdgeFactoryDefault());
 	}	
-//	edgeParserGenerics = EdgeParser.createEdgeParser();
-//	edgeParserDefault = EdgeParser.createEdgeParser(new EdgeParser.EdgeFactoryDefault());
-	
 	
 	// TODO: if this method is "opened" for client code i.e. made public then write some tests with validation of input
+	
+	/**
+	 * @param <E> edge
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @param edgeFactory
+	 * @param separatorBetweenEdgesAndWeightWhenSplitting
+	 * @param separatorBetweenEdgesAndWeightWhenCreating
+	 * @param orderForStartVertex
+	 * @param orderForEndVertex
+	 * @param orderForWeight
+	 * @return
+	 */
 	private static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> EdgeParser<E, V, W> createEdgeParser(
-//		final Class<E> edgeClass,
 		final EdgeFactory<E, V , W> edgeFactory,
 		final String separatorBetweenEdgesAndWeightWhenSplitting, 
 		final String separatorBetweenEdgesAndWeightWhenCreating, 
@@ -129,7 +151,6 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 			orderForStartVertex, 
 			orderForEndVertex, 
 			orderForWeight
-//			null, null, null
 		);
 	}
 	
@@ -141,9 +162,7 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	 * 	for example "X Y 12.34" for an edge from vertex X to vertex Y with 12.34 as the weight 
 	 * @return
 	 */
-	public  E fromStringToEdge(final String stringRepresentationOfEdge) {
-//		System.out.println("fromStringToEdge edgeClass.getName() " + edgeClass.getName());
-		
+	public E fromStringToEdge(final String stringRepresentationOfEdge) {
 		final String[] array = stringRepresentationOfEdge.split(separatorBetweenEdgesAndWeightWhenSplitting);
 		// if(split.length < 3) // TODO throw
 		final String startVertexId = array[orderForStartVertex-1];
@@ -156,23 +175,10 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 
 	// the purpose of the method name is not reduce the risk of forgetting to refactor .... 
 	private E createEdge(final String startVertexId, final String endVertexId, final double weightValue) {
-		
 		final V startVertex = (V)createVertex(startVertexId);
 		final V endVertex = (V)createVertex(endVertexId);
 		final W weight = (W)createWeight(weightValue);
-		
 		return (E) edgeFactory.createEdge(startVertex, endVertex, weight);
-		
-//		if(edgeClass != null && edgeClass.getName().equals(EdgeDefaultImpl.class.getName())) {
-//			EdgeDefault edgeDefault = EdgeDefaultImpl.createEdgeDefault(startVertex, endVertex, weight);
-//			E edgeDefault2 = (E) edgeDefault;
-////			System.out.println("ok this far: " + edgeDefault2.getClass());
-//			return edgeDefault2; 
-//		}
-//		else {
-//			final E edge = (E)createEdge((V)startVertex, (V)endVertex, (W)weight);
-//			return edge;			
-//		}
 	}
 
 	/**
@@ -192,7 +198,7 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	 */
 	public String fromEdgeToString(final E edge) {
 		// if(edge == null) // TODO throw		
-		String[] array = new String[3];
+		final String[] array = new String[3];
 		array[orderForStartVertex-1] = edge.getStartVertex().getVertexId();
 		array[orderForEndVertex-1] = edge.getEndVertex().getVertexId();
 		array[orderForWeight-1] = Double.toString(edge.getEdgeWeight().getWeightValue());
@@ -200,7 +206,6 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	}
 
 	/**
-	 * 
 	 * @param multiLinedString a string including linebreaks where each line defines an edge with vertices and weight. 
 	 * A string like this is intended to be surrounded by  xml tags in xml files but the content will then use this method.
 	    A B 5
@@ -219,21 +224,11 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 		return edges;
 	}
 	
-	 
-	
 	public interface EdgeFactory<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
-//		E createEdge(String startVertexId, String endVertexId, double weightValue);
 		E createEdge(V startVertex, V endVertex, W weightValue);
 	}
 	
 	public static class EdgeFactoryGenerics<E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> implements EdgeFactory<E, V, W> {
-//		public E createEdge(String startVertexId, String endVertexId, double weightValue) {
-//			final Vertex startVertex = createVertex(startVertexId);
-//			final Vertex endVertex = createVertex(endVertexId);
-//			final Weight weight = createWeight(weightValue);			
-//			EdgeImpl.createEdge(startVertex, endVertex, weight);
-//			return null;
-//		}
 		public E createEdge(V startVertex, V endVertex, W weight) {
 			EdgeGenerics<V, W> edge = EdgeGenericsImpl.createEdgeGenerics(startVertex, endVertex, weight);
 			return (E) edge;
@@ -242,9 +237,7 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	
 	public static class EdgeFactoryDefault implements EdgeFactory<Edge , Vertex , Weight> {
 		public Edge createEdge(Vertex startVertex, Vertex endVertex, Weight weight) {
-			Edge edge  = EdgeImpl.createEdge(startVertex, endVertex, weight);
-			return edge;
+			return EdgeImpl.createEdge(startVertex, endVertex, weight);
 		}
-		
 	}
 }

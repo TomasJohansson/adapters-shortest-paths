@@ -13,7 +13,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
  * The different "Adapter" implementations of this "Target" interface will use different third-part libraries
  * for finding the shortest paths, i.e. those libraries play the role of the "Adaptee" in the Adapter Pattern.   
  
- * @see https://en.wikipedia.org/wiki/Adapter_pattern 
+ * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">https://en.wikipedia.org/wiki/Adapter_pattern</a> 
  * 
  * @author Tomas Johansson
  */

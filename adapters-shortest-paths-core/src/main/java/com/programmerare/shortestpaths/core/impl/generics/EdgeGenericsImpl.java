@@ -75,12 +75,15 @@ public class EdgeGenericsImpl<V extends Vertex , W extends Weight> implements Ed
 
 	private final static String SEPARATOR_BETWEEN_START_AND_END_VERTEX_ID = "_";
 
+
 	/**
-	 * It could be nicer to place this method somewhere else but the important thing is 
-	 * to avoid the duplication, i.e. avoid implementing the concatenation in different places. 
-	 * @return a string as documented by {@link Vertex#getVertexId()}
+	 * @param startVertexId the id for the vertex at the start of an edge
+	 * @param endVertexId the id for the vertex at the end of an edge
+	 * @return the id to be used for the edge, as documented by {@link Vertex#getVertexId()}
 	 */
-	public static String createEdgeIdValue(String startVertexId, String endVertexId) {
+	public static String createEdgeIdValue(final String startVertexId, final String endVertexId) {
+		// It could be nicer to place this method somewhere else but the important thing is 
+		// to avoid the duplication, i.e. avoid implementing the concatenation in different places.		
 		return startVertexId + SEPARATOR_BETWEEN_START_AND_END_VERTEX_ID + endVertexId;
 	}
 

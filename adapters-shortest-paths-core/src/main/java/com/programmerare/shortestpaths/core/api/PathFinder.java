@@ -2,6 +2,10 @@ package com.programmerare.shortestpaths.core.api;
 
 import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 
+/**
+ * @see PathFinderGenerics
+ * @author Tomas Johansson
+ */
 public interface PathFinder 
 	extends PathFinderGenerics<
 		Path,
@@ -9,6 +13,4 @@ public interface PathFinder
 		Vertex , 
 		Weight
 	>
-{
-
-}
+{}

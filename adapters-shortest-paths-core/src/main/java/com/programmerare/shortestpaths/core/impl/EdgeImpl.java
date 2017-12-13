@@ -5,18 +5,35 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 
-public class EdgeImpl extends EdgeGenericsImpl<Vertex, Weight> implements Edge {
+/**
+ * @author Tomas Johansson
+ */
+public final class EdgeImpl extends EdgeGenericsImpl<Vertex, Weight> implements Edge {
 
-	protected EdgeImpl(String edgeId, Vertex startVertex, Vertex endVertex, Weight weight) {
+	protected EdgeImpl(
+		final String edgeId, 
+		final Vertex startVertex, 
+		final Vertex endVertex, 
+		final Weight weight
+	) {
 		super(edgeId, startVertex, endVertex, weight);
 	}
 
-	public static Edge createEdge(final Vertex startVertex, Vertex endVertex, Weight weight) {
+	public static Edge createEdge(
+		final Vertex startVertex, 
+		final Vertex endVertex, 
+		final Weight weight
+	) {
 		final String edgeId = createEdgeIdValue(startVertex.getVertexId(), endVertex.getVertexId());
 		return createEdge(edgeId, startVertex, endVertex, weight);
 	}
 
-	public static Edge createEdge(final String edgeId, final Vertex startVertex, Vertex endVertex, Weight weight) {
+	public static Edge createEdge(
+		final String edgeId, 
+		final Vertex startVertex, 
+		final Vertex endVertex, 
+		final Weight weight
+	) {
 		return new EdgeImpl(edgeId, startVertex, endVertex, weight);
 	}	
 }
