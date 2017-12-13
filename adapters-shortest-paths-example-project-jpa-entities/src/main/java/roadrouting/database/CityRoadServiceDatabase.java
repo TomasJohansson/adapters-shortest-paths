@@ -76,10 +76,7 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 		if(isAllFieldsLoadedFromDatabase) return true; // lazy loading field
 		
 		// try to query all needed fields from the database
-		allCities = cityDataMapper.getAll();
-		allRoads = roadDataMapper.getAll();
-		startCity = cityDataMapper.getByCityName(NAME_OF_START_CITY);
-		endCity = cityDataMapper.getByCityName(NAME_OF_END_CITY);
+		loadFieldsFromDatabase();
 
 		// if everything above worked then that is good,
 		// but if nothing works, it is also a reasonable expected/normal scenario
@@ -112,6 +109,16 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 		
 		persistCitiesToDatabase(citiesNotYetPersisted);
 		persistRoadsToDatabase(roadsNotYetPersisted);
+		
+		loadFieldsFromDatabase();
+	}
+
+	private void loadFieldsFromDatabase() {
+		allCities = cityDataMapper.getAll();
+		allRoads = roadDataMapper.getAll();
+		startCity = cityDataMapper.getByCityName(NAME_OF_START_CITY);
+		endCity = cityDataMapper.getByCityName(NAME_OF_END_CITY);
+
 	}
 
 	private void persistCitiesToDatabase(final List<City> cities) {
