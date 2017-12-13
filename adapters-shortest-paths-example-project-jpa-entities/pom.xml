@@ -14,9 +14,17 @@
 		<url>https://jitpack.io</url>
 		</repository>
 	</repositories>
-
-	  
 	<dependencies>
+		<!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+		<dependency>
+			<groupId>com.github.TomasJohansson</groupId>
+			<artifactId>adapters-shortest-paths</artifactId>
+			<version>c2a3a04a2a7c0d03b4fe71db1bbfb2807f798568</version> 
+		</dependency>
+		<!--
+		Currently jitpack is used above instead of the below libraries which are not yet published to maven central   
+		 -->	
+		<!-- 
 		<dependency>
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-jgrapht</artifactId>
@@ -32,16 +40,8 @@
 			<artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		 
-		 
-		 <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
-		 <!-- 		
-		<dependency>
-			<groupId>com.github.TomasJohansson</groupId>
-			<artifactId>adapters-shortest-paths</artifactId>
-			<version>5308d2aec13d6147c864703e1e2284a970e8c42e</version> 
-		</dependency>		
-	 	-->
+		-->		 
+	 	
 			<!--  org.sqlite.JDBC -->		
 			<dependency>
 				<groupId>org.xerial</groupId>

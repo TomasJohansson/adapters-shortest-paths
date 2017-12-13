@@ -16,7 +16,7 @@
 		<dependency>
 			<groupId>com.github.TomasJohansson</groupId>
 			<artifactId>adapters-shortest-paths</artifactId>
-			<version>34650cce9ae4ea26fddb3301e808cce142b97fe9</version> 
+			<version>c2a3a04a2a7c0d03b4fe71db1bbfb2807f798568</version> 
 		</dependency>      
 	</dependencies>
 	  
