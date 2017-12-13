@@ -22,11 +22,8 @@ public class RoadRoutingMain {
 	 */
 	public static void main(String[] args) {
 		final boolean useDatabase = parseArguments(args);
-		
 		final CityRoadService cityRoadService = CityRoadServiceFactory.createCityRoadService(useDatabase);
-
 		final List<Road> roads = cityRoadService.getAllRoads();
-
 		final City startCity = cityRoadService.getStartCity();
 		final City endCity = cityRoadService.getEndCity();
 
@@ -40,6 +37,7 @@ public class RoadRoutingMain {
 			endCity, 
 			pathFinderFactories
 		);
+		cityRoadService.releaseResourcesIfAny();
 	}
 	
 	private static void performRoadRoutingForTheImplementations(

@@ -29,10 +29,12 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 	private final RoadDataMapper roadDataMapper;
 	private final CityRoadService cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty;
 	
-
+	private final EntityManagerFactory emf;
+	private final EntityManager entityManager;
+	
 	public CityRoadServiceDatabase(final CityRoadService cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty) {
-		final EntityManagerFactory emf = Persistence.createEntityManagerFactory(NAME_OF_PERSISTANCE_UNIT_IN_PERSISTENCE_XML_FILE);
-		final EntityManager entityManager = emf.createEntityManager();
+		emf = Persistence.createEntityManagerFactory(NAME_OF_PERSISTANCE_UNIT_IN_PERSISTENCE_XML_FILE);
+		entityManager = emf.createEntityManager();
 		cityDataMapper = new CityDataMapper(entityManager);
 		roadDataMapper = new RoadDataMapper(entityManager);
 		
@@ -134,4 +136,26 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 		throwExceptionIfCouldNotBeRetrievedFromDatabase("start city with name " + NAME_OF_START_CITY, 	startCity == null);
 		throwExceptionIfCouldNotBeRetrievedFromDatabase("end city with name " + NAME_OF_END_CITY, 		endCity == null);
 	}
+	
+	public void releaseResourcesIfAny() {
+		closeEntityManagerAndEntityManagerFactoryIfStillOpen();
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		closeEntityManagerAndEntityManagerFactoryIfStillOpen();
+	}
+	
+	private void closeEntityManagerAndEntityManagerFactoryIfStillOpen() {
+		if(entityManager.isOpen()) {
+			entityManager.close();		
+		}
+		// it is important to close, because otherwise the program does not 
+		// really finish even though the main method has finished running
+		if(emf.isOpen()) {
+			emf.close();
+		}
+	}
+	
 }

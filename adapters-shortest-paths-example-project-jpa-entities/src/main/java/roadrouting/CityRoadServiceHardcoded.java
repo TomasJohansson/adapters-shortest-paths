@@ -75,4 +75,7 @@ public final class CityRoadServiceHardcoded implements CityRoadService {
 		return endCity;
 	}
 
+	public void releaseResourcesIfAny() {
+		// Nothing to do here in this class
+	}
 }

@@ -11,4 +11,9 @@ public interface CityRoadService {
 	List<Road> getAllRoads();
 	City getStartCity();
 	City getEndCity();
+	
+	/**
+	 * Database implementation should close its resources
+	 */
+	void releaseResourcesIfAny();
 }
