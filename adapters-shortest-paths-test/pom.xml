@@ -59,6 +59,11 @@
 			<artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-impl-reneargento</artifactId>
+		</dependency>
+		
 </dependencies>
 
 </project>
