@@ -165,7 +165,7 @@ public class XmlDefinedTests {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 16 seconds, reasonable acceptable for frequent regression testing 
+		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 16 seconds, reasonable acceptable for frequent regression testing
 		// pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
 		// pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
@@ -294,8 +294,7 @@ public class XmlDefinedTests {
 				createVertex(endVertexId), 
 				maxNumberOfPaths, 
 				pathFinderFactories,
-				expectedListOfPaths, // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
-				consoleOutputDesired
+				expectedListOfPaths // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
 			);
 		}
 	}

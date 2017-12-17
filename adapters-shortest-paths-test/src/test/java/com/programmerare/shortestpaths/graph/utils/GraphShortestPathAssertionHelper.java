@@ -59,8 +59,7 @@ public class GraphShortestPathAssertionHelper {
 			endVertex, 
 			numberOfPathsToFind, 
 			pathFinderFactoriesForImplementationsToTest,
-			null,
-			false
+			null
 		);		
 	}
 
@@ -77,8 +76,7 @@ public class GraphShortestPathAssertionHelper {
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
 		final List<PathFinderFactory> pathFinderFactoriesForImplementationsToTest,
-		final List<Path> expectedListOfPaths,
-		final boolean shouldPrettyPrintListOfPathsToTheConsoleOutput
+		final List<Path> expectedListOfPaths
 	) {
 		output("Number of edges in the graph to be tested : " + edgesForBigGraph.size());
 		
@@ -103,7 +101,7 @@ public class GraphShortestPathAssertionHelper {
 			assertNotNull(shortestPaths);
 			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
 			output("seconds : " + tm.getSeconds() + " for implementation " + pathFinder.getClass().getName());
-			if(shouldPrettyPrintListOfPathsToTheConsoleOutput) {
+			if(this.consoleOutputDesired) {
 				output("Implementation " + pathFinderFactory.getClass().getSimpleName());
 				displayListOfShortestPath(shortestPaths);
 				displayAsPathStringsWhichCanBeUsedInXml(shortestPaths, pathParser);
