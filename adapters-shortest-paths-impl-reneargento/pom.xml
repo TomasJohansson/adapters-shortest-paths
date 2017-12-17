@@ -15,12 +15,20 @@
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-core</artifactId>
 		</dependency>
-			
+		
+		<!-- 	
 		<dependency>
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>fork-of-reneargento_algorithms-sedgewick-wayne</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>	
+		</dependency>
+		-->
+		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
+		    <groupId>com.github.TomasJohansson</groupId>
+		    <artifactId>algorithms-sedgewick-wayne</artifactId>
+		    <version>433bd4dc15dac605c331a762f2a6509b3bd505a1</version> <!-- 2017-12-18 -->
+		</dependency>
+		
 	</dependencies>
 	  
 	<build>
