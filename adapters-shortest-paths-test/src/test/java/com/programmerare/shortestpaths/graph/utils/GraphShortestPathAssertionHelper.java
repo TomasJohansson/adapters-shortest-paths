@@ -37,8 +37,8 @@ import com.programmerare.shortestpaths.utils.TimeMeasurer;
  */
 public class GraphShortestPathAssertionHelper {
 	
-	public GraphShortestPathAssertionHelper(boolean isExecutingThroughTheMainMethod) {
-		this.setConsoleOutputDesired(isExecutingThroughTheMainMethod);
+	public GraphShortestPathAssertionHelper(final boolean isExecutingThroughTheMainMethod) {
+		this.setConsoleOutputDesired(isExecutingThroughTheMainMethod ? ConsoleOutputDesired.ALL : ConsoleOutputDesired.NONE);
 	}
 
 	/**
@@ -100,8 +100,8 @@ public class GraphShortestPathAssertionHelper {
 			List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			assertNotNull(shortestPaths);
 			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
-			output("seconds : " + tm.getSeconds() + " for implementation " + pathFinder.getClass().getName());
-			if(this.consoleOutputDesired) {
+			output("seconds : " + tm.getSeconds() + " for implementation " + pathFinder.getClass().getName(), ConsoleOutputDesired.TIME_MEASURE);
+			if(isAllConsoleOutputDesired()) {
 				output("Implementation " + pathFinderFactory.getClass().getSimpleName());
 				displayListOfShortestPath(shortestPaths);
 				displayAsPathStringsWhichCanBeUsedInXml(shortestPaths, pathParser);
@@ -156,19 +156,25 @@ public class GraphShortestPathAssertionHelper {
 	}
 
 	private void output(Object o) {
-		if(isConsoleOutputDesired()) {
+		if(isAllConsoleOutputDesired()) {
 			System.out.println(o);
 		}
 	}
 	
-	private boolean consoleOutputDesired = false;
+	private void output(Object o, ConsoleOutputDesired consoleOutputDesired) {
+		if(isAllConsoleOutputDesired() || consoleOutputDesired == this.consoleOutputDesired) {
+			System.out.println(o);
+		}
+	}
+	
+	private ConsoleOutputDesired consoleOutputDesired = ConsoleOutputDesired.NONE;
 
-	public void setConsoleOutputDesired(boolean consoleOutputDesired) {
+	public void setConsoleOutputDesired(final ConsoleOutputDesired consoleOutputDesired) {
 		this.consoleOutputDesired = consoleOutputDesired;
 	}
-	private boolean isConsoleOutputDesired() {
-		return consoleOutputDesired;
-	}
+	private boolean  isAllConsoleOutputDesired() {
+		return consoleOutputDesired == ConsoleOutputDesired.ALL;
+	}	
 
 	private void assertEqualPaths(final String message, final Path expectedPath, final Path actualPath) {
 		assertNotNull(expectedPath); // the expected list SHOULD not be null but you never know for sure, since it might originate from an xml file which was not properly defined or read
@@ -251,5 +257,12 @@ public class GraphShortestPathAssertionHelper {
 	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(EdgeGenerics edge) {
 		return edge.getEdgeWeight().getWeightValue()  + "[" + edge.getStartVertex().getVertexId() + "--->" + edge.getEndVertex().getVertexId() + "] ";		
 	}
-	// ---------------------------------------------------------------------------------------	
+	// ---------------------------------------------------------------------------------------
+	
+	public enum ConsoleOutputDesired {
+		NONE,
+		PATH_RESULTS,
+		TIME_MEASURE,
+		ALL
+	}	
 }

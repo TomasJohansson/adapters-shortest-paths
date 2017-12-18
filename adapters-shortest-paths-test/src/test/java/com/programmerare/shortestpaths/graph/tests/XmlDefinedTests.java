@@ -30,6 +30,7 @@ import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
+import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper.ConsoleOutputDesired;
 import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 import com.programmerare.shortestpaths.utils.EdgeUtility;
 import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
@@ -283,8 +284,7 @@ public class XmlDefinedTests {
 			final String maxNumberOfPathsAsString = xmlFileReader.getTextContentNodeOfFirstSubNode(nodeWithInputForTestCase, "maxNumberOfPaths");
 			final int maxNumberOfPaths = Integer.parseInt(maxNumberOfPathsAsString);
 //			System.out.println("maxNumberOfPaths " + maxNumberOfPaths);
-			final boolean consoleOutputDesired = false;
-			graphShortestPathAssertionHelper.setConsoleOutputDesired(consoleOutputDesired);
+			graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 			
 //			System.out.println("innan graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther " + edgesForGraph.get(0).getClass());
 			
