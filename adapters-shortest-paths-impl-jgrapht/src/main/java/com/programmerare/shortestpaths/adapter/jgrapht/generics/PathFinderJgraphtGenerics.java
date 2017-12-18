@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.KShortestPaths;
+import org.jgrapht.alg.shortestpath.KShortestPaths;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
@@ -75,8 +75,8 @@ public class PathFinderJgraphtGenerics
 		final String sourceVertexId = startVertex.getVertexId();
 		final String targetVertexId = endVertex.getVertexId();
 		
-		final KShortestPaths<String, WeightedEdge> ksp = new KShortestPaths<String, WeightedEdge>(graphAdaptee, sourceVertexId, maxNumberOfPaths);
-	    final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(targetVertexId);
+		final KShortestPaths<String, WeightedEdge> ksp = new KShortestPaths<String, WeightedEdge>(graphAdaptee, maxNumberOfPaths);
+		final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId);
 	    
 	    for (final GraphPath<String, WeightedEdge> graphPath : listOfPaths) {
 	    	final List<E> edges = new ArrayList<E>();

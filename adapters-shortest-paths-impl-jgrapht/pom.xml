@@ -11,11 +11,15 @@
 	
 	<name>Implementation of the shortest paths, using the library jgrapht</name>
 	<description>
-		The license for using the imlpementaion with jgrapht 0.9.2 is one of these two:
+		JGraphT "requires JDK 1.8 or later starting with JGraphT 1.0.0"".
+		(quoted from https://github.com/jgrapht/jgrapht/ )
+	
+		The license for using the imlpementaion with jgrapht 1.1.0 is one of these two:
 		GNU Lesser General Public License Version 2.1, February 1999
 		Eclipse Public License (EPL) 1.0
 		
-		https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core/0.9.2
+		https://github.com/jgrapht/jgrapht/releases/tag/jgrapht-1.1.0
+		https://github.com/jgrapht/jgrapht/blob/8ad64186e61383ad25e557d3307924e8ab2b8995/README.md
 	</description>
 	<url>https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht</url>	
 
@@ -34,11 +38,13 @@
 		
 	<dependencies>
 	
+		<!-- https://mvnrepository.com/artifact/org.jgrapht/jgrapht-core -->
 		<dependency>
 		    <groupId>org.jgrapht</groupId>
 		    <artifactId>jgrapht-core</artifactId>
-		    <version>0.9.2</version>
+		    <version>1.1.0</version>
 		</dependency>
+
 		
 		<dependency>
 			<groupId>com.programmerare.shortest-paths</groupId>

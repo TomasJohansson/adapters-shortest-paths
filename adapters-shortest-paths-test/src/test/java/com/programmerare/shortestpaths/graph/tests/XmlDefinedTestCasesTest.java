@@ -180,11 +180,11 @@ public class XmlDefinedTestCasesTest {
 
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
-		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		// graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryYanQi());
 		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		//pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 8 seconds, compared to less than 1 seconds for the other implementations 
+		// pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 6 seconds, compared to less than 1 second for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
 	
@@ -194,10 +194,10 @@ public class XmlDefinedTestCasesTest {
 		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryYanQi());
 		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		//pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 9 seconds, compared to less than 1 second for the other implementations 
+		//pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 7 seconds, compared to less than 1 second for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, pathFinderFactories);
 	}	
-	
+
 	@Test
 	public void test_all_xml_files_in_test_graphs_directory() throws IOException {
 		// the advantage with iterating xml files is this method is that you do not have to add a new test method

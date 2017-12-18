@@ -1,9 +1,16 @@
-This adapter library for jgrapht is licensed in the same way as jgrapht itself. 
+This adapter library for jgrapht is licensed in the same way as jgrapht itself, as specified below. 
 
-The license for jgrapht 0.9.2 is one of these two:
+The license for jgrapht 1.1.0 is one of these two:
 	GNU Lesser General Public License Version 2.1, February 1999
 	Eclipse Public License (EPL) 1.0
 
 Source for the above information about those two licenses:
-The pom.xml file for jgrapht-core 0.9.2
-https://github.com/jgrapht/jgrapht/releases/tag/jgrapht-0.9.2
+The pom.xml file (and other files, within the zip file) for the release jgrapht-1.1.0
+https://github.com/jgrapht/jgrapht/releases/tag/jgrapht-1.1.0
+
+The release 1.1.0 is based on git commit 8ad64186e61383ad25e557d3307924e8ab2b8995 , and the 
+dual license information can also be read in the pom file and license text files and readme file for that version in the git history: 
+https://github.com/jgrapht/jgrapht/blob/8ad64186e61383ad25e557d3307924e8ab2b8995/pom.xml
+https://github.com/jgrapht/jgrapht/blob/8ad64186e61383ad25e557d3307924e8ab2b8995/license-EPL.txt
+https://github.com/jgrapht/jgrapht/blob/8ad64186e61383ad25e557d3307924e8ab2b8995/license-LGPL.txt
+https://github.com/jgrapht/jgrapht/blob/8ad64186e61383ad25e557d3307924e8ab2b8995/README.md
