@@ -19,6 +19,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -95,13 +97,14 @@ public class XmlDefinedTests {
 			DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI,
 			BASE_DIRECTORY_FOR_XML_TEST_FILES // yes the base directory itself also currently has some xml test files
 		);
+		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.NONE);
 	}
 
 
 	/**
 	 * The content of the test data in this xml file is copied from the "bsmock" implementation: 
 	 * /tomas-fork_bsmock_k-shortest-paths/edu/ufl/cise/bsmock/graph/ksp/test/small_road_network_01.txt
-	 * It contains 28.000+ Edges, and it takes about 21 seconds with the implementation "GraphYanQi" and 421 seconds with "GraphBsmock".
+	 * It contains 28.000+ Edges, and it takes a long time for some implementations.
 	 * Therefore it is excluded from the frequent testing.
 	 */
 	private final static String XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01 = "small_road_network_01.xml";
@@ -166,26 +169,32 @@ public class XmlDefinedTests {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 16 seconds, reasonable acceptable for frequent regression testing
-		// pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>()); // 298 seconds (five minutes !) NOT acceptable for frequent regression testing 
-		// pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // gave up waiting after 30+ minutes !
+		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		pathFinderFactories.add(new PathFinderFactoryReneArgento()); // 4 seconds
+		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 8 seconds, reasonable acceptable for frequent regression testing
+		//pathFinderFactories.add(new PathFinderFactoryBsmock()); // 189 seconds (three minutes !) NOT acceptable for frequent regression testing 
+		// pathFinderFactories.add(new PathFinderFactoryJgrapht()); // gave up waiting after 30+ minutes !
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
 	}
 	
 
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
+		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryYanQi());
 		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		//pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 16 seconds, compared to less than 1 seconds for the other two implementations 
+		//pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 8 seconds, compared to less than 1 seconds for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
 	
 	@Test   
 	public void testXmlFile_test_50() throws IOException {
+		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryYanQi());
 		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		//pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 13 seconds, compared to less than 2 seconds for the other two implementations 
+		//pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 9 seconds, compared to less than 1 second for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, pathFinderFactories);
 	}	
 	
@@ -284,17 +293,17 @@ public class XmlDefinedTests {
 			final String maxNumberOfPathsAsString = xmlFileReader.getTextContentNodeOfFirstSubNode(nodeWithInputForTestCase, "maxNumberOfPaths");
 			final int maxNumberOfPaths = Integer.parseInt(maxNumberOfPathsAsString);
 //			System.out.println("maxNumberOfPaths " + maxNumberOfPaths);
-			graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
-			
 //			System.out.println("innan graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther " + edgesForGraph.get(0).getClass());
-			
+		
+			// pathToResourceXmlFile
 			graphShortestPathAssertionHelper.testResultsWithImplementationsAgainstEachOther(
 				edgesForGraph, 
 				createVertex(startVertexId), 
 				createVertex(endVertexId), 
 				maxNumberOfPaths, 
 				pathFinderFactories,
-				expectedListOfPaths // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
+				expectedListOfPaths, // null, // expectedListOfPaths , use null when we do not want to fail because of expected output according to xml but maybe instyead want to print output with below paaraeter
+				pathToResourceXmlFile
 			);
 		}
 	}

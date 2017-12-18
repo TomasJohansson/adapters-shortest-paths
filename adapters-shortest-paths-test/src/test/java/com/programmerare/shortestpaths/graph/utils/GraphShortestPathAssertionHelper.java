@@ -59,6 +59,7 @@ public class GraphShortestPathAssertionHelper {
 			endVertex, 
 			numberOfPathsToFind, 
 			pathFinderFactoriesForImplementationsToTest,
+			null,
 			null
 		);		
 	}
@@ -76,10 +77,11 @@ public class GraphShortestPathAssertionHelper {
 		final Vertex endVertex, 
 		final int numberOfPathsToFind, 
 		final List<PathFinderFactory> pathFinderFactoriesForImplementationsToTest,
-		final List<Path> expectedListOfPaths
+		final List<Path> expectedListOfPaths,
+		final String optionalPathToResourceXmlFile
 	) {
+		final String messagePrefixWithInformationAboutXmlSourcefileWithTestData = optionalPathToResourceXmlFile == null ? "" : "Xml file with test data: " + optionalPathToResourceXmlFile + " . ";
 		output("Number of edges in the graph to be tested : " + edgesForBigGraph.size());
-		
 		final Map<String, List<Path>> shortestPathsPerImplementation = new HashMap<String, List<Path>>();
 
 		// the parameter GraphEdgesValidationDesired.NO will be used so therefore do the validation once externally here first
@@ -90,7 +92,6 @@ public class GraphShortestPathAssertionHelper {
 		assertThat("At least some implementation should be used", pathFinderFactoriesForImplementationsToTest.size(), greaterThanOrEqualTo(1));
 		for (int i = 0; i < pathFinderFactoriesForImplementationsToTest.size(); i++) {
 			final PathFinderFactory pathFinderFactory = pathFinderFactoriesForImplementationsToTest.get(i);
-//			System.out.println("pathFinderFactory " + pathFinderFactory.getClass());
 			
 			final TimeMeasurer tm = TimeMeasurer.start(); 			
 			final PathFinder pathFinder = pathFinderFactory.createPathFinder(
@@ -100,24 +101,18 @@ public class GraphShortestPathAssertionHelper {
 			List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			assertNotNull(shortestPaths);
 			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
-			output("seconds : " + tm.getSeconds() + " for implementation " + pathFinder.getClass().getName(), ConsoleOutputDesired.TIME_MEASURE);
+			output(
+					messagePrefixWithInformationAboutXmlSourcefileWithTestData					
+						+ "Seconds: " + tm.getSeconds() 
+						+ ". Implementation: " + pathFinder.getClass().getName(), 
+					ConsoleOutputDesired.TIME_MEASURE
+			);
 			if(isAllConsoleOutputDesired()) {
-				output("Implementation " + pathFinderFactory.getClass().getSimpleName());
 				displayListOfShortestPath(shortestPaths);
+				output("Implementation class for above and below output: " + pathFinderFactory.getClass().getSimpleName());				
 				displayAsPathStringsWhichCanBeUsedInXml(shortestPaths, pathParser);
 			}
-			
-//			for (Path path : shortestPaths) {
-//				// output("shortest path weight " + path.getTotalWeightForPath().getWeightValue());
-//			}
-			
 			shortestPathsPerImplementation.put(pathFinder.getClass().getName(), shortestPaths);
-			
-			final Path shortestPath = shortestPaths.get(0);
-			final List<Edge> edgesForShortestPaths = shortestPath.getEdgesForPath();
-			for (int j = 0; j < edgesForShortestPaths.size(); j++) {
-				// output("edge " + j + " : " + edgesForShortestPaths.get(j));
-			}
 		}
 		
 		final List<String> nameOfImplementations = new ArrayList<String>(shortestPathsPerImplementation.keySet());
@@ -140,7 +135,7 @@ public class GraphShortestPathAssertionHelper {
 					assertEqualPaths("fail for i,j,k " + i + " , " + j + " , " + k , pathsFoundByImplementation_1.get(k), pathsFoundByImplementation_2.get(k));
 				}
 				output("-----------------");
-				output("Now the results from these two implementationss have been compaerd with each other: ");
+				output("Now the results from these two implementations have been compaerd with each other: ");
 				output(nameOfImplementation_1 + " vs " + nameOfImplementation_2);
 			}
 		}
