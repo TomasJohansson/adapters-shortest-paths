@@ -129,10 +129,11 @@ public class GraphShortestPathAssertionHelper {
 			
 			for (int j = i+1; j < nameOfImplementations.size(); j++) {
 				final String nameOfImplementation_2 = nameOfImplementations.get(j);
+				final String comparedImplementations = nameOfImplementation_1 + " vs " + nameOfImplementation_2 + " , "; 
 				final List<Path> pathsFoundByImplementation_2 = shortestPathsPerImplementation.get(nameOfImplementation_2);
 				assertEquals(pathsFoundByImplementation_1.size(), pathsFoundByImplementation_2.size());
 				for (int k = 0; k < pathsFoundByImplementation_2.size(); k++) {
-					assertEqualPaths("fail for i,j,k " + i + " , " + j + " , " + k , pathsFoundByImplementation_1.get(k), pathsFoundByImplementation_2.get(k));
+					assertEqualPaths(comparedImplementations + "fail for i,j,k " + i + " , " + j + " , " + k , pathsFoundByImplementation_1.get(k), pathsFoundByImplementation_2.get(k));
 				}
 				output("-----------------");
 				output("Now the results from these two implementations have been compaerd with each other: ");
