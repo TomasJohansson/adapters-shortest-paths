@@ -45,7 +45,7 @@ import com.programmerare.shortestpaths.utils.XmlFileReader;
  * 
  * @author Tomas Johansson
  */
-public class XmlDefinedTests {
+public class XmlDefinedTestCasesTest {
 
 	private EdgeUtility<Edge, Vertex, Weight> edgeUtility;
 	private XmlFileReader xmlFileReader;
