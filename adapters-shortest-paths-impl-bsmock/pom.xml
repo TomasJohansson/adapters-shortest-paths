@@ -27,7 +27,7 @@
 		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
 		    <groupId>com.github.TomasJohansson</groupId>
 		    <artifactId>k-shortest-paths</artifactId>
-		    <version>05f6ef172fa25bef9b1da3c7b9525e69439fabd6</version> <!-- 2017-11-12 -->
+		    <version>0506929fa994f76fbd7c4f4312374657c591781a</version> <!-- 2017-12-18 -->
 		</dependency>
 		<!-- 
 		<dependency>
