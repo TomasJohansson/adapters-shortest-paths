@@ -20,6 +20,7 @@ import org.w3c.dom.NodeList;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
 import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
@@ -169,9 +170,10 @@ public class XmlDefinedTestCasesTest {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 		pathFinderFactories.add(new PathFinderFactoryReneArgento()); // 4 seconds
 		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 8 seconds, reasonable acceptable for frequent regression testing
+		// pathFinderFactories.add(new PathFinderFactoryMulavito()); // 117 seconds (about two minutes !) NOT acceptable for frequent regression testing 
 		//pathFinderFactories.add(new PathFinderFactoryBsmock()); // 189 seconds (three minutes !) NOT acceptable for frequent regression testing 
 		// pathFinderFactories.add(new PathFinderFactoryJgrapht()); // gave up waiting after 30+ minutes !
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
@@ -180,11 +182,12 @@ public class XmlDefinedTestCasesTest {
 
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
-		// graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryYanQi());
 		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		// pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 6 seconds, compared to less than 1 second for the other implementations 
+		pathFinderFactories.add(new PathFinderFactoryMulavito());
+		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 6 seconds, compared to less than 1 second for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
 	
@@ -194,7 +197,8 @@ public class XmlDefinedTestCasesTest {
 		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryYanQi());
 		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		//pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 7 seconds, compared to less than 1 second for the other implementations 
+		pathFinderFactories.add(new PathFinderFactoryMulavito());
+		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 7 seconds, compared to less than 1 second for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, pathFinderFactories);
 	}	
 

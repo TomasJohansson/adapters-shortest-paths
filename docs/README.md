@@ -1,18 +1,18 @@
 # License Notice
 Notice that the "core" library with the API and general code is released with MIT License.
 However, the libraries which are implementing adapters are licensed in the same way as the adapted libraries.
-Currently there are four such adapter libraries, and if you intend to use one or more of them you must check their licenses:
-* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht
-* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock
-* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi
-* https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento
-
+Currently there are **five** such adapter libraries, and **if you intend to use one or more of them you must check their licenses**:
+* [adapters-shortest-paths-impl-jgrapht](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht)
+* [adapters-shortest-paths-impl-bsmock](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock)
+* [adapters-shortest-paths-impl-yanqi](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi)
+* [adapters-shortest-paths-impl-reneargento](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento)
+* [adapters-shortest-paths-impl-mulavito](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-mulavito)
 
 ## Adapters for Java implementations of Graph algorithms for routing the shortest paths.
 
 The purpose of this project is to provide Adapters for Java implementations of Graph algorithms for routing the shortest path**s**.<br>(the bold '**s**' above is intentional i.e. **not only** the single shortest path but the shortest path**s**)
 
-**Currently there are four implemented Adapters**, i.e. four different implementations can be used.
+**Currently there are five implemented Adapters**, i.e. five different implementations can be used.
 Since the Client code is using the same Target interface (see the [Adapter Design Pattern](https://en.wikipedia.org/wiki/Adapter_pattern)) it is possible to **reuse the same test code for the different implementations**.
 Therefore you can assert their results against each other, which could help finding bugs. If one implementation would produce a different result than the others, then it is likely a bug that should be reported and hopefully fixed. However, note that the tested graph need to be constructed in such a way that there must not be more than one path (among the first shortest paths you use test assertions for) with the same total weight. If multiple paths have the same total weight then it is not obvious which should be sorted first, and then it would not be surprising if different implementations produce different results.
 
@@ -21,7 +21,7 @@ When you run such tests with the same test data for different implementations th
 ### Example of how to use this shortest paths adapter library:
 
 The Java code example below uses the following graph with four vertices (A,B,C,D) and five edges with weights.<br>(A to B (5) , A to C (6) , B to C (7)  , B to D (8) , C to D (9) ).<br>![alt text](images/shortest_paths_getting_started_example.gif "Logo Title Text 1")<br>
-There are four possible paths from A to D , with the total weight within parenthesis : 
+There are three possible paths from A to D , with the total weight within parenthesis : 
 * A to B to D (total cost: 13 = 5 + 8)
 * A to C to D (total cost: 15 = 6 + 9)
 * A to B to C to D (total cost: 21 = 5 + 7 + 9)
@@ -68,7 +68,8 @@ import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 	// or: pathFinderFactory = new PathFinderFactoryBsmock();
 	// or: pathFinderFactory = new PathFinderFactoryYanQi();
 	// or: pathFinderFactory = new PathFinderFactoryReneArgento();
-	// (currently there are four implementations)
+	// or: pathFinderFactory = new PathFinderFactoryMulavito();
+	// (currently there are five implementations)
 
 	PathFinder pathFinder = pathFinderFactory.createPathFinder(graph);
 	List<Path> shortestPaths = pathFinder.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
@@ -120,19 +121,20 @@ The other two Adaptee libraries are actually compiled for Java **5**.
 This means that if you are using Java 8, then you should be able to use all Adapters, but if you use Java 6 or Java 7 then you are restricted to using only the latter two of the above Adapters. 
      
 
-### Some comments about the four adaptee libraries currently being used
+### Some comments about the five adaptee libraries currently being used
 
-There are currently Adapter implementations for the following four libraries:
+There are currently Adapter implementations for the following five libraries:
 * <https://github.com/jgrapht/jgrapht>
 * <https://github.com/yan-qi/k-shortest-paths-java-version>
 * <https://github.com/bsmock/k-shortest-paths>
 * <https://github.com/reneargento/algorithms-sedgewick-wayne>
+* <https://github.com/TomasJohansson/MuLaViTo-fork> (fork based on <https://sourceforge.net/p/mulavito/>)
 
 Regarding the versions/"releases" of the above libraries:
 
 * Regarding jgrapht, the [version 1.1.0](https://github.com/jgrapht/jgrapht/releases/tag/jgrapht-1.1.0) is currently used.         
 * Regarding the ["yan-ki"](https://github.com/yan-qi/k-shortest-paths-java-version) implementation, there seems to be no official releases. Also, I could not find a way of reusing the library without modification since it seems to [require input from a file](https://github.com/yan-qi/k-shortest-paths-java-version/issues/4) which would mean I could not have used it as intended, e.g. programmatically creating a big graph for comparison against other implementations. This was one of the reasons why I instead use a [forked version](https://github.com/TomasJohansson/k-shortest-paths-java-version/commits/programmatic-graph-creation-without-using-inputfile). Another reason for creating and using a fork was the limitation that the input vertices needs to be integer in a sequence, while the other libraries support general strings. I fixed this with a mapper class in which maps back and forth from more general input strings.          
 * Regarding the ["bsmock"](https://github.com/bsmock/k-shortest-paths) implementation, it was not even a maven project. Therefore I [forked](https://github.com/TomasJohansson/k-shortest-paths/commits/adding-maven-structure-and-junit-test) it and created a maven project of it. I have created a [pull request with my changes](https://github.com/bsmock/k-shortest-paths/pull/2).
-* Regarding "reneargento", it was neither (just like above "bsmock") a maven project, which was the reason for forking it. It also included a jar file, but the fork is instead using maven and jitpack for defining the dependency in the pom file. Please [read about the license for that dependency](https://github.com/TomasJohansson/algorithms-sedgewick-wayne).
-   
+* Regarding "reneargento", it was neither a maven project, which was the reason for forking it. It also included a jar file, but the fork is instead using maven and jitpack for defining the dependency in the pom file. Please [read about the license for that dependency](https://github.com/TomasJohansson/algorithms-sedgewick-wayne).
+* Regarding "reneargento", it was neither a maven project, which was one of the reason for forking it. It also included unnecessary (for the purpose of just wanting to use the shortest path algorithm) many third-party libraries which have been removed from a branch of the fork.  
 	

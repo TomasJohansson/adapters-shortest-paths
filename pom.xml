@@ -37,7 +37,13 @@
 				<groupId>com.programmerare.shortest-paths</groupId>
 				<artifactId>adapters-shortest-paths-impl-reneargento</artifactId>
 				<version>${project.version}</version>			    
-			</dependency>			
+			</dependency>
+			
+			<dependency>
+				<groupId>com.programmerare.shortest-paths</groupId>
+				<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
+				<version>${project.version}</version>			    
+			</dependency>
 									
 			<dependency>
 				<groupId>org.hamcrest</groupId>
@@ -69,6 +75,7 @@
 		<module>adapters-shortest-paths-impl-yanqi</module> 	<!-- https://github.com/yan-qi/k-shortest-paths-java-version -->
 		<module>adapters-shortest-paths-impl-bsmock</module> 	<!-- https://github.com/bsmock/k-shortest-paths -->
 		<module>adapters-shortest-paths-impl-reneargento</module>
+		<module>adapters-shortest-paths-impl-mulavito</module>
 		
 		<module>adapters-shortest-paths-test</module>
 	</modules>

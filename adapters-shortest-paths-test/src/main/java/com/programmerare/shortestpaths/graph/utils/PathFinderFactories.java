@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
 import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
@@ -22,6 +23,7 @@ public final class PathFinderFactories {
 		list.add(new PathFinderFactoryBsmock());
 		list.add(new PathFinderFactoryJgrapht());
 		list.add(new PathFinderFactoryReneArgento());
+		list.add(new PathFinderFactoryMulavito());
 		return list;		
 	}
 }

@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.programmerare.shortest-paths</groupId>
+		<artifactId>adapters-shortest-paths</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+ 	<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
+  	
+	<dependencies>
+
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-core</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sf.jung</groupId>
+		    <artifactId>jung-graph-impl</artifactId>
+		    <version>2.0.1</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>net.sf.jung</groupId>
+		    <artifactId>jung-algorithms</artifactId>
+		    <version>2.0.1</version>
+		</dependency>
+				
+		
+		<!-- 	
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>fork-of-mulavito-at-sourceforge</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		-->
+		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
+		    <groupId>com.github.TomasJohansson</groupId>
+		    <artifactId>MuLaViTo-fork</artifactId>
+		    <version>45f161312b5e9ec50e2d430d17e8d4a395ce82be</version> <!-- 2017-12-21 -->
+		</dependency>
+		
+	</dependencies>
+	  
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>
+				<includes>
+					<include>LICENSE_NOTICE.txt</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>  	
+	
+</project>
