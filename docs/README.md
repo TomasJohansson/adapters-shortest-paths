@@ -103,7 +103,7 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 	<dependency>
 		<groupId>com.github.TomasJohansson</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>deb1dc5b437bc2e12a5a49b77731a8da5ef8c89b</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+		<version>b084ffdddcf49fe680f68dcf43eb78b05f820e2a</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
 	</dependency>      
 </dependencies>
 ```
@@ -115,10 +115,13 @@ Java **6** is currently used for compiling the the core library itself, includin
 However, two of the Adaptee libraries are compiled for Java **8**.
 ( [JGraphT](https://github.com/jgrapht/jgrapht/blob/master/pom.xml) and [the fork of "reneargento/algorithms-sedgewick-wayne"](https://github.com/TomasJohansson/algorithms-sedgewick-wayne) )  
 
-The other two Adaptee libraries are actually compiled for Java **5**.
+One of the Adaptee libraries are compiled for Java **7**.
+( [MuLaViTo](https://github.com/TomasJohansson/MuLaViTo-fork/blob/45f161312b5e9ec50e2d430d17e8d4a395ce82be/pom.xml) (i.e. the fork of <https://sourceforge.net/p/mulavito/>)
+
+The remaining two Adaptee libraries are actually compiled for Java **5**.
 ( [the fork of "bsmock/k-shortest-paths"](https://github.com/TomasJohansson/k-shortest-paths) and [the fork of "yan-qi/k-shortest-paths-java-version"](https://github.com/TomasJohansson/k-shortest-paths-java-version) )  
   
-This means that if you are using Java 8, then you should be able to use all Adapters, but if you use Java 6 or Java 7 then you are restricted to using only the latter two of the above Adapters. 
+This means that if you are using Java 8, then you should be able to use all Adapters, but if you use Java 6 or Java 7 then you are more limited regarding which of the Adapters to use. 
      
 
 ### Some comments about the five adaptee libraries currently being used
@@ -136,5 +139,5 @@ Regarding the versions/"releases" of the above libraries:
 * Regarding the ["yan-ki"](https://github.com/yan-qi/k-shortest-paths-java-version) implementation, there seems to be no official releases. Also, I could not find a way of reusing the library without modification since it seems to [require input from a file](https://github.com/yan-qi/k-shortest-paths-java-version/issues/4) which would mean I could not have used it as intended, e.g. programmatically creating a big graph for comparison against other implementations. This was one of the reasons why I instead use a [forked version](https://github.com/TomasJohansson/k-shortest-paths-java-version/commits/programmatic-graph-creation-without-using-inputfile). Another reason for creating and using a fork was the limitation that the input vertices needs to be integer in a sequence, while the other libraries support general strings. I fixed this with a mapper class in which maps back and forth from more general input strings.          
 * Regarding the ["bsmock"](https://github.com/bsmock/k-shortest-paths) implementation, it was not even a maven project. Therefore I [forked](https://github.com/TomasJohansson/k-shortest-paths/commits/adding-maven-structure-and-junit-test) it and created a maven project of it. I have created a [pull request with my changes](https://github.com/bsmock/k-shortest-paths/pull/2).
 * Regarding "reneargento", it was neither a maven project, which was the reason for forking it. It also included a jar file, but the fork is instead using maven and jitpack for defining the dependency in the pom file. Please [read about the license for that dependency](https://github.com/TomasJohansson/algorithms-sedgewick-wayne).
-* Regarding "reneargento", it was neither a maven project, which was one of the reason for forking it. It also included unnecessary (for the purpose of just wanting to use the shortest path algorithm) many third-party libraries which have been removed from a branch of the fork.  
+* Regarding "mulavito", it was neither a maven project, which was one of the reason for forking it. It also included unnecessary (for the purpose of just wanting to use the shortest path algorithm) many third-party libraries which have been removed from a branch of the fork.  
 	
