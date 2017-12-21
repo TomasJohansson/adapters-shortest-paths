@@ -47,7 +47,7 @@
 			<resource>
 				<directory>${project.basedir}</directory>
 				<includes>
-					<include>LICENSE_NOTICE.txt</include>
+					<include>LICENSE_NOTICE.md</include>
 				</includes>
 			</resource>
 		</resources>
