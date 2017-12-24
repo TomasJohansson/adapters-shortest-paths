@@ -7,6 +7,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**
+ * @author Tomas Johansson
+ */
 public class FileReaderTest {
 
 	@Test

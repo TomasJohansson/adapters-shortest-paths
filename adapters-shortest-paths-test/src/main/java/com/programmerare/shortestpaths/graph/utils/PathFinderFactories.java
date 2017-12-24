@@ -10,6 +10,9 @@ import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryRene
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 
+/**
+ * @author Tomas Johansson
+ */
 public final class PathFinderFactories {
 	
 	/**

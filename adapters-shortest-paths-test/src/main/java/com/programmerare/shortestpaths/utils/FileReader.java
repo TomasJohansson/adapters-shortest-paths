@@ -7,6 +7,9 @@ import java.util.List;
 
 import com.google.common.io.Resources;
 
+/**
+ * @author Tomas Johansson
+ */
 public class FileReader {
 
 	public final static Charset CHARSET_UTF_8;

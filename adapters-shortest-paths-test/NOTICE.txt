@@ -2,9 +2,10 @@ Notice that the "core" part of the adapter library with the API and general code
 
 However, the libraries which implement the adapters are licensed in the same way as the adapted libraries.
  
-Currently there are three such adapters, and if you intend to use one or more of them you must check their licenses:
+Currently there are five such adapters, and if you intend to use one or more of them you must check their licenses:
 
 	https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht
 	https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock
 	https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi
-	
+	https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento
+	https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-mulavito
