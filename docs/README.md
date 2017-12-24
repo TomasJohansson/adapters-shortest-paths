@@ -148,22 +148,22 @@ Regarding the versions/"releases" of the above libraries:
 
 (see the next section further down below regarding how these concepts are relevant when you want to find the shortest paths in travel routing)
 
-"[Vertex](https://en.wikipedia.org/wiki/Vertex_(graph_theory)" = A point or a node in a so called 'Graph'. 'Point' or 'Node' are alternative words sometimes used instead of 'Vertex' . (the plural form of the word 'vertex' is 'vertices')
+"[Vertex](https://en.wikipedia.org/wiki/Vertex_(graph_theory))" = A point or a node in a so called 'Graph'. 'Point' or 'Node' are alternative words sometimes used instead of 'Vertex' . (the plural form of the word 'vertex' is 'vertices')
  
-"[Edge](https://en.wikipedia.org/wiki/Edge_(graph_theory)" = Connection between two vertices in a 'Graph'. 'Arc' or 'Line' are alternative words sometimes used instead of 'Edge'. There can also be a direction and/or a weight associated with an edge.
+"[Edge](https://en.wikipedia.org/wiki/Edge_(graph_theory))" = Connection between two vertices in a 'Graph'. 'Arc' or 'Line' are alternative words sometimes used instead of 'Edge'. There can also be a direction and/or a weight associated with an edge.
 
-"[Graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)" = Collection of edges (and thus of course the collection also includes vertices since there are normally two vertices in an edge, unless the edge is a loop with the same vertex in both ends of the edge).
+"[Graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics))" = Collection of edges (and thus of course the collection also includes vertices since there are normally two vertices in an edge, unless the edge is a loop with the same vertex in both ends of the edge).
  
 "[Weight](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#weight)" = Some kind of 'cost' associated with an edge. It can be thought of as the 'cost' of going from the vertex in one end to the vertex in the other end of the edge. Time or distance are examples of weights/costs. When trying to find the shortest path, allowing negative weights tend to make the problem more complicated. The naive approach is that you can simply adjust all weights with a constant big enough to make all weights positive, but then [please look at a counter-example proving it is not that easy](https://www.quora.com/Can-you-add-a-large-constant-to-a-weighted-graph-with-negative-edges-so-that-all-the-weights-become-positive-then-run-Dijkstras-algorithm-starting-at-node-S-and-return-to-the-shortest-path-found-to-node-T-in-order-to-still-get-the-shortest-path). 
 
-"[Path](https://en.wikipedia.org/wiki/Path_(graph_theory)" = Sequence of one or more edges leading from some start vertex to some end vertex. For example, if you have one edge from vertex A to vertex B, and one edge from vertex B to vertex C, then you would have one possible path from A to C by combining those two edges (A to B, and B to C) as a path.
+"[Path](https://en.wikipedia.org/wiki/Path_(graph_theory))" = Sequence of one or more edges leading from some start vertex to some end vertex. For example, if you have one edge from vertex A to vertex B, and one edge from vertex B to vertex C, then you would have one possible path from A to C by combining those two edges (A to B, and B to C) as a path.
 
 "[Direction](https://en.wikipedia.org/wiki/Directed_graph)" of an edge means that one of the two vertices for the edge is the "start vertex" and the other is the "end vertex".  
 When the graph is illustrated in a picture you will normally see an arrow illustrating the direction.
 
-"[Loop](https://en.wikipedia.org/wiki/Loop_(graph_theory)" = Edge connecting a vertex with itself, i.e. the same vertex in both ends of the edge.
+"[Loop](https://en.wikipedia.org/wiki/Loop_(graph_theory))" = Edge connecting a vertex with itself, i.e. the same vertex in both ends of the edge.
 
-"[Cycle](https://en.wikipedia.org/wiki/Cycle_(graph_theory)" = Path where you reach the same vertex again i.e. more than once within the path.
+"[Cycle](https://en.wikipedia.org/wiki/Cycle_(graph_theory))" = Path where you reach the same vertex again i.e. more than once within the path.
 
 "Vertex-[disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint)" paths means that the paths do not have any vertex in common. Vertex-independent is another word for 'Vertex-disjoint'.
 
