@@ -146,24 +146,24 @@ Regarding the versions/"releases" of the above libraries:
 	
 #### Some concepts in graph theory:
 
-(see the next section regarding how these concepts are relevant when you want to find the shortest paths in travel routing)
+(see the next section further down below regarding how these concepts are relevant when you want to find the shortest paths in travel routing)
 
-"[Vertex](https://en.wikipedia.org/wiki/Vertex_(graph_theory))" = A point or a node in a so called 'Graph'. 'Point' or 'Node' are alternative words sometimes used instead of 'Vertex' . (the plural form of the word 'vertex' is 'vertices')
+"[Vertex](https://en.wikipedia.org/wiki/Vertex_(graph_theory)" = A point or a node in a so called 'Graph'. 'Point' or 'Node' are alternative words sometimes used instead of 'Vertex' . (the plural form of the word 'vertex' is 'vertices')
  
-"[Edge](https://en.wikipedia.org/wiki/Edge_(graph_theory))" = Connection between two vertices in a 'Graph'. 'Arc' or 'Line' are alternative words sometimes used instead of 'Edge'. There can also be a direction and/or a weight associated with an edge.
+"[Edge](https://en.wikipedia.org/wiki/Edge_(graph_theory)" = Connection between two vertices in a 'Graph'. 'Arc' or 'Line' are alternative words sometimes used instead of 'Edge'. There can also be a direction and/or a weight associated with an edge.
 
-"[Graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics))" = Collection of edges (and thus of course the collection also includes vertices since there are normally two vertices in an edge, unless the edge is a loop with the same vertex in both ends of the edge).
+"[Graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)" = Collection of edges (and thus of course the collection also includes vertices since there are normally two vertices in an edge, unless the edge is a loop with the same vertex in both ends of the edge).
  
-"[Weight](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#weight)" = Some kind of 'cost' associated with an edge. It can be thought of as the 'cost' of going from the vertex in one end to the vertex in the other end of the edge. Typical weights/costs are time or distance. When trying to find the shortest path, allowing negative weights tend to make the problem more complicated. The naive approach is that you can simply adjust all weights with a constant big enough to make all weights positive, but then [please look at a counter-example proving it is not that easy](https://www.quora.com/Can-you-add-a-large-constant-to-a-weighted-graph-with-negative-edges-so-that-all-the-weights-become-positive-then-run-Dijkstras-algorithm-starting-at-node-S-and-return-to-the-shortest-path-found-to-node-T-in-order-to-still-get-the-shortest-path). 
+"[Weight](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#weight)" = Some kind of 'cost' associated with an edge. It can be thought of as the 'cost' of going from the vertex in one end to the vertex in the other end of the edge. Time or distance are examples of weights/costs. When trying to find the shortest path, allowing negative weights tend to make the problem more complicated. The naive approach is that you can simply adjust all weights with a constant big enough to make all weights positive, but then [please look at a counter-example proving it is not that easy](https://www.quora.com/Can-you-add-a-large-constant-to-a-weighted-graph-with-negative-edges-so-that-all-the-weights-become-positive-then-run-Dijkstras-algorithm-starting-at-node-S-and-return-to-the-shortest-path-found-to-node-T-in-order-to-still-get-the-shortest-path). 
 
-"[Path](https://en.wikipedia.org/wiki/Path_(graph_theory))" = Sequence of one or more edges leading from some start vertex to some end vertex. For example, if you have one edge from vertex A to vertex B, and one edge from vertex B to vertex C, then you would have one possible path from A to C by combining those two edges (A to B, and B to C) as a path.
+"[Path](https://en.wikipedia.org/wiki/Path_(graph_theory)" = Sequence of one or more edges leading from some start vertex to some end vertex. For example, if you have one edge from vertex A to vertex B, and one edge from vertex B to vertex C, then you would have one possible path from A to C by combining those two edges (A to B, and B to C) as a path.
 
 "[Direction](https://en.wikipedia.org/wiki/Directed_graph)" of an edge means that one of the two vertices for the edge is the "start vertex" and the other is the "end vertex".  
 When the graph is illustrated in a picture you will normally see an arrow illustrating the direction.
 
-"[Loop](https://en.wikipedia.org/wiki/Loop_(graph_theory))" = Edge connecting a vertex with itself, i.e. the same vertex in both ends of the edge.
+"[Loop](https://en.wikipedia.org/wiki/Loop_(graph_theory)" = Edge connecting a vertex with itself, i.e. the same vertex in both ends of the edge.
 
-"[Cycle](https://en.wikipedia.org/wiki/Cycle_(graph_theory))" = Path where you reach the same vertex again i.e. more than once within the path.
+"[Cycle](https://en.wikipedia.org/wiki/Cycle_(graph_theory)" = Path where you reach the same vertex again i.e. more than once within the path.
 
 "Vertex-[disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint)" paths means that the paths do not have any vertex in common. Vertex-independent is another word for 'Vertex-disjoint'.
 
@@ -173,19 +173,19 @@ When the graph is illustrated in a picture you will normally see an arrow illust
 
 ### Some words about how graph theory relates to finding the shortest paths when implementing travel routing
 
-"Vertex": Think of it as a specific geographic location/point which is either an end of the road (dead end/return path) or a place where you have an option about where to go next when you reach that point e.g. at a cross-road.
+"Vertex": You can think of a 'vertex' as a specific geographic location/point which is either an end of the road (dead end/return path) or a place where you have an option about where to go next when you reach that point e.g. at a cross-road.
 
-"Edge": Think of it as a road section between to geographic points ("Vertex" above).
+"Edge": You can think of an 'edge' as a road section between to geographic points ("Vertex" above).
 
-"Graph": Think of it as the road network.
+"Graph": You can think of a 'graph' as the road network.
 
-"Weight": Think of an 'edge weight' as the time or distance for traveling through a road section. When searching for the "shortest" paths from one location to another, you may want to minimize the total travel time (although distance can also be an interesting kind of weight). Note that the weight does not necessarily have to be  equal for both directions. For example, if you have defined a graph with walking times between different points when the road section is not flat, then the weight (time) will be larger when you walk steep up compared to walking steep down. The algorithm does **not** need to be able to handle negative weights since time and distance are concepts with positive values.     
+"Weight": You can think of an 'edge weight' as the time or distance for traveling through a road section ('edge' above) . When searching for the shortest paths (i.e. paths with minimal total weights) from one location to another, you may want to minimize the total travel time (although distance can also be an interesting kind of weight). Note that the weight does not necessarily have to be  equal for both directions. For example, if you have defined a graph with walking times between different points when the road section is not flat, then the weight (time) will be larger when you walk steep up compared to walking steep down. The algorithm does **not** need to be able to handle negative weights since time and distance are concepts with positive values.     
 
 "Path": Think of different alternative paths (i.e. paths with the same start vertex and end vertex) as alternative routes. If you have used a GPS (or have made some search with google map regarding traveling between two points) then you have probably seen that you sometimes will see a couple of suggested alternative routes/paths. 
 
 "Direction": Often, but not always (but almost always regarding walking) the roads are bidirectional, i.e. you can walk or go by car in both directions. However, as you know, sometimes you can go by car in only one direction.
 
-"Loops" and "cycles": Of course, you never want to waste time with loops in travel routing, going back to the same place again during the trip. You only want to find meaningful alternative paths, and those should **not** include any loops. This is relevant to consider in graph theory. For example, there is an algorithm named "Eppstein" which can find the shortest paths but it does not exclude cycles from the result paths, and therefore is not an appropriate algorithm for travel routing.          
+"Loops" and "cycles": Of course, you never want to waste time with loops in travel routing, going back to the same place again during the trip. You only want to find meaningful alternative paths, and those should **not** include any loops nor cycles. This is relevant to consider in graph theory. For example, there is an algorithm named "Eppstein" which can find the shortest paths but it does not exclude cycles from the result paths, and therefore is not an appropriate algorithm for travel routing.          
 
 "Vertex-disjoint" and "Edge-disjoint": It is okay if the alternative routes/paths are **partially** the same, i.e. passing trough the same points or road sections. In other words, when an algorithm finds alternative routes/paths, they do **not** have to be disjoint.   
 
