@@ -24,6 +24,7 @@
 	<url>https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht</url>	
 
 	<licenses>
+		<!-- The license for this adapter library is the same as the adaptee library jgrapht -->
 		<license>
 			<name>GNU Lesser General Public License Version 2.1, February 1999</name>
 			<url>http://jgrapht.sourceforge.net/LGPL.html</url>

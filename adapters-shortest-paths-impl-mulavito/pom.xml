@@ -6,7 +6,32 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
  	<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
-  	
+
+	<licenses>
+		<!-- The license for this adapter library is the same as the adaptee library -->
+        <license>
+            <name>GNU Lesser General Public License 3</name>
+            <url>https://www.gnu.org/licenses/lgpl.html</url>
+            <distribution>repo</distribution>
+			<comments>
+			The license for this adapter library is the same as the adaptee library which is a 
+			fork of the MuLaViTo library which in turn has the same license as the original MuLaViTo library.
+			Quote from source code files in the MuLaViTo library:
+			'
+				MuLaViTo is free software; you can redistribute it and/or modify it
+				under the terms of the GNU General Public License Version 3 or later
+				(the "GPL"), or the GNU Lesser General Public License Version 3 or later
+				(the "LGPL") as published by the Free Software Foundation.
+			'			
+			</comments>            
+		</license>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.en.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	  	
 	<dependencies>
 
 		<dependency>

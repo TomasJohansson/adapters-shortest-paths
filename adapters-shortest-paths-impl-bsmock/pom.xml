@@ -8,6 +8,14 @@
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths-impl-bsmock</artifactId>
+
+	<licenses>
+		<license>
+			<name>Apache Software License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 	
 	<dependencies>
 

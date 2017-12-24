@@ -9,6 +9,22 @@
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths-impl-reneargento</artifactId>
 
+	<licenses>
+		<license>
+			<name>GNU GENERAL PUBLIC LICENSE</name>
+			<url>http://www.gnu.org/licenses/gpl-3.0.en.html</url>
+			<distribution>repo</distribution>
+			<comments>
+				MIT license is defined here: 
+				https://github.com/reneargento/algorithms-sedgewick-wayne/blob/master/LICENSE
+				However,  there is a dependency to "algs4.jar":  
+				https://github.com/reneargento/algorithms-sedgewick-wayne/blob/master/libs/algs4.jar
+				Therefore GPLv3 is specified here as the license.
+				https://github.com/kevin-wayne/algs4/blob/master/LICENSE
+			</comments>
+		</license>
+	</licenses>
+
 	<dependencies>
 
 		<dependency>
