@@ -8,10 +8,13 @@ Currently there are **five** such adapter libraries, and **if you intend to use 
 * [adapters-shortest-paths-impl-reneargento](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento)
 * [adapters-shortest-paths-impl-mulavito](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-mulavito)
 
-## Adapters for Java implementations of Graph algorithms for routing the shortest paths.
+## Adapters for Java implementations of Graph algorithms useful for finding the shortest paths ins travel routing.
 
-The purpose of this project is to provide Adapters for Java implementations of Graph algorithms for routing the shortest path**s**.<br>(the bold '**s**' above is intentional i.e. **not only** the single shortest path but the shortest path**s**)
-
+The purpose of this project is to provide Adapters for Java implementations finding the shortest path**s** (and note the plural of the word 'path**s**').<br>
+This is useful for travel routing  when you want to minimize the total time or total distance.<br>
+The project might also be useful for other situations, but travel routing is the main kind of application I have in mind.<br>
+Regarding graph theory applicable for finding the shortest paths in travel routing, see more information about that further down in a separate section at this page.
+  
 **Currently there are five implemented Adapters**, i.e. five different implementations can be used.
 Since the Client code is using the same Target interface (see the [Adapter Design Pattern](https://en.wikipedia.org/wiki/Adapter_pattern)) it is possible to **reuse the same test code for the different implementations**.
 Therefore you can assert their results against each other, which could help finding bugs. If one implementation would produce a different result than the others, then it is likely a bug that should be reported and hopefully fixed. However, note that the tested graph need to be constructed in such a way that there must not be more than one path (among the first shortest paths you use test assertions for) with the same total weight. If multiple paths have the same total weight then it is not obvious which should be sorted first, and then it would not be surprising if different implementations produce different results.
@@ -141,3 +144,54 @@ Regarding the versions/"releases" of the above libraries:
 * Regarding "reneargento", it was neither a maven project, which was the reason for forking it. It also included a jar file, but the fork is instead using maven and jitpack for defining the dependency in the pom file. Please [read about the license for that dependency](https://github.com/TomasJohansson/algorithms-sedgewick-wayne).
 * Regarding "mulavito", it was neither a maven project, which was one of the reason for forking it. It also included unnecessary (for the purpose of just wanting to use the shortest path algorithm) many third-party libraries which have been removed from a branch of the fork.  
 	
+#### Some concepts in graph theory:
+
+(see the next section regarding how these concepts are relevant when you want to find the shortest paths in travel routing)
+
+"[Vertex](https://en.wikipedia.org/wiki/Vertex_(graph_theory))" = A point or a node in a so called 'Graph'. 'Point' or 'Node' are alternative words sometimes used instead of 'Vertex' . (the plural form of the word 'vertex' is 'vertices')
+ 
+"[Edge](https://en.wikipedia.org/wiki/Edge_(graph_theory))" = Connection between two vertices in a 'Graph'. 'Arc' or 'Line' are alternative words sometimes used instead of 'Edge'. There can also be a direction and/or a weight associated with an edge.
+
+"[Graph](https://en.wikipedia.org/wiki/Graph_(discrete_mathematics))" = Collection of edges (and thus of course the collection also includes vertices since there are normally two vertices in an edge, unless the edge is a loop with the same vertex in both ends of the edge).
+ 
+"[Weight](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#weight)" = Some kind of 'cost' associated with an edge. It can be thought of as the 'cost' of going from the vertex in one end to the vertex in the other end of the edge. Typical weights/costs are time or distance. When trying to find the shortest path, allowing negative weights tend to make the problem more complicated. The naive approach is that you can simply adjust all weights with a constant big enough to make all weights positive, but then [please look at a counter-example proving it is not that easy](https://www.quora.com/Can-you-add-a-large-constant-to-a-weighted-graph-with-negative-edges-so-that-all-the-weights-become-positive-then-run-Dijkstras-algorithm-starting-at-node-S-and-return-to-the-shortest-path-found-to-node-T-in-order-to-still-get-the-shortest-path). 
+
+"[Path](https://en.wikipedia.org/wiki/Path_(graph_theory))" = Sequence of one or more edges leading from some start vertex to some end vertex. For example, if you have one edge from vertex A to vertex B, and one edge from vertex B to vertex C, then you would have one possible path from A to C by combining those two edges (A to B, and B to C) as a path.
+
+"[Direction](https://en.wikipedia.org/wiki/Directed_graph)" of an edge means that one of the two vertices for the edge is the "start vertex" and the other is the "end vertex".  
+When the graph is illustrated in a picture you will normally see an arrow illustrating the direction.
+
+"[Loop](https://en.wikipedia.org/wiki/Loop_(graph_theory))" = Edge connecting a vertex with itself, i.e. the same vertex in both ends of the edge.
+
+"[Cycle](https://en.wikipedia.org/wiki/Cycle_(graph_theory))" = Path where you reach the same vertex again i.e. more than once within the path.
+
+"Vertex-[disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint)" paths means that the paths do not have any vertex in common. Vertex-independent is another word for 'Vertex-disjoint'.
+
+"Edge-disjoint" paths means that the paths do not have any edge in common. Edge-independent is another word for 'Edge-disjoint'.  
+
+"[Multi-edge](https://en.wikipedia.org/wiki/Multiple_edges)" means that there are more than one edge connecting the same two vertices (in the same direction if the edges in the graph are directed). 'Parallel edges' or 'Multiple edges' are alternative phrases for 'Multi-edge'. 
+
+### Some words about how graph theory relates to finding the shortest paths when implementing travel routing
+
+"Vertex": Think of it as a specific geographic location/point which is either an end of the road (dead end/return path) or a place where you have an option about where to go next when you reach that point e.g. at a cross-road.
+
+"Edge": Think of it as a road section between to geographic points ("Vertex" above).
+
+"Graph": Think of it as the road network.
+
+"Weight": Think of an 'edge weight' as the time or distance for traveling through a road section. When searching for the "shortest" paths from one location to another, you may want to minimize the total travel time (although distance can also be an interesting kind of weight). Note that the weight does not necessarily have to be  equal for both directions. For example, if you have defined a graph with walking times between different points when the road section is not flat, then the weight (time) will be larger when you walk steep up compared to walking steep down. The algorithm does **not** need to be able to handle negative weights since time and distance are concepts with positive values.     
+
+"Path": Think of different alternative paths (i.e. paths with the same start vertex and end vertex) as alternative routes. If you have used a GPS (or have made some search with google map regarding traveling between two points) then you have probably seen that you sometimes will see a couple of suggested alternative routes/paths. 
+
+"Direction": Often, but not always (but almost always regarding walking) the roads are bidirectional, i.e. you can walk or go by car in both directions. However, as you know, sometimes you can go by car in only one direction.
+
+"Loops" and "cycles": Of course, you never want to waste time with loops in travel routing, going back to the same place again during the trip. You only want to find meaningful alternative paths, and those should **not** include any loops. This is relevant to consider in graph theory. For example, there is an algorithm named "Eppstein" which can find the shortest paths but it does not exclude cycles from the result paths, and therefore is not an appropriate algorithm for travel routing.          
+
+"Vertex-disjoint" and "Edge-disjoint": It is okay if the alternative routes/paths are **partially** the same, i.e. passing trough the same points or road sections. In other words, when an algorithm finds alternative routes/paths, they do **not** have to be disjoint.   
+
+"Multi-edge": The algorithm does **not** need to suport multi-edged paths. It would not make sense to choose some other strategy than simply choosing the edge with the smallest weight (time or distance) between two points.
+Of course, if you consider rush hours, it is indeed very common with different travel times between two points, but to handle those situations you can define alternative graphs, i.e. edges with different weights for different times of the day. 
+  
+
+One interesting algorithm for "[k shortest paths](https://en.wikipedia.org/wiki/K_shortest_path_routing)" is [Yen's algorithm](https://en.wikipedia.org/wiki/Yen%27s_algorithm).
+As mentioned above, Eppstein is not as interesting since it can include cycles.
