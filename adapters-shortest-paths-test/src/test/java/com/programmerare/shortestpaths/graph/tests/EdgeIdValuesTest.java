@@ -20,7 +20,6 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
@@ -206,7 +205,7 @@ public class EdgeIdValuesTest {
 			for (int j = 0; j < expectedEdgesForPath.length; j++) {
 				errorContext += " , j=" + j;
 				ExpectedEdge expectedEdge = expectedEdgesForPath[j];
-				EdgeGenerics actualEdge = actualEdgesForPath.get(j);
+				Edge actualEdge = actualEdgesForPath.get(j);
 				assertNotNull(errorContext, actualEdge);
 				assertNotNull(errorContext, actualEdge.getEdgeWeight());
 				assertNotNull(errorContext, actualEdge.getStartVertex());

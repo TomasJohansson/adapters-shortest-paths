@@ -19,7 +19,6 @@ import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
-import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**
@@ -99,7 +98,7 @@ public class SmallGraphTest {
 		assertEqualsAndTheSameInstance(edgeBD13,  edgesForPath2.get(1));
 	}
 
-	private void assertEqualsAndTheSameInstance(EdgeGenerics edgeFromOriginalInput, EdgeGenerics edgeFromResultingPath) {
+	private void assertEqualsAndTheSameInstance(Edge edgeFromOriginalInput, Edge edgeFromResultingPath) {
 		assertEquals(edgeFromOriginalInput,  edgeFromResultingPath);
 		// Note that the below assertion works thanks to the class EdgeMappe
 		assertSame(edgeFromOriginalInput, edgeFromResultingPath);

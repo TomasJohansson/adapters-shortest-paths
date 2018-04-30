@@ -5,29 +5,28 @@
 */
 package com.programmerare.shortestpaths.core.impl.generics;
 
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 
 /**
  * @author Tomas Johansson
  */
 public class EdgeGenericsImplTest {
-
 	private Vertex vertexA, vertexB;
 	private Weight weight;
 	private double weightValue;
-	private EdgeGenerics edgeX, edgeY;
+	private Edge edgeX, edgeY;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -35,9 +34,9 @@ public class EdgeGenericsImplTest {
 		vertexB = createVertex("B");
 		weightValue = 123.45;
 		weight = createWeight(weightValue);
-		edgeX = createEdgeGenerics(vertexA, vertexB, weight);
+		edgeX = createEdge(vertexA, vertexB, weight);
 		
-		edgeY = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(weightValue));
+		edgeY = createEdge(createVertex("A"), createVertex("B"), createWeight(weightValue));
 	}
 
 

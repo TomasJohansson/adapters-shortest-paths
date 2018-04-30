@@ -62,7 +62,7 @@ public class GraphGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex ,
 		return g;
 	}
 	
-	public List getEdges() {
+	public List<E> getEdges() {
 		return edges;
 	}
 

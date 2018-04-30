@@ -17,7 +17,6 @@ import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
-import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
@@ -142,7 +141,7 @@ public class GraphShortestPathAssertionHelper {
 		}
 	}
 
-	private void displayAsPathStringsWhichCanBeUsedInXml(List<Path> shortestPaths, PathParser pathParser) {
+	private void displayAsPathStringsWhichCanBeUsedInXml(List<Path> shortestPaths, PathParser<Path, Edge, Vertex, Weight> pathParser) {
 		output("-----");
 		output("The below output is in a format which can be used in xml files with test cases defining the expected output");
 		for (Path path : shortestPaths) {
@@ -193,8 +192,8 @@ public class GraphShortestPathAssertionHelper {
 			actualEdges.size()
 		);
 		for (int i = 0; i < actualEdges.size(); i++) {
-			final EdgeGenerics actualEdge = actualEdges.get(i);
-			final EdgeGenerics expectedEdge = expectedEdges.get(i);
+			final Edge actualEdge = actualEdges.get(i);
+			final Edge expectedEdge = expectedEdges.get(i);
 			assertNotNull(messageIncludingActualAndExpectedPath, expectedEdge); // same comment as above, regarding why the expected value is asserted 
 			assertNotNull(messageIncludingActualAndExpectedPath, actualEdge);
 			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge.getStartVertex(), actualEdge.getStartVertex());
@@ -209,7 +208,7 @@ public class GraphShortestPathAssertionHelper {
 		}
 
 		double weightTotal = 0;
-		for (EdgeGenerics edge : actualEdges) {
+		for (Edge edge : actualEdges) {
 			assertNotNull(edge.getEdgeWeight());
 			weightTotal += edge.getEdgeWeight().getWeightValue();
 		}
@@ -259,7 +258,8 @@ public class GraphShortestPathAssertionHelper {
 		sb.append(")");
 		return sb.toString();
 	}
-	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(EdgeGenerics edge) {
+	
+	private static String getEdgeAsPrettyPrintedStringForConsoleOutput(Edge edge) {
 		return edge.getEdgeWeight().getWeightValue()  + "[" + edge.getStartVertex().getVertexId() + "--->" + edge.getEndVertex().getVertexId() + "] ";		
 	}
 	// ---------------------------------------------------------------------------------------
