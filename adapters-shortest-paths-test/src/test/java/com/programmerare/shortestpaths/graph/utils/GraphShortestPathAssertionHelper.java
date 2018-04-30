@@ -182,41 +182,50 @@ public class GraphShortestPathAssertionHelper {
 		final List<Edge> actualEdges = actualPath.getEdgesForPath();
 		assertNotNull(message, expectedEdges); // same comment as above, regarding why the expected value is asserted
 		assertNotNull(message, actualEdges);
+
+		final String actualPathAsString = getPathAsPrettyPrintedStringForConsoleOutput(actualPath);
+		final String expectedPathAsString = getPathAsPrettyPrintedStringForConsoleOutput(expectedPath);
+		final String messageIncludingActualAndExpectedPath = message + " , actualPath : " + actualPathAsString +  " expectedPath :  " + expectedPathAsString;
+
+		assertEquals(
+			"Mismatching number of vertices/edges in the path, " + messageIncludingActualAndExpectedPath, 
+			expectedEdges.size(), 
+			actualEdges.size()
+		);
+		for (int i = 0; i < actualEdges.size(); i++) {
+			final EdgeGenerics actualEdge = actualEdges.get(i);
+			final EdgeGenerics expectedEdge = expectedEdges.get(i);
+			assertNotNull(messageIncludingActualAndExpectedPath, expectedEdge); // same comment as above, regarding why the expected value is asserted 
+			assertNotNull(messageIncludingActualAndExpectedPath, actualEdge);
+			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge.getStartVertex(), actualEdge.getStartVertex());
+			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge.getEndVertex(), actualEdge.getEndVertex());
+			assertEquals(
+				messageIncludingActualAndExpectedPath, 
+				expectedEdge.getEdgeWeight().getWeightValue(), 
+				actualEdge.getEdgeWeight().getWeightValue(), 
+				SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
+			);			
+			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge, actualEdge);			
+		}
+
 		double weightTotal = 0;
 		for (EdgeGenerics edge : actualEdges) {
 			assertNotNull(edge.getEdgeWeight());
 			weightTotal += edge.getEdgeWeight().getWeightValue();
 		}
 		assertEquals(
-			message, 
+			messageIncludingActualAndExpectedPath, 
 			weightTotal, 
 			actualPath.getTotalWeightForPath().getWeightValue(), 
 			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
 		);
 		
 		assertEquals(
-			message, 
+			messageIncludingActualAndExpectedPath, 
 			expectedPath.getTotalWeightForPath().getWeightValue(), 
 			actualPath.getTotalWeightForPath().getWeightValue(), 
 			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
 		);
-
-		assertEquals("Mismatching number of vertices/edges in the path, " + message, expectedEdges.size(), actualEdges.size());
-		for (int i = 0; i < actualEdges.size(); i++) {
-			final EdgeGenerics actualEdge = actualEdges.get(i);
-			final EdgeGenerics expectedEdge = expectedEdges.get(i);
-			assertNotNull(message, expectedEdge); // same comment as above, regarding why the expected value is asserted 
-			assertNotNull(message, actualEdge);
-			assertEquals(message, expectedEdge.getStartVertex(), actualEdge.getStartVertex());
-			assertEquals(message, expectedEdge.getEndVertex(), actualEdge.getEndVertex());
-			assertEquals(
-				message, 
-				expectedEdge.getEdgeWeight().getWeightValue(), 
-				actualEdge.getEdgeWeight().getWeightValue(), 
-				SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
-			);			
-			assertEquals(message, expectedEdge, actualEdge);			
-		}
 	}
 	
 	
