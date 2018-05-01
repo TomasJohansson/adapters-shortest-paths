@@ -13,6 +13,7 @@ import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 
 /**
+ * {@code
  * Used for creating an instance of Path<E, V, W>.
  * 	Example of path types which can be created by an implementation class:
  * 		PathDefault (which is defined as extends Path< EdgeDefault , Vertex , Weight > )
@@ -20,7 +21,7 @@ import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
  * 		Path<Road ,  City , WeightDeterminedByRoadLengthAndQuality>
  * 				(and note that the above three types within brackets are NOT part of the library but 
  * 					examples of types which client code can create as subtypes)
- *
+ * }
  * @param <P> Path or subtype
  * @param <E> Edge or subtype
  * @param <V> Vertex or subtype 

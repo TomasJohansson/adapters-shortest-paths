@@ -33,11 +33,14 @@ public class PathGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex , 
 
 	/**
 	 * 
-	 * @param totalWeight
-	 * @param edges
-	 * @param shouldThrowExceptionIfTotalWeightIsMismatching
-	 * @param shouldThrowExceptionIfAnyMismatchingVertex
-	 * @return
+	 * @param totalWeight total weight
+	 * @param edges list of edges
+	 * @param shouldThrowExceptionIfTotalWeightIsMismatching boolean flag for deciding if exception is desired if there is a mismatch in the total weight (which is redundant available in a convenience method but also summable from the list of edges and therefore might mismatch) 
+	 * @param shouldThrowExceptionIfAnyMismatchingVertex boolean flag for deciding if exception is desired if there is a mismatch in the vertices of the path edges (i.e. if not the end vertex is the same as the start vertex for the next edge)
+	 * @param <E> edge 
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @return an instance of PathGenericsImpl
 	 */
 	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> PathGenerics<E, V, W> createPathGenerics(
 		final W totalWeight, 

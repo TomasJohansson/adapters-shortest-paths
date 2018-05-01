@@ -102,8 +102,8 @@ public final class GraphEdgesValidator<P extends PathGenerics<E,V,W> , E extends
 	 * of the code under test.
 	 * Precondition: The list of all the edges should be valid, i.e. it is NOT tested again in this method that
 	 * 	the vertices and weights are not null.    
-	 * @param paths
-	 * @param allEdgesForGraph
+	 * @param paths list of paths
+	 * @param allEdgesForGraph all edges for the graph
 	 */
 	public void validateAllPathsOnlyContainEdgesDefinedInGraph(
 		final List<P> paths, 
@@ -148,9 +148,15 @@ public final class GraphEdgesValidator<P extends PathGenerics<E,V,W> , E extends
 	}
 
 	/**
+	 * {@code 
 	 * Static convenience method. Can be invoked like this:
 	 * GraphEdgesValidator.<Path, Edge, Vertex, Weight>validateEdgesForGraphCreation(edges);
-	 * @param edges
+	 * }
+	 * @param <P> path
+	 * @param <E> edge
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @param edges list of edges
 	 */
 	//public static <E extends Edge> void validateEdgesForGraphCreation(final List<E> edges) {
 	public static <P extends PathGenerics<E,V,W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> void validateEdgesForGraphCreation(final List<E> edges) {

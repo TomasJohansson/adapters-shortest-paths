@@ -27,7 +27,8 @@ import com.programmerare.shortestpaths.utils.StringUtility;
 /**
  *  TODO: write more/better documentation ...
  * 
- *  String representation of the "List<Path<Edge>>" i.e. the same type returned from the following method: 
+ * {@code 
+ * String representation of the "List<Path<Edge>>" i.e. the same type returned from the following method: 
  * List<Path<Edge>> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
  * The intended purpose is to define strings within xml files with the expected result
  * 
@@ -35,7 +36,8 @@ import com.programmerare.shortestpaths.utils.StringUtility;
  * Example:  "13 A B D"
  * The simple representation (without weight informatin) is the reason why the list of edges is also needed,
  * i.e. to find the weights.
- *
+ * }
+ * 
  * @param <P> path
  * @param <E> edge
  * @param <V> vertex

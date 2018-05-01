@@ -40,11 +40,16 @@ public class GraphGenericsImpl<E extends EdgeGenerics<V, W> , V extends Vertex ,
 		}		
 	}
 
+	
 	/**
 	 * Creates a graph instance, but will validate the edges and throw an exception if validation fails.
-	 * If validation is not desired, then use the overloaded method. 
-	 * @param edges
-	 */	
+	 * If validation is not desired, then use the overloaded method.
+	 * @param <E> edge
+	 * @param <V> vertex
+	 * @param <W> weight
+	 * @param edges list of edges
+	 * @return an instance implementing the interface GraphGenerics
+	 */
 	public static <E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> GraphGenerics<E, V, W> createGraphGenerics(
 		final List<E> edges
 	) {

@@ -26,7 +26,8 @@ public final class GraphImpl extends GraphGenericsImpl<Edge, Vertex , Weight> im
 	/**
 	 * Creates a graph instance, but will validate the edges and throw an exception if validation fails.
 	 * If validation is not desired, then use the overloaded method. 
-	 * @param edges
+	 * @param edges list of all the edges for the graph
+	 * @return an instance implementing the Graph interface
 	 */	
 	public static Graph createGraph(
 		final List<Edge> edges
@@ -34,6 +35,11 @@ public final class GraphImpl extends GraphGenericsImpl<Edge, Vertex , Weight> im
 		return createGraph(edges, GraphEdgesValidationDesired.YES);
 	}
 	
+	/**
+	 * @param edges list of all the edges for the graph
+	 * @param graphEdgesValidationDesired enum specifying whether or not validation is desired
+	 * @return an instance implementing the Graph interface
+	 */
 	public static Graph createGraph(
 		final List<Edge> edges,
 		final GraphEdgesValidationDesired graphEdgesValidationDesired

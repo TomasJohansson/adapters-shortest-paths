@@ -52,6 +52,9 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	private final int orderForWeight;
 
 	/**
+	 * @param <E> edge 
+	 * @param <V> vertex
+	 * @param <W> weight
 	 * @param separatorBetweenEdgesAndWeightWhenSplitting
 	 * @param separatorBetweenEdgesAndWeightWhenCreating
 	 * @param orderForStartVertex
@@ -118,9 +121,6 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 
 	/**
 	 * Convenience methods.
-	 * @param <E> edge
-	 * @param <V> vertex
-	 * @param <W> weight
 	 * @return an instance of EdgeParser constructed with a simple/standard version of the edgeFactory 
 	 */
 	public static EdgeParser<Edge, Vertex, Weight> createEdgeParserDefault() {
@@ -165,7 +165,7 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	 * Read input line by line from a file, and each line represents an Edge, which then can be parsed with this method.
 	 * @param stringRepresentationOfEdge format: "startVertexId [SPACE] endVertexId [SPACE] weight", 
 	 * 	for example "X Y 12.34" for an edge from vertex X to vertex Y with 12.34 as the weight 
-	 * @return
+	 * @return an Edge
 	 */
 	public E fromStringToEdge(final String stringRepresentationOfEdge) {
 		final String[] array = stringRepresentationOfEdge.split(separatorBetweenEdgesAndWeightWhenSplitting);
@@ -194,12 +194,12 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	 * The reason for doing these things is that you want use regression testing with repeatable deterministic assertions,
 	 * which you will not get if you randomly generate new graphs every time.
 	 * Regarding how to produce assertions for a randomly generated graph written to a file,
-	 * one method is to use the assertions with different implementations, and if three or more independen implementations 
+	 * one method is to use the assertions with different implementations, and if three or more independent implementations 
 	 * produce the same result, then it is reasonable to assume that the result is correct, and those expected 
 	 * assertions might also be generated to a file, rather than every time only being able to assert 
 	 * that different implementations produce the same result.  
-	 * @param edge
-	 * @return
+	 * @param edge an Edge
+	 * @return a string representation of the edge for example  "A B 3.7" for an edge from vertex A to B with weight 3.7 
 	 */
 	public String fromEdgeToString(final E edge) {
 		// if(edge == null) // TODO throw		
@@ -218,7 +218,7 @@ public final class EdgeParser<E extends EdgeGenerics<V, W> , V extends Vertex , 
 	    B C 7
 	    B D 8
 	    C D 9    
-	 * @return
+	 * @return a list of edges
 	 */
 	public List<E> fromMultiLinedStringToListOfEdges(final String multiLinedString) {
 		final List<E> edges = new ArrayList<E>();

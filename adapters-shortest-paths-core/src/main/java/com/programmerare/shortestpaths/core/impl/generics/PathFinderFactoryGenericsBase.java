@@ -25,9 +25,9 @@ public abstract class PathFinderFactoryGenericsBase
 	protected PathFinderFactoryGenericsBase() { }
 
 	/**
-	 * @param edges
+	 * @param edges list of edges
 	 * @param graphEdgesValidationDesired should be NO (for performance reason) if validation has already been done
-	 * @return
+	 * @return an instance of a PathFinderGenerics implementation
 	 */
 	public final F createPathFinder(
 		final List<E> edges, 

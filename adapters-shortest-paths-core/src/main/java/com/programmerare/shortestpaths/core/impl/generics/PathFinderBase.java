@@ -43,9 +43,8 @@ public abstract class PathFinderBase
 	}
 	
 	/**
-	 * @param graph
-	 * @param graphEdgesValidationDesired
-	 * @param pathFactory if null then a default instance will be created
+	 * @param graph an implementation of the interface GraphGenerics
+	 * @param pathFactory an implementation of the interface PathFactory, if null then a default instance will be created
 	 */
 	protected PathFinderBase(
 		final GraphGenerics<E, V, W> graph, 
@@ -53,7 +52,6 @@ public abstract class PathFinderBase
 	) {
 		this.graph = graph;		
 		this.pathFactory = pathFactory != null ? pathFactory : createStandardInstanceOfPathFactory();
-
 		// Prevondition to method below is that validation is performed i.e. 
 		// the method below will NOT try to validate,
 		edgeMapper = EdgeMapper.createEdgeMapper(graph.getEdges());
