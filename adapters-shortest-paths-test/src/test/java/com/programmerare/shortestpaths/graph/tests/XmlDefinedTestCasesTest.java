@@ -190,6 +190,8 @@ public class XmlDefinedTestCasesTest {
 		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 6 seconds, compared to less than 1 second for the other implementations 
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
+
+	
 	
 	@Test   
 	public void testXmlFile_test_50() throws IOException {
