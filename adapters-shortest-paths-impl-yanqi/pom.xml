@@ -3,12 +3,25 @@
 	<parent>
 		<groupId>com.programmerare.shortest-paths</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent> 
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
 
+	<name>adapters-shortest-paths-impl-yanqi</name>
+	<description>
+		Adapter implementation (for the Target Adapter interfaces defined in 'adapters-shortest-paths-core')
+		which uses 'fork of yan-qi k-shortest-paths-java-version' as the adaptee.
+		(
+			the library located at URL 
+			https://github.com/TomasJohansson/k-shortest-paths-java-version
+			is a fork of 
+			https://github.com/yan-qi/k-shortest-paths-java-version
+		)
+	</description>
+	<url>https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi</url>
+	
 	<licenses>
 		<license>
 			<name>Apache Software License, Version 2.0</name>
@@ -16,11 +29,27 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
-		
+
+	<developers>
+		<developer>
+			<name>Tomas Johansson</name>
+			<organizationUrl>https://github.com/TomasJohansson</organizationUrl>
+		</developer>	  
+	</developers>
+	
 	<dependencies>
-				
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-core</artifactId>
+		</dependency>	
+	
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>fork-of-edu.asu.emit.algorithm.graph</artifactId>	
+			<version>1.0.0</version>
+		</dependency>
 		<!-- 
-			"yanqi" implementation does not currently seem to provide a way of programmatically create a graph,
+			"yanqi" implementation did not seem to provide a way of programmatically create a graph,
 			but rather seem to require that input data must come from a file.
 			For that reason, I created a fork of it and used jitpack and my own github commit id as version below.
 			https://github.com/yan-qi/k-shortest-paths-java-version
@@ -31,27 +60,14 @@
 			The artifact below will be retrieved from the "jitpack" repository which been added to the parent pom.xml file  
 			Thanks to the below maven dependency, the types within the following "yanqi" package can be used: 
 			edu.asu.emit.algorithm
-		 -->
-
-
-		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
-		    <groupId>com.github.TomasJohansson</groupId>
-		    <artifactId>k-shortest-paths-java-version</artifactId>
-		    <version>323afae47fb580a50bf18129108385126eda969b</version> <!--  2017-11-12 -->
-		</dependency>
-		<!--
-		<dependency>
-			<groupId>com.programmerare.shortest-paths</groupId>
-			<artifactId>fork_of_com.programmerare.edu.asu.emit.algorithm.graph</artifactId>
-		</dependency>
-		 -->
-
-
-		<dependency>
-			<groupId>com.programmerare.shortest-paths</groupId>
-			<artifactId>adapters-shortest-paths-core</artifactId>
-		</dependency>
-				
+			repository "jitpack.io" in parent pom.xml
+			<dependency>
+				<groupId>com.github.TomasJohansson</groupId>
+				<artifactId>k-shortest-paths-java-version</artifactId>
+				<version>323afae47fb580a50bf18129108385126eda969b</version> 2017-11-12
+			</dependency>			
+			Updated comment: Now when the yan-qi fork have been released to OSSRH ("Maven Central") the jitpack is no longer needed for the 'yan-qi' adapter
+		-->
 	</dependencies>
 
 	<build>
@@ -65,4 +81,10 @@
 		</resources>	
 	</build>
 	
+	<repositories>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</repositories>		
 </project>

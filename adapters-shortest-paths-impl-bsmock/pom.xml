@@ -3,12 +3,25 @@
 	<parent>
 		<groupId>com.programmerare.shortest-paths</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent> 
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths-impl-bsmock</artifactId>
 
+	<name>adapters-shortest-paths-impl-bsmock</name>
+	<description>
+		Adapter implementation (for the Target Adapter interfaces defined in 'adapters-shortest-paths-core')
+		which uses 'fork of bsmock k-shortest-paths' as the adaptee.
+		(
+			the library located at URL 
+			https://github.com/TomasJohansson/k-shortest-paths
+			is a fork of 
+			https://github.com/bsmock/k-shortest-paths
+		)
+	</description>
+	<url>https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock</url>
+	
 	<licenses>
 		<license>
 			<name>Apache Software License, Version 2.0</name>
@@ -16,11 +29,29 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<developers>
+		<developer>
+			<name>Tomas Johansson</name>
+			<organizationUrl>https://github.com/TomasJohansson</organizationUrl>
+		</developer>	  
+	</developers>
 	
 	<dependencies>
 
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-core</artifactId>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>fork-of-edu.ufl.cise.bsmock.graph</artifactId>
+			<version>1.0.0</version>
+		</dependency>			
+	
 		<!-- 
-			"bsmock" implementation does not currently have a maven pom.xml file 
+			The "bsmock" implementation did not have a maven pom.xml file 
 			so I created a fork of it and used jitpack and my own github commit id as version below 
 			https://github.com/bsmock/k-shortest-paths
 			https://github.com/TomasJohansson/k-shortest-paths
@@ -29,27 +60,16 @@
 			The artifact below will be retrieved from the "jitpack" repository which been added to the parent pom.xml file  
 			Thanks to the below dependency below, the types within the following "bsmock" package can be used: 
 			edu.ufl.cise.bsmock
+			Updated comment: Now when the bsmock fork have been released to OSSRH ("Maven Central") the jitpack is no longer needed for the 'bsmock' adapter
 		 -->
-
-
-		<dependency> <!-- repository "jitpack.io" in parent pom.xml -->
+		<!-- repository "jitpack.io" in parent pom.xml -->
+		<!--
+		<dependency> 
 		    <groupId>com.github.TomasJohansson</groupId>
 		    <artifactId>k-shortest-paths</artifactId>
-		    <version>0506929fa994f76fbd7c4f4312374657c591781a</version> <!-- 2017-12-18 -->
+		    <version>0506929fa994f76fbd7c4f4312374657c591781a</version> 2017-12-18
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.programmerare.shortest-paths</groupId>
-			<artifactId>fork-of-edu.ufl.cise.bsmock.graph</artifactId>
-		</dependency>
-		 -->
-
-
-		<dependency>
-			<groupId>com.programmerare.shortest-paths</groupId>
-			<artifactId>adapters-shortest-paths-core</artifactId>
-		</dependency>
-		
+		-->
 	</dependencies>
 	
 	<build>

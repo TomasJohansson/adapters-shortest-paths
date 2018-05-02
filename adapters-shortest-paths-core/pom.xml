@@ -1,9 +1,38 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.programmerare.shortest-paths</groupId>
+		<artifactId>adapters-shortest-paths</artifactId>
+		<version>1.0.0</version>
+	</parent> 	
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths-core</artifactId>
 
+	<name>adapters-shortest-paths-core</name>
+	<description>
+		Core adapter library with general classes and interfaces.
+		For example it contains the Target (see the Adapter design pattern) interfaces.
+		The adapter implementations with dependencies to adaptees are located in other libraries.
+		(https://github.com/TomasJohansson/adapters-shortest-paths)
+	</description>
+	<url>https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-core</url>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/License.txt</url>
+			<comments>MIT license for the core library. The adapter libraries have the same license as the adaptee libraries.</comments>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<name>Tomas Johansson</name>
+			<organizationUrl>https://github.com/TomasJohansson</organizationUrl>
+		</developer>	  
+	</developers>	
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -17,12 +46,6 @@
 		    <scope>test</scope>
 		</dependency>		
 	</dependencies>
-			
-	<parent>
-		<groupId>com.programmerare.shortest-paths</groupId>
-		<artifactId>adapters-shortest-paths</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent> 
 	
 	<build>
 		<resources>

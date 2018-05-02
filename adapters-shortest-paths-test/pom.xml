@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.programmerare.shortest-paths</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent> 
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
@@ -69,6 +69,9 @@
 			<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
 		</dependency>
 		
-</dependencies>
+	</dependencies>
 
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
 </project>

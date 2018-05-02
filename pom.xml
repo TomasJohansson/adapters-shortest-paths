@@ -3,9 +3,42 @@
 	
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 
+	<name>adapters-shortest-paths</name>
+	<description>
+		Adapter library and implementations for finding the shortest paths between two locations.
+		This is useful for travel routing when you want to minimize the total time or total distance.
+	</description>
+	<url>https://github.com/TomasJohansson/adapters-shortest-paths</url>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/License.txt</url>
+			<comments>MIT license for the core library. The adapter libraries have the same license as the adaptee libraries.</comments>
+		</license>
+		<license>
+			<name>Apache Software License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<comments>Apache license for the adapter implementations 'yan-qi' and 'bsmock' (the same license as their adaptee libraries)</comments>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<name>Tomas Johansson</name>
+			<organizationUrl>https://github.com/TomasJohansson</organizationUrl>
+		</developer>	  
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/TomasJohansson/adapters-shortest-paths.git</connection>
+		<developerConnection>scm:git:ssh://github.com/TomasJohansson/adapters-shortest-paths.git</developerConnection>
+		<url>https://github.com/TomasJohansson/adapters-shortest-paths</url>
+	</scm>  
+	
 	<dependencyManagement>
 		<dependencies>
 
@@ -98,10 +131,19 @@
 			</resource>
 		</resources>
 		<plugins>
+		
+			<!-- 
+			http://central.sonatype.org/pages/requirements.html
+			https://maven.apache.org/plugin-developers/cookbook/attach-source-javadoc-artifacts.html
+			
+			https://maven.apache.org/plugins/maven-source-plugin/download.cgi
+			https://maven.apache.org/plugins/maven-javadoc-plugin/download.cgi
+			http://maven.apache.org/plugins/maven-gpg-plugin/download.cgi
+			-->	
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -114,7 +156,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
+				<version>3.0.0</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<!-- https://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
+				</configuration>				
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -128,7 +174,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.5</version>
+				<version>1.6</version>
 				<executions>
 					<execution>
 						<id>sign-artifacts</id>
@@ -138,18 +184,19 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>			
+		
 		</plugins>
 	</build>
 	
 	<!--  
-	-->
 	<repositories>
 		<repository>
 		<id>jitpack.io</id>
 		<url>https://jitpack.io</url>
 		</repository>
 	</repositories>	
+	-->
 
 	<distributionManagement>
 		<snapshotRepository>

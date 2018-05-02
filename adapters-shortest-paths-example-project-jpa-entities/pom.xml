@@ -6,6 +6,7 @@
   
 	<properties>
 		<outputDirectoryForGeneratedJpaMetamodel>${project.basedir}/src/java-generated</outputDirectoryForGeneratedJpaMetamodel>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 
 	<repositories>
@@ -106,5 +107,4 @@
 
 		</plugins>
 	</build>
-	
 </project>
