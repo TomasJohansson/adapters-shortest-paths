@@ -8,26 +8,28 @@ Currently there are **five** such adapter libraries, and **if you intend to use 
 * [adapters-shortest-paths-impl-mulavito](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-mulavito)
 * [adapters-shortest-paths-impl-reneargento](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento)
 
-Note that only **two** of the above five implementation libraries are available from OSSRH ("Maven Central").   
+Note that only **two** (yanqi and bsmock) of the above five implementation libraries are available from OSSRH ("Maven Central").   
 
-## Information about why only some libraries are deployed to OSSRH ("Maven Central").
+## Information about why only some libraries are deployed to OSSRH ("Maven Central")
 
-Currently only **two** of the above five implementation libraries are available from OSSRH ("Maven Central").
+Currently only **two** (yanqi and bsmock) of the above five implementation libraries are available from OSSRH ("Maven Central").<br>
 The reasons are related to licenses and performance.
 
-If you would decide which project to use then you would likely want to use an implementation producing correct results and as fast as possible.
+If you would decide which project to use then you would likely want to use an implementation producing correct results and as fast as possible.<br>
 The test cases indicate that all five implementations produce the same results, which means that correctness is not a relevant factor when deciding which library to use.
 
-If we for a while ignore the licensing issue, then why not simply only deploy the fastest implementation?
-Well, since the project is an adapter it would look weird if someone finds it through a website where you can search for maven projects, and then find this "adapter" project with only one implementation.
+If we for a second would ignore the licensing issue, then why not simply only deploy the fastest implementation?<br>
+Well, since the project is an adapter it would look weird if someone finds it through a website where you can search for maven projects, and then find this "adapter" project with only one implementation.<br>
 Therefore I consider two libraries as a minimum that should be deployed.
 
-Then the two fastest should be deployed?
-Well, my testing indicates that the "reneargento" implementation is the fastest, and then the second fastest is "yanqi".
-The reason for not having deployed "reneargento" is that the license is **probably** less permissive and I do not want to get into trouble.
-More information about the license for that adaptee project can be found here:
+Then the two fastest should be deployed?<br>
+Well, yes that would be natural if you ignore the licensing issue.<br>
+The test cases with big graphs indicate that the "reneargento" implementation is the fastest, and then the second fastest is "yanqi".<br>
+The reason for not having deployed "reneargento" is that the license is **probably** less permissive and I do not want to get into trouble.<br>
+More information about the license for that adaptee project can be found here:<br>
 https://github.com/TomasJohansson/algorithms-sedgewick-wayne
 
+The permissive Apache License is used for both of the two adaptee projects (forks) used by the adapters "yanqi" and "bsmock".
 
 ## Adapters for Java implementations of Graph algorithms useful for finding the shortest paths ins travel routing.
 
