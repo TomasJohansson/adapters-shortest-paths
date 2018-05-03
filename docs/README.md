@@ -2,11 +2,32 @@
 Notice that the "core" library with the API and general code is released with MIT License.
 However, the libraries which are implementing adapters are licensed in the same way as the adapted libraries.
 Currently there are **five** such adapter libraries, and **if you intend to use one or more of them you must check their licenses**:
-* [adapters-shortest-paths-impl-jgrapht](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht)
-* [adapters-shortest-paths-impl-bsmock](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock)
 * [adapters-shortest-paths-impl-yanqi](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi)
-* [adapters-shortest-paths-impl-reneargento](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento)
+* [adapters-shortest-paths-impl-bsmock](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock)
+* [adapters-shortest-paths-impl-jgrapht](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht)
 * [adapters-shortest-paths-impl-mulavito](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-mulavito)
+* [adapters-shortest-paths-impl-reneargento](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento)
+
+Note that only **two** of the above five implementation libraries are available from OSSRH ("Maven Central").   
+
+## Information about why only some libraries are deployed to OSSRH ("Maven Central").
+
+Currently only **two** of the above five implementation libraries are available from OSSRH ("Maven Central").
+The reasons are related to licenses and performance.
+
+If you would decide which project to use then you would likely want to use an implementation producing correct results and as fast as possible.
+The test cases indicate that all five implementations produce the same results, which means that correctness is not a relevant factor when deciding which library to use.
+
+If we for a while ignore the licensing issue, then why not simply only deploy the fastest implementation?
+Well, since the project is an adapter it would look weird if someone finds it through a website where you can search for maven projects, and then find this "adapter" project with only one implementation.
+Therefore I consider two libraries as a minimum that should be deployed.
+
+Then the two fastest should be deployed?
+Well, my testing indicates that the "reneargento" implementation is the fastest, and then the second fastest is "yanqi".
+The reason for not having deployed "reneargento" is that the license is **probably** less permissive and I do not want to get into trouble.
+More information about the license for that adaptee project can be found here:
+https://github.com/TomasJohansson/algorithms-sedgewick-wayne
+
 
 ## Adapters for Java implementations of Graph algorithms useful for finding the shortest paths ins travel routing.
 
@@ -67,11 +88,12 @@ import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 	
 	Graph graph = createGraph(edges, GraphEdgesValidationDesired.YES); 
 
-	PathFinderFactory pathFinderFactory = new PathFinderFactoryJgrapht();
-	// or: pathFinderFactory = new PathFinderFactoryBsmock();
-	// or: pathFinderFactory = new PathFinderFactoryYanQi();
-	// or: pathFinderFactory = new PathFinderFactoryReneArgento();
-	// or: pathFinderFactory = new PathFinderFactoryMulavito();
+	// the two first below imlementations "YanQi" and "Bsmock" are available from OSSRH ("Maven Central")
+	PathFinderFactory pathFinderFactory = new PathFinderFactoryYanQi(); // available from "Maven Central"
+	// or: pathFinderFactory = new PathFinderFactoryBsmock(); // available from "Maven Central"
+	// or: pathFinderFactory = new PathFinderFactoryJgrapht();  // currently NOT available from "Maven Central" !
+	// or: pathFinderFactory = new PathFinderFactoryReneArgento(); // currently NOT available from "Maven Central" !
+	// or: pathFinderFactory = new PathFinderFactoryMulavito(); // currently NOT available from "Maven Central" !
 	// (currently there are five implementations)
 
 	PathFinder pathFinder = pathFinderFactory.createPathFinder(graph);
@@ -96,21 +118,47 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 <repositories>
 	...
 	<repository>
+		<!-- 
+		add this jitpack.io repository as below if you want to use some of the libraries not currently 
+		available from "Maven Central" i.e. if you want to use some other library than "YanQi" and "Bsmock" 
+		which are the only two currently implementation libraries available att OSSRH ("Maven Central")
+		-->	
 		<id>jitpack.io</id>
 		<url>https://jitpack.io</url>
 	</repository>
 </repositories>
 	
 <dependencies>
-	...
+    ...
+	<!--
+		You can use the below dependency if you want to use some implementation library not 
+		available at OSSRH ("Maven Central") i.e. if you want to use the above repository jitpack.io      
+	-->
 	<dependency>
 		<groupId>com.github.TomasJohansson</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>b084ffdddcf49fe680f68dcf43eb78b05f820e2a</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
-	</dependency>      
+		<version>7bf0484ca31d17b982abd4a0ec824e945a2e5d50</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+	</dependency>
+	<!--
+	    An ALTERNATIVE to the above dependency (and then you do neither have to add jitpack.io as above
+	    is to use one or both of the below dependencies which 
+	    are the ONLY TWO implementation libraries CURRENTLY deployed to OSSRH ("Maven Central")    
+    -->
+    <dependency>
+        <groupId>com.programmerare.shortest-paths</groupId>
+        <artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
+        <version>1.0.0</version>
+    </dependency>      	
+    
+    <dependency>
+        <groupId>com.programmerare.shortest-paths</groupId>
+        <artifactId>adapters-shortest-paths-impl-bsmock</artifactId>		
+        <version>1.0.0</version>
+    </dependency>
+    
+    <!-- the "core" library are also deployed to OSSRH but it should be automatically retrieved when some of the above two dependencies are used -->      			          
 </dependencies>
 ```
-Note that "jitpack" is used since currently there is no release of this library in the maven central repository.
 
 ### Java version
 Java **6** is currently used for compiling the the core library itself, including the Adapter implementations.
