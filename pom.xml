@@ -189,14 +189,16 @@
 		</plugins>
 	</build>
 	
-	<!--  
 	<repositories>
+		<!-- 
+		jitpack is needed by some modules which are using an adaptee implementations not available at "Maven Central" 
+		but then instead can be retrieved from jitpack by referring to a github project and commmit as the version. 
+		 -->
 		<repository>
 		<id>jitpack.io</id>
 		<url>https://jitpack.io</url>
 		</repository>
 	</repositories>	
-	-->
 
 	<distributionManagement>
 		<snapshotRepository>
