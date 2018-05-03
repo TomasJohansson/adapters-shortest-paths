@@ -28,6 +28,9 @@ public class RoadRoutingMain {
 	 */
 	public static void main(String[] args) {
 		final boolean useDatabase = parseArguments(args);
+	}
+	
+	public static void main(boolean useDatabase) {
 		final CityRoadService cityRoadService = CityRoadServiceFactory.createCityRoadService(useDatabase);
 		try {
 			final List<Road> roads = cityRoadService.getAllRoads();
