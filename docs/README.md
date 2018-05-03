@@ -134,7 +134,12 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
     ...
 	<!--
 		You can use the below dependency if you want to use some implementation library not 
-		available at OSSRH ("Maven Central") i.e. if you want to use the above repository jitpack.io      
+		available at OSSRH ("Maven Central") i.e. if you want to use the above repository jitpack.io  
+		Note that if you use this dependency below 
+		(e.g. because you want to use the "reneargento" implementation since it seems to be the fastest)
+		then you are probably restricted to use it only in a context not violating the license GPLv3.
+		Further information about the licensing issue:
+		https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento
 	-->
 	<dependency>
 		<groupId>com.github.TomasJohansson</groupId>
@@ -147,12 +152,14 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 	    are the ONLY TWO implementation libraries CURRENTLY deployed to OSSRH ("Maven Central")    
     -->
     <dependency>
+        <!-- Apache Software License, Version 2.0 -->
         <groupId>com.programmerare.shortest-paths</groupId>
         <artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
         <version>1.0.0</version>
     </dependency>      	
     
     <dependency>
+        <!-- Apache Software License, Version 2.0 -->
         <groupId>com.programmerare.shortest-paths</groupId>
         <artifactId>adapters-shortest-paths-impl-bsmock</artifactId>		
         <version>1.0.0</version>
