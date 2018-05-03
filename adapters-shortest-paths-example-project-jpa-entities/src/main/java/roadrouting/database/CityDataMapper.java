@@ -26,7 +26,14 @@ public final class CityDataMapper extends BaseDataMapper<City, Integer>  {
 		
 		final Root<City> root = cq.from(City.class);
 		
-		// Note that the below used class "City_ is code generated and part of the JPA meta model 
+		// Note that the below used class "City_ is code generated and part of the JPA meta model
+		// You do not always want to add genereated source files to the source control system 
+		// but in this case the below "City_.java" (and "Road_.java") are added to git 
+		// since otherwise you might get a compiling error because it is missing which  
+		// would be unnecessary since the goal here is not to teach JPA configuration but rather 
+		// to provide an executable example using JPA.
+		// The two generated files should be located at "/adapters-shortest-paths-example-project-jpa-entities/src/java-generated/roadrouting/"
+		// according to the configuration in the pom file  ( <outputDirectoryForGeneratedJpaMetamodel>${project.basedir}/src/java-generated</outputDirectoryForGeneratedJpaMetamodel> )
 		cq.where(cb.like(root.get(City_.cityName), cityName));
 		
 		final List<City> resultList = em.createQuery(cq).getResultList();
