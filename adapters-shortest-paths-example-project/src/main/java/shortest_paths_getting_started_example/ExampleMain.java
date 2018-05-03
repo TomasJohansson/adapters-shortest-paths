@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
+import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
@@ -20,7 +22,6 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 
 /**
  * This is the only class in a minimal example showing how to use the adapter library for 
@@ -70,12 +71,14 @@ public class ExampleMain {
 		edges.add(createEdge(b, c, createWeight(7)));
 		edges.add(createEdge(b, d, createWeight(8)));
 		edges.add(createEdge(c, d, createWeight(9)));
-
+		
 		Graph graph = createGraph(edges, GraphEdgesValidationDesired.YES);
 		
-		displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryJgrapht());
 		displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryYanQi());
 		displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryBsmock());
+		displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryJgrapht());
+		displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryReneArgento());
+		displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryMulavito());
 	}
 
 	// ---------------------------------------------------------------------------------------

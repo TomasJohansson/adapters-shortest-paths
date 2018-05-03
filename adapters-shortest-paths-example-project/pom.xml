@@ -16,8 +16,31 @@
 		<dependency>
 			<groupId>com.github.TomasJohansson</groupId>
 			<artifactId>adapters-shortest-paths</artifactId>
-			<version>c2a3a04a2a7c0d03b4fe71db1bbfb2807f798568</version> 
-		</dependency>      
+			<version>7bf0484ca31d17b982abd4a0ec824e945a2e5d50</version> 
+		</dependency>
+	    <!--
+	    An alternative to the above dependency (if you ONLY use the below yanqi and bsmock implementations)
+	    is to use the below two dependencies instead of the above which include all five implementations.
+	    Though be careful to use the above dependency in real projects since you must not violate the licences.
+	    For example, the "reneargento" implementation seem to be the fastest but then you must probably only 
+	    use it in a context not violating GPLv3.
+	    Further information about the licensing for the "reneargento" implementation:
+		https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento
+		The below "yanqi" and "bsmock" implementations are both using the license Apache Software License, Version 2.0
+	     -->
+	     <!-- 
+	    <dependency>
+	        <groupId>com.programmerare.shortest-paths</groupId>
+	        <artifactId>adapters-shortest-paths-impl-yanqi</artifactId>
+	        <version>1.0.0</version>
+	    </dependency>      	
+	    <dependency>
+	        <groupId>com.programmerare.shortest-paths</groupId>
+	        <artifactId>adapters-shortest-paths-impl-bsmock</artifactId>		
+	        <version>1.0.0</version>
+	    </dependency>
+	     -->
+	    
 	</dependencies>
 	  
 	<properties>
