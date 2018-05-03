@@ -54,25 +54,28 @@ There are three possible paths from A to D , with the total weight within parent
 
 For example, the vertices might represent cities, and the edges might represent roads with distances as weights.
 
-The Java code below can be used for finding the shortest paths (sorted with the shortest first) from A to D :
+The Java code below can be used for finding the shortest paths (sorted with the shortest first) from A to D :<br>
+(and similar code as below can be found in the example project's file [ExampleMain.java](https://github.com/TomasJohansson/adapters-shortest-paths/blob/master/adapters-shortest-paths-example-project/src/main/java/shortest_paths_getting_started_example/ExampleMain.java))
 
 ```java
+import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
+import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
+import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import java.util.Arrays;
 import java.util.List;
-import com.programmerare.shortestpaths.core.api.Vertex;
-import com.programmerare.shortestpaths.core.api.Weight;
+import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
+import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
+import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
+import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
+import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
-import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
-import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
-import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
-import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
-
 ...
 
 	Vertex a = createVertex("A");
@@ -90,7 +93,7 @@ import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 	
 	Graph graph = createGraph(edges, GraphEdgesValidationDesired.YES); 
 
-	// the two first below imlementations "YanQi" and "Bsmock" are available from OSSRH ("Maven Central")
+	// the two first below implementations "YanQi" and "Bsmock" are available from OSSRH ("Maven Central")
 	PathFinderFactory pathFinderFactory = new PathFinderFactoryYanQi(); // available from "Maven Central"
 	// or: pathFinderFactory = new PathFinderFactoryBsmock(); // available from "Maven Central"
 	// or: pathFinderFactory = new PathFinderFactoryJgrapht();  // currently NOT available from "Maven Central" !
