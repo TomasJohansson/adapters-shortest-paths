@@ -5,6 +5,7 @@ import static com.programmerare.shortestpaths.core.impl.GraphImpl.createGraph;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -80,13 +81,13 @@ public class ExampleMain {
 		
 		Graph graph = createGraph(edges, GraphEdgesValidationDesired.YES);
 		
-		List<PathFinderFactory> pathFinderFactories = Arrays.asList(
-			new PathFinderFactoryYanQi(),
-			new PathFinderFactoryBsmock(),
-			new PathFinderFactoryJgrapht(),
-			new PathFinderFactoryReneArgento(),
-			new PathFinderFactoryMulavito()				
-		);
+		List<PathFinderFactory> pathFinderFactories = new ArrayList<PathFinderFactory>();
+		pathFinderFactories.add(new PathFinderFactoryYanQi());
+		pathFinderFactories.add(new PathFinderFactoryBsmock());
+		pathFinderFactories.add(new PathFinderFactoryJgrapht());
+		pathFinderFactories.add(new PathFinderFactoryReneArgento());
+		pathFinderFactories.add(new PathFinderFactoryMulavito());
+		
 		for (PathFinderFactory pathFinderFactory : pathFinderFactories) {
 			displayShortestPathBetweenEdges(a, d, graph, pathFinderFactory);
 		}
