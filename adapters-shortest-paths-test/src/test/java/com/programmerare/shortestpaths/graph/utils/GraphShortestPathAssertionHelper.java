@@ -162,7 +162,7 @@ public class GraphShortestPathAssertionHelper {
 		}
 	}
 	
-	private ConsoleOutputDesired consoleOutputDesired = ConsoleOutputDesired.NONE;
+	private ConsoleOutputDesired consoleOutputDesired = ConsoleOutputDesired.ALL;
 
 	public void setConsoleOutputDesired(final ConsoleOutputDesired consoleOutputDesired) {
 		this.consoleOutputDesired = consoleOutputDesired;

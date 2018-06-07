@@ -68,6 +68,13 @@
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
 		</dependency>
+
+<!--
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>jgrapht_fork_kevemueller</artifactId>
+		</dependency>
+		-->
 		
 	</dependencies>
 

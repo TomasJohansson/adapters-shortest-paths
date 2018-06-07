@@ -191,7 +191,7 @@ public class EdgeIdValuesTest {
 		);
 		List<Path> actualShortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, 10);
 		
-		assertEquals(expectedShortestPaths.length, actualShortestPaths.size());
+		assertEquals(pathFinderFactory.getClass().getSimpleName(), expectedShortestPaths.length, actualShortestPaths.size());
 
 		String errorContext = pathFinderFactory.getClass().getSimpleName(); 
 		for (int i = 0; i < expectedShortestPaths.length; i++) {

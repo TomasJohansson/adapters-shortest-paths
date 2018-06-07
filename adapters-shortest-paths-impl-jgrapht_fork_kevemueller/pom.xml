@@ -1,0 +1,78 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.programmerare.shortest-paths</groupId>
+		<artifactId>adapters-shortest-paths</artifactId>
+		<version>1.0.0</version>
+	</parent> 
+	
+	<groupId>com.programmerare.shortest-paths</groupId>
+	<artifactId>jgrapht_fork_kevemueller</artifactId>
+	
+	<name>Implementation of the shortest paths, using the library jgrapht</name>
+	<description>
+		TODO: description of this fork ...
+		(and check the rest of the pom file too)
+		
+		JGraphT "requires JDK 1.8 or later starting with JGraphT 1.0.0"".
+		(quoted from https://github.com/jgrapht/jgrapht/ )
+	
+		The license for using the imlpementaion with jgrapht 1.1.0 is one of these two:
+		GNU Lesser General Public License Version 2.1, February 1999
+		Eclipse Public License (EPL) 1.0
+		
+		https://github.com/jgrapht/jgrapht/releases/tag/jgrapht-1.1.0
+		https://github.com/jgrapht/jgrapht/blob/8ad64186e61383ad25e557d3307924e8ab2b8995/README.md
+	</description>
+	<url>
+https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht</url>	
+
+	<licenses>
+		<!-- The license for this adapter library is the same as the adaptee library jgrapht -->
+		<license>
+			<name>GNU Lesser General Public License Version 2.1, February 1999</name>
+			<url>http://jgrapht.sourceforge.net/LGPL.html</url>
+			<distribution>repo</distribution>
+		</license>
+		<license>
+			<name>Eclipse Public License (EPL) 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+		
+	<dependencies>
+		<dependency>
+			<groupId>com.github.kevemueller</groupId>
+			<artifactId>jgrapht</artifactId>
+			<version>9cab11ba8e89a2446c10a441486f46db96eae67f</version> 
+		</dependency>
+
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-core</artifactId>
+		</dependency>
+			
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}</directory>			
+				<includes>
+					<include>LICENSE_NOTICE.txt</include>
+				</includes>
+			</resource>	
+		</resources>	
+	</build>
+
+	<properties>
+		<maven.deploy.skip>true</maven.deploy.skip>
+	</properties>
+</project>

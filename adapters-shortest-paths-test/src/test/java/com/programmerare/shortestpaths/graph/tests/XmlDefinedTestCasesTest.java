@@ -20,6 +20,7 @@ import org.w3c.dom.NodeList;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
+import com.programmerare.shortestpaths.adapter.jgrapht.yen.PathFinderFactoryJgraphtYen;
 import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
 import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
@@ -141,17 +142,24 @@ public class XmlDefinedTestCasesTest {
 	 * Method for troubleshooting (or for big slow files), when you want to temporary want to focus at one 
 	 * file, as opposed to normal regression testing when all files are iterated through another test method  
 	 */
-	//@Test // enable this row when you want to used the method
+	@Test // enable this row when you want to used the method
 	public void temporaryTest() throws IOException {
+		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.ALL);
 		// Either use all factories as the first row below, or add one or more to the list which is empty after the setup method 
 //		pathFinderFactories = pathFinderFactoriesForAllImplementations;
 		// Use the row above OR INSTEAD some of the rows below, to specify which implementations should be used for the test
-		//pathFinderFactories.add(new PathFinderFactoryYanQi<Edge>());
-		//pathFinderFactories.add(new PathFinderFactoryBsmock<Edge>());
+//		pathFinderFactories.add(new PathFinderFactoryJgrapht());
+//		pathFinderFactories.add(new PathFinderFactoryBsmock());
+//		pathFinderFactories.add(new PathFinderFactoryMulavito());
+//		pathFinderFactories.add(new PathFinderFactoryReneArgento());
+		pathFinderFactories.add(new PathFinderFactoryYanQi());
+		pathFinderFactories.add(new PathFinderFactoryJgraphtYen());		
 //		pathFinderFactories.add(new PathFinderFactoryJgrapht<Edge>()); // 67 seconds, compaerd to less than 1 seconds for the other two implementations 
 		
 //		runTestCaseDefinedInXmlFile("tiny_graph_01.xml", pathFinderFactories);
-//		runTestCaseDefinedInXmlFile("tiny_graph_02.xml", pathFinderFactories);
+		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, "tiny_graph_01.xml", pathFinderFactories);
+//		runTestCaseDefinedInXmlFile(BASE_DIRECTORY_FOR_XML_TEST_FILES, "very_small_graph.xml", pathFinderFactories);
+		
 //		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "network.xml", pathFinderFactories);
 //		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_5.xml", pathFinderFactories);
 		//runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, "test_50.xml", pathFinderFactories);
