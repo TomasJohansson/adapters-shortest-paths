@@ -35,6 +35,8 @@ import com.programmerare.shortestpaths.utils.TimeMeasurer;
  * @author Tomas Johansson
  */
 public class GraphShortestPathAssertionHelper {
+
+	private GraphAndPathRenderer graphAndPathRenderer = new GraphAndPathRenderer();
 	
 	public GraphShortestPathAssertionHelper(final boolean isExecutingThroughTheMainMethod) {
 		this.setConsoleOutputDesired(isExecutingThroughTheMainMethod ? ConsoleOutputDesired.ALL : ConsoleOutputDesired.NONE);
@@ -99,12 +101,13 @@ public class GraphShortestPathAssertionHelper {
 			);
 			List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, numberOfPathsToFind);
 			assertNotNull(shortestPaths);
+			//printResultPathsToConsoleOutput(shortestPaths, pathFinder);
 			assertThat("At least some path should be found", shortestPaths.size(), greaterThanOrEqualTo(1));
 			output(
-					messagePrefixWithInformationAboutXmlSourcefileWithTestData					
-						+ "Seconds: " + tm.getSeconds() 
-						+ ". Implementation: " + pathFinder.getClass().getName(), 
-					ConsoleOutputDesired.TIME_MEASURE
+				messagePrefixWithInformationAboutXmlSourcefileWithTestData					
+					+ "Seconds: " + tm.getSeconds() 
+					+ ". Implementation: " + pathFinder.getClass().getName(), 
+				ConsoleOutputDesired.TIME_MEASURE
 			);
 			if(isAllConsoleOutputDesired()) {
 				displayListOfShortestPath(shortestPaths);
@@ -161,6 +164,14 @@ public class GraphShortestPathAssertionHelper {
 			System.out.println(o);
 		}
 	}
+
+	private void printResultPathsToConsoleOutput(List<Path> shortestPaths, PathFinder pathFinder) {
+		//this.setConsoleOutputDesired(ConsoleOutputDesired.ALL);
+		output("printResultPathsToConsoleOutput starts for implementation " + pathFinder.getClass().getName());
+		output(graphAndPathRenderer.getPathsAsStringWithOnePathPerLine(shortestPaths));
+		output("printResultPathsToConsoleOutput ends for implementation " + pathFinder.getClass().getName());
+		//this.setConsoleOutputDesired(ConsoleOutputDesired.NONE);
+	}
 	
 	private ConsoleOutputDesired consoleOutputDesired = ConsoleOutputDesired.NONE;
 
@@ -184,7 +195,9 @@ public class GraphShortestPathAssertionHelper {
 
 		final String actualPathAsString = getPathAsPrettyPrintedStringForConsoleOutput(actualPath);
 		final String expectedPathAsString = getPathAsPrettyPrintedStringForConsoleOutput(expectedPath);
-		final String messageIncludingActualAndExpectedPath = message + " , actualPath : " + actualPathAsString +  " expectedPath :  " + expectedPathAsString;
+		final String messageIncludingActualAndExpectedPath = message + " , actualPath : " + actualPathAsString +  " expectedPath :  " + expectedPathAsString
+			+ "\n actual path (in format for xml file): " + graphAndPathRenderer.getPathAsString(actualPath,true)
+			+ "\n expected path (in format for xml file): " + graphAndPathRenderer.getPathAsString(expectedPath,true);
 
 		assertEquals(
 			"Mismatching number of vertices/edges in the path, " + messageIncludingActualAndExpectedPath, 
