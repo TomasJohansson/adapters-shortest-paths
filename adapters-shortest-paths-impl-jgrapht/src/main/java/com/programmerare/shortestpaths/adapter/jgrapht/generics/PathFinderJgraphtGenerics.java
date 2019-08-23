@@ -5,7 +5,20 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.KShortestPaths;
+
+// import org.jgrapht.alg.shortestpath.KShortestPaths;
+//	The above (previously used) KShortestPaths was removed 2018-05-17 in git commit "6db9154ea569e2cb46a42815a75086ffda1b4db4"
+//	(and was deprecated In favor of KShortestSimplePaths )
+import org.jgrapht.alg.shortestpath.KShortestSimplePaths;
+// When the code in this class used 'KShortestSimplePaths' instead of 'KShortestPaths'
+// (because of the above reason)
+// there was a failure in one of the tests.
+// TODO: figure out if it seem to be a bug or if it is because of incorrect usage ...
+
+// Anyway, now there is also a new class 'YenKShortestPath' in 'jgrapht'
+// which can be used instead, and then all tests succeed,
+// so therefore it is indeed now used instead.
+import org.jgrapht.alg.shortestpath.YenKShortestPath;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
@@ -20,7 +33,7 @@ import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
- * @see https://en.wikipedia.org/wiki/Adapter_pattern
+ * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">https://en.wikipedia.org/wiki/Adapter_pattern</a>
  */
 public class PathFinderJgraphtGenerics
 	< 
@@ -75,8 +88,10 @@ public class PathFinderJgraphtGenerics
 		final String sourceVertexId = startVertex.getVertexId();
 		final String targetVertexId = endVertex.getVertexId();
 		
-		final KShortestPaths<String, WeightedEdge> ksp = new KShortestPaths<String, WeightedEdge>(graphAdaptee, maxNumberOfPaths);
-		final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId);
+		//final KShortestSimplePaths<String, WeightedEdge> ksp = new KShortestSimplePaths<String, WeightedEdge>(graphAdaptee, maxNumberOfPaths);
+		//final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
+		final YenKShortestPath<String, WeightedEdge> yenKShortestPath = new YenKShortestPath<>(graphAdaptee);
+		final List<GraphPath<String, WeightedEdge>> listOfPaths =yenKShortestPath.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
 	    
 	    for (final GraphPath<String, WeightedEdge> graphPath : listOfPaths) {
 	    	final List<E> edges = new ArrayList<E>();
