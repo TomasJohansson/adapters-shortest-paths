@@ -10,6 +10,7 @@ import static org.junit.Assert.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
 import org.junit.Test;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
@@ -39,13 +40,26 @@ public class SmallGraphTest {
 		testFindShortestPaths(
 			new PathFinderFactoryBsmock()
 		);		
-	}	
-	
+	}
+
 	@Test
-	public void testFindShortestPaths_Jgrapht() {
+	public void testFindShortestPaths_Jgrapht_defaultConstructorWithDefaultAlgorithm() {
 		testFindShortestPaths(
 			new PathFinderFactoryJgrapht()
 		);		
+	}
+	@Test
+	public void testFindShortestPaths_Jgrapht_BellmanFord() {
+		testFindShortestPaths(
+			new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFord)
+		);		
+	}
+
+	@Test
+	public void testFindShortestPaths_Jgrapht_Yen() {
+		testFindShortestPaths(
+			new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsYen)
+		);
 	}
 	
 	@Test

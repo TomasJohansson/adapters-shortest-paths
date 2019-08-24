@@ -4,22 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
 import org.jgrapht.GraphPath;
 
-// import org.jgrapht.alg.shortestpath.KShortestPaths;
-//	The above (previously used) KShortestPaths was removed 2018-05-17 in git commit "6db9154ea569e2cb46a42815a75086ffda1b4db4"
-//	(and was deprecated In favor of KShortestSimplePaths )
 import org.jgrapht.Graphs;
-import org.jgrapht.alg.shortestpath.KShortestSimplePaths;
-// When the code in this class used 'KShortestSimplePaths' instead of 'KShortestPaths'
-// (because of the above reason)
-// there was a failure in one of the tests.
-// TODO: figure out if it seem to be a bug or if it is because of incorrect usage ...
+import org.jgrapht.alg.interfaces.KShortestPathAlgorithm;
 
-// Anyway, now there is also a new class 'YenKShortestPath' in 'jgrapht'
-// which can be used instead, and then all tests succeed,
-// so therefore it is indeed now used instead.
-import org.jgrapht.alg.shortestpath.YenKShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
@@ -48,20 +38,25 @@ public class PathFinderJgraphtGenerics
 	implements PathFinderGenerics<P, E, V, W> 
 {
 	private final SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graphAdaptee;
+
+	private final JGraphtAlgorithm jGraphtAlgorithm;
 	
 	protected PathFinderJgraphtGenerics(
 		final GraphGenerics<E, V, W> graph 
 	) {
 		this(
 			graph, 
-			null				
+			null,
+			JGraphtAlgorithm.getDefault()	
 		);
 	}
 	protected PathFinderJgraphtGenerics(
 		final GraphGenerics<E, V, W> graph, 
-		final PathFactory<P, E, V, W> pathFactory
+		final PathFactory<P, E, V, W> pathFactory,
+		final JGraphtAlgorithm jGraphtAlgorithm
 	) {
 		super(graph, pathFactory);
+		this.jGraphtAlgorithm = jGraphtAlgorithm;
 		graphAdaptee = new SimpleDirectedWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
 		populateGraphAdapteeWithVerticesAndWeights();
 	}
@@ -89,11 +84,9 @@ public class PathFinderJgraphtGenerics
 
 		final String sourceVertexId = startVertex.getVertexId();
 		final String targetVertexId = endVertex.getVertexId();
-		
-		//final KShortestSimplePaths<String, WeightedEdge> ksp = new KShortestSimplePaths<String, WeightedEdge>(graphAdaptee, maxNumberOfPaths);
-		//final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
-		final YenKShortestPath<String, DefaultWeightedEdge> yenKShortestPath = new YenKShortestPath<>(graphAdaptee);
-		final List<GraphPath<String, DefaultWeightedEdge>> listOfPaths =yenKShortestPath.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
+
+		final KShortestPathAlgorithm<String, DefaultWeightedEdge> ksp = JGraphtAlgorithmFactory.CreateKShortestPathAlgorithm(this.jGraphtAlgorithm, graphAdaptee);
+		final List<GraphPath<String, DefaultWeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
 	    
 	    for (final GraphPath<String, DefaultWeightedEdge> graphPath : listOfPaths) {
 	    	final List<E> edges = new ArrayList<E>();
@@ -105,6 +98,9 @@ public class PathFinderJgraphtGenerics
 	    	final W totalWeight = super.createInstanceWithTotalWeight(graphPath.getWeight(), edges);
 	    	paths.add(super.createPath(totalWeight, edges));
 		}
+		//System.out.println("ksp implementation class: " + ksp.getClass().getName());
+		//	ksp implementation class: org.jgrapht.alg.shortestpath.YenKShortestPath
+		//	ksp implementation class: org.jgrapht.alg.shortestpath.KShortestSimplePaths
 		return Collections.unmodifiableList(paths);
 	}
 

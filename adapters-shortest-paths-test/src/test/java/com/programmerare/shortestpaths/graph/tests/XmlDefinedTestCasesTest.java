@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -170,10 +171,16 @@ public class XmlDefinedTestCasesTest {
 	 */
 	@Test   
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		// graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 		pathFinderFactories.add(new PathFinderFactoryReneArgento()); // 6 seconds
 		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 12 seconds, reasonable acceptable for frequent regression testing
-		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 12 seconds
+		
+		// Two alternative algorithms can be used with Jgrapht, but Yen is faster
+		// and should also be used automatically with the default constructor below
+		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 12 seconds (using Yen i.e. the below Yen algorithm is the default)
+		pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsYen)); // 12 seconds
+		// pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFord)); // gave up waiting after a few minutes
+		
 		// pathFinderFactories.add(new PathFinderFactoryMulavito()); // 117 seconds (about two minutes !) NOT acceptable for frequent regression testing 
 		//pathFinderFactories.add(new PathFinderFactoryBsmock()); // 189 seconds (three minutes !) NOT acceptable for frequent regression testing
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);

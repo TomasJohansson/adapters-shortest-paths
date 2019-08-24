@@ -19,10 +19,20 @@ public class PathFinderFactoryJgrapht
 		>	
 	implements PathFinderFactory
 {
+	private final JGraphtAlgorithm jGraphtAlgorithm;
+	
+	public PathFinderFactoryJgrapht(final JGraphtAlgorithm jGraphtAlgorithm) {
+		super();
+		this.jGraphtAlgorithm = jGraphtAlgorithm;
+	}
+	public PathFinderFactoryJgrapht() {
+		this(JGraphtAlgorithm.getDefault());
+	}	
+
 	@Override
 	public PathFinder createPathFinder(
 		final GraphGenerics<Edge, Vertex, Weight> graph
 	) {
-		return new PathFinderJgrapht(graph);
+		return new PathFinderJgrapht(graph, this.jGraphtAlgorithm);
 	}
 }

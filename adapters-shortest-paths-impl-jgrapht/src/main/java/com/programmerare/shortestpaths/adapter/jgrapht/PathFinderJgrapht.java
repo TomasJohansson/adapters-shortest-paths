@@ -19,8 +19,10 @@ public class PathFinderJgrapht
 	implements PathFinder
 {
 	protected PathFinderJgrapht(
-		final GraphGenerics<Edge, Vertex, Weight> graph
+		final GraphGenerics<Edge, Vertex, Weight> graph,
+		final JGraphtAlgorithm jGraphtAlgorithm
 	) {
-		super(graph, new PathFactoryDefault());
+		super(graph, new PathFactoryDefault(), jGraphtAlgorithm);
 	}
+
 }
