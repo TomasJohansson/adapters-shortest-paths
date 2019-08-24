@@ -19,6 +19,7 @@ import org.jgrapht.alg.shortestpath.KShortestSimplePaths;
 // which can be used instead, and then all tests succeed,
 // so therefore it is indeed now used instead.
 import org.jgrapht.alg.shortestpath.YenKShortestPath;
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
@@ -45,7 +46,7 @@ public class PathFinderJgraphtGenerics
 	extends PathFinderBase<P,  E, V, W> 
 	implements PathFinderGenerics<P, E, V, W> 
 {
-	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
+	private final SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graphAdaptee;
 	
 	protected PathFinderJgraphtGenerics(
 		final GraphGenerics<E, V, W> graph 
@@ -60,7 +61,7 @@ public class PathFinderJgraphtGenerics
 		final PathFactory<P, E, V, W> pathFactory
 	) {
 		super(graph, pathFactory);
-		graphAdaptee = new SimpleDirectedWeightedGraph<String, WeightedEdge>(WeightedEdge.class);
+		graphAdaptee = new SimpleDirectedWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
 		populateGraphAdapteeWithVerticesAndWeights();
 	}
 	
@@ -72,7 +73,7 @@ public class PathFinderJgraphtGenerics
 		
 		final List<E> edges = this.getGraph().getEdges();
 		for (final E edge : edges) {
-			final WeightedEdge weightedEdge = this.graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
+			final DefaultWeightedEdge weightedEdge = this.graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId());
 			this.graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
 		}		
 	}
@@ -90,13 +91,13 @@ public class PathFinderJgraphtGenerics
 		
 		//final KShortestSimplePaths<String, WeightedEdge> ksp = new KShortestSimplePaths<String, WeightedEdge>(graphAdaptee, maxNumberOfPaths);
 		//final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
-		final YenKShortestPath<String, WeightedEdge> yenKShortestPath = new YenKShortestPath<>(graphAdaptee);
-		final List<GraphPath<String, WeightedEdge>> listOfPaths =yenKShortestPath.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
+		final YenKShortestPath<String, DefaultWeightedEdge> yenKShortestPath = new YenKShortestPath<>(graphAdaptee);
+		final List<GraphPath<String, DefaultWeightedEdge>> listOfPaths =yenKShortestPath.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
 	    
-	    for (final GraphPath<String, WeightedEdge> graphPath : listOfPaths) {
+	    for (final GraphPath<String, DefaultWeightedEdge> graphPath : listOfPaths) {
 	    	final List<E> edges = new ArrayList<E>();
-	    	final List<WeightedEdge> edgeList = graphPath.getEdgeList();
-	    	for (final WeightedEdge weightedEdge : edgeList) {
+	    	final List<DefaultWeightedEdge> edgeList = graphPath.getEdgeList();
+	    	for (final DefaultWeightedEdge weightedEdge : edgeList) {
 	    		final E edge = getOriginalEdgeInstance(weightedEdge);
 	    		edges.add(edge);
 			}
@@ -106,8 +107,10 @@ public class PathFinderJgraphtGenerics
 		return Collections.unmodifiableList(paths);
 	}
 
-	private E getOriginalEdgeInstance(final WeightedEdge weightedEdge) {
-		return super.getOriginalEdgeInstance(weightedEdge.getSourceIdAsStringValue(), weightedEdge.getTargetIdAsStringValue());
+	private E getOriginalEdgeInstance(final DefaultWeightedEdge weightedEdge) {
+		final String edgeSource = this.graphAdaptee.getEdgeSource(weightedEdge);
+		final String edgeTarget = this.graphAdaptee.getEdgeTarget(weightedEdge);		
+		return super.getOriginalEdgeInstance(edgeSource, edgeTarget);
 	}
 }
 //https://github.com/jgrapht/jgrapht/blob/2432532a6642e27d99c8124a094751577a4df655/jgrapht-core/src/test/java/org/jgrapht/alg/KSPExampleTest.java
