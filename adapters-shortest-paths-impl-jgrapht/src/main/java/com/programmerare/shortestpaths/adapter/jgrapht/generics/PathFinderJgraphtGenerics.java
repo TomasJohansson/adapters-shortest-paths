@@ -9,6 +9,7 @@ import org.jgrapht.GraphPath;
 // import org.jgrapht.alg.shortestpath.KShortestPaths;
 //	The above (previously used) KShortestPaths was removed 2018-05-17 in git commit "6db9154ea569e2cb46a42815a75086ffda1b4db4"
 //	(and was deprecated In favor of KShortestSimplePaths )
+import org.jgrapht.Graphs;
 import org.jgrapht.alg.shortestpath.KShortestSimplePaths;
 // When the code in this class used 'KShortestSimplePaths' instead of 'KShortestPaths'
 // (because of the above reason)
@@ -67,14 +68,14 @@ public class PathFinderJgraphtGenerics
 	
 	private void populateGraphAdapteeWithVerticesAndWeights() {
 		final List<V> vertices = this.getGraph().getVertices();
-		for (final Vertex vertex : vertices) {
-			this.graphAdaptee.addVertex(vertex.getVertexId());	
-		}
-		
 		final List<E> edges = this.getGraph().getEdges();
 		for (final E edge : edges) {
-			final DefaultWeightedEdge weightedEdge = this.graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId());
-			this.graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
+			Graphs.addEdgeWithVertices(
+				this.graphAdaptee,
+				edge.getStartVertex().getVertexId(),
+				edge.getEndVertex().getVertexId(),
+				edge.getEdgeWeight().getWeightValue()
+			);
 		}		
 	}
 
