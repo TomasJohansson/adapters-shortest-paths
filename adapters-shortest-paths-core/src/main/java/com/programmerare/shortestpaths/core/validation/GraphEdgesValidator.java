@@ -14,7 +14,7 @@ import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
-import com.programmerare.shortestpaths.utils.EdgeUtility;
+import com.programmerare.shortestpaths.core.utils.EdgeUtility;
 
 public final class GraphEdgesValidator<P extends PathGenerics<E,V,W> , E extends EdgeGenerics<V, W> , V extends Vertex , W extends Weight> {
 

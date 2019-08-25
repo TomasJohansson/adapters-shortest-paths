@@ -17,7 +17,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
 import com.programmerare.shortestpaths.core.impl.EdgeImpl;
 import com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl;
-import com.programmerare.shortestpaths.utils.StringUtility;
+import com.programmerare.shortestpaths.core.utils.StringUtility;
 
 /**
  * See javadoc comments at the two essential methods in this class, i.e. the methods which convert between String and Edge.

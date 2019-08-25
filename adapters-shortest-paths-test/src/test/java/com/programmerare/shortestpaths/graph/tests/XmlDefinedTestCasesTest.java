@@ -36,8 +36,8 @@ import com.programmerare.shortestpaths.graph.utils.FileReaderForGraphEdges;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper.ConsoleOutputDesired;
 import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
-import com.programmerare.shortestpaths.utils.EdgeUtility;
-import com.programmerare.shortestpaths.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
+import com.programmerare.shortestpaths.core.utils.EdgeUtility;
+import com.programmerare.shortestpaths.core.utils.EdgeUtility.SelectionStrategyWhenEdgesAreDuplicated;
 import com.programmerare.shortestpaths.utils.ResourceReader;
 import com.programmerare.shortestpaths.utils.XmlFileReader;
 

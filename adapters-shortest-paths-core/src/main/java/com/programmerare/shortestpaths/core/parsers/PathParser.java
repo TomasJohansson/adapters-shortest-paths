@@ -22,7 +22,7 @@ import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryDefault;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactoryGenerics;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
-import com.programmerare.shortestpaths.utils.StringUtility;
+import com.programmerare.shortestpaths.core.utils.StringUtility;
 
 /**
  *  TODO: write more/better documentation ...

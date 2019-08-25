@@ -20,7 +20,7 @@ import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
-import com.programmerare.shortestpaths.utils.TimeMeasurer;
+import com.programmerare.shortestpaths.core.utils.TimeMeasurer;
 
 /**
  * Used for validation of paths against each other.

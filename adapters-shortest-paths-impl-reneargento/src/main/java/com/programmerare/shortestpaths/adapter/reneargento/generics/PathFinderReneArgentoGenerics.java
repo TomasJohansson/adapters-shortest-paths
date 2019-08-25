@@ -12,7 +12,7 @@ import com.programmerare.shortestpaths.core.api.generics.PathFinderGenerics;
 import com.programmerare.shortestpaths.core.api.generics.PathGenerics;
 import com.programmerare.shortestpaths.core.impl.generics.PathFinderBase;
 import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
-import com.programmerare.shortestpaths.utils.MapperForIntegerIdsAndGeneralStringIds;
+import com.programmerare.shortestpaths.core.utils.MapperForIntegerIdsAndGeneralStringIds;
 
 import chapter4.section4.DirectedEdge;
 import chapter4.section4.EdgeWeightedDigraph;
