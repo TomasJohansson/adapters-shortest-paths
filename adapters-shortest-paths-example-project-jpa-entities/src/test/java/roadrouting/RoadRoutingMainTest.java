@@ -1,7 +1,7 @@
 package roadrouting;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is not a real test class which is doing any assertions, but it is a convenient 
@@ -15,7 +15,7 @@ public class RoadRoutingMainTest {
 
 	private RoadRoutingMain roadRoutingMain;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		roadRoutingMain = new RoadRoutingMain();
 	}
