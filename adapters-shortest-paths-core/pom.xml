@@ -33,26 +33,6 @@
 		</developer>	  
 	</developers>	
 	
-	<dependencies>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<!-- important to include junit-jupiter-engine in the pom file for modules with JUnit 5 tests -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-	
-		<dependency>
-		    <groupId>org.hamcrest</groupId>
-		    <artifactId>hamcrest-core</artifactId>
-		    <scope>test</scope>
-		</dependency>		
-	</dependencies>
-	
 	<build>
 		<resources>
 			<resource>
@@ -64,13 +44,5 @@
 			</resource>	
 		</resources>	
 	</build>
-	
-	<properties>
-		<maven.deploy.skip>true</maven.deploy.skip>
-		<!-- Java 6 is actually enough for the source code in this core module, 
-			except for the tests, since JUnit 5 is used which requires Java 8 --> 
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
 	
 </project> <!-->https://maven.apache.org/pom.html#Quick_Overview -->
