@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
@@ -41,10 +42,24 @@ public class SmallGraphTest {
 	}
 
 	@Test
-	public void testFindShortestPaths_Jgrapht() {
+	public void testFindShortestPaths_Jgrapht_defaultConstructorWithDefaultAlgorithm() {
 		testFindShortestPaths(
 			new PathFinderFactoryJgrapht()
 		);		
+	}
+
+	@Test
+	public void testFindShortestPaths_Jgrapht_BellmanFord() {
+		testFindShortestPaths(
+			new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFord)
+		);		
+	}
+
+	@Test
+	public void testFindShortestPaths_Jgrapht_Yen() {
+		testFindShortestPaths(
+			new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsYen)
+		);
 	}
 
 	@Test

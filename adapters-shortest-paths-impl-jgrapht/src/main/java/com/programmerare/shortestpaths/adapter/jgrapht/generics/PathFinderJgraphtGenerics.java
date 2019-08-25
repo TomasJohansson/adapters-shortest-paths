@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.KShortestPaths;
+
+import org.jgrapht.Graphs;
+import org.jgrapht.alg.interfaces.KShortestPathAlgorithm;
+
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
@@ -20,7 +25,7 @@ import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
- * @see https://en.wikipedia.org/wiki/Adapter_pattern
+ * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">https://en.wikipedia.org/wiki/Adapter_pattern</a>
  */
 public class PathFinderJgraphtGenerics
 	< 
@@ -32,35 +37,40 @@ public class PathFinderJgraphtGenerics
 	extends PathFinderBase<P,  E, V, W> 
 	implements PathFinderGenerics<P, E, V, W> 
 {
-	private final SimpleDirectedWeightedGraph<String, WeightedEdge> graphAdaptee;
+	private final SimpleDirectedWeightedGraph<String, DefaultWeightedEdge> graphAdaptee;
+
+	private final JGraphtAlgorithm jGraphtAlgorithm;
 	
 	protected PathFinderJgraphtGenerics(
 		final GraphGenerics<E, V, W> graph 
 	) {
 		this(
 			graph, 
-			null				
+			null,
+			JGraphtAlgorithm.getDefault()	
 		);
 	}
 	protected PathFinderJgraphtGenerics(
 		final GraphGenerics<E, V, W> graph, 
-		final PathFactory<P, E, V, W> pathFactory
+		final PathFactory<P, E, V, W> pathFactory,
+		final JGraphtAlgorithm jGraphtAlgorithm
 	) {
 		super(graph, pathFactory);
-		graphAdaptee = new SimpleDirectedWeightedGraph<String, WeightedEdge>(WeightedEdge.class);
+		this.jGraphtAlgorithm = jGraphtAlgorithm;
+		graphAdaptee = new SimpleDirectedWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
 		populateGraphAdapteeWithVerticesAndWeights();
 	}
 	
 	private void populateGraphAdapteeWithVerticesAndWeights() {
 		final List<V> vertices = this.getGraph().getVertices();
-		for (final Vertex vertex : vertices) {
-			this.graphAdaptee.addVertex(vertex.getVertexId());	
-		}
-		
 		final List<E> edges = this.getGraph().getEdges();
 		for (final E edge : edges) {
-			final WeightedEdge weightedEdge = this.graphAdaptee.addEdge(edge.getStartVertex().getVertexId(), edge.getEndVertex().getVertexId()); 
-			this.graphAdaptee.setEdgeWeight(weightedEdge, edge.getEdgeWeight().getWeightValue()); 
+			Graphs.addEdgeWithVertices(
+				this.graphAdaptee,
+				edge.getStartVertex().getVertexId(),
+				edge.getEndVertex().getVertexId(),
+				edge.getEdgeWeight().getWeightValue()
+			);
 		}		
 	}
 
@@ -74,25 +84,30 @@ public class PathFinderJgraphtGenerics
 
 		final String sourceVertexId = startVertex.getVertexId();
 		final String targetVertexId = endVertex.getVertexId();
-		
-		final KShortestPaths<String, WeightedEdge> ksp = new KShortestPaths<String, WeightedEdge>(graphAdaptee, maxNumberOfPaths);
-		final List<GraphPath<String, WeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId);
+
+		final KShortestPathAlgorithm<String, DefaultWeightedEdge> ksp = JGraphtAlgorithmFactory.CreateKShortestPathAlgorithm(this.jGraphtAlgorithm, graphAdaptee);
+		final List<GraphPath<String, DefaultWeightedEdge>> listOfPaths = ksp.getPaths(sourceVertexId, targetVertexId, maxNumberOfPaths);
 	    
-	    for (final GraphPath<String, WeightedEdge> graphPath : listOfPaths) {
+	    for (final GraphPath<String, DefaultWeightedEdge> graphPath : listOfPaths) {
 	    	final List<E> edges = new ArrayList<E>();
-	    	final List<WeightedEdge> edgeList = graphPath.getEdgeList();
-	    	for (final WeightedEdge weightedEdge : edgeList) {
+	    	final List<DefaultWeightedEdge> edgeList = graphPath.getEdgeList();
+	    	for (final DefaultWeightedEdge weightedEdge : edgeList) {
 	    		final E edge = getOriginalEdgeInstance(weightedEdge);
 	    		edges.add(edge);
 			}
 	    	final W totalWeight = super.createInstanceWithTotalWeight(graphPath.getWeight(), edges);
 	    	paths.add(super.createPath(totalWeight, edges));
 		}
+		//System.out.println("ksp implementation class: " + ksp.getClass().getName());
+		//	ksp implementation class: org.jgrapht.alg.shortestpath.YenKShortestPath
+		//	ksp implementation class: org.jgrapht.alg.shortestpath.KShortestSimplePaths
 		return Collections.unmodifiableList(paths);
 	}
 
-	private E getOriginalEdgeInstance(final WeightedEdge weightedEdge) {
-		return super.getOriginalEdgeInstance(weightedEdge.getSourceIdAsStringValue(), weightedEdge.getTargetIdAsStringValue());
+	private E getOriginalEdgeInstance(final DefaultWeightedEdge weightedEdge) {
+		final String edgeSource = this.graphAdaptee.getEdgeSource(weightedEdge);
+		final String edgeTarget = this.graphAdaptee.getEdgeTarget(weightedEdge);		
+		return super.getOriginalEdgeInstance(edgeSource, edgeTarget);
 	}
 }
 //https://github.com/jgrapht/jgrapht/blob/2432532a6642e27d99c8124a094751577a4df655/jgrapht-core/src/test/java/org/jgrapht/alg/KSPExampleTest.java
