@@ -14,7 +14,6 @@ import org.junit.Test;
 public class RoadRoutingMainTest {
 
 	private RoadRoutingMain roadRoutingMain;
-	private boolean useDatabase;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -22,15 +21,18 @@ public class RoadRoutingMainTest {
 	}
 
 	@Test
-	public void testMainWithDatabase() {
-		useDatabase = true;
-		roadRoutingMain.main(useDatabase);
+	public void testMainWithSqliteDatabaseFile() {
+		roadRoutingMain.main(CityRoadServiceType.DatabaseSqliteFile);
+	}
+
+	@Test
+	public void testMainWithSqliteDatabaseInMemory() {
+		roadRoutingMain.main(CityRoadServiceType.DatabaseSqliteInMemoryWithoutFile);
 	}
 	
 	@Test
 	public void testMainWithoutDatabase() {
-		useDatabase = false;
-		roadRoutingMain.main(useDatabase);
+		roadRoutingMain.main(CityRoadServiceType.NoDatabase);
 	}	
 
 }

@@ -1,7 +1,9 @@
 package roadrouting.database;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,6 +11,7 @@ import javax.persistence.Persistence;
 
 import roadrouting.City;
 import roadrouting.CityRoadService;
+import roadrouting.CityRoadServiceType;
 import roadrouting.Road;
 
 /**
@@ -17,10 +20,15 @@ import roadrouting.Road;
 public final class CityRoadServiceDatabase implements CityRoadService {
     
     /**
-     * The name of this constant must be the same as the file name for the sqlite file 
-     * specified in "src/main/resources/META-INF/persistence.xml"
-     * which should have a row like this:
+     * Normally, the name of a constant like this (i.e. the name of the sqlite file in a JPA application)
+	 * should be the same as a file name specified in the JPA persisting unit file 
+	 * "src/main/resources/META-INF/persistence.xml"
+     * which normally have a row like this:
      * <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:roadrouting_example_database.sqlite" />
+	 * However, in this example project the constant below is actually used for overriding the default url
+	 * when the EntityManagerFactory is created.
+	 * The default in the JPA file is to use an in-memory sqlite database like this:
+	 * 
      */
     private final static String NameOfSqliteFile = "roadrouting_example_database.sqlite";
     
@@ -41,14 +49,30 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 	private final EntityManagerFactory emf;
 	private final EntityManager entityManager;
 
-	public CityRoadServiceDatabase(final CityRoadService cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty) {
-		this.deleteSqliteFileIfItAlreadyExists();
-		emf = Persistence.createEntityManagerFactory(NAME_OF_PERSISTANCE_UNIT_IN_PERSISTENCE_XML_FILE);
+	public CityRoadServiceDatabase(
+		final CityRoadService cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty,
+		final CityRoadServiceType cityRoadServiceType
+	) {
+		final Map<String, String> persistenceProperties = createPersistenceProperties(cityRoadServiceType); 
+		emf = Persistence.createEntityManagerFactory(NAME_OF_PERSISTANCE_UNIT_IN_PERSISTENCE_XML_FILE, persistenceProperties);
 		entityManager = emf.createEntityManager();
 		cityDataMapper = new CityDataMapper(entityManager);
 		roadDataMapper = new RoadDataMapper(entityManager);
-		
 		this.cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty = cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty;
+	}
+
+	private Map<String, String> createPersistenceProperties(final CityRoadServiceType cityRoadServiceType)
+	{
+		final Map<String, String> persistenceProperties = new HashMap<String, String>();
+		if(cityRoadServiceType == CityRoadServiceType.DatabaseSqliteFile) {
+			this.deleteSqliteFileIfItAlreadyExists(); // kind of ugly to have this invocation here in 'createPersistenceProperties' but another similar if statement outside the method does not really feel great neither     
+			final String connectionStringForSqliteFile = "jdbc:sqlite:" + NameOfSqliteFile;
+			persistenceProperties.put("javax.persistence.jdbc.url", connectionStringForSqliteFile);
+		}
+		else if(cityRoadServiceType != CityRoadServiceType.DatabaseSqliteInMemoryWithoutFile) {
+			throw new UnsupportedOperationException("cityRoadServiceType : " + cityRoadServiceType);
+		}		
+		return persistenceProperties;
 	}
 
 	public City getStartCity() {

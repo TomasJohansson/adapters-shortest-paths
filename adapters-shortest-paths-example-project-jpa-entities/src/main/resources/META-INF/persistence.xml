@@ -12,9 +12,18 @@
 		<properties>
  			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
 			
-			<!-- if the file name "roadrouting_example_database.sqlite" is changed in the row below then it must also be changed in the constant in the class CityRoadServiceDatabase -->
- 			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:roadrouting_example_database.sqlite" />
-			<!-- the sqlfile above "roadrouting_example_database.sqlite" becomes created in the "user directory" i.e. 'System.getProperty("user.dir")' -->
+			<!-- 
+				the default in this example project is to use an in-memory database with the below connection string ("url") 
+			 	but a database file can also be used when EntityManagerFactory is created if such an option 
+			 	has been provided at the beginning of the code execution i.e. by setting a value of an enum
+			 	(i.e. the parameter for the start method  in the class RoadRoutingMain)
+			 -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite::memory:" />
+			<!--
+				if it would be desirable to instead define a sqlite file to become created then the following syntax could be used:
+				<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:roadrouting_example_database.sqlite" />
+				Then the sqlfile above (i.e. "roadrouting_example_database.sqlite")  would become created in the "user directory" i.e. 'System.getProperty("user.dir")'
+           -->			
 
 			<property name="javax.persistence.schema-generation.database.action" value="create" />
  			<!--

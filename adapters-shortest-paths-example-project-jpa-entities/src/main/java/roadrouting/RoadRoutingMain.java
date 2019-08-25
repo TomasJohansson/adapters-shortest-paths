@@ -19,19 +19,22 @@ public class RoadRoutingMain {
 	
 	/**
 	 * Use the following commands to run the main method with Maven
-	* 			(but use the last "1" argument only if you want to use SQLite database,
-	* 		 	 so for example use "0" if you want hardcoded 'entities' instead) :
+	* 			(but use the last "1" argument only if you want to use SQLite database file,
+	 * 			 or use "2" instead if you want to use SQLite database in memory,	
+	* 		 	 or use "0" instead if you want hardcoded 'entities') :
 	 * 		cd adapters-shortest-paths-example-project-jpa-entities
 	 * 		mvn compile 
 	 * 		mvn exec:java -Dexec.mainClass="roadrouting.RoadRoutingMain" -Dexec.args="1"
-	 * @param args "1" if you want to use the database, otherwise hardcoded 'entities' will be used.
+	 * @param args "1" if you want to use the sqlite database file, or "2" if you want to use sqlite database in memory,
+	 * 				or otherwise hardcoded 'entities' will be used.
 	 */
 	public static void main(String[] args) {
-		final boolean useDatabase = parseArguments(args);
+		final CityRoadServiceType cityRoadServiceType = parseArguments(args);
+		main(cityRoadServiceType);
 	}
 	
-	public static void main(boolean useDatabase) {
-		final CityRoadService cityRoadService = CityRoadServiceFactory.createCityRoadService(useDatabase);
+	public static void main(final CityRoadServiceType cityRoadServiceType) {
+		final CityRoadService cityRoadService = CityRoadServiceFactory.createCityRoadService(cityRoadServiceType);
 		try {
 			final List<Road> roads = cityRoadService.getAllRoads();
 			final City startCity = cityRoadService.getStartCity();
@@ -130,11 +133,21 @@ public class RoadRoutingMain {
 
 	/**
 	 * @param args
-	 * @return true if args[0] == "1" otherwise false
+	 * @return 	
+	 * 		CityRoadServiceType.DatabaseSqliteFile if args[0] == "1"
+	 * 		CityRoadServiceType.DatabaseSqliteInMemoryWithoutFile if args[0] == "2"	
+	 *		otherwise return CityRoadServiceType.NoDatabase
 	 */
-	private static boolean parseArguments(String[] args) {
-		if(args == null || args.length < 1) return false;
-		return args[0].equals("1");
+	private static CityRoadServiceType parseArguments(String[] args) {
+		if(args == null || args.length < 1) return CityRoadServiceType.NoDatabase;
+		final String parameter = args[0];
+		if(parameter.equals("1")) {
+			return CityRoadServiceType.DatabaseSqliteFile;
+		}
+		else if(parameter.equals("2")) {
+			return CityRoadServiceType.DatabaseSqliteInMemoryWithoutFile;
+		}
+		return CityRoadServiceType.NoDatabase;
 	}
 	
 }
