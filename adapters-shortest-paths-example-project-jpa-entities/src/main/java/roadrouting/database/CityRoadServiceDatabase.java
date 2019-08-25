@@ -1,5 +1,6 @@
 package roadrouting.database;
 
+import java.io.File;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -14,7 +15,15 @@ import roadrouting.Road;
  * @author Tomas Johansson
  */
 public final class CityRoadServiceDatabase implements CityRoadService {
-
+    
+    /**
+     * The name of this constant must be the same as the file name for the sqlite file 
+     * specified in "src/main/resources/META-INF/persistence.xml"
+     * which should have a row like this:
+     * <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:roadrouting_example_database.sqlite" />
+     */
+    private final static String NameOfSqliteFile = "roadrouting_example_database.sqlite";
+    
 	private List<City> allCities;
 	private List<Road> allRoads;
 	private City startCity;
@@ -31,8 +40,9 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 	
 	private final EntityManagerFactory emf;
 	private final EntityManager entityManager;
-	
+
 	public CityRoadServiceDatabase(final CityRoadService cityRoadServiceProvidingDataForPopulatingDatabaseIfEmpty) {
+		this.deleteSqliteFileIfItAlreadyExists();
 		emf = Persistence.createEntityManagerFactory(NAME_OF_PERSISTANCE_UNIT_IN_PERSISTENCE_XML_FILE);
 		entityManager = emf.createEntityManager();
 		cityDataMapper = new CityDataMapper(entityManager);
@@ -164,5 +174,22 @@ public final class CityRoadServiceDatabase implements CityRoadService {
 			emf.close();
 		}
 	}
-	
+
+	private void deleteSqliteFileIfItAlreadyExists()
+	{
+		final String userDirectory = System.getProperty("user.dir");
+		final File sqliteFile = new File(userDirectory, NameOfSqliteFile);
+		if(sqliteFile.exists()) {
+			System.out.println("File existed but will now become deleted: " + sqliteFile.getAbsolutePath());
+			sqliteFile.delete();
+			// now wait a second for the file to become deleted from the operating system file system 
+            // to avoid potential problem with hibernate immediately trying to recreate it but then 
+            // thinking it already exists 
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+	}
 }

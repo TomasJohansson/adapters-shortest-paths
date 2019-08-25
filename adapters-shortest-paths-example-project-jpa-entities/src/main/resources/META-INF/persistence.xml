@@ -11,7 +11,10 @@
 
 		<properties>
  			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
+			
+			<!-- if the file name "roadrouting_example_database.sqlite" is changed in the row below then it must also be changed in the constant in the class CityRoadServiceDatabase -->
  			<property name="javax.persistence.jdbc.url" value="jdbc:sqlite:roadrouting_example_database.sqlite" />
+			<!-- the sqlfile above "roadrouting_example_database.sqlite" becomes created in the "user directory" i.e. 'System.getProperty("user.dir")' -->
 
 			<property name="javax.persistence.schema-generation.database.action" value="create" />
  			<!--
