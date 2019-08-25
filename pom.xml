@@ -1,6 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+	<!--
+	IMPORTANT NOTE: Currently, if you want to use this Maven pom file as it is, then you need to have defined 
+	an environment variable "JDK9" which is used further down in this file as <jdk>${env.JDK9}</jdk> 
+	-->
 	
+	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.programmerare.shortest-paths</groupId>
 	<artifactId>adapters-shortest-paths</artifactId>
 	<version>1.0.0</version>
@@ -92,35 +96,84 @@
 			</dependency>
 		
 			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.12</version>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>5.5.1</version>
 				<scope>test</scope>
 			</dependency>
+			<!-- important to include junit-jupiter-engine in the pom file for modules with JUnit 5 tests -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>5.5.1</version>
+				<scope>test</scope>
+			</dependency>			
 
 		</dependencies>		
 	</dependencyManagement>
 
 	<modules>
 		<module>adapters-shortest-paths-core</module>
-		
 		<module>adapters-shortest-paths-impl-jgrapht</module> 	<!-- https://github.com/jgrapht/jgrapht -->
 		<module>adapters-shortest-paths-impl-yanqi</module> 	<!-- https://github.com/yan-qi/k-shortest-paths-java-version -->
 		<module>adapters-shortest-paths-impl-bsmock</module> 	<!-- https://github.com/bsmock/k-shortest-paths -->
 		<module>adapters-shortest-paths-impl-reneargento</module>
 		<module>adapters-shortest-paths-impl-mulavito</module>
-		
 		<module>adapters-shortest-paths-test</module>
 	</modules>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		  	
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
+		<!-- Junit 5 requires Java 8 , and therefore two modules override the above configuration in their pom files  -->
+		
+		<!-- JDK 9 supports compiling to Java 6 : -->
+		<maven.compiler.forceJavacCompilerUse>true</maven.compiler.forceJavacCompilerUse>
+		<jdk.version>9</jdk.version>
+		<jdk>${env.JDK9}</jdk>        
 	</properties>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.1</version>
+                    <configuration>
+						<!--
+                        <source>1.6</source>
+                        <target>1.6</target>
+						-->
+						<!--
+						https://stackoverflow.com/questions/12414209/compile-maven-module-with-different-java-version
+						The source level can be set like below (and can be overridden i sub modules) 
+							<properties>
+								<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+								<maven.compiler.source>1.6</maven.compiler.source>
+								<maven.compiler.target>1.6</maven.compiler.target>						 
+						JDK 9 supports compiling to Java 6
+						-->
+						<showDeprecation>true</showDeprecation>
+						<showWarnings>true</showWarnings>
+						<executable>${jdk}/bin/javac</executable>
+						<fork>true</fork>
+                    </configuration>                    
+				</plugin>
+				<!-- the below maven-surefire-plugin and maven-failsafe-plugin :
+				https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven 
+				--> 
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>2.22.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
 		<resources>
 			<resource>
 				<directory>${project.basedir}</directory>

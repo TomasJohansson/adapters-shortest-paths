@@ -11,17 +11,16 @@ import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImp
 import static com.programmerare.shortestpaths.core.impl.generics.GraphGenericsImpl.createGraphGenerics;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -32,7 +31,7 @@ public class GraphGenericsImplTest {
 
 	private EdgeGenerics<Vertex,Weight> edge1, edge2;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		edge1 = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(123));
 		edge2 = createEdgeGenerics(createVertex("B"), createVertex("C"), createWeight(456));		

@@ -8,15 +8,17 @@ package com.programmerare.shortestpaths.core.impl.generics;
 import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPathGenerics;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.GraphGenericsImpl.createGraphGenerics;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -50,7 +52,7 @@ public class PathFinderBaseTest {
 		assertEquals(12.456, createdWeightInstance.getWeightValue(), 0.0001);
 	}
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		final EdgeParser<EdgeGenerics<Vertex, Weight>, Vertex, Weight> edgeParser = EdgeParser.createEdgeParserGenerics();
 		final List<EdgeGenerics<Vertex,Weight>> edges = edgeParser.fromMultiLinedStringToListOfEdges(
@@ -87,10 +89,13 @@ public class PathFinderBaseTest {
 		pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesBeingPartOfTheGraph);
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void validateThatAllEdgesInAllPathsArePartOfTheGraph_SHOULD_throw_exception() {
-		PathFinderConcrete<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight>, EdgeGenerics<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight>, EdgeGenerics<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
-		pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesNOTbeingPartOfTheGraph);
+		GraphValidationException exception = assertThrows(GraphValidationException.class, () -> {
+			PathFinderConcrete<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight>, EdgeGenerics<Vertex,Weight>,Vertex,Weight> pathFinderConcrete = new PathFinderConcrete<PathGenerics<EdgeGenerics<Vertex,Weight>,Vertex,Weight>, EdgeGenerics<Vertex,Weight>,Vertex,Weight>(graph, GraphEdgesValidationDesired.YES);
+			pathFinderConcrete.validateThatAllEdgesInAllPathsArePartOfTheGraph(this.pathWithAllEdgesNOTbeingPartOfTheGraph);
+		});
+		assertThat(exception.getMessage(), containsString("not part of")); // Edge in path is not part of the graph
 	}
 
 	// TODO: refactor duplication ... the same etst class as below is duplicated in another test class file

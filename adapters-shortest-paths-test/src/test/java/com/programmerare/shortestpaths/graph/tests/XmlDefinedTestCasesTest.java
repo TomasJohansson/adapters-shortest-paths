@@ -4,16 +4,16 @@ import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -79,7 +79,7 @@ public class XmlDefinedTestCasesTest {
 	 */
 	private int minimumTotalNumberOfXmlTestFiles = 11; // 2 in base directory and 2 in "bsmock" (actually 3 there but one is in the exclusion list of files) and some more in yanqi directory,...  
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		edgeUtility = EdgeUtility.create();
 		
@@ -168,7 +168,7 @@ public class XmlDefinedTestCasesTest {
 	 * and instead use this method for only testing reasonable fast implementation.
 	 * @throws IOException
 	 */
-	@Test   
+	@Test
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
 		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 		pathFinderFactories.add(new PathFinderFactoryReneArgento()); // 4 seconds
@@ -178,6 +178,7 @@ public class XmlDefinedTestCasesTest {
 		// pathFinderFactories.add(new PathFinderFactoryJgrapht()); // gave up waiting after 30+ minutes !
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
 	}
+
 	
 
 	@Test   

@@ -6,11 +6,10 @@
 package com.programmerare.shortestpaths.core.impl;
 
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
 
@@ -22,7 +21,7 @@ public class VertexImplTest {
 	private Vertex vertexA;
 	private Vertex vertexB;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		vertexA = createVertex(357);
 		vertexB = createVertex("357");		

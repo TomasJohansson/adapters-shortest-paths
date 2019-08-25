@@ -1,8 +1,9 @@
 package com.programmerare.shortestpaths.utils;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class ResourceReaderTest {
 
 	private ResourceReader resourceReader;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		resourceReader = new ResourceReader();
 	}

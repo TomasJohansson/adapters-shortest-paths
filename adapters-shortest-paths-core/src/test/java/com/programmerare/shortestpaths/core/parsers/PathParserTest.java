@@ -6,13 +6,11 @@
 package com.programmerare.shortestpaths.core.parsers;
 
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -28,7 +26,7 @@ public class PathParserTest {
 	
 	private PathParser<Path, Edge, Vertex, Weight> pathParserPathDefault;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		final String stringWithEdges = "A B 5\r\n" + 
 				"A C 6\r\n" + 
@@ -101,10 +99,13 @@ public class PathParserTest {
 		assertEquals(pathParserGenerics.getEdgeIncludingTheWeight("C", "D"), edgesForPath3.get(2));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testgetEdgeIncludingTheWeight_should_throw_exception_when_edge_does_not_exist() {
-		// the edges in the setup method do not contain any edge between vertices A and D
-		pathParserGenerics.getEdgeIncludingTheWeight("A", "D");	
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			// the edges in the setup method do not contain any edge between vertices A and D
+			pathParserGenerics.getEdgeIncludingTheWeight("A", "D");
+		});
+		assertEquals("No edge with these vertices: from A to D", exception.getMessage());		
 	}
 
 	// yes, I am lazy here, with two methods tested, convenient with strings compared to creating Path and Edge objects 

@@ -8,15 +8,16 @@ package com.programmerare.shortestpaths.core.validation;
 import static com.programmerare.shortestpaths.core.impl.PathImpl.createPath;
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.validation.GraphEdgesValidator.createGraphEdgesValidator;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.containsString;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -54,7 +55,7 @@ public class GraphEdgesValidatorTest {
 	private String stringIdY = "y";
 	private String stringIdZ = "Z";
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		graphEdgesValidator = createGraphEdgesValidator();
 		
@@ -84,24 +85,36 @@ public class GraphEdgesValidatorTest {
 		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, vertexB, weight5));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonNullObjects_whenEdgeIsNull() {
-		graphEdgesValidator.validateNonNullObjects(null);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonNullObjects(null);
+		});
+		assertThat(exception.getMessage(), containsString("null"));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonNullObjects_whenStartVertexIsNull() {
-		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, null, vertexA, weight6));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, null, vertexA, weight6));
+		});
+		assertThat(exception.getMessage(), containsString("null"));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonNullObjects_whenEndVertexIsNull() {
-		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, null, weight6));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, null, weight6));
+		});
+		assertThat(exception.getMessage(), containsString("is null"));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonNullObjects_whenWeightIsNull() {
-		graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, vertexB, null));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonNullObjects(createTestEdge(stringIdX, vertexA, vertexB, null));
+		});
+		assertThat(exception.getMessage(), containsString("null"));	
 	}	
 
 	// tests for validateNonNullObjects above
@@ -114,53 +127,80 @@ public class GraphEdgesValidatorTest {
 	
 	// - - - - - -
 	// Three tests for edge id:
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenEdgeIdIsNull() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexA, vertexB, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexA, vertexB, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("must not be")); // the message should be something like "must not be empty or null"
 	}	
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenEdgeIdIsEmptyString() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexA, vertexB, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexA, vertexB, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("empty"));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenEdgeIdIsSomeSpaces() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexA, vertexB, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexA, vertexB, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("empty"));
 	}	
 	
 	// - - - - - -
 	// Three tests for start vertex id:
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenStartVertexIdIsNull() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexWithNullAsId, vertexB, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexWithNullAsId, vertexB, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("null"));
 	}	
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenStartVertexIdIsEmptyString() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexWithEmptyStringAsId, vertexB, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexWithEmptyStringAsId, vertexB, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("empty"));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenStartVertexIdIsSomeSpaces() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexWithSomeSpacesAsId, vertexB, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexWithSomeSpacesAsId, vertexB, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("empty"));
 	}
 	
 	// - - - - - -
 	// Three tests for end vertex id:
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenEndVertexIdIsNull() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexA, vertexWithNullAsId, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdNull, vertexA, vertexWithNullAsId, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("must not be")); // the message should be something like "must not be empty or null"		
 	}	
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenEndVertexIdIsEmptyString() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexA, vertexWithEmptyStringAsId, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdEmpty, vertexA, vertexWithEmptyStringAsId, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("empty"));
 	}
 	
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateNonBlankIds_whenEndVertexIdIsSomeSpaces() {
-		graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexA, vertexWithSomeSpacesAsId, weight5));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graphEdgesValidator.validateNonBlankIds(createTestEdge(stringIdSomeSpaces, vertexA, vertexWithSomeSpacesAsId, weight5));
+		});
+		assertThat(exception.getMessage(), containsString("empty"));
 	}
 	// tests for validateNonBlankIds above
 	// ----------------------------------------------------------------------------------------------
@@ -178,16 +218,19 @@ public class GraphEdgesValidatorTest {
 		graphEdgesValidator.validateUniqueEdgeId(edges.get(2), mapForValidatingUniqueEdgeId);
 	}
 
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateUniqueEdgeId_whenAlllAreNotUnique() {
-		List<Edge> edges = Arrays.asList(
-			createTestEdge(stringIdX, vertexA, vertexB, weight5),
-			createTestEdge(stringIdY, vertexB, vertexC, weight6),
-			createTestEdge(stringIdX, vertexC, vertexD, weight7) // Note X again, i.e. x NOT unique, should cause Exception 
-		);
-		graphEdgesValidator.validateUniqueEdgeId(edges.get(0), mapForValidatingUniqueEdgeId);
-		graphEdgesValidator.validateUniqueEdgeId(edges.get(1), mapForValidatingUniqueEdgeId);
-		graphEdgesValidator.validateUniqueEdgeId(edges.get(2), mapForValidatingUniqueEdgeId);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			List<Edge> edges = Arrays.asList(
+				createTestEdge(stringIdX, vertexA, vertexB, weight5),
+				createTestEdge(stringIdY, vertexB, vertexC, weight6),
+				createTestEdge(stringIdX, vertexC, vertexD, weight7) // Note X again, i.e. x NOT unique, should cause Exception 
+			);
+			graphEdgesValidator.validateUniqueEdgeId(edges.get(0), mapForValidatingUniqueEdgeId);
+			graphEdgesValidator.validateUniqueEdgeId(edges.get(1), mapForValidatingUniqueEdgeId);
+			graphEdgesValidator.validateUniqueEdgeId(edges.get(2), mapForValidatingUniqueEdgeId);
+		});
+		assertThat(exception.getMessage(), containsString("must be unique"));	
 	}
 	
 	// tests for validateUniqueEdgeId above
@@ -196,25 +239,28 @@ public class GraphEdgesValidatorTest {
 	@Test
 	public void testValidateUniqueVerticesIds_whenAlllAreUnique() {
 		List<Edge> edges = Arrays.asList(
-				createTestEdge(stringIdX, vertexA, vertexB, weight5),
-				createTestEdge(stringIdY, vertexB, vertexC, weight6),
-				createTestEdge(stringIdZ, vertexC, vertexD, weight7)
-			);
-			graphEdgesValidator.validateUniqueVerticesIds(edges.get(0), mapForValidatingUniqueVerticesIds);
-			graphEdgesValidator.validateUniqueVerticesIds(edges.get(1), mapForValidatingUniqueVerticesIds);
-			graphEdgesValidator.validateUniqueVerticesIds(edges.get(2), mapForValidatingUniqueVerticesIds);		
-	}	
-	
-	@Test(expected = GraphValidationException.class)
-	public void testValidateUniqueVerticesIds_whenAlllAreNotUnique() {
-		List<Edge> edges = Arrays.asList(
 			createTestEdge(stringIdX, vertexA, vertexB, weight5),
 			createTestEdge(stringIdY, vertexB, vertexC, weight6),
-			createTestEdge(stringIdZ, vertexB, vertexC, weight7) //  // Note "B to C" again, i.e. x NOT unique, should cause Exception
+			createTestEdge(stringIdZ, vertexC, vertexD, weight7)
 		);
 		graphEdgesValidator.validateUniqueVerticesIds(edges.get(0), mapForValidatingUniqueVerticesIds);
 		graphEdgesValidator.validateUniqueVerticesIds(edges.get(1), mapForValidatingUniqueVerticesIds);
-		graphEdgesValidator.validateUniqueVerticesIds(edges.get(2), mapForValidatingUniqueVerticesIds);
+		graphEdgesValidator.validateUniqueVerticesIds(edges.get(2), mapForValidatingUniqueVerticesIds);		
+	}	
+	
+	@Test
+	public void testValidateUniqueVerticesIds_whenAlllAreNotUnique() {
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			List<Edge> edges = Arrays.asList(
+				createTestEdge(stringIdX, vertexA, vertexB, weight5),
+				createTestEdge(stringIdY, vertexB, vertexC, weight6),
+				createTestEdge(stringIdZ, vertexB, vertexC, weight7) //  // Note "B to C" again, i.e. x NOT unique, should cause Exception
+			);
+			graphEdgesValidator.validateUniqueVerticesIds(edges.get(0), mapForValidatingUniqueVerticesIds);
+			graphEdgesValidator.validateUniqueVerticesIds(edges.get(1), mapForValidatingUniqueVerticesIds);
+			graphEdgesValidator.validateUniqueVerticesIds(edges.get(2), mapForValidatingUniqueVerticesIds);
+		});
+		assertThat(exception.getMessage(), containsString("must be unique"));	
 	}
 
 	private Vertex createTestVertex(String id) {
@@ -307,21 +353,24 @@ public class GraphEdgesValidatorTest {
 	}
 
 	// ----------------------------------------------------------------------------------------------
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testValidateAllPathsOnlyContainEdgesDefinedInGraph() {
-		final List<Edge> allEdgesForGraph = new ArrayList<Edge>();
-		allEdgesForGraph.add(createTestEdge("11", createTestVertex("a"), createTestVertex("b"), createTestWeight(1)));
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			final List<Edge> allEdgesForGraph = new ArrayList<Edge>();
+			allEdgesForGraph.add(createTestEdge("11", createTestVertex("a"), createTestVertex("b"), createTestWeight(1)));
 
-		final List<Edge> edgesForPath = new ArrayList<Edge>();
-		edgesForPath.add(createTestEdge("11", createTestVertex("a"), createTestVertex("c"), createTestWeight(1)));
-		final Path path = createPath(createTestWeight(1), edgesForPath);
-		List<Path> paths = Arrays.asList(path);
+			final List<Edge> edgesForPath = new ArrayList<Edge>();
+			edgesForPath.add(createTestEdge("11", createTestVertex("a"), createTestVertex("c"), createTestWeight(1)));
+			final Path path = createPath(createTestWeight(1), edgesForPath);
+			List<Path> paths = Arrays.asList(path);
 
-		graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(paths, allEdgesForGraph);
+			graphEdgesValidator.validateAllPathsOnlyContainEdgesDefinedInGraph(paths, allEdgesForGraph);
 
-		// TODO maybe: introduce a new base class for GraphJgrapht and for the other implementations of Graph, 
-		// and put the validation there, to ensure a reasonable output paths by using the above validation method, 
-		// but then maybe such an validation also should be optional 
+			// TODO maybe: introduce a new base class for GraphJgrapht and for the other implementations of Graph, 
+			// and put the validation there, to ensure a reasonable output paths by using the above validation method, 
+			// but then maybe such an validation also should be optional 
+		});
+		assertThat(exception.getMessage(), containsString("not part of")); // the message should be something like "The edge in path is not part of the graph "
 	}
 	// ----------------------------------------------------------------------------------------------
 }

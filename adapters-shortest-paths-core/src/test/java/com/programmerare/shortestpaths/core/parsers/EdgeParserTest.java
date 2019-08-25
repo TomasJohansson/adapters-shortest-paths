@@ -10,20 +10,17 @@ import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
-import static com.programmerare.shortestpaths.core.parsers.EdgeParser.createEdgeParser;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;
-import com.programmerare.shortestpaths.core.parsers.EdgeParser;
 
 /**
  * @author Tomas Johansson
@@ -33,7 +30,7 @@ public class EdgeParserTest {
 	private EdgeParser<EdgeGenerics<Vertex, Weight>, Vertex, Weight> edgeParserGenerics;
 	private EdgeParser<Edge, Vertex, Weight> edgeParserDefault;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		edgeParserGenerics = EdgeParser.createEdgeParser(new EdgeParser.EdgeFactoryGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight>());
 		edgeParserDefault = EdgeParser.createEdgeParser(new EdgeParser.EdgeFactoryDefault());

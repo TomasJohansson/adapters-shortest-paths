@@ -11,13 +11,14 @@ import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.PathGenericsImpl.createPathGenerics;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -35,7 +36,7 @@ public class PathGenericsImplTest {
 	private double weightFirstEdge, weightSecondEdge, weightThirdEdge, totalWeight;
 	private Path path; 
 			
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		firstVertex = "A";
 		secondVertex = "B";
@@ -68,32 +69,38 @@ public class PathGenericsImplTest {
 		assertEquals(edgeCD7, edgesForPath.get(2));
 	}
 
-	@Test(expected = RuntimeException.class) 
-	public void testExceptionIsThrownIfVerticesIsNotMatching() { 
-		createPathGenerics(
-			createWeight(15d),  
-			Arrays.asList(
-				createEdge(createVertex("A"), createVertex("B"), createWeight(3d)),
-				createEdge(createVertex("B"), createVertex("C"), createWeight(5d)),
-				 // Note that "X" should be "C" below, which is the reason for expected exceotion
-				createEdge(createVertex("X"), createVertex("D"), createWeight(7d))
-			),
-			false,
-			true // tell creation method to throw exception if not all vertices are matching 				
-		);
+	@Test
+	public void testExceptionIsThrownIfVerticesIsNotMatching() {
+		RuntimeException exception = org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+			createPathGenerics(
+				createWeight(15d),
+				Arrays.asList(
+					createEdge(createVertex("A"), createVertex("B"), createWeight(3d)),
+					createEdge(createVertex("B"), createVertex("C"), createWeight(5d)),
+					// Note that "X" should be "C" below, which is the reason for expected exceotion
+					createEdge(createVertex("X"), createVertex("D"), createWeight(7d))
+				),
+				false,
+				true // tell creation method to throw exception if not all vertices are matching 				
+			);
+		});
+		assertThat(exception.getMessage(), containsString("vertices")); // Mismatching vertices detected
 	}
 	
-	@Test(expected = RuntimeException.class) 
+	@Test
 	public void testExceptionIsTotalWeightIsNotMatching() {
-		createPathGenerics(
-			createWeight(16), // SHOULD be 15 ( 3 + 5 + 7 ) and therefore an exception should be thrown 
-			Arrays.asList(
-				createEdge(createVertex("A"), createVertex("B"), createWeight(3d)),
-				createEdge(createVertex("B"), createVertex("C"), createWeight(5d)),
-				createEdge(createVertex("C"), createVertex("D"), createWeight(7d))
-			),
-			true,  // tell creation method to throw exception if sum is not matching
-			false 				
-		);
+		RuntimeException exception = org.junit.jupiter.api.Assertions.assertThrows(RuntimeException.class, () -> {
+			createPathGenerics(
+				createWeight(16), // SHOULD be 15 ( 3 + 5 + 7 ) and therefore an exception should be thrown 
+				Arrays.asList(
+					createEdge(createVertex("A"), createVertex("B"), createWeight(3d)),
+					createEdge(createVertex("B"), createVertex("C"), createWeight(5d)),
+					createEdge(createVertex("C"), createVertex("D"), createWeight(7d))
+				),
+				true,  // tell creation method to throw exception if sum is not matching
+				false
+			);
+		});
+		assertThat(exception.getMessage(), containsString("weight")); // Incorrect weight
 	}	
 }

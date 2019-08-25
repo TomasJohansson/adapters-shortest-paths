@@ -8,14 +8,13 @@ package com.programmerare.shortestpaths.utils;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImpl.createEdgeGenerics;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -48,7 +47,7 @@ public class EdgeUtilityTest {
 	private final static int startIndexForLargest = startIndexForSmallest + numberOfEdgesPerMultiplier;
 	private final static int startIndexForLast = startIndexForLargest + numberOfEdgesPerMultiplier;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		edgeUtility = EdgeUtility.create();
 		edges = new ArrayList<EdgeGenerics<Vertex, Weight>>();

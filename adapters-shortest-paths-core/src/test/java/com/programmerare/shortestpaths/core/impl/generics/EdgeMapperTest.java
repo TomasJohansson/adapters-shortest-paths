@@ -5,21 +5,21 @@
 */
 package com.programmerare.shortestpaths.core.impl.generics;
 
-import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
+import com.programmerare.shortestpaths.core.api.Edge;
 import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
 
-import com.programmerare.shortestpaths.core.api.Edge;
 
 /**
  * @author Tomas Johansson
@@ -27,7 +27,7 @@ import com.programmerare.shortestpaths.core.api.Edge;
 public class EdgeMapperTest {
 	private Edge edgeX1, edgeX2, edgeY1, edgeY2;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		edgeX1 = createEdge(createVertex("A"), createVertex("B"), createWeight(7));
 		edgeX2 = createEdge(createVertex("A"), createVertex("B"), createWeight(7));

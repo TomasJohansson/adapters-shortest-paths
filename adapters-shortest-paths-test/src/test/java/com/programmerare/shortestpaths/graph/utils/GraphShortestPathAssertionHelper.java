@@ -3,8 +3,8 @@ package com.programmerare.shortestpaths.graph.utils;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // artifact/jarfile "hamcrest-library" is needed, i.e. this method is NOT included in "hamcrest-core"
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,7 +123,7 @@ public class GraphShortestPathAssertionHelper {
 			final List<Path> pathsFoundByImplementation_1 = shortestPathsPerImplementation.get(nameOfImplementation_1);
 			if(expectedListOfPaths != null) {
 				final String failureMessage = nameOfImplementation_1 + " failed when comparing with expected result according to xml file"; 
-				assertEquals("Mismatching number of paths, " + failureMessage, expectedListOfPaths.size(), pathsFoundByImplementation_1.size());
+				assertEquals(expectedListOfPaths.size(), pathsFoundByImplementation_1.size(), "Mismatching number of paths, " + failureMessage);
 				for (int m = 0; m < pathsFoundByImplementation_1.size(); m++) {
 					assertEqualPaths(failureMessage + " , path with index " + m , expectedListOfPaths.get(m), pathsFoundByImplementation_1.get(m));
 				}					
@@ -190,8 +190,8 @@ public class GraphShortestPathAssertionHelper {
 		
 		final List<Edge> expectedEdges = expectedPath.getEdgesForPath(); 
 		final List<Edge> actualEdges = actualPath.getEdgesForPath();
-		assertNotNull(message, expectedEdges); // same comment as above, regarding why the expected value is asserted
-		assertNotNull(message, actualEdges);
+		assertNotNull(expectedEdges, message); // same comment as above, regarding why the expected value is asserted
+		assertNotNull(actualEdges, message);
 
 		final String actualPathAsString = getPathAsPrettyPrintedStringForConsoleOutput(actualPath);
 		final String expectedPathAsString = getPathAsPrettyPrintedStringForConsoleOutput(expectedPath);
@@ -200,24 +200,24 @@ public class GraphShortestPathAssertionHelper {
 			+ "\n expected path (in format for xml file): " + graphAndPathRenderer.getPathAsString(expectedPath,true);
 
 		assertEquals(
-			"Mismatching number of vertices/edges in the path, " + messageIncludingActualAndExpectedPath, 
 			expectedEdges.size(), 
-			actualEdges.size()
+			actualEdges.size(),
+			"Mismatching number of vertices/edges in the path, " + messageIncludingActualAndExpectedPath
 		);
 		for (int i = 0; i < actualEdges.size(); i++) {
 			final Edge actualEdge = actualEdges.get(i);
 			final Edge expectedEdge = expectedEdges.get(i);
-			assertNotNull(messageIncludingActualAndExpectedPath, expectedEdge); // same comment as above, regarding why the expected value is asserted 
-			assertNotNull(messageIncludingActualAndExpectedPath, actualEdge);
-			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge.getStartVertex(), actualEdge.getStartVertex());
-			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge.getEndVertex(), actualEdge.getEndVertex());
+			assertNotNull(expectedEdge, messageIncludingActualAndExpectedPath); // same comment as above, regarding why the expected value is asserted 
+			assertNotNull(actualEdge, messageIncludingActualAndExpectedPath);
+			assertEquals(expectedEdge.getStartVertex(), actualEdge.getStartVertex(), messageIncludingActualAndExpectedPath);
+			assertEquals(expectedEdge.getEndVertex(), actualEdge.getEndVertex(), messageIncludingActualAndExpectedPath);
 			assertEquals(
-				messageIncludingActualAndExpectedPath, 
 				expectedEdge.getEdgeWeight().getWeightValue(), 
 				actualEdge.getEdgeWeight().getWeightValue(), 
-				SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
+				SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS,
+				messageIncludingActualAndExpectedPath
 			);			
-			assertEquals(messageIncludingActualAndExpectedPath, expectedEdge, actualEdge);			
+			assertEquals(expectedEdge, actualEdge, messageIncludingActualAndExpectedPath);			
 		}
 
 		double weightTotal = 0;
@@ -226,17 +226,17 @@ public class GraphShortestPathAssertionHelper {
 			weightTotal += edge.getEdgeWeight().getWeightValue();
 		}
 		assertEquals(
-			messageIncludingActualAndExpectedPath, 
 			weightTotal, 
 			actualPath.getTotalWeightForPath().getWeightValue(), 
-			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
+			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS,
+			messageIncludingActualAndExpectedPath
 		);
 		
 		assertEquals(
-			messageIncludingActualAndExpectedPath, 
 			expectedPath.getTotalWeightForPath().getWeightValue(), 
 			actualPath.getTotalWeightForPath().getWeightValue(), 
-			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS
+			SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS,
+			messageIncludingActualAndExpectedPath
 		);
 	}
 	

@@ -5,20 +5,15 @@
 */
 package com.programmerare.shortestpaths.utils;
 
-import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Tomas Johansson
  */
 public class MapperForIntegerIdsAndGeneralStringIdsTest {
 
-//	@Before
+//	@BeforeEach
 //	public void setUp() throws Exception {
 //	}
 

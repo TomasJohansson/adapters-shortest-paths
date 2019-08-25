@@ -12,8 +12,10 @@ import static com.programmerare.shortestpaths.core.impl.generics.EdgeGenericsImp
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
@@ -30,7 +32,7 @@ public class GraphImplTest {
 
 	private GraphGenerics<EdgeGenerics<Vertex, Weight>, Vertex, Weight> graph;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		
 		final EdgeGenerics<Vertex,Weight> edge_A_B = createEdgeGenerics(createVertex("A"), createVertex("B"), createWeight(123));
@@ -42,9 +44,12 @@ public class GraphImplTest {
 		edgesForUnacceptableGraph = Arrays.asList(edge_A_B, edge_A_B_again);
 	}
 
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void testCreateGraph_SHOULD_throw_exception_for_unacceptable_graph_when_validation_REQUIRED() {
-		graph = GraphGenericsImpl.createGraphGenerics(edgesForUnacceptableGraph, GraphEdgesValidationDesired.YES);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			graph = GraphGenericsImpl.createGraphGenerics(edgesForUnacceptableGraph, GraphEdgesValidationDesired.YES);
+		});
+		assertThat(exception.getMessage(), containsString("duplicated edges"));
 	}
 	
 	@Test

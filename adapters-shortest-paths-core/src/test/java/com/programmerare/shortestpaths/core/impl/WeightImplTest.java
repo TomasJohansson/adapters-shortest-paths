@@ -7,11 +7,10 @@ package com.programmerare.shortestpaths.core.impl;
 
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import com.programmerare.shortestpaths.core.api.Weight;
 
@@ -26,7 +25,7 @@ public class WeightImplTest {
 	private double weightValueB;
 	
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		weightValueA = 12345.6789;
 		weightValueB = 12345.6789;

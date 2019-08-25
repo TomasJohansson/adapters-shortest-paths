@@ -6,9 +6,10 @@ import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 
-import org.junit.Before;
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
@@ -20,6 +21,7 @@ import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphValidationException;
+import org.junit.jupiter.api.Test;
 
 /**
  * PathFinderBase is an abstract base class, and this test class verifies that the subclasses throw validation exceptions implemented in the base class. 
@@ -31,7 +33,7 @@ public class PathFinderBaseValidationExceptionTest {
 	private List<Edge> edges_A_B_and_B_C;
 	private Vertex vertexA, vertexB, vertexC, vertexX_notPartOfGraph;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		vertexA = createVertex("A");
 		vertexB = createVertex("B");
@@ -50,33 +52,55 @@ public class PathFinderBaseValidationExceptionTest {
 	
 	// -------------------------------------------------------------
 	// Three tests (for three implementations) with start vertex not part of the graph
-	@Test(expected = GraphValidationException.class)
+	@Test
 	public void incorrect_startVertex_shouldThrowException_Bsmock() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock(), vertexX_notPartOfGraph, vertexC);
-	}	
-	@Test(expected = GraphValidationException.class)
-	public void incorrect_startVertex_shouldThrowException_Jgrapht() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht(), vertexX_notPartOfGraph, vertexC);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock(), vertexX_notPartOfGraph, vertexC);
+		});
+		assertThat(exception.getMessage(), containsString("start vertex")); // start vertex is not part of the graph
 	}
-	@Test(expected = GraphValidationException.class)
+
+	@Test
+	public void incorrect_startVertex_shouldThrowException_Jgrapht() {
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht(), vertexX_notPartOfGraph, vertexC);
+		});
+		assertThat(exception.getMessage(), containsString("start vertex")); // start vertex is not part of the graph		
+	}
+
+	@Test
 	public void incorrect_startVertex_shouldThrowException_YanQi() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi(), vertexX_notPartOfGraph, vertexC);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi(), vertexX_notPartOfGraph, vertexC);
+		});
+		assertThat(exception.getMessage(), containsString("start vertex")); // start vertex is not part of the graph
 	}
 	
 	
 	// -------------------------------------------------------------
-	// Three tests (for three implementations) with end vertex not part of the graph 
-	@Test(expected = GraphValidationException.class)
+	// Three tests (for three implementations) with end vertex not part of the graph
+	@Test
 	public void incorrect_endVertex_shouldThrowException_Bsmock() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock(), vertexA, vertexX_notPartOfGraph);
-	}	
-	@Test(expected = GraphValidationException.class)
-	public void incorrect_endVertex_shouldThrowException_Jgrapht() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht(), vertexA, vertexX_notPartOfGraph);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryBsmock(), vertexA, vertexX_notPartOfGraph);
+		});
+		assertThat(exception.getMessage(), containsString("end vertex")); // end vertex is not part of the graph		
 	}
-	@Test(expected = GraphValidationException.class)
+
+	@Test
+	public void incorrect_endVertex_shouldThrowException_Jgrapht() {
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryJgrapht(), vertexA, vertexX_notPartOfGraph);
+		});
+		assertThat(exception.getMessage(), containsString("end vertex")); // end vertex is not part of the graph
+	}
+
+	@Test
 	public void incorrect_endVertex_shouldThrowException_YanQi() {
-		shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi(), vertexA, vertexX_notPartOfGraph);
+		GraphValidationException exception = org.junit.jupiter.api.Assertions.assertThrows(GraphValidationException.class, () -> {
+			shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(new PathFinderFactoryYanQi(), vertexA, vertexX_notPartOfGraph);
+		});
+		assertThat(exception.getMessage(), containsString("end vertex")); // end vertex is not part of the graph		
 	}
 
 	
@@ -97,12 +121,12 @@ public class PathFinderBaseValidationExceptionTest {
 	}	
 	// -------------------------------------------------------------
 	private void shouldThrowExceptionIfAnyOfTheVerticesIsNotPartOfTheGraph(
-		PathFinderFactory pathFinderFactory, 
-		Vertex startVertex, 
-		Vertex endVertex
+		final PathFinderFactory pathFinderFactory,
+		final Vertex startVertex,
+		final Vertex endVertex
 	) {
 		PathFinder pathFinder = pathFinderFactory.createPathFinder(edges_A_B_and_B_C, GraphEdgesValidationDesired.YES);
-		List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, maxNumberOfPaths);
+		List<Path> shortestPaths = pathFinder.findShortestPaths(startVertex, endVertex, maxNumberOfPaths);				
 	}
 	
 	private final static int maxNumberOfPaths = 1;

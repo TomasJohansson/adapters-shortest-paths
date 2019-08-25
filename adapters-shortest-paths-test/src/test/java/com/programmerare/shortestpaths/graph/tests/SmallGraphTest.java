@@ -4,13 +4,11 @@ import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
@@ -20,6 +18,7 @@ import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for a small graph. It is small for the purpose that it should be easy to understand.
@@ -39,15 +38,15 @@ public class SmallGraphTest {
 		testFindShortestPaths(
 			new PathFinderFactoryBsmock()
 		);		
-	}	
-	
+	}
+
 	@Test
 	public void testFindShortestPaths_Jgrapht() {
 		testFindShortestPaths(
 			new PathFinderFactoryJgrapht()
 		);		
 	}
-	
+
 	@Test
 	public void testFindShortestPaths_YanQi() {
 		testFindShortestPaths(

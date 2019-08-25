@@ -4,16 +4,16 @@ import static com.programmerare.shortestpaths.core.impl.EdgeImpl.createEdge;
 import static com.programmerare.shortestpaths.core.impl.VertexImpl.createVertex;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS;
 import static com.programmerare.shortestpaths.core.impl.WeightImpl.createWeight;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -79,7 +79,7 @@ public class EdgeIdValuesTest {
 	private Vertex c;
 	private Vertex d;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		a = createVertex(A);
 		b = createVertex(B);
@@ -198,22 +198,22 @@ public class EdgeIdValuesTest {
 			errorContext += " , i: "+ i;
 			ExpectedPath expectedPath = expectedShortestPaths[i];
 			Path actualPath = actualShortestPaths.get(i);
-			assertEquals(errorContext, expectedPath.totalWeight, actualPath.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
+			assertEquals(expectedPath.totalWeight, actualPath.getTotalWeightForPath().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS, errorContext);
 			ExpectedEdge[] expectedEdgesForPath = expectedPath.expectedEdges;
 			List<Edge> actualEdgesForPath = actualPath.getEdgesForPath();
-			assertEquals(errorContext, expectedEdgesForPath.length, actualEdgesForPath.size());
+			assertEquals(expectedEdgesForPath.length, actualEdgesForPath.size(), errorContext);
 			for (int j = 0; j < expectedEdgesForPath.length; j++) {
 				errorContext += " , j=" + j;
 				ExpectedEdge expectedEdge = expectedEdgesForPath[j];
 				Edge actualEdge = actualEdgesForPath.get(j);
-				assertNotNull(errorContext, actualEdge);
-				assertNotNull(errorContext, actualEdge.getEdgeWeight());
-				assertNotNull(errorContext, actualEdge.getStartVertex());
-				assertNotNull(errorContext, actualEdge.getEndVertex());
-				assertEquals(errorContext, expectedEdge.weight, actualEdge.getEdgeWeight().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS);
-				assertEquals(errorContext, expectedEdge.startVertexId, actualEdge.getStartVertex().getVertexId());
-				assertEquals(errorContext, expectedEdge.endVertexId, actualEdge.getEndVertex().getVertexId());
-				assertEquals(errorContext, expectedEdge.edgeId, actualEdge.getEdgeId());
+				assertNotNull(actualEdge, errorContext);
+				assertNotNull(actualEdge.getEdgeWeight(), errorContext);
+				assertNotNull(actualEdge.getStartVertex(), errorContext);
+				assertNotNull(actualEdge.getEndVertex(), errorContext);
+				assertEquals(expectedEdge.weight, actualEdge.getEdgeWeight().getWeightValue(), SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS, errorContext);
+				assertEquals(expectedEdge.startVertexId, actualEdge.getStartVertex().getVertexId(), errorContext);
+				assertEquals(expectedEdge.endVertexId, actualEdge.getEndVertex().getVertexId(), errorContext);
+				assertEquals(expectedEdge.edgeId, actualEdge.getEdgeId(), errorContext);
 			}			
 		}
 	}
