@@ -19,11 +19,15 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
 		<dependency>
 			<groupId>com.github.TomasJohansson</groupId>
 			<artifactId>adapters-shortest-paths</artifactId>
-			<version>c3793b442fcf411a2668bcedebc01e5029986612</version> 
+			<version>3def6cde009542b3daa032daab836bccf7e3b70f</version>
+			<!-- 
+			git commit 3def6cde009542b3daa032daab836bccf7e3b70f :
+			https://github.com/TomasJohansson/adapters-shortest-paths/commit/3def6cde009542b3daa032daab836bccf7e3b70f
+			https://jitpack.io/com/github/TomasJohansson/adapters-shortest-paths/3def6cde009542b3daa032daab836bccf7e3b70f/build.log
+			-->
 		</dependency>
 		<!--
 		Currently jitpack is used above instead of the below libraries which are not (at least not all of them) published to "maven central"   
