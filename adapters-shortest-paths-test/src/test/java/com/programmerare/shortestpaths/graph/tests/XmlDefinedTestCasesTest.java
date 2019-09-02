@@ -179,7 +179,7 @@ public class XmlDefinedTestCasesTest {
 		// and should also be used automatically with the default constructor below
 		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 12 seconds (using Yen i.e. the below Yen algorithm is the default)
 		pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsYen)); // 12 seconds
-		// pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFord)); // gave up waiting after a few minutes
+		// pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFordInspired)); // gave up waiting after a few minutes
 		
 		// pathFinderFactories.add(new PathFinderFactoryMulavito()); // 117 seconds (about two minutes !) NOT acceptable for frequent regression testing 
 		//pathFinderFactories.add(new PathFinderFactoryBsmock()); // 189 seconds (three minutes !) NOT acceptable for frequent regression testing

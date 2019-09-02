@@ -51,7 +51,7 @@ public class SmallGraphTest {
 	@Test
 	public void testFindShortestPaths_Jgrapht_BellmanFord() {
 		testFindShortestPaths(
-			new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFord)
+			new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFordInspired)
 		);		
 	}
 

@@ -21,7 +21,7 @@ class JGraphtAlgorithmFactory {
         if(jGraphtAlgorithm == JGraphtAlgorithm.KShortestPathsYen) {
             return new YenKShortestPath<>(graphAdaptee);
         }
-        else if(jGraphtAlgorithm == JGraphtAlgorithm.KShortestPathsBellmanFord) {
+        else if(jGraphtAlgorithm == JGraphtAlgorithm.KShortestPathsBellmanFordInspired) {
             return new KShortestSimplePaths<String, DefaultWeightedEdge>(graphAdaptee);
         }
         throw new UnsupportedOperationException("Unsupported jGraphtAlgorithm: " + jGraphtAlgorithm);
