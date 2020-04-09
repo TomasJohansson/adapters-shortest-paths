@@ -94,7 +94,7 @@ public class EdgeGenericsImpl<V extends Vertex , W extends Weight> implements Ed
 
 	@Override
 	public String toString() {
-		return "Edge[ id=" + id + " , startVertex=[ " + startVertex + " ] , endVertex=[ " + endVertex + " ] , weight=[ " + weight + " ] ]";
+		return renderToString();
 	}
 
 
@@ -144,8 +144,7 @@ public class EdgeGenericsImpl<V extends Vertex , W extends Weight> implements Ed
 
 
 	public String renderToString() {
-		// TODO put the implementation here and invoke it from toString instead of the other way as it is now
-		return toString();
+		return "Edge[ id=" + id + " , startVertex=[ " + startVertex + " ] , endVertex=[ " + endVertex + " ] , weight=[ " + weight + " ] ]";
 	}
 
 

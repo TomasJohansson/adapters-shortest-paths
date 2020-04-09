@@ -32,7 +32,7 @@ public final class WeightImpl implements Weight {
 
 	@Override
 	public String toString() {
-		return "Weight[ value=" + value + " ]";
+		return renderToString();
 	}
 
 	@Override
@@ -62,8 +62,7 @@ public final class WeightImpl implements Weight {
 	public final static double SMALL_DELTA_VALUE_FOR_WEIGHT_COMPARISONS = 0.0000000001;
 	
 	public String renderToString() {
-		// TODO put the implementation here and invoke it from toString instead of the other way as it is now
-		return toString();
+		return "Weight[ value=" + value + " ]";
 	}
 
 	public Weight create(double value) {
