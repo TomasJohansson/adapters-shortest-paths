@@ -53,6 +53,10 @@ public class WeightImplTest {
 	@Test
 	public void testHashCode() {
 		assertEquals(weightA.hashCode(), weightB.hashCode());
-	}	
+	}
 
+	@Test
+	public void testRenderToString() {
+		assertEquals("Weight[ value=12345.6789 ]", weightA.renderToString());
+	}	
 }

@@ -68,5 +68,13 @@ public class EdgeGenericsImplTest {
 	@Test
 	public void testHashCode() {
 		assertEquals(edgeX.hashCode(), edgeY.hashCode());
-	}	
+	}
+
+	@Test
+	public void testRenderToString() {
+		assertEquals(
+			"Edge[ id=A_B , startVertex=[ Vertex[ id=A ] ] , endVertex=[ Vertex[ id=B ] ] , weight=[ Weight[ value=123.45 ] ] ]", 
+			edgeX.renderToString()
+		);
+	}
 }

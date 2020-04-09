@@ -40,7 +40,7 @@ public final class VertexImpl implements Vertex {
 
 	@Override
 	public String toString() {
-		return "VertexImpl [id=" + id + "]";
+		return "Vertex[ id=" + id + " ]";
 	}
 
 	@Override
@@ -69,6 +69,7 @@ public final class VertexImpl implements Vertex {
 	}
 
 	public String renderToString() {
+		// TODO put the implementation here and invoke it from toString instead of the other way as it is now
 		return toString();
 	}
 

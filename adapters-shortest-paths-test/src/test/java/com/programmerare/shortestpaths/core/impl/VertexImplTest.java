@@ -49,6 +49,10 @@ public class VertexImplTest {
 	@Test
 	public void testHashCode() {
 		assertEquals(vertexA.hashCode(), vertexB.hashCode());
-	}	
+	}
 
+	@Test
+	public void testRenderToString() {
+		assertEquals("Vertex[ id=357 ]", vertexA.renderToString());
+	}
 }
