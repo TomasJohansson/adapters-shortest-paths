@@ -25,7 +25,7 @@ import com.programmerare.shortestpaths.core.pathfactories.PathFactory;
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
- * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">https://en.wikipedia.org/wiki/Adapter_pattern</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">Adapter pattern</a>
  */
 public class PathFinderJgraphtGenerics
 	< 

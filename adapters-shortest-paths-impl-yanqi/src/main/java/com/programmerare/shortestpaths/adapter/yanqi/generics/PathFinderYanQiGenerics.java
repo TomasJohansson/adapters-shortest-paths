@@ -23,7 +23,7 @@ import edu.asu.emit.algorithm.graph.shortestpaths.YenTopKShortestPathsAlg;
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
- * @see https://en.wikipedia.org/wiki/Adapter_pattern
+ * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">Adapter pattern</a>
  */
 public class PathFinderYanQiGenerics 
 	< 

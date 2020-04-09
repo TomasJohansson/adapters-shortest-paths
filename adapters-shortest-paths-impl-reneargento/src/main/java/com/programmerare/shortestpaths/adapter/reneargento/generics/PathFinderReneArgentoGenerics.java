@@ -22,7 +22,7 @@ import chapter4.section4.KShortestPaths.Path;
 /**
  * "Adapter" implementation of the "Target" interface 
  * @author Tomas Johansson
- * @see https://en.wikipedia.org/wiki/Adapter_pattern
+ * @see <a href="https://en.wikipedia.org/wiki/Adapter_pattern">Adapter pattern</a>
  */
 public class PathFinderReneArgentoGenerics 
 	< 
