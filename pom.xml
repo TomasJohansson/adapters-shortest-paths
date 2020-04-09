@@ -81,31 +81,35 @@
 				<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
 				<version>${project.version}</version>			    
 			</dependency>
-									
+
+			<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
 			<dependency>
 				<groupId>org.hamcrest</groupId>
-				<artifactId>hamcrest-core</artifactId>
-				<version>2.1</version>
+				<artifactId>hamcrest</artifactId>
+				<version>2.2</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-			    <groupId>org.hamcrest</groupId>
-			    <artifactId>hamcrest-library</artifactId>
-			    <version>2.1</version>
-			    <scope>test</scope>
-			</dependency>
-		
+			<!-- 
+				The both previously used "hamcrest-core" and "hamcrest-library" are deprecated:
+					https://mvnrepository.com/artifact/org.hamcrest/hamcrest-core
+						Core Hamcrest API - deprecated, please use "hamcrest" instead
+					https://mvnrepository.com/artifact/org.hamcrest/hamcrest-library
+						A library of Hamcrest matchers - deprecated, please use "hamcrest" instead
+			-->			
+
+			
+			<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-api</artifactId>
-				<version>5.5.1</version>
+				<version>5.6.1</version>
 				<scope>test</scope>
 			</dependency>
 			<!-- important to include junit-jupiter-engine in the pom file for modules with JUnit 5 tests -->
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
 				<artifactId>junit-jupiter-engine</artifactId>
-				<version>5.5.1</version>
+				<version>5.6.1</version>
 				<scope>test</scope>
 			</dependency>			
 
@@ -137,6 +141,8 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.8.1</version>
@@ -162,7 +168,9 @@
 				</plugin>
 				<!-- the below maven-surefire-plugin and maven-failsafe-plugin :
 				https://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven 
-				--> 
+				-->
+
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.22.2</version>
@@ -192,11 +200,13 @@
 			https://maven.apache.org/plugins/maven-source-plugin/download.cgi
 			https://maven.apache.org/plugins/maven-javadoc-plugin/download.cgi
 			http://maven.apache.org/plugins/maven-gpg-plugin/download.cgi
-			-->	
+			-->
+
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.2.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -206,10 +216,12 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.2.0</version>
 				<configuration>
 					<failOnError>false</failOnError>
 					<!-- https://maven.apache.org/plugins/maven-javadoc-plugin/javadoc-mojo.html -->
@@ -224,6 +236,7 @@
 				</executions>
 			</plugin>
 
+			<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
