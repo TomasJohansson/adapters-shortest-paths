@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface PathFinder {
     List<List<String>> findShortestPaths(String startVertex, String endVertex, int maxNumberOfPaths);
+    void addGraphEdge(String source, String target, double weight);
 }
