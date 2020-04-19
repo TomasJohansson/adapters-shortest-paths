@@ -149,7 +149,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
-		<!-- jgrapht 1.3.1 and test module using Junit 5 requires Java 8 , and therefore these two modules override the above configuration in their pom files  -->
+		<!-- jgrapht 1.3.1+ and test module using Junit 5 requires Java 8 , and therefore these two modules override the above configuration in their pom files  -->
 		
 		<!-- JDK 9 supports compiling to Java 6 : -->
 		<maven.compiler.forceJavacCompilerUse>true</maven.compiler.forceJavacCompilerUse>
