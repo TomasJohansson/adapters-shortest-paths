@@ -22,11 +22,10 @@
 		<dependency>
 			<groupId>com.github.TomasJohansson</groupId>
 			<artifactId>adapters-shortest-paths</artifactId>
-			<version>3def6cde009542b3daa032daab836bccf7e3b70f</version>
+			<version>fdb3ad991e7157667dcee3efe3200106fe9cd584</version>
 			<!-- 
-			git commit 3def6cde009542b3daa032daab836bccf7e3b70f :
-			https://github.com/TomasJohansson/adapters-shortest-paths/commit/3def6cde009542b3daa032daab836bccf7e3b70f
-			https://jitpack.io/com/github/TomasJohansson/adapters-shortest-paths/3def6cde009542b3daa032daab836bccf7e3b70f/build.log
+			git commit fdb3ad991e7157667dcee3efe3200106fe9cd584 :
+			https://jitpack.io/com/github/TomasJohansson/adapters-shortest-paths/fdb3ad991e7157667dcee3efe3200106fe9cd584/build.log
 			-->
 		</dependency>
 		<!--

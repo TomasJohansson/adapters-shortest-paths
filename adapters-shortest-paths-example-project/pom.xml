@@ -16,7 +16,11 @@
 		<dependency>
 			<groupId>com.github.TomasJohansson</groupId>
 			<artifactId>adapters-shortest-paths</artifactId>
-			<version>7bf0484ca31d17b982abd4a0ec824e945a2e5d50</version> 
+			<version>fdb3ad991e7157667dcee3efe3200106fe9cd584</version>
+			<!-- 
+			git commit fdb3ad991e7157667dcee3efe3200106fe9cd584 :
+			https://jitpack.io/com/github/TomasJohansson/adapters-shortest-paths/fdb3ad991e7157667dcee3efe3200106fe9cd584/build.log
+			-->			
 		</dependency>
 	    <!--
 	    An alternative to the above dependency (if you ONLY use the below yanqi and bsmock implementations)
@@ -46,7 +50,19 @@
 			<artifactId>junit</artifactId>
 			<version>4.13</version>
 			<scope>test</scope>
-		</dependency>	    
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.30</version>
+			<!--
+			Note that it does NOT work to above use the below configuration from the 
+			pom file in the root directory since this is NOT a module of that pom.
+			<version>${slf4j.version}</version>			 
+			-->
+			<scope>test</scope>
+		</dependency>		
 	</dependencies>
 	  
 	<properties>

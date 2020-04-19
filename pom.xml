@@ -183,9 +183,23 @@
 						-->
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
-						<!--
+						
 						<executable>${jdk}/bin/javac</executable>
-						<fork>true</fork>
+						<fork>true</fork>						
+						<!--
+						Note: Jitpack currently (April 2020) compiles with Java 8 as the default, 
+						but you can use a "jitpack.yml" file at the git root and there specify this:
+							jdk:
+							  - openjdk9
+						I did this in the git commit fdb3ad991e7157667dcee3efe3200106fe9cd584 and then it was succesful: 						
+						https://jitpack.io/com/github/TomasJohansson/adapters-shortest-paths/fdb3ad991e7157667dcee3efe3200106fe9cd584/build.log
+						However you can see this line in the above url:
+							Quote: "Java version: 10, vendor: Oracle Corporation, runtime: /usr/lib/jvm/jdk-10"
+								... BUILD SUCCESS
+						Anyway, it worked. Which it dit not with the previous commit 9aef649762ba90fa9922d55c1ff96a9d7d879b0a
+						https://jitpack.io/com/github/TomasJohansson/adapters-shortest-paths/9aef649762ba90fa9922d55c1ff96a9d7d879b0a/build.log
+							Quote: "Java version: 1.8.0_212, vendor: Oracle Corporation, runtime: /usr/lib/jvm/java-8-openjdk-amd64/jre"
+								... BUILD FAILURE
 						-->
                     </configuration>                    
 				</plugin>

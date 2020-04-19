@@ -14,6 +14,7 @@ import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
 import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.jython_networkx.PathFinderFactoryJythonNetworkx;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
@@ -91,6 +92,14 @@ public class ExampleMain {
 		for (PathFinderFactory pathFinderFactory : pathFinderFactories) {
 			displayShortestPathBetweenEdges(a, d, graph, pathFinderFactory);
 		}
+		try {
+			// The below implementation uses Jython and the Python pip package networkx
+			// and will fail if not both of these are installed. 
+			displayShortestPathBetweenEdges(a, d, graph, new PathFinderFactoryJythonNetworkx());
+		}
+		catch(Exception e) {
+			System.err.println(e.toString());
+		}
 	}
 
 	// ---------------------------------------------------------------------------------------
@@ -104,7 +113,7 @@ public class ExampleMain {
 		for (Path path : shortestPaths) {
 			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}
-  		System.out.println("-------------------------------------------------------------");
+		System.out.println("-------------------------------------------------------------");
 	}
 	
 	private static String getPathAsPrettyPrintedStringForConsoleOutput(final Path path) {
