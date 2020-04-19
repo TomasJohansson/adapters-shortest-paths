@@ -14,13 +14,14 @@ import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
 import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
-import com.programmerare.shortestpaths.adapter.jython_networkx.PathFinderFactoryJythonNetworkx;
+import com.programmerare.shortestpaths.adapter.jython_networkx.PathFinderFactoryJythonNetworkx; 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 
 /**
@@ -88,7 +89,7 @@ public class ExampleMain {
 		pathFinderFactories.add(new PathFinderFactoryJgrapht());
 		pathFinderFactories.add(new PathFinderFactoryReneArgento());
 		pathFinderFactories.add(new PathFinderFactoryMulavito());
-		
+
 		for (PathFinderFactory pathFinderFactory : pathFinderFactories) {
 			displayShortestPathBetweenEdges(a, d, graph, pathFinderFactory);
 		}

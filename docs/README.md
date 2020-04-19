@@ -1,22 +1,23 @@
 # License Notice
 Notice that the "core" library with the API and general code is released with MIT License.
 However, the libraries which are implementing adapters are licensed in the same way as the adapted libraries.
-Currently there are **five** such adapter libraries, and **if you intend to use one or more of them you must check their licenses**:
+Currently there are **six** such adapter libraries, and **if you intend to use one or more of them you must check their licenses**:
 * [adapters-shortest-paths-impl-yanqi](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-yanqi)
 * [adapters-shortest-paths-impl-bsmock](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-bsmock)
 * [adapters-shortest-paths-impl-jgrapht](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jgrapht)
 * [adapters-shortest-paths-impl-mulavito](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-mulavito)
 * [adapters-shortest-paths-impl-reneargento](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-reneargento)
+* [adapters-shortest-paths-impl-jython_networkx](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jython_networkx)
 
-Note that only **two** (yanqi and bsmock) of the above five implementation libraries are available from OSSRH ("Maven Central").   
+Note that only **two** (yanqi and bsmock) of the above six implementation libraries are available from OSSRH ("Maven Central").   
 
 ## Information about why only some libraries are deployed to OSSRH ("Maven Central")
 
-Currently only **two** (yanqi and bsmock) of the above five implementation libraries are available from OSSRH ("Maven Central").<br>
+Currently only **two** (yanqi and bsmock) of the above six implementation libraries are available from OSSRH ("Maven Central").<br>
 The reasons are related to licenses and performance.
 
 If you would decide which project to use then you would likely want to use an implementation producing correct results and as fast as possible.<br>
-The test cases indicate that all five implementations produce the same results, which means that correctness is not a relevant factor when deciding which library to use.
+The test cases indicate that all six implementations produce the same results, which means that correctness is not a relevant factor when deciding which library to use.
 
 If we for a second would ignore the licensing issue, then why not simply only deploy the fastest implementation?<br>
 Well, since the project is an adapter it would look weird if someone finds it through a website where you can search for maven projects, and then find this "adapter" project with only one implementation.<br>
@@ -38,7 +39,7 @@ This is useful for travel routing  when you want to minimize the total time or t
 The project might also be useful for other situations, but travel routing is the main kind of application I have in mind.<br>
 Regarding graph theory applicable for finding the shortest paths in travel routing, see more information about that further down in a separate section at this page.
   
-**Currently there are five implemented Adapters**, i.e. five different implementations can be used.
+**Currently there are six implemented Adapters**, i.e. six different implementations can be used.
 Since the Client code is using the same Target interface (see the [Adapter Design Pattern](https://en.wikipedia.org/wiki/Adapter_pattern)) it is possible to **reuse the same test code for the different implementations**.
 Therefore you can assert their results against each other, which could help finding bugs. If one implementation would produce a different result than the others, then it is likely a bug that should be reported and hopefully fixed. However, note that the tested graph need to be constructed in such a way that there must not be more than one path (among the first shortest paths you use test assertions for) with the same total weight. If multiple paths have the same total weight then it is not obvious which should be sorted first, and then it would not be surprising if different implementations produce different results.
 
@@ -69,12 +70,14 @@ import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.mulavito.PathFinderFactoryMulavito;
 import com.programmerare.shortestpaths.adapter.reneargento.PathFinderFactoryReneArgento;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.jython_networkx.PathFinderFactoryJythonNetworkx;// requires Jython and the Python pip package networkx 
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Graph;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
 import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
+import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 ...
 
@@ -99,7 +102,8 @@ import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesir
 	// or: pathFinderFactory = new PathFinderFactoryJgrapht();  // currently NOT available from "Maven Central" !
 	// or: pathFinderFactory = new PathFinderFactoryReneArgento(); // currently NOT available from "Maven Central" !
 	// or: pathFinderFactory = new PathFinderFactoryMulavito(); // currently NOT available from "Maven Central" !
-	// (currently there are five implementations)
+	// or: pathFinderFactory = new PathFinderFactoryJythonNetworkx(); // NOT available from "Maven Central" ! and it requires Jython and the Python pip package networkx
+	// (currently there are six implementations)
 
 	PathFinder pathFinder = pathFinderFactory.createPathFinder(graph);
 	List<Path> shortestPaths = pathFinder.findShortestPaths(a, d, 10); // last parameter is max number to return but in this case there are only 3 possible paths
@@ -147,7 +151,7 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 	<dependency>
 		<groupId>com.github.TomasJohansson</groupId>
 		<artifactId>adapters-shortest-paths</artifactId>
-		<version>7bf0484ca31d17b982abd4a0ec824e945a2e5d50</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
+		<version>fdb3ad991e7157667dcee3efe3200106fe9cd584</version> <!--https://github.com/TomasJohansson/adapters-shortest-paths/commits/master  -->
 	</dependency>
 	<!--
 	    An ALTERNATIVE to the above dependency (and then you do neither have to add jitpack.io as above
@@ -172,37 +176,48 @@ Assuming you are using Maven, to be able to use the above code, you can use the 
 </dependencies>
 ```
 
+### Gradle or SBT dependencies
+If you are not using Maven but instead for example Gradle or SBT, then you can find the dependencies at 
+mvnrepository.com for [core](https://mvnrepository.com/artifact/com.programmerare.shortest-paths/adapters-shortest-paths-core) and 
+[yanqi](https://mvnrepository.com/artifact/com.programmerare.shortest-paths/adapters-shortest-paths-impl-yanqi)
+and [bsmock](https://mvnrepository.com/artifact/com.programmerare.shortest-paths/adapters-shortest-paths-impl-bsmock). 
+
+
 ### Java version
+If you are using Java 8+, then you should be able to use all Adapters, but if you use Java 6 or Java 7 then you are more limited regarding which of the Adapters to use.
+
 Java **6** is currently used for compiling the the core library itself, including the Adapter implementations.
 
 However, two of the Adaptee libraries are compiled for Java **8**.
 ( [JGraphT](https://github.com/jgrapht/jgrapht/blob/master/pom.xml) and [the fork of "reneargento/algorithms-sedgewick-wayne"](https://github.com/TomasJohansson/algorithms-sedgewick-wayne) )  
 
-One of the Adaptee libraries are compiled for Java **7**.
+One of the Adapt**ee** libraries are compiled for Java **7**.
 ( [MuLaViTo](https://github.com/TomasJohansson/MuLaViTo-fork/blob/45f161312b5e9ec50e2d430d17e8d4a395ce82be/pom.xml) (i.e. the fork of <https://sourceforge.net/p/mulavito/>)
 
-The remaining two Adaptee libraries are actually compiled for Java **5**.
-( [the fork of "bsmock/k-shortest-paths"](https://github.com/TomasJohansson/k-shortest-paths) and [the fork of "yan-qi/k-shortest-paths-java-version"](https://github.com/TomasJohansson/k-shortest-paths-java-version) )  
-  
-This means that if you are using Java 8, then you should be able to use all Adapters, but if you use Java 6 or Java 7 then you are more limited regarding which of the Adapters to use. 
-     
+The following two Adapt**ee** libraries can be compiled for Java **6** :  
+[The fork of "bsmock/k-shortest-paths"](https://github.com/TomasJohansson/k-shortest-paths) and [The fork of "yan-qi/k-shortest-paths-java-version"](https://github.com/TomasJohansson/k-shortest-paths-java-version)  
 
-### Some comments about the five adaptee libraries currently being used
+The adapter library "adapters-shortest-paths-impl-jython_networkx" can be compiled with Java 6 but 
+it has a difference kind of dependency than the others. See below in the next section.
 
-There are currently Adapter implementations for the following five libraries:
+### Some comments about the six adaptee libraries currently being used
+
+There are currently Adapter implementations for the following six libraries:
 * <https://github.com/jgrapht/jgrapht>
 * <https://github.com/yan-qi/k-shortest-paths-java-version>
 * <https://github.com/bsmock/k-shortest-paths>
 * <https://github.com/reneargento/algorithms-sedgewick-wayne>
 * <https://github.com/TomasJohansson/MuLaViTo-fork> (fork based on <https://sourceforge.net/p/mulavito/>)
+* [Jython](https://www.jython.org/) and the Python pip package [networkx](https://networkx.github.io/)
 
 Regarding the versions/"releases" of the above libraries:
 
-* Regarding jgrapht, the [version 1.1.0](https://github.com/jgrapht/jgrapht/releases/tag/jgrapht-1.1.0) is currently used.         
+* Regarding jgrapht, the [version 1.4.0](https://github.com/jgrapht/jgrapht/releases/tag/1.4.0) is currently used (but **not** released to OSSRH as mentioned further up in this webpage)
 * Regarding the ["yan-ki"](https://github.com/yan-qi/k-shortest-paths-java-version) implementation, there seems to be no official releases. Also, I could not find a way of reusing the library without modification since it seems to [require input from a file](https://github.com/yan-qi/k-shortest-paths-java-version/issues/4) which would mean I could not have used it as intended, e.g. programmatically creating a big graph for comparison against other implementations. This was one of the reasons why I instead use a [forked version](https://github.com/TomasJohansson/k-shortest-paths-java-version/commits/programmatic-graph-creation-without-using-inputfile). Another reason for creating and using a fork was the limitation that the input vertices needs to be integer in a sequence, while the other libraries support general strings. I fixed this with a mapper class in which maps back and forth from more general input strings.          
 * Regarding the ["bsmock"](https://github.com/bsmock/k-shortest-paths) implementation, it was not even a maven project. Therefore I [forked](https://github.com/TomasJohansson/k-shortest-paths/commits/adding-maven-structure-and-junit-test) it and created a maven project of it. I have created a [pull request with my changes](https://github.com/bsmock/k-shortest-paths/pull/2).
 * Regarding "reneargento", it was neither a maven project, which was the reason for forking it. It also included a jar file, but the fork is instead using maven and jitpack for defining the dependency in the pom file. Please [read about the license for that dependency](https://github.com/TomasJohansson/algorithms-sedgewick-wayne).
 * Regarding "mulavito", it was neither a maven project, which was one of the reason for forking it. It also included unnecessary (for the purpose of just wanting to use the shortest path algorithm) many third-party libraries which have been removed from a branch of the fork.  
+* Regarding "Jython/Networkx" it is different from the others.  Instead of using a dependency in Maven pom file for an external Java library, it uses a Python script within the Adapter library. It will only work if you have installed Jython and the pip package networkx (and you must have some jython environment variable defining the jython home directory). This is tested with Windows 10 and Jython 2.7.2 which is currently (april 2020) the latest Jython version. To make the code in this implementation find your Jython home directory with your file jython.jar, then you must have defined an environment variable containing the string "jython" (**not** case sensitive) for example "jython.home" or "JYTHON_HOME" or simply "JYTHON". In that Jython home directory there should be a subdirectory "Lib/site-packages" and there you should have installed 'networkx' with this command: "jython -m pip install networkx".  
 	
 #### Some concepts in graph theory:
 
