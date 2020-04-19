@@ -183,8 +183,10 @@
 						-->
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
+						<!--
 						<executable>${jdk}/bin/javac</executable>
 						<fork>true</fork>
+						-->
                     </configuration>                    
 				</plugin>
 				<!-- the below maven-surefire-plugin and maven-failsafe-plugin :
