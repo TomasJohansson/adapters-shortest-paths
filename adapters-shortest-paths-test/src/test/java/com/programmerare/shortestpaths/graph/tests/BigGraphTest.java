@@ -21,6 +21,8 @@ import com.programmerare.shortestpaths.core.api.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.graph.utils.GraphShortestPathAssertionHelper;
 import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -41,7 +43,8 @@ import com.programmerare.shortestpaths.graph.utils.PathFinderFactories;
 // and is now tested from the class "com/programmerare/shortestpaths/graph/tests/XmlDefinedTestCasesTest.java"
 // through its test method test_all_xml_files_in_test_graphs_directory
 public class BigGraphTest {
-
+	private final Logger logger = LoggerFactory.getLogger(BigGraphTest.class);
+	
 	private GraphAndPathRenderer graphAndPathRenderer = new GraphAndPathRenderer();
 	
 	private boolean isExecutingThroughTheMainMethod = false;
@@ -143,9 +146,9 @@ public class BigGraphTest {
 //		if(!isExecutingThroughTheMainMethod) return;
 		final GraphGenerics<Edge, Vertex, Weight> graph = GraphGenericsImpl.createGraphGenerics(edges);
 		String s = graphAndPathRenderer.getGraphAsStringWithOneEdgePerLine(graph);
-		System.out.println("printGraphEdgesToConsoleOutput starts");
-		System.out.println(s);
-		System.out.println("printGraphEdgesToConsoleOutput ends");
+		logger.info("printGraphEdgesToConsoleOutput starts");
+		logger.info(s);
+		logger.info("printGraphEdgesToConsoleOutput ends");
 	}
 	
 }

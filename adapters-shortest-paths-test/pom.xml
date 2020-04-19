@@ -64,10 +64,36 @@
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-reneargento</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-impl-jython_networkx</artifactId>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<!--
+			the version of the artifact "slf4j-api" is defined in the parent pom.xml 
+			<version>1.7.30</version>
+			-->
+		</dependency>
+		<!--
+		http://www.slf4j.org/manual.html
+		http://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html
+		-->
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.30</version>
+			<scope>test</scope>
 		</dependency>
 		
 	</dependencies>

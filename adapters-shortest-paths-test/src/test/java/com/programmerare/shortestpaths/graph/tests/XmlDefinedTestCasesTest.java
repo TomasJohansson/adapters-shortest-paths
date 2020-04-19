@@ -7,14 +7,19 @@ import static org.hamcrest.number.OrderingComparison.greaterThanOrEqualTo; // ar
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.programmerare.shortestpaths.adapter.jython_networkx.PathFinderFactoryJythonNetworkx;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -48,7 +53,8 @@ import com.programmerare.shortestpaths.utils.XmlFileReader;
  * @author Tomas Johansson
  */
 public class XmlDefinedTestCasesTest {
-
+	private final static Logger logger = LoggerFactory.getLogger(XmlDefinedTestCasesTest.class);
+	
 	private EdgeUtility<Edge, Vertex, Weight> edgeUtility;
 	private XmlFileReader xmlFileReader;
 	private ResourceReader resourceReader;
@@ -80,8 +86,18 @@ public class XmlDefinedTestCasesTest {
 	 */
 	private int minimumTotalNumberOfXmlTestFiles = 11; // 2 in base directory and 2 in "bsmock" (actually 3 there but one is in the exclusion list of files) and some more in yanqi directory,...  
 	
+	@BeforeAll
+	static void beforeAll() throws Exception {
+		logger.info("XmlDefinedTestCasesTest setUp before new PathFinderFactoryJythonNetworkx() " + new Date());
+		createPathFinderFactoryJythonNetworkx();
+		logger.info("XmlDefinedTestCasesTest setUp after new PathFinderFactoryJythonNetworkx() " + new Date());
+		// The purpose of the above is that the implementation uses Jython, and is very slow 
+		// regarding the initial (using singleton) instantiation
+		// which should not affect the test performance below and thus is created first above		
+	}
+	
 	@BeforeEach
-	public void setUp() throws Exception {
+	void setUp() throws Exception {
 		edgeUtility = EdgeUtility.create();
 		
 		fileReaderForGraphTestData = FileReaderForGraphEdges.createFileReaderForGraphEdges(new EdgeParser.EdgeFactoryDefault());
@@ -171,7 +187,7 @@ public class XmlDefinedTestCasesTest {
 	 */
 	@Test
 	public void testXmlFile_smallRoadNetwork01() throws IOException {
-		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
 		pathFinderFactories.add(new PathFinderFactoryReneArgento()); // 6 seconds
 		pathFinderFactories.add(new PathFinderFactoryYanQi()); // 12 seconds, reasonable acceptable for frequent regression testing
 		
@@ -180,20 +196,41 @@ public class XmlDefinedTestCasesTest {
 		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 12 seconds (using Yen i.e. the below Yen algorithm is the default)
 		pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsYen)); // 12 seconds
 		// pathFinderFactories.add(new PathFinderFactoryJgrapht(JGraphtAlgorithm.KShortestPathsBellmanFordInspired)); // gave up waiting after a few minutes
-		
-		// pathFinderFactories.add(new PathFinderFactoryMulavito()); // 117 seconds (about two minutes !) NOT acceptable for frequent regression testing 
-		//pathFinderFactories.add(new PathFinderFactoryBsmock()); // 189 seconds (three minutes !) NOT acceptable for frequent regression testing
+
+		// pathFinderFactories.add(createPathFinderFactoryJythonNetworkx()); // 113 seconds (about two minutes !) NOT acceptable for frequent regression testing
+//		pathFinderFactories.add(new PathFinderFactoryMulavito()); // 117 seconds (about two minutes !) NOT acceptable for frequent regression testing 
+//		pathFinderFactories.add(new PathFinderFactoryBsmock()); // 189 seconds (three minutes !) NOT acceptable for frequent regression testing
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_BSMOCK, XML_FILE_BIG_TEST__SMALL_ROAD_NETWORK_01, pathFinderFactories);
 	}
 
+	private static PathFinderFactory createPathFinderFactoryJythonNetworkx() {
+		// The implementation uses Jython, and is very slow regarding the initial instantiation
+		// which should not affect the test performance below and thus it should be created 
+		// in the setup method to make it already initialized and not affect performance 
+		// for the algorithm itself when the time is measured in other methods.
+		try {
+			return new PathFinderFactoryJythonNetworkx();	
+		}
+		catch(Exception e) {
+			// for example if Jython is not installed or the python pip package networkx is not installed 
+			return null;
+		}
+	}
+
+
 	@Test   
 	public void testXmlFile_test_50_2() throws IOException {
-		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
-		pathFinderFactories.add(new PathFinderFactoryReneArgento());
-		pathFinderFactories.add(new PathFinderFactoryYanQi());
-		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		pathFinderFactories.add(new PathFinderFactoryMulavito());
-		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 6 seconds, compared to less than 1 second for the other implementations 
+		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+
+//		pathFinderFactories.add(new PathFinderFactoryReneArgento());
+//		pathFinderFactories.add(new PathFinderFactoryYanQi());
+//		pathFinderFactories.add(new PathFinderFactoryBsmock());
+//		pathFinderFactories.add(new PathFinderFactoryMulavito());
+//		pathFinderFactories.add(createPathFinderFactoryJythonNetworkx());		
+//		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 6 seconds, compared to less than 1 second for the other implementations
+        
+        pathFinderFactories.addAll(PathFinderFactories.createPathFinderFactories());
+        
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50_2, pathFinderFactories);
 	}
 
@@ -201,12 +238,17 @@ public class XmlDefinedTestCasesTest {
 	
 	@Test   
 	public void testXmlFile_test_50() throws IOException {
-		//graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
-		pathFinderFactories.add(new PathFinderFactoryReneArgento());
-		pathFinderFactories.add(new PathFinderFactoryYanQi());
-		pathFinderFactories.add(new PathFinderFactoryBsmock());
-		pathFinderFactories.add(new PathFinderFactoryMulavito());
-		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 7 seconds, compared to less than 1 second for the other implementations 
+		graphShortestPathAssertionHelper.setConsoleOutputDesired(ConsoleOutputDesired.TIME_MEASURE);
+		
+//		pathFinderFactories.add(new PathFinderFactoryReneArgento());
+//		pathFinderFactories.add(new PathFinderFactoryYanQi());
+//		pathFinderFactories.add(new PathFinderFactoryBsmock());
+//		pathFinderFactories.add(new PathFinderFactoryMulavito());
+//		pathFinderFactories.add(createPathFinderFactoryJythonNetworkx()); // 1 second, compared to less than 1 second for the above implementations		
+//		pathFinderFactories.add(new PathFinderFactoryJgrapht()); // 7 seconds, compared to less than 1 second for the other implementations
+
+        pathFinderFactories.addAll(PathFinderFactories.createPathFinderFactories());
+        
 		runTestCaseDefinedInXmlFile(DIRECTORY_FOR_XML_TEST_FILES_FROM_YANQI, XML_FILE_BIG_TEST__50, pathFinderFactories);
 	}
 

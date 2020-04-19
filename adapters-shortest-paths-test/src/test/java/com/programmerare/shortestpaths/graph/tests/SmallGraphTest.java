@@ -14,6 +14,7 @@ import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
 import com.programmerare.shortestpaths.adapter.bsmock.PathFinderFactoryBsmock;
 import com.programmerare.shortestpaths.adapter.jgrapht.PathFinderFactoryJgrapht;
 import com.programmerare.shortestpaths.adapter.yanqi.PathFinderFactoryYanQi;
+import com.programmerare.shortestpaths.adapter.jython_networkx.PathFinderFactoryJythonNetworkx;
 import com.programmerare.shortestpaths.core.api.Edge;
 import com.programmerare.shortestpaths.core.api.Path;
 import com.programmerare.shortestpaths.core.api.PathFinder;
@@ -68,6 +69,13 @@ public class SmallGraphTest {
 			new PathFinderFactoryYanQi()
 		);
 	}
+
+	@Test
+	public void testFindShortestPaths_JythonNetworkx() {
+		testFindShortestPaths(
+			new PathFinderFactoryJythonNetworkx()
+		);
+	}	
 	
 	public void testFindShortestPaths(
 			PathFinderFactory pathFinderFactory
