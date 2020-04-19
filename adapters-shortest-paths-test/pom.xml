@@ -32,6 +32,7 @@
 			<artifactId>junit-jupiter-api</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- the parent pom file defines the version ${junit.version} -->
 		<!-- important to include junit-jupiter-engine in the pom file for modules with JUnit 5 tests -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -79,10 +80,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<!--
-			the version of the artifact "slf4j-api" is defined in the parent pom.xml 
-			<version>1.7.30</version>
-			-->
+			<!-- the parent pom file defines the version ${slf4j.version} -->
 		</dependency>
 		<!--
 		http://www.slf4j.org/manual.html
@@ -92,7 +90,7 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.30</version>
+			<version>${slf4j.version}</version> <!-- the parent pom file defines the version ${slf4j.version} --> 
 			<scope>test</scope>
 		</dependency>
 		
