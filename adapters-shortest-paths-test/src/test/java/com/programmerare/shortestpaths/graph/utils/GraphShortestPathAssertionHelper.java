@@ -21,6 +21,8 @@ import com.programmerare.shortestpaths.core.parsers.PathParser;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidationDesired;
 import com.programmerare.shortestpaths.core.validation.GraphEdgesValidator;
 import com.programmerare.shortestpaths.core.utils.TimeMeasurer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Used for validation of paths against each other.
@@ -35,7 +37,8 @@ import com.programmerare.shortestpaths.core.utils.TimeMeasurer;
  * @author Tomas Johansson
  */
 public class GraphShortestPathAssertionHelper {
-
+	private final static Logger logger = LoggerFactory.getLogger(GraphShortestPathAssertionHelper.class);
+	
 	private GraphAndPathRenderer graphAndPathRenderer = new GraphAndPathRenderer();
 	
 	public GraphShortestPathAssertionHelper(final boolean isExecutingThroughTheMainMethod) {
@@ -153,15 +156,15 @@ public class GraphShortestPathAssertionHelper {
 		output("-----");
 	}
 
-	private void output(Object o) {
+	private void output(String s) {
 		if(isAllConsoleOutputDesired()) {
-			System.out.println(o);
+			logger.info(s);
 		}
 	}
 	
-	private void output(Object o, ConsoleOutputDesired consoleOutputDesired) {
+	private void output(String s, ConsoleOutputDesired consoleOutputDesired) {
 		if(isAllConsoleOutputDesired() || consoleOutputDesired == this.consoleOutputDesired) {
-			System.out.println(o);
+			logger.info(s);
 		}
 	}
 
@@ -253,9 +256,9 @@ public class GraphShortestPathAssertionHelper {
 //	}
 	private static void displayListOfShortestPath(List<Path> shortestPaths) {
 		for (Path path : shortestPaths) {
-			System.out.println(getPathAsPrettyPrintedStringForConsoleOutput(path));
+			logger.info(getPathAsPrettyPrintedStringForConsoleOutput(path));
 		}
-		System.out.println("-------------------------------------------------------------");		
+		logger.info("-------------------------------------------------------------");		
 	}
 	
 	private static String getPathAsPrettyPrintedStringForConsoleOutput(Path path) {

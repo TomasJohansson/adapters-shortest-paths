@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.programmerare.shortestpaths.adapter.jgrapht.JGraphtAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -51,7 +53,8 @@ import com.programmerare.shortestpaths.utils.XmlFileReader;
  * @author Tomas Johansson
  */
 public class XmlDefinedTestCasesTest {
-
+	private final static Logger logger = LoggerFactory.getLogger(XmlDefinedTestCasesTest.class);
+	
 	private EdgeUtility<Edge, Vertex, Weight> edgeUtility;
 	private XmlFileReader xmlFileReader;
 	private ResourceReader resourceReader;
@@ -85,9 +88,9 @@ public class XmlDefinedTestCasesTest {
 	
 	@BeforeAll
 	static void beforeAll() throws Exception {
-		System.out.println("XmlDefinedTestCasesTest setUp before new PathFinderFactoryJythonNetworkx() " + new Date());
+		logger.info("XmlDefinedTestCasesTest setUp before new PathFinderFactoryJythonNetworkx() " + new Date());
 		createPathFinderFactoryJythonNetworkx();
-		System.out.println("XmlDefinedTestCasesTest setUp after new PathFinderFactoryJythonNetworkx() " + new Date());
+		logger.info("XmlDefinedTestCasesTest setUp after new PathFinderFactoryJythonNetworkx() " + new Date());
 		// The purpose of the above is that the implementation uses Jython, and is very slow 
 		// regarding the initial (using singleton) instantiation
 		// which should not affect the test performance below and thus is created first above		

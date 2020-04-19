@@ -8,8 +8,14 @@ import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+ 
 public class JythonConfiguration {
+    private final Logger logger = LoggerFactory.getLogger(JythonConfiguration.class);
+
+    
     private static JythonConfiguration _jythonConfiguration = new JythonConfiguration();
 
     public static JythonConfiguration getInstance() {
@@ -203,7 +209,7 @@ public class JythonConfiguration {
         String jythonHomeDirectory = getJythonHomeDirectory();
         if(jythonHomeDirectory == null) {
             final String errorMessage = "jython HomeDirectory is unknown";
-            printWarningMessage(errorMessage);
+            logger.error(errorMessage);
             throw new NullPointerException(errorMessage);
         }
         final File dir = new File(getJythonHomeDirectory());
@@ -260,9 +266,9 @@ public class JythonConfiguration {
     }
 
     private void printWarningMessage(String warningMessage) {
-        System.out.println("WARNING: " + warningMessage);
+        logger.warn("WARNING: " + warningMessage);
     }
     private void print(String text) {
-        System.out.println(text);
+        logger.info(text);
     }    
 }

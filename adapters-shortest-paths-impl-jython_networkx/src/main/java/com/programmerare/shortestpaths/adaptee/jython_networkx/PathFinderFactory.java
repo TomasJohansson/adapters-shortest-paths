@@ -2,6 +2,8 @@ package com.programmerare.shortestpaths.adaptee.jython_networkx;
 
 import org.python.util.PythonInterpreter;
 import org.python.core.PyObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 //import org.python.core.PyString;
@@ -11,6 +13,8 @@ import java.util.Date;
 //import java.util.List;
 
 public class PathFinderFactory {
+    private final Logger logger = LoggerFactory.getLogger(PathFinderFactory.class);
+    
     private final PyObject classObject;
     private final TimeMeasurer _timeMeasurer;
 
@@ -74,6 +78,6 @@ public class PathFinderFactory {
         _timeMeasurer.printMessageIncludingNumberOfSecondsSinceStart(messageSuffix);
     }    
     private void print(String s) {
-        System.out.println();
+        logger.info(s);
     }
 }

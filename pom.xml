@@ -117,8 +117,20 @@
 				<artifactId>junit-jupiter-engine</artifactId>
 				<version>5.6.1</version>
 				<scope>test</scope>
-			</dependency>			
+			</dependency>
 
+			<!--
+			https://github.com/qos-ch/slf4j
+			All versions upto and including 1.7.x require Java 5 or later to build.
+			SLF4J version 2.0.x requires Java 9 or later.
+			-->			
+			<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.30</version>
+			</dependency>
+			
 		</dependencies>		
 	</dependencyManagement>
 
