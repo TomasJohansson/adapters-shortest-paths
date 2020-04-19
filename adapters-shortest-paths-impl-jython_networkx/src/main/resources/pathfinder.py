@@ -1,6 +1,6 @@
 import networkx as nx
 from itertools import islice
-from adapters.shortest.paths.impl.jython_networkx import PathFinder
+from com.programmerare.shortestpaths.adaptee.jython_networkx import PathFinder
 
 def k_shortest_paths(G, source, target, k, weight=None):
     # The implementation of this function "k_shortest_paths" is copied from the URL below:
@@ -8,7 +8,7 @@ def k_shortest_paths(G, source, target, k, weight=None):
     return list(islice(nx.shortest_simple_paths(G, source, target, weight=weight), k))
 
 # The Python/Jython class below is implementing the Java interface "PathFinder"
-# (src\main\java\adapters\shortest\paths\impl\jython_networkx\PathFinder.java)     
+# (src\main\java\com\programmerare\shortestpaths\adaptee\jython_networkx\PathFinder.java)     
 class MyPathFinder(PathFinder):
     def __init__(self):
         self._graph = nx.DiGraph()

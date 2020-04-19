@@ -1,8 +1,10 @@
-package adapters.shortest.paths.impl.jython_networkx;
+package com.programmerare.shortestpaths.adaptee.jython_networkx;
 
 //import org.junit.jupiter.api.AfterEach;
 //import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.programmerare.shortestpaths.adaptee.jython_networkx.PathFinder;
+import com.programmerare.shortestpaths.adaptee.jython_networkx.PathFinderFactory;
+import com.programmerare.shortestpaths.adaptee.jython_networkx.TimeMeasurer;
 
 import java.util.List;
 

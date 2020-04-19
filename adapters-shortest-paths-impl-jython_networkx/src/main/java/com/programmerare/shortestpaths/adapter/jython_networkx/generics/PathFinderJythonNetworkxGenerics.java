@@ -1,7 +1,7 @@
 package com.programmerare.shortestpaths.adapter.jython_networkx.generics;
 
-import adapters.shortest.paths.impl.jython_networkx.PathFinder;
-import adapters.shortest.paths.impl.jython_networkx.PathFinderFactory;
+import com.programmerare.shortestpaths.adaptee.jython_networkx.PathFinder;
+import com.programmerare.shortestpaths.adaptee.jython_networkx.PathFinderFactory;
 import com.programmerare.shortestpaths.core.api.Vertex;
 import com.programmerare.shortestpaths.core.api.Weight;
 import com.programmerare.shortestpaths.core.api.generics.EdgeGenerics;

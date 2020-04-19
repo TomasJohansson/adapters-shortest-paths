@@ -1,4 +1,4 @@
-package adapters.shortest.paths.impl.jython_networkx;
+package com.programmerare.shortestpaths.adaptee.jython_networkx;
 
 import org.python.util.PythonInterpreter;
 import java.io.File;
