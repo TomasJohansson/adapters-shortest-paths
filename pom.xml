@@ -82,6 +82,12 @@
 				<version>${project.version}</version>			    
 			</dependency>
 
+			<dependency>
+				<groupId>com.programmerare.shortest-paths</groupId>
+				<artifactId>adapters-shortest-paths-impl-jython_networkx</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
 			<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
 			<dependency>
 				<groupId>org.hamcrest</groupId>
@@ -123,6 +129,7 @@
 		<module>adapters-shortest-paths-impl-bsmock</module> 	<!-- https://github.com/bsmock/k-shortest-paths -->
 		<module>adapters-shortest-paths-impl-reneargento</module>
 		<module>adapters-shortest-paths-impl-mulavito</module>
+		<module>adapters-shortest-paths-impl-jython_networkx</module>
 		<module>adapters-shortest-paths-test</module>
 	</modules>
 	

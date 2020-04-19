@@ -160,7 +160,12 @@ public class JythonConfiguration {
     }
     
     private boolean setJythonPathToUse(String jythonPathToUse) {
-        return setExistingJythonJarFile(new File(jythonPathToUse,"jython.jar"));
+        final File pythonDirectory = new File(jythonPathToUse);
+        if(!pythonDirectory.exists() || !pythonDirectory.isDirectory()) {
+            printWarningMessage("jython home directory does not exist: " + pythonDirectory.getAbsolutePath());
+            return false;
+        }
+        return setExistingJythonJarFile(new File(pythonDirectory,"jython.jar"));
     }
 
     private boolean setExistingJythonJarFile(final File jythonJarFile)  {
@@ -224,14 +229,13 @@ public class JythonConfiguration {
     public boolean setNameOfEnvironmentVariableDefiningTheJythonHomeDirectory(String nameOfEnvironmentVariableDefiningTheJythonHomeDirectory)  {
         final String theJythonHomeDirectory = System.getenv(nameOfEnvironmentVariableDefiningTheJythonHomeDirectory);
         if(theJythonHomeDirectory == null) {
-            //print("no Jython home directory was found with environment variable " + nameOfEnvironmentVariableDefiningTheJythonHomeDirectory);
+            printWarningMessage("no Jython home directory was found with environment variable " + nameOfEnvironmentVariableDefiningTheJythonHomeDirectory);
             return false;
         }
         else {
-            //print("Jython home directory was found with environment variable " + nameOfEnvironmentVariableDefiningTheJythonHomeDirectory);
+            print("Jython home directory was found with environment variable " + nameOfEnvironmentVariableDefiningTheJythonHomeDirectory + " : " + theJythonHomeDirectory);
             return setJythonHomeDirectory(theJythonHomeDirectory);
         }
-        
     }
 
     public void showWarningIfSubDirectorySeemsToBeMissing(

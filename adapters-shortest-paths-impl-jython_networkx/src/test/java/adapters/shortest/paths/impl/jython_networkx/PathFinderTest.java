@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PathFinderTest {
     
-    @Test
+//    @Test
     void findShortestPaths() {
-        final TimeMeasurer timeMeasurer = TimeMeasurer.start();
-        final PathFinderFactory pathFinderFactory = new PathFinderFactory(timeMeasurer);
+        final PathFinderFactory pathFinderFactory = PathFinderFactory.getInstance();
+        final TimeMeasurer timeMeasurer = pathFinderFactory.getTimeMeasurer();
         timeMeasurer.printMessageIncludingNumberOfSecondsSinceStart("After PathFinderFactory constructor");
         // the above (i.e. PathFinderFactory constructor) takes almost a minute
         

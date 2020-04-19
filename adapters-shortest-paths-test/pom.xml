@@ -64,10 +64,15 @@
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-reneargento</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.programmerare.shortest-paths</groupId>
 			<artifactId>adapters-shortest-paths-impl-mulavito</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.programmerare.shortest-paths</groupId>
+			<artifactId>adapters-shortest-paths-impl-jython_networkx</artifactId>
 		</dependency>
 		
 	</dependencies>
