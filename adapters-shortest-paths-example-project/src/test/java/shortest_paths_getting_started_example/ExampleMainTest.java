@@ -1,6 +1,6 @@
 package shortest_paths_getting_started_example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This is not a real test class which is doing any assertions, but it is a convenient 
