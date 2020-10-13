@@ -11,6 +11,27 @@ Currently there are **six** such adapter libraries, and **if you intend to use o
 
 Note that only **two** (yanqi and bsmock) of the above six implementation libraries are available from OSSRH ("Maven Central").   
 
+## Prerequisites if you are trying to compile the source code from this git repository
+* [Maven](http://maven.apache.org) (e.g. version 3.6.3)
+* Define an environment variable "JDK9" pointing to the path where you have installed (or extracted tar.gz file) [JDK 9](http://jdk.java.net/archive/) (which supports compiling to Java 6 , and this environment variable are used in the pom.xml in the root directory)
+* See also the prerequisites for the [Jython implementation](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jython_networkx/README.md)
+
+If the above conditions are fulfilled and you have access to an internet connection then it should hopefully work to use this library as below:
+```shell
+git clone https://github.com/TomasJohansson/adapters-shortest-paths
+mvn test
+```
+Note that the two sample projects are not included as modules (from the root level file pom.xml).  
+They can be run separately like this:
+
+```shell
+cd adapters-shortest-paths-example-project
+mvn test
+
+cd adapters-shortest-paths-example-project-jpa-entities   
+mvn test
+```
+
 ## Information about why only some libraries are deployed to OSSRH ("Maven Central")
 
 Currently only **two** (yanqi and bsmock) of the above six implementation libraries are available from OSSRH ("Maven Central").<br>
@@ -198,7 +219,7 @@ The following two Adapt**ee** libraries can be compiled for Java **6** :
 [The fork of "bsmock/k-shortest-paths"](https://github.com/TomasJohansson/k-shortest-paths) and [The fork of "yan-qi/k-shortest-paths-java-version"](https://github.com/TomasJohansson/k-shortest-paths-java-version)  
 
 The adapter library "adapters-shortest-paths-impl-jython_networkx" can be compiled with Java 6 but 
-it has a difference kind of dependency than the others. See below in the next section.
+it has a difference kind of dependency than the others. See below in the next section. 
 
 ### Some comments about the six adaptee libraries currently being used
 
@@ -217,7 +238,7 @@ Regarding the versions/"releases" of the above libraries:
 * Regarding the ["bsmock"](https://github.com/bsmock/k-shortest-paths) implementation, it was not even a maven project. Therefore I [forked](https://github.com/TomasJohansson/k-shortest-paths/commits/adding-maven-structure-and-junit-test) it and created a maven project of it. I have created a [pull request with my changes](https://github.com/bsmock/k-shortest-paths/pull/2).
 * Regarding "reneargento", it was neither a maven project, which was the reason for forking it. It also included a jar file, but the fork is instead using maven and jitpack for defining the dependency in the pom file. Please [read about the license for that dependency](https://github.com/TomasJohansson/algorithms-sedgewick-wayne).
 * Regarding "mulavito", it was neither a maven project, which was one of the reason for forking it. It also included unnecessary (for the purpose of just wanting to use the shortest path algorithm) many third-party libraries which have been removed from a branch of the fork.  
-* Regarding "Jython/Networkx" it is different from the others.  Instead of using a dependency in Maven pom file for an external Java library, it uses a Python script within the Adapter library. It will only work if you have installed Jython and the pip package networkx (and you must have some jython environment variable defining the jython home directory). This is tested with Windows 10 and Jython 2.7.2 which is currently (april 2020) the latest Jython version. To make the code in this implementation find your Jython home directory with your file jython.jar, then you must have defined an environment variable containing the string "jython" (**not** case sensitive) for example "jython.home" or "JYTHON_HOME" or simply "JYTHON". In that Jython home directory there should be a subdirectory "Lib/site-packages" and there you should have installed 'networkx' with this command: "jython -m pip install networkx".  
+* Regarding "Jython/Networkx" it is different from the others.  Instead of using a dependency in Maven pom file for an external Java library, it uses a Python script within the Adapter library. It will only work if you have installed Jython and the pip package networkx (and you must have some jython environment variable defining the jython home directory). This is tested with Windows 10 and Jython 2.7.2 which is currently (october 2020) the latest Jython version. To make the code in this implementation find your Jython home directory with your file jython.jar, then you must have defined an environment variable containing the string "jython" (**not** case sensitive) for example "jython.home" or "jython_home" or simply "jython". In that Jython home directory there should be a subdirectory "Lib/site-packages" and there you should have installed 'networkx' with this command: "jython -m pip install networkx".  
 	
 #### Some concepts in graph theory:
 

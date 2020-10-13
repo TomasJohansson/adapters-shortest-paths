@@ -8,6 +8,8 @@ import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +24,11 @@ public class JythonConfiguration {
         return _jythonConfiguration;
     }
 
-    private final List<String> namesWithPotentialEnvinronmentVariablesForJythonHomeDirectory = Arrays.asList(
-        "jython.home", "JYTHON_HOME", "JYTHON"
+    // uppercased versions of these below strings (potential environment variable names) will also be iterated when trying to find a jython installation directory
+    private final List<String> _lowerCasedNamesWithPotentialEnvinronmentVariablesForJythonHomeDirectory = Arrays.asList(
+        "jython.home", "jython_home", "jythonhome",
+        "jython.path", "jython_path", "jythonpath",
+        "jython"
     );
     
     private final Map<String, String> jythonEnvironmentVariables = new HashMap<String, String>();
@@ -41,15 +46,29 @@ public class JythonConfiguration {
         _versionOfJythonAtTheClassPath = getVersionOfJythonAtTheClassPath();
 //        print("_versionOfJythonAtTheClassPath " + _versionOfJythonAtTheClassPath);
         boolean result = false;
+
+        final ArrayList<String> namesWithPotentialEnvinronmentVariablesForJythonHomeDirectory = new ArrayList<String>(_lowerCasedNamesWithPotentialEnvinronmentVariablesForJythonHomeDirectory);
+
+        // Java 8 code:
+        //namesWithPotentialEnvinronmentVariablesForJythonHomeDirectory.addAll(
+            // add upper cased versions of the strings
+            //_lowerCasedNamesWithPotentialEnvinronmentVariablesForJythonHomeDirectory.stream().map(s -> s.toUpperCase()).collect(Collectors.toList())
+        //);
+        // use the code above instead of the code below if/when Java 8 is used instead of Java 6
+        // Java 6 code:
+        for(String lowerCasedName: _lowerCasedNamesWithPotentialEnvinronmentVariablesForJythonHomeDirectory) {
+            namesWithPotentialEnvinronmentVariablesForJythonHomeDirectory.add(lowerCasedName.toUpperCase());
+        }
+
         for (String env : namesWithPotentialEnvinronmentVariablesForJythonHomeDirectory) {
-            // print("envv " + env);
+            // print("iterated environment variable: " + env);
             result = setNameOfEnvironmentVariableDefiningTheJythonHomeDirectory(env);
             if(result) {
                 break;
             }
         }
         if(!result) {
-            iterateEnvironmentVariablesAndPopulateMapWithPotentialJythonVariables();    
+            iterateEnvironmentVariablesAndPopulateMapWithPotentialJythonVariables();
         }
     }
 
@@ -63,11 +82,13 @@ public class JythonConfiguration {
             final String key = next.getKey();
             final String keyLowerCased = key.toLowerCase();
             final String value = next.getValue();
+            //print("iterated env key: " + keyLowerCased);
+            //print("iterated env value: " + value);
             if(keyLowerCased.contains("jython")) {
-//            print("iterated env key: " + keyLowerCased);
-//            print("iterated env value: " + value);                
                 if(_firstFoundJythonKey == null) {
                     _firstFoundJythonKey = key;
+                    print("iterated env key: " + keyLowerCased);
+                    print("iterated env value: " + value);
                     setJythonPathToUse(value);
                 }
                 jythonEnvironmentVariables.put(key, value);
