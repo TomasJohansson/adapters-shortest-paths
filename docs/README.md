@@ -12,9 +12,10 @@ Currently there are **six** such adapter libraries, and **if you intend to use o
 Note that only **two** (yanqi and bsmock) of the above six implementation libraries are available from OSSRH ("Maven Central").   
 
 ## Prerequisites if you are trying to compile the source code from this git repository
+* [Git](https://git-scm.com) or ([Git BASH for Windows](https://gitforwindows.org))
 * [Maven](http://maven.apache.org) (e.g. version 3.6.3)
-* Define an environment variable "JDK9" pointing to the path where you have installed (or extracted tar.gz file) [JDK 9](http://jdk.java.net/archive/) (which supports compiling to Java 6 , and this environment variable are used in the pom.xml in the root directory)
-* See also the prerequisites for the [Jython implementation](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jython_networkx)
+* Java 9. Define an environment variable "JDK9" pointing to the path where you have installed (or extracted tar.gz file) [JDK 9](http://jdk.java.net/archive/) (which supports compiling to Java 6 , and this environment variable JDK9 is used in the file pom.xml in the root directory)
+* See also the [prerequisites for the Jython implementation](https://github.com/TomasJohansson/adapters-shortest-paths/tree/master/adapters-shortest-paths-impl-jython_networkx)
 
 If the above conditions are fulfilled and you have access to an internet connection then it should hopefully work to use this library as below:
 ```shell
